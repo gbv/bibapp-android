@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+    
+    <TextView
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/settings_store"
+	    android:textStyle="bold"
+	    android:gravity="center_horizontal"
+	    android:layout_marginBottom="10dp" />
+    
+	<CheckBox
+	    android:id="@+id/settings_save_checkbox"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/settings_description" />
+
+</LinearLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp</string>
+    <string name="empty_list">Keine Einträge vorhanden</string>
+    <string name="loading_in_progress">Inhalte werden geladen</string>
+    
+    <!-- action bar -->
+    <string name="actionbar_account">Konto</string>
+    <string name="actionbar_search">Suche</string>
+    <string name="actionbar_watchlist">Merkliste</string>
+    <string name="actionbar_info">Info</string>
+    <string name="actionbar_settings">Optionen</string>
+    
+    <!-- login dialog -->
+    <string name="logindialog_username">Login</string>
+    <string name="logindialog_password">Passwort</string>
+    <string name="logindialog_login">Anmelden</string>
+    <string name="logindialog_cancel">Abbrechen</string>
+    <string name="logindialog_heading">Bitte melden Sie sich an</string>
+    <string name="logindialog_wrong">Bitte überprüfen Sie ihre Logindaten!</string>
+    
+    <!-- error dialog -->
+    <string name="errordialog_connection">
+        Ihre Anfrage konnte nicht abgeschlossen werden.\n
+        Bitte überprüfen Sie ggf. Ihre Netzverbindung und versuchen es erneut!
+    </string>
+    <string name="errordialog_proceed">OK</string>
+    
+    <!-- swipe dialog -->
+    <string name="swipedialog_extending">Einträge werden nachgeladen</string>
+    
+    <!-- paia dialog -->
+    <string name="paiadialog_heading">Kontozugriff</string>
+    <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt</string>
+    <string name="paiadialog_proceed">Schließen</string>
+    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert</string>
+    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden</string>
+    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden</string>
+    <string name="paiadialog_cancel_success">Alle Einträge wurden storniert</string>
+    <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden</string>
+    <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden</string>
+    <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt</string>
+    <string name="paiadialog_general_failure">Die Aktion schlug leider fehl</string>
+    
+    <!-- detail actions dialog -->
+    <string name="detailactionsdialog_heading">Wählen Sie eine Aktion</string>
+    <string name="detailactionsdialog_cancel">Abbrechen</string>
+    <string name="detailactionsdialog_location">Standortinformationen</string>
+    <string name="detailactionsdialog_request">Vormerken</string>
+    <string name="detailactionsdialog_order">Bestellen</string>
+    <string name="detailactionsdialog_online">Online ansehen</string>
+    
+    <!-- settings -->
+    <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden</string>
+    <string name="settings_store">Logindaten speichern</string>
+    <string name="settings_store_on">Login wird gespeichert</string>
+    <string name="settings_store_off">Login wird nicht gespeichert</string>
+    
+    <!-- info -->
+    <string name="info_button_contact">Kontakt</string>
+    <string name="info_button_locations">Standorte</string>
+    <string name="info_button_impressum">Impressum</string>
+    
+    <!-- account -->
+    <string name="account_borrowed">Ausgeliehen</string>
+    <string name="account_booked">Vorgemerkt</string>
+    <string name="account_fees">Gebühren</string>
+    <string name="account_fees_amount">Gesamt:</string>
+    
+    <!-- search -->
+    <string name="search_hint">Suche</string>
+    <string name="search_hits">Treffer</string>
+    <string name="search_in_progress">Bibliothek wird durchsucht</string>
+    <string name="search_local">Lokal</string>
+    <string name="search_gvk">GVK</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <b>Hildesheim</b>\n
+		\n
+		<b>Anschrift</b>\n
+		Universitätsbibliothek Hildesheim\n
+		Marienburger Platz 22\n
+		31141 Hildesheim\n
+		\n
+		www.uni-hildesheim.de/bibliothek\n
+		\n
+		<b>Auskunft</b>\n
+		Telefon: (05121) 883-260\n
+		E-Mail: auskunft@uni-hildesheim.de\n
+		\n
+		<b>Ausleihe</b>\n
+		Telefon: (05121) 883-264\n
+		E-Mail: ausleihe@uni-hildesheim.de
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <b>Anbieter</b>\n
+        Universitätsbibliothek Hildesheim\n
+		Marienburger Platz 22\n
+		31141 Hildesheim\n
+		\n
+		E-Mail: auskunft@uni-hildesheim.de\n
+		Telefon: +49 (0) 51 21 - 883 260\n
+		Telefax: +49 (0) 51 21 - 883 266\n
+		\n
+		<b>Vertreter</b>\n
+		Die Universitätsbibliothek Hildesheim ist eine Einrichtung der Stiftung Universität Hildesheim, sie wird vertreten durch ihren Leiter, Dr. Ewald Brahms. Die Stiftung Universität Hildesheim ist eine rechtsfähige Stiftung öffentlichen Rechts. Die Stiftung unterhält und fördert die Universität Hildesheim in deren Eigenschaft als Körperschaft des öffentlichen Rechts und übt die Rechtsaufsicht über sie aus. Stiftung Universität Hildesheim und Universität Hildesheim werden vertreten durch ihren Präsidenten Herrn Prof. Dr. Wolfgang-Uwe Friedrich.\n
+Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259506.\n
+		\n
+		<b>Angaben zum Datenschutz</b>\n
+		Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.\n
+		Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).\n
+		\n
+		<b>Rechtliche Hinweise zur Haftung</b>\n
+		Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.\n
+		Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.\n
+		\n
+		<b>Gestaltung und Umsetzung</b>\n
+		Entwurf und Konzeption\n
+		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)\n
+		Umsetzung\n
+		Effective Webwork GmbH\n
+    </string>
+    
+    <!-- account -->
+    <string name="account_borrowed_signature">Signatur:</string>
+    <string name="account_borrowed_duedate">Leihfristende:</string>
+    <string name="account_borrowed_queue">Vormerkungen:</string>
+    <string name="account_borrowed_renewals">Verlängerungen:</string>
+    <string name="account_borrowed_status">Status:</string>
+    <string name="account_booked_signature">Signatur:</string>
+    <string name="account_booked_date">Vormerkdatum:</string>
+    
+    <!-- menu -->
+    <string name="menu_borrowed_extend">Verlängern</string>
+    <string name="menu_detail_addtowatchlist">Zur Merkliste hinzufügen</string>
+    <string name="menu_detail_addtowatchlist_duplicate">Bereits in Merkliste</string>
+    <string name="menu_booked_cancel">Stornieren</string>
+    <string name="menu_watchlist_remove">Entfernen</string>
+    
+    <!-- detail -->
+    <string name="detail_available">Verfügbarkeit</string>
+    <string name="detail_index">Inhaltsverzeichnis anzeigen</string>
+    <string name="detail_daia_no_department">Ohne Zuordnung</string>
+    <string name="detail_interlending">Fernleihoptionen</string>
+    <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus</string>
+    
+    <!-- toasts -->
+    <string name="toast_watchlist_added">Eintrag in Merkliste kopiert</string>
+    <string name="toast_watchlist_removed">Einträge wurden entfernt</string>
+</resources>

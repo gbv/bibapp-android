@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    
+    <TextView
+        android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="5dp"
+        android:text="@string/logindialog_heading"
+        android:textSize="20sp" />
+    
+    <TextView
+        android:id="@+id/logindialog_wrong"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:paddingTop="5dp"
+        android:text="@string/logindialog_wrong"
+        android:textColor="@color/logindialog_wrong"
+        android:visibility="invisible" />
+    
+    <EditText
+        android:id="@+id/logindialog_username"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="5dp"
+        android:hint="@string/logindialog_username" />
+    
+    <EditText
+        android:id="@+id/logindialog_password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="5dp"
+        android:fontFamily="sans-serif"
+        android:hint="@string/logindialog_password"/>
+    
+    <CheckBox
+	    android:id="@+id/logindialog_save"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_marginTop="5dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="5dp"
+	    android:text="@string/settings_store"
+	    android:visibility="gone" />
+    
+</LinearLayout>
