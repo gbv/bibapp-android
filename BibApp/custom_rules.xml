@@ -4,7 +4,6 @@
     <target name="-pre-clean"/>
     
     <target name="-pre-build" if="build.is.mode.release">
-        ${custom.package}
     </target>
     
     <target name="-pre-compile"/>
