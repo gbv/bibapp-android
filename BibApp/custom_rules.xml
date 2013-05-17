@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="android_custom">
+    
+    <target name="-pre-clean"/>
+    
+    <target name="-pre-build" if="build.is.mode.release">
+        ${custom.package}
+    </target>
+    
+    <target name="-pre-compile"/>
+    
+    <target name="-post-compile"/>
+
+    <target name="-post-package"/>
+    
+    <target name="-post-build" />
+</project>
