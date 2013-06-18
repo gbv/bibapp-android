@@ -1,5 +1,7 @@
 package de.eww.bibapp;
 
+import java.util.Date;
+
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -7,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 {
 	private static String accessToken = null;
 	private static String username = null;
+	private static Date accessTokenDate = null;
 	
 	private Fragment fragment;
 	
@@ -35,6 +39,11 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		return PaiaHelper.accessToken;
 	}
 	
+	public static void updateAccessTokenDate()
+	{
+		PaiaHelper.accessTokenDate = new Date();
+	}
+	
 	public static String getUsername()
 	{
 		return PaiaHelper.username;
@@ -44,13 +53,24 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	{
 		PaiaHelper.accessToken = null;
 		PaiaHelper.username = null;
+		PaiaHelper.accessTokenDate = null;
 	}
 	
 	public void ensureConnection()
 	{
-		// if we do not already have an access token
-	    if ( PaiaHelper.accessToken == null )
+		Date compareDate = null;
+		if ( PaiaHelper.accessTokenDate != null )
+		{
+			compareDate = new Date(PaiaHelper.accessTokenDate.getTime() + (15 * 60 * 1000));
+		}
+		
+		// if we do not already have an access token or the token is expired
+		Date now = new Date();
+	    if ( PaiaHelper.accessToken == null ||
+	    		( compareDate != null && now.after(compareDate)) )
 	    {
+	    	Log.v("PAIA", "not logged in or token expired");
+	    	
 	    	// if login data is not stored or credentials are not set, ask user for them
 		    boolean showLoginDialog = false;
 		    
@@ -80,6 +100,8 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				{
 					JSONObject accessToken = loginTask.get();
 					PaiaHelper.accessToken = accessToken.getString("access_token");
+					PaiaHelper.updateAccessTokenDate();
+					
 				}
 				catch (Exception e)
 				{
@@ -149,6 +171,8 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				    	
 				    	editor.commit();
 				    }
+				    
+				    PaiaHelper.updateAccessTokenDate();
 				    
 				    ((PaiaListener) this.fragment).onPaiaConnected();
 					

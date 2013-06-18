@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import de.eww.bibapp.AsyncCanceledInterface;
+import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
 
 /**
@@ -75,6 +76,8 @@ abstract public class AbstractPaiaTask extends AsyncTask<String, Void, JSONObjec
 			{
 				response = new JSONObject(httpResponse);
 			}
+			
+			PaiaHelper.updateAccessTokenDate();
 		}
 		finally
 		{
