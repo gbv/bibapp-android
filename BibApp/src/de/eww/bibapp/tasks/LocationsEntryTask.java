@@ -2,6 +2,7 @@ package de.eww.bibapp.tasks;
 
 import java.io.BufferedInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,7 +63,7 @@ public class LocationsEntryTask extends AsyncTask<String, Void, LocationsEntry>
 					String entryName = "";
 					String entryListName = "";
 					String entryAddress = "";
-					String entryOpeningHours = "";
+					ArrayList<String> listOpeningHours = new ArrayList<String>();
 					String entryEmail = "";
 					String entryUrl = "";
 					String entryPhone = "";
@@ -99,8 +100,11 @@ public class LocationsEntryTask extends AsyncTask<String, Void, LocationsEntry>
 					if ( jsonContent.has("http://purl.org/ontology/gbv/openinghours") )
 					{
 						JSONArray jsonOpeningHoursArray = jsonContent.getJSONArray("http://purl.org/ontology/gbv/openinghours");
-						JSONObject jsonOpeningHoursObject = jsonOpeningHoursArray.getJSONObject(jsonOpeningHoursArray.length() - 1);
-						entryOpeningHours = jsonOpeningHoursObject.getString("value");
+						for ( int i=0; i < jsonOpeningHoursArray.length(); i++ )
+						{
+							JSONObject jsonOpeningHoursObject = jsonOpeningHoursArray.getJSONObject(i);
+							listOpeningHours.add(jsonOpeningHoursObject.getString("value"));
+						}
 					}
 					
 					// get email
@@ -167,7 +171,7 @@ public class LocationsEntryTask extends AsyncTask<String, Void, LocationsEntry>
 						entryName,
 						entryListName,
 						entryAddress,
-						entryOpeningHours,
+						listOpeningHours,
 						entryEmail,
 						entryUrl,
 						entryPhone,

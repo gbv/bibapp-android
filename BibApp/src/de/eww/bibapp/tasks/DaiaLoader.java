@@ -151,7 +151,7 @@ public class DaiaLoader extends AbstractLoader<AvailableEntry>
 									
 									if ( !entryPosLong.isEmpty() && !entryPosLat.isEmpty() )
 									{
-										entry.setLocation(new LocationsEntry("", "", "", "", "", "", "", entryPosLong, entryPosLat, ""));
+										entry.setLocation(new LocationsEntry("", "", "", new ArrayList<String>(), "", "", "", entryPosLong, entryPosLat, ""));
 									}
 								}
 							}

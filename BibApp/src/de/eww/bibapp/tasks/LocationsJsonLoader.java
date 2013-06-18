@@ -57,133 +57,72 @@ public class LocationsJsonLoader extends AbstractLoader<LocationsEntry>
 			Log.v("URI", httpResponse);
 			
 			JSONObject jsonResponse = new JSONObject(httpResponse);
-			Iterator<?> keyIterator = jsonResponse.keys();
 			
+			// search the main entry, this should be the one with the key "http://www.w3.org/ns/org#hasSite"
+			JSONObject mainEntry = null;
+			Iterator<?> keyIterator = jsonResponse.keys();
 			while ( keyIterator.hasNext() )
 			{
 				String key = (String) keyIterator.next();
 				JSONObject jsonContent = (JSONObject) jsonResponse.get(key);
 				
-				// check if this is a locations entry - we assume this, if there is "http://xmlns.com/foaf/0.1/name" value
-				if ( jsonContent.has("http://xmlns.com/foaf/0.1/name") )
+				if ( jsonContent.has("http://www.w3.org/ns/org#hasSite") )
 				{
-					// prepare LocationsEntry data
-					String entryName = "";
-					String entryListName = "";
-					String entryAddress = "";
-					String entryOpeningHours = "";
-					String entryEmail = "";
-					String entryUrl = "";
-					String entryPhone = "";
-					String entryPosLong = "";
-					String entryPosLat = "";
-					String entryDescription = "";
+					mainEntry = jsonContent;
+				}
+			}
+			
+			// is there a main entry?
+			if ( mainEntry != null )
+			{
+				// add the main entry to the reponse list
+				response.add(this.createLocationFromJSON(mainEntry, jsonResponse));
+				
+				// iterate the elements of the "http://www.w3.org/ns/org#hasSite" key, holding all child locations
+				JSONArray jsonChildArray = mainEntry.getJSONArray("http://www.w3.org/ns/org#hasSite");
+				
+				for ( int i=0; i < jsonChildArray.length(); i++ )
+				{
+					JSONObject jsonChildContent = (JSONObject) jsonChildArray.get(i);
 					
-					// get name
-					JSONArray jsonNameArray = jsonContent.getJSONArray("http://xmlns.com/foaf/0.1/name");
-					JSONObject jsonNameObject = jsonNameArray.getJSONObject(jsonNameArray.length() - 1);
-					entryName = jsonNameObject.getString("value");
+					// get the uri of the child
+					String childUri = jsonChildContent.getString("value");
 					
-					// get list name
-					if ( jsonContent.has("http://dbpedia.org/property/shortName") )
-					{
-						JSONArray jsonListNameArray = jsonContent.getJSONArray("http://dbpedia.org/property/shortName");
-						JSONObject jsonListNameObject = jsonListNameArray.getJSONObject(jsonListNameArray.length() - 1);
-						entryListName = jsonListNameObject.getString("value");
-					}
-					else
-					{
-						entryListName = entryName;
-					}
+					// make a new uri request
+					URLConnectionHelper childUrlConnectionHelper = new URLConnectionHelper(childUri + "?format=json");
 					
-					// get address
-					if ( jsonContent.has("http://purl.org/ontology/gbv/address") )
+					try
 					{
-						JSONArray jsonAddressArray = jsonContent.getJSONArray("http://purl.org/ontology/gbv/address");
-						JSONObject jsonAddressObject = jsonAddressArray.getJSONObject(jsonAddressArray.length() - 1);
-						entryAddress = jsonAddressObject.getString("value");
-					}
-					
-					// get opening hours
-					if ( jsonContent.has("http://purl.org/ontology/gbv/openinghours") )
-					{
-						JSONArray jsonOpeningHoursArray = jsonContent.getJSONArray("http://purl.org/ontology/gbv/openinghours");
-						JSONObject jsonOpeningHoursObject = jsonOpeningHoursArray.getJSONObject(jsonOpeningHoursArray.length() - 1);
-						entryOpeningHours = jsonOpeningHoursObject.getString("value");
-					}
-					
-					// get email
-					if ( jsonContent.has("http://www.w3.org/2006/vcard/ns#email") )
-					{
-						JSONArray jsonEmailArray = jsonContent.getJSONArray("http://www.w3.org/2006/vcard/ns#email");
-						JSONObject jsonEmailObject = jsonEmailArray.getJSONObject(jsonEmailArray.length() - 1);
-						entryEmail = jsonEmailObject.getString("value");
-					}
-					
-					// get url
-					if ( jsonContent.has("http://www.w3.org/2006/vcard/ns#url") )
-					{
-						JSONArray jsonUrlArray = jsonContent.getJSONArray("http://www.w3.org/2006/vcard/ns#url");
-						JSONObject jsonUrlObject = jsonUrlArray.getJSONObject(jsonUrlArray.length() - 1);
-						entryUrl = jsonUrlObject.getString("value");
-					}
-					
-					// get phone
-					if ( jsonContent.has("http://xmlns.com/foaf/0.1/phone") )
-					{
-						JSONArray jsonPhoneArray = jsonContent.getJSONArray("http://xmlns.com/foaf/0.1/phone");
-						JSONObject jsonPhoneObject = jsonPhoneArray.getJSONObject(jsonPhoneArray.length() - 1);
-						entryPhone = jsonPhoneObject.getString("value");
-					}
-					
-					// get location
-					if ( jsonContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#location") )
-					{
-						JSONArray jsonLocationArray = jsonContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#location");
-						JSONObject jsonLocationObject = jsonLocationArray.getJSONObject(jsonLocationArray.length() - 1);
-						String locationKey = jsonLocationObject.getString("value");
+						// open connection
+						childUrlConnectionHelper.configure();
+						childUrlConnectionHelper.connect(null);
 						
-						if ( jsonResponse.has(locationKey) )
+						InputStream childInputStream = childUrlConnectionHelper.getStream();
+						
+						// starts the query
+						childInputStream = new BufferedInputStream(childUrlConnectionHelper.getInputStream());
+						
+						String childHttpResponse = childUrlConnectionHelper.readStream(childInputStream);
+						Log.v("URI", childHttpResponse);
+						
+						JSONObject childJsonResponse = new JSONObject(childHttpResponse);
+						
+						if ( childJsonResponse.has(childUri) )
 						{
-							JSONObject jsonLocationContent = jsonResponse.getJSONObject(locationKey);
+							JSONObject childJsonContent = (JSONObject) childJsonResponse.get(childUri);
 							
-							if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#long") )
-							{
-								JSONArray jsonLongArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#long");
-								JSONObject jsonLongObject = jsonLongArray.getJSONObject(jsonLongArray.length() - 1);
-								entryPosLong = jsonLongObject.getString("value");
-							}
-							
-							if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#lat") )
-							{
-								JSONArray jsonLatArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#lat");
-								JSONObject jsonLatObject = jsonLatArray.getJSONObject(jsonLatArray.length() - 1);
-								entryPosLat = jsonLatObject.getString("value");
-							}
+							// add the child entry to the reponse list
+							response.add(this.createLocationFromJSON(childJsonContent, childJsonResponse));
 						}
 					}
-					
-					// get description
-					if ( jsonContent.has("http://purl.org/dc/elements/1.1/description") )
+					catch ( Exception e )
 					{
-						JSONArray jsonDescriptionArray = jsonContent.getJSONArray("http://purl.org/dc/elements/1.1/description");
-						JSONObject jsonDescriptionObject = jsonDescriptionArray.getJSONObject(jsonDescriptionArray.length() - 1);
-						entryDescription = jsonDescriptionObject.getString("value");
+						throw e;
 					}
-					
-					// add entry
-					response.add(new LocationsEntry(
-						entryName,
-						entryListName,
-						entryAddress,
-						entryOpeningHours,
-						entryEmail,
-						entryUrl,
-						entryPhone,
-						entryPosLong,
-						entryPosLat,
-						entryDescription
-					));
+					finally
+					{
+						childUrlConnectionHelper.disconnect();
+					}
 				}
 			}
 		}
@@ -199,5 +138,134 @@ public class LocationsJsonLoader extends AbstractLoader<LocationsEntry>
 		}
 		
 		return response;
+	}
+	
+	private LocationsEntry createLocationFromJSON(JSONObject jsonObject, JSONObject completeResponse) throws Exception
+	{
+		// prepare LocationsEntry data
+		String entryName = "";
+		String entryListName = "";
+		String entryAddress = "";
+		ArrayList<String> listOpeningHours = new ArrayList<String>();
+		String entryEmail = "";
+		String entryUrl = "";
+		String entryPhone = "";
+		String entryPosLong = "";
+		String entryPosLat = "";
+		String entryDescription = "";
+		
+		// check if this is a locations entry - we assume this, if there is "http://xmlns.com/foaf/0.1/name" value
+		if ( jsonObject.has("http://xmlns.com/foaf/0.1/name") )
+		{
+			// get name
+			JSONArray jsonNameArray = jsonObject.getJSONArray("http://xmlns.com/foaf/0.1/name");
+			JSONObject jsonNameObject = jsonNameArray.getJSONObject(jsonNameArray.length() - 1);
+			entryName = jsonNameObject.getString("value");
+			
+			// get list name
+			if ( jsonObject.has("http://dbpedia.org/property/shortName") )
+			{
+				JSONArray jsonListNameArray = jsonObject.getJSONArray("http://dbpedia.org/property/shortName");
+				JSONObject jsonListNameObject = jsonListNameArray.getJSONObject(jsonListNameArray.length() - 1);
+				entryListName = jsonListNameObject.getString("value");
+			}
+			else
+			{
+				entryListName = entryName;
+			}
+			
+			// get address
+			if ( jsonObject.has("http://purl.org/ontology/gbv/address") )
+			{
+				JSONArray jsonAddressArray = jsonObject.getJSONArray("http://purl.org/ontology/gbv/address");
+				JSONObject jsonAddressObject = jsonAddressArray.getJSONObject(jsonAddressArray.length() - 1);
+				entryAddress = jsonAddressObject.getString("value");
+			}
+			
+			// get opening hours
+			if ( jsonObject.has("http://purl.org/ontology/gbv/openinghours") )
+			{
+				JSONArray jsonOpeningHoursArray = jsonObject.getJSONArray("http://purl.org/ontology/gbv/openinghours");
+				
+				for ( int i=0; i < jsonOpeningHoursArray.length(); i++ )
+				{
+					JSONObject jsonOpeningHoursObject = jsonOpeningHoursArray.getJSONObject(i);
+					listOpeningHours.add(jsonOpeningHoursObject.getString("value"));
+				}
+			}
+			
+			// get email
+			if ( jsonObject.has("http://www.w3.org/2006/vcard/ns#email") )
+			{
+				JSONArray jsonEmailArray = jsonObject.getJSONArray("http://www.w3.org/2006/vcard/ns#email");
+				JSONObject jsonEmailObject = jsonEmailArray.getJSONObject(jsonEmailArray.length() - 1);
+				entryEmail = jsonEmailObject.getString("value");
+			}
+			
+			// get url
+			if ( jsonObject.has("http://www.w3.org/2006/vcard/ns#url") )
+			{
+				JSONArray jsonUrlArray = jsonObject.getJSONArray("http://www.w3.org/2006/vcard/ns#url");
+				JSONObject jsonUrlObject = jsonUrlArray.getJSONObject(jsonUrlArray.length() - 1);
+				entryUrl = jsonUrlObject.getString("value");
+			}
+			
+			// get phone
+			if ( jsonObject.has("http://xmlns.com/foaf/0.1/phone") )
+			{
+				JSONArray jsonPhoneArray = jsonObject.getJSONArray("http://xmlns.com/foaf/0.1/phone");
+				JSONObject jsonPhoneObject = jsonPhoneArray.getJSONObject(jsonPhoneArray.length() - 1);
+				entryPhone = jsonPhoneObject.getString("value");
+			}
+			
+			// get location
+			if ( jsonObject.has("http://www.w3.org/2003/01/geo/wgs84_pos#location") )
+			{
+				JSONArray jsonLocationArray = jsonObject.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#location");
+				JSONObject jsonLocationObject = jsonLocationArray.getJSONObject(jsonLocationArray.length() - 1);
+				String locationKey = jsonLocationObject.getString("value");
+				
+				if ( completeResponse.has(locationKey) )
+				{
+					JSONObject jsonLocationContent = completeResponse.getJSONObject(locationKey);
+					
+					if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#long") )
+					{
+						JSONArray jsonLongArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#long");
+						JSONObject jsonLongObject = jsonLongArray.getJSONObject(jsonLongArray.length() - 1);
+						entryPosLong = jsonLongObject.getString("value");
+					}
+					
+					if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#lat") )
+					{
+						JSONArray jsonLatArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#lat");
+						JSONObject jsonLatObject = jsonLatArray.getJSONObject(jsonLatArray.length() - 1);
+						entryPosLat = jsonLatObject.getString("value");
+					}
+				}
+			}
+			
+			// get description
+			if ( jsonObject.has("http://purl.org/dc/elements/1.1/description") )
+			{
+				JSONArray jsonDescriptionArray = jsonObject.getJSONArray("http://purl.org/dc/elements/1.1/description");
+				JSONObject jsonDescriptionObject = jsonDescriptionArray.getJSONObject(jsonDescriptionArray.length() - 1);
+				entryDescription = jsonDescriptionObject.getString("value");
+			}
+		}
+		
+		// add entry
+		return new LocationsEntry(
+			entryName,
+			entryListName,
+			entryAddress,
+			listOpeningHours,
+			entryEmail,
+			entryUrl,
+			entryPhone,
+			entryPosLong,
+			entryPosLat,
+			entryDescription
+		);
 	}
 }

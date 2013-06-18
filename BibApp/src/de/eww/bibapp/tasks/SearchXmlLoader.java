@@ -24,7 +24,7 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 {
 	private HashMap<String, Object> entries;
 	private String searchString = null;
-	private Integer count = null;;
+	private Integer count = null;
 	private boolean isLocalSearch = true;
 	private int offset = 1;
 	private Fragment fragment;

@@ -1,5 +1,7 @@
 package de.eww.bibapp.fragments.info;
 
+import java.util.ListIterator;
+
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -90,7 +92,20 @@ public class LocationsDetailFragment extends DialogFragment
 		
 		titleView.setText(item.name);
 		
-		openingHoursView.setText(item.openingHours);
+		if ( !item.openingHours.isEmpty() )
+		{
+			String finalOpeningHours = "";
+			
+			ListIterator<String> it = item.openingHours.listIterator();
+			if ( it.hasNext() )
+			{
+				String openingHours = it.next();
+				finalOpeningHours += openingHours + "\n";
+			}
+			
+			openingHoursView.setText(finalOpeningHours);
+			openingHoursView.setVisibility(View.VISIBLE);
+		}
 		
 		if ( !item.address.isEmpty() )
 		{

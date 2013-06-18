@@ -1,11 +1,13 @@
 package de.eww.bibapp.data;
 
+import java.util.ArrayList;
+
 public class LocationsEntry
 {
 	public final String name;
 	public final String listName;
 	public final String address;
-	public final String openingHours;
+	public final ArrayList<String> openingHours;
 	public final String email;
 	public final String url;
 	public final String phone;
@@ -13,7 +15,7 @@ public class LocationsEntry
 	public final String posLat;
 	public final String description;
 	
-	public LocationsEntry(String name, String listName, String address, String openingHours, String email, String url, String phone, String posLong, String posLat, String description)
+	public LocationsEntry(String name, String listName, String address, ArrayList<String> openingHours, String email, String url, String phone, String posLong, String posLat, String description)
 	{
 		this.name = name;
 		this.listName = listName;
