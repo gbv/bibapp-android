@@ -108,6 +108,11 @@ public final class Constants
 	}
 	
 	/**
+	 * DBS Counting (called on every search request)
+	 */
+	public static String DBS_COUNTING_URL = "http://dbspixel.hbz-nrw.de/count?id=AN087&page=3";
+	
+	/**
 	 * You probably do not need to change anything below this line
 	 * =====================================================================
 	 */
@@ -115,6 +120,6 @@ public final class Constants
 	public static double EARTH_FLATTENING = 0.00335281066474748071984552861852;
 	public static double EQUATORIAL_RADIUS = 6378.137;
 	
-	public static final int READ_TIMEOUT = 10000; /* ms */
+	public static final int READ_TIMEOUT = 15000; /* ms */
 	public static final int CONNECTION_TIMEOUT = 15000; /* ms */
 }

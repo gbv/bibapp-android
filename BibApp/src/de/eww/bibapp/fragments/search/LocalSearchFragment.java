@@ -7,6 +7,8 @@ import java.util.HashMap;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -34,6 +36,8 @@ import de.eww.bibapp.fragments.AbstractListFragment;
 import de.eww.bibapp.fragments.detail.DetailFragment;
 import de.eww.bibapp.fragments.detail.DetailPagerFragment;
 import de.eww.bibapp.fragments.dialogs.LoadCanceledDialogFragment;
+import de.eww.bibapp.tasks.DBSPixelTask;
+import de.eww.bibapp.tasks.DownloadImageTask;
 import de.eww.bibapp.tasks.SearchXmlLoader;
 
 public class LocalSearchFragment extends AbstractListFragment implements
@@ -152,6 +156,13 @@ public class LocalSearchFragment extends AbstractListFragment implements
 		// show the number of results in action bar
 		this.hits = (Integer) data.get("numberOfRecords");
 		this.setHits(this.hits);
+		
+		// dbs counting
+		if ( Constants.DBS_COUNTING_URL != null && !Constants.DBS_COUNTING_URL.isEmpty() )
+		{
+			AsyncTask<Void, Void, Void> dbsPixelTask = new DBSPixelTask();
+			dbsPixelTask.execute();
+		}
 	}
 	
 	private void setHits(int hits)
