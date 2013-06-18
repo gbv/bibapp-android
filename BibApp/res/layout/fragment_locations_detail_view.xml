@@ -15,6 +15,7 @@
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:padding="5dp"
         android:layout_weight=".40">
         
 	    <LinearLayout
