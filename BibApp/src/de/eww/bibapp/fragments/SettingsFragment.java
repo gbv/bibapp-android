@@ -2,6 +2,8 @@ package de.eww.bibapp.fragments;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -9,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.TextView;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 
@@ -44,6 +47,20 @@ public class SettingsFragment extends AbstractContainerFragment implements Compo
 		checkbox.setChecked(isChecked);
 		
 		checkbox.setOnCheckedChangeListener(this);
+		
+		// get the version number and set it in the layout
+		try
+		{
+			PackageInfo packageInfo = this.getActivity().getPackageManager().getPackageInfo(this.getActivity().getPackageName(), 0);
+			TextView versionView = (TextView) v.findViewById(R.id.settings_version_name);
+			versionView.setText('v' + packageInfo.versionName);
+		}
+		catch (NameNotFoundException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		
 		// set title
 		ActionBar actionBar = this.getActivity().getActionBar();
