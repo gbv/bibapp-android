@@ -139,16 +139,18 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 			
 			try
 			{
-				JSONObject accessToken = loginTask.get();
-				PaiaHelper.accessToken = accessToken.getString("access_token");
+				JSONObject accessTokenObject = loginTask.get();
+				String accessToken = accessTokenObject.getString("access_token");
 				
-				if ( PaiaHelper.accessToken.isEmpty() )
+				if ( accessToken.isEmpty() )
 				{
 					// login was wrong - update dialog
 					((LoginDialogFragment) dialog).setWrongLogin();
 				}
 				else
 				{
+					PaiaHelper.accessToken = accessToken;
+					
 					// force soft keyboard to hide
 					InputMethodManager imm = (InputMethodManager) this.fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
