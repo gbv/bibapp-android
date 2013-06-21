@@ -135,25 +135,38 @@ public class LocationsEntryTask extends AsyncTask<String, Void, LocationsEntry>
 					if ( jsonContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#location") )
 					{
 						JSONArray jsonLocationArray = jsonContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#location");
-						JSONObject jsonLocationObject = jsonLocationArray.getJSONObject(jsonLocationArray.length() - 1);
-						String locationKey = jsonLocationObject.getString("value");
 						
-						if ( jsonResponse.has(locationKey) )
+						if ( jsonLocationArray.length() > 0 )
 						{
-							JSONObject jsonLocationContent = jsonResponse.getJSONObject(locationKey);
+							JSONObject jsonLocationFirstObject = jsonLocationArray.getJSONObject(0);
 							
-							if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#long") )
+							// check if the first item is of type bnode
+							if ( jsonLocationFirstObject.getString("type").equals("bnode") )
 							{
-								JSONArray jsonLongArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#long");
-								JSONObject jsonLongObject = jsonLongArray.getJSONObject(jsonLongArray.length() - 1);
-								entryPosLong = jsonLongObject.getString("value");
+								// search the referenced nodes
+								String referenceNodeName = jsonLocationFirstObject.getString("value");
+								if ( jsonResponse.has(referenceNodeName) )
+								{
+									JSONObject jsonLocationContent = jsonResponse.getJSONObject(referenceNodeName);
+									
+									if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#long") )
+									{
+										JSONArray jsonLongArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#long");
+										JSONObject jsonLongObject = jsonLongArray.getJSONObject(jsonLongArray.length() - 1);
+										entryPosLong = jsonLongObject.getString("value");
+									}
+									
+									if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#lat") )
+									{
+										JSONArray jsonLatArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#lat");
+										JSONObject jsonLatObject = jsonLatArray.getJSONObject(jsonLatArray.length() - 1);
+										entryPosLat = jsonLatObject.getString("value");
+									}
+								}
 							}
-							
-							if ( jsonLocationContent.has("http://www.w3.org/2003/01/geo/wgs84_pos#lat") )
+							else
 							{
-								JSONArray jsonLatArray = jsonLocationContent.getJSONArray("http://www.w3.org/2003/01/geo/wgs84_pos#lat");
-								JSONObject jsonLatObject = jsonLatArray.getJSONObject(jsonLatArray.length() - 1);
-								entryPosLat = jsonLatObject.getString("value");
+								
 							}
 						}
 					}
