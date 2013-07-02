@@ -15,6 +15,7 @@ import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapters.RSSAdapter;
+import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.data.NewsEntry;
 import de.eww.bibapp.fragments.AbstractListFragment;
 import de.eww.bibapp.fragments.dialogs.LoadCanceledDialogFragment;
@@ -47,15 +48,19 @@ public class InfoFragment extends AbstractListFragment implements
 	{
         super.onActivityCreated(savedInstanceState);
         
-        // Force recreation of loader
-        this.getLoaderManager().destroyLoader(0);
-        getLoaderManager().initLoader(0, null, this);
-        
-        this.mAdapter = new RSSAdapter(getActivity(), R.layout.fragment_news_item_view);
-        
-        this.setListAdapter(mAdapter);
-        this.isListShown = true;
-        this.setListShown(false);
+        // Check if a rss feed is given
+        if ( !Constants.NEWS_URL.isEmpty() )
+        {
+        	// Force recreation of loader
+            this.getLoaderManager().destroyLoader(0);
+            getLoaderManager().initLoader(0, null, this);
+            
+            this.mAdapter = new RSSAdapter(getActivity(), R.layout.fragment_news_item_view);
+            
+            this.setListAdapter(mAdapter);
+            this.isListShown = true;
+            this.setListShown(false);
+        }
         
         ActionBar actionBar = MainActivity.instance.getActionBar();
         
