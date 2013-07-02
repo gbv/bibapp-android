@@ -53,7 +53,9 @@
     <string name="detailactionsdialog_online">Online ansehen</string>
     
     <!-- settings -->
-    <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden</string>
+    <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
+    <string name="settings_dbs_description">Wenn Sie diese Funktion deaktivieren, verhindern Sie, dass statistische Daten über Ihre Suchen an die DBS gesendet werden.</string>
+    <string name="settings_data_privacy">Datenschutz</string>
     <string name="settings_store">Logindaten speichern</string>
     <string name="settings_store_on">Login wird gespeichert</string>
     <string name="settings_store_off">Login wird nicht gespeichert</string>

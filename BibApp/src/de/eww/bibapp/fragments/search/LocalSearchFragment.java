@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -37,7 +37,6 @@ import de.eww.bibapp.fragments.detail.DetailFragment;
 import de.eww.bibapp.fragments.detail.DetailPagerFragment;
 import de.eww.bibapp.fragments.dialogs.LoadCanceledDialogFragment;
 import de.eww.bibapp.tasks.DBSPixelTask;
-import de.eww.bibapp.tasks.DownloadImageTask;
 import de.eww.bibapp.tasks.SearchXmlLoader;
 
 public class LocalSearchFragment extends AbstractListFragment implements
@@ -160,8 +159,14 @@ public class LocalSearchFragment extends AbstractListFragment implements
 		// dbs counting
 		if ( Constants.DBS_COUNTING_URL != null && !Constants.DBS_COUNTING_URL.isEmpty() )
 		{
-			AsyncTask<Void, Void, Void> dbsPixelTask = new DBSPixelTask();
-			dbsPixelTask.execute();
+			SharedPreferences settings = this.getActivity().getPreferences(0);
+			boolean isDbsChecked = settings.getBoolean("allow_dbs", true);
+			
+			if ( isDbsChecked )
+			{
+				AsyncTask<Void, Void, Void> dbsPixelTask = new DBSPixelTask();
+				dbsPixelTask.execute();
+			}
 		}
 	}
 	
