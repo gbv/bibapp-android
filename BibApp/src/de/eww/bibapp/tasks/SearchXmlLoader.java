@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.AsyncTaskLoader;
 import de.eww.bibapp.AsyncCanceledInterface;
@@ -168,7 +169,9 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 			e1.printStackTrace();
 		}
 		
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch));
+		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, spinnerValue));
 		
 		try
 		{

@@ -14,9 +14,9 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 import de.eww.bibapp.fragments.AbstractContainerFragment;
 import de.eww.bibapp.fragments.AccountFragment;
-import de.eww.bibapp.fragments.SettingsFragment;
 import de.eww.bibapp.fragments.info.InfoContainerFragment;
 import de.eww.bibapp.fragments.search.SearchContainerFragment;
+import de.eww.bibapp.fragments.settings.SettingsContainerFragment;
 import de.eww.bibapp.fragments.watchlist.WatchlistContainerFragment;
 
 /**
@@ -65,7 +65,7 @@ public class MainActivity extends FragmentActivity
 	    this.addTab(AccountFragment.class, "account", resources.getText(R.string.actionbar_account), resources.getDrawable(R.drawable.menu_account));
 	    this.addTab(WatchlistContainerFragment.class, "watchlist", resources.getText(R.string.actionbar_watchlist), resources.getDrawable(R.drawable.menu_watchlist));
 	    this.addTab(InfoContainerFragment.class, "info", resources.getText(R.string.actionbar_info), resources.getDrawable(R.drawable.menu_info));
-	    this.addTab(SettingsFragment.class, "settings", resources.getText(R.string.actionbar_settings), resources.getDrawable(R.drawable.menu_settings));
+	    this.addTab(SettingsContainerFragment.class, "settings", resources.getText(R.string.actionbar_settings), resources.getDrawable(R.drawable.menu_settings));
 	    
 	    this.mainTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener()
 	    {

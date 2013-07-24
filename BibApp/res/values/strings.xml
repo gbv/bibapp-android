@@ -59,6 +59,8 @@
     <string name="settings_store">Logindaten speichern</string>
     <string name="settings_store_on">Login wird gespeichert</string>
     <string name="settings_store_off">Login wird nicht gespeichert</string>
+    <string name="settings_local_search">Lokaler Katalog</string>
+    <string name="settings_local_search_description">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
     
     <!-- info -->
     <string name="info_button_contact">Kontakt</string>

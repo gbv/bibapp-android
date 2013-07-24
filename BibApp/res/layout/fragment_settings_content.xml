@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/settings_store"
+	    android:textStyle="bold"
+	    android:gravity="center_horizontal"
+	    android:layout_marginBottom="10dp" />
+    
+	<CheckBox
+	    android:id="@+id/settings_save_checkbox"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/settings_description"
+	    android:layout_marginBottom="20dp" />
+	
+	<TextView
+        android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:text="@string/settings_local_search"
+	    android:textStyle="bold"
+	    android:gravity="center_horizontal"
+	    android:layout_marginBottom="10dp" />
+	
+	<TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_local_search_description" />
+	
+	<Spinner
+	    android:id="@+id/settings_local_search_spinner"
+	    android:layout_height="wrap_content"
+	    android:layout_width="fill_parent"
+        android:layout_marginBottom="20dp"
+        android:gravity="left" />
+	
+	<LinearLayout
+	    android:id="@+id/settings_data_privacy_layout"
+	    android:orientation="vertical"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:visibility="gone"
+	    android:layout_marginBottom="20dp" >
+	
+		<TextView
+	        android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/settings_data_privacy"
+		    android:textStyle="bold"
+		    android:gravity="center_horizontal"
+		    android:layout_marginBottom="10dp" />
+		
+		<CheckBox
+		    android:id="@+id/settings_dbs_checkbox"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/settings_dbs_description" />
+	</LinearLayout>
+	
+	<TextView
+	    android:id="@+id/settings_version_name"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:gravity="right|bottom" />
+
+</LinearLayout>

@@ -20,9 +20,14 @@ public final class Constants
 	public static final String PAIA_URL = "https://paia.gbv.de/isil/" + BIB_CODE;
 	
 	/**
-	 * The name of the catalog used for local search operations
+	 * The name of the catalogs used for local search operations
 	 */
-	public static final String LOCAL_CATALOG = "opac-de-hil2";
+	public static final String[][] LOCAL_CATALOGS = {
+		{ "opac-de-hil2", "Lokal 1" },
+		{ "opac-de-hil2", "Lokal 2" }
+	};
+	
+	public static final int LOCAL_CATALOG_DEFAULT = 0;
 	
 	/**
 	 * The name of the global catalog used for search operations
@@ -47,7 +52,7 @@ public final class Constants
 	/**
 	 * This determs the URL for search requests
 	 */
-	public static String getSearchUrl(String search, int start, int numRecords, boolean isLocalSearch)
+	public static String getSearchUrl(String search, int start, int numRecords, boolean isLocalSearch, int localCatalogIndex)
 	{
 		String url = null;
 		
@@ -55,7 +60,7 @@ public final class Constants
 		
 		if ( isLocalSearch == true )
 		{
-			url += Constants.LOCAL_CATALOG;
+			url += Constants.LOCAL_CATALOGS[localCatalogIndex][0];
 		}
 		else
 		{

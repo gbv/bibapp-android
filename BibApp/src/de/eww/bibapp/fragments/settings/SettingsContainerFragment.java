@@ -1,4 +1,4 @@
-package de.eww.bibapp.fragments.watchlist;
+package de.eww.bibapp.fragments.settings;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,19 +12,19 @@ import de.eww.bibapp.fragments.AbstractContainerFragment;
  * 
  * This file is part of the Android BibApp Project
  * =========================================================
- * Watchlist Fragment class, providing a container for the users watchlist
+ * Settings Fragment class, providing a container for the configuration options
  */
-public class WatchlistContainerFragment extends AbstractContainerFragment
+public class SettingsContainerFragment extends AbstractContainerFragment
 {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
 		// inflate the layout for this fragment
-		View v = inflater.inflate(R.layout.fragment_watchlist_main, container, false);
+		View v = inflater.inflate(R.layout.fragment_settings_main, container, false);
 		
 		if ( this.fragments.isEmpty() )
 		{
-			this.switchContent(R.id.watchlist_container, WatchlistFragment.class.getName(), "watchlist_container", false);
+			this.switchContent(R.id.settings_container, SettingsFragment.class.getName(), "settings_container", false);
 		}
 		
 		return v;
