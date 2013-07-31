@@ -72,56 +72,64 @@ public class LocationsJsonLoader extends AbstractLoader<LocationsEntry>
 				}
 			}
 			
+			// if we did not found a main entry, try to find one with the uri url as key
+			String lookupKey = Constants.LOCATION_URL.substring(0, Constants.LOCATION_URL.length() - 12);
+			if (jsonResponse.has(lookupKey)) {
+				mainEntry = (JSONObject) jsonResponse.get(lookupKey);
+			}
+			
 			// is there a main entry?
 			if ( mainEntry != null )
 			{
 				// add the main entry to the reponse list
 				response.add(this.createLocationFromJSON(mainEntry, jsonResponse));
 				
-				// iterate the elements of the "http://www.w3.org/ns/org#hasSite" key, holding all child locations
-				JSONArray jsonChildArray = mainEntry.getJSONArray("http://www.w3.org/ns/org#hasSite");
-				
-				for ( int i=0; i < jsonChildArray.length(); i++ )
-				{
-					JSONObject jsonChildContent = (JSONObject) jsonChildArray.get(i);
+				if (mainEntry.has("http://www.w3.org/ns/org#hasSite")) {
+					// iterate the elements of the "http://www.w3.org/ns/org#hasSite" key, holding all child locations
+					JSONArray jsonChildArray = mainEntry.getJSONArray("http://www.w3.org/ns/org#hasSite");
 					
-					// get the uri of the child
-					String childUri = jsonChildContent.getString("value");
-					
-					// make a new uri request
-					URLConnectionHelper childUrlConnectionHelper = new URLConnectionHelper(childUri + "?format=json");
-					
-					try
+					for ( int i=0; i < jsonChildArray.length(); i++ )
 					{
-						// open connection
-						childUrlConnectionHelper.configure();
-						childUrlConnectionHelper.connect(null);
+						JSONObject jsonChildContent = (JSONObject) jsonChildArray.get(i);
 						
-						InputStream childInputStream = childUrlConnectionHelper.getStream();
+						// get the uri of the child
+						String childUri = jsonChildContent.getString("value");
 						
-						// starts the query
-						childInputStream = new BufferedInputStream(childUrlConnectionHelper.getInputStream());
+						// make a new uri request
+						URLConnectionHelper childUrlConnectionHelper = new URLConnectionHelper(childUri + "?format=json");
 						
-						String childHttpResponse = childUrlConnectionHelper.readStream(childInputStream);
-						Log.v("URI", childHttpResponse);
-						
-						JSONObject childJsonResponse = new JSONObject(childHttpResponse);
-						
-						if ( childJsonResponse.has(childUri) )
+						try
 						{
-							JSONObject childJsonContent = (JSONObject) childJsonResponse.get(childUri);
+							// open connection
+							childUrlConnectionHelper.configure();
+							childUrlConnectionHelper.connect(null);
 							
-							// add the child entry to the reponse list
-							response.add(this.createLocationFromJSON(childJsonContent, childJsonResponse));
+							InputStream childInputStream = childUrlConnectionHelper.getStream();
+							
+							// starts the query
+							childInputStream = new BufferedInputStream(childUrlConnectionHelper.getInputStream());
+							
+							String childHttpResponse = childUrlConnectionHelper.readStream(childInputStream);
+							Log.v("URI", childHttpResponse);
+							
+							JSONObject childJsonResponse = new JSONObject(childHttpResponse);
+							
+							if ( childJsonResponse.has(childUri) )
+							{
+								JSONObject childJsonContent = (JSONObject) childJsonResponse.get(childUri);
+								
+								// add the child entry to the reponse list
+								response.add(this.createLocationFromJSON(childJsonContent, childJsonResponse));
+							}
 						}
-					}
-					catch ( Exception e )
-					{
-						throw e;
-					}
-					finally
-					{
-						childUrlConnectionHelper.disconnect();
+						catch ( Exception e )
+						{
+							throw e;
+						}
+						finally
+						{
+							childUrlConnectionHelper.disconnect();
+						}
 					}
 				}
 			}
