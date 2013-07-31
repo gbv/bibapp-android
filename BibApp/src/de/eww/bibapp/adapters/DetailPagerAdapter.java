@@ -25,6 +25,8 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter
 	
 	private ArrayList<SearchEntry> entryArray = new ArrayList<SearchEntry>();
 	
+	private static final int LOADING_OFFSET = 3; 
+	
 	public DetailPagerAdapter(FragmentManager fm)
 	{
 		super(fm);
@@ -49,7 +51,6 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter
 	{
 		if ( this.searchAdapterInterface != null )
 		{
-			//return this.searchAdapterInterface.getSearchAdapter().getCount();
 			return this.searchAdapterInterface.getHits();
 		}
 		
@@ -59,10 +60,11 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter
     @Override
     public Fragment getItem(int position)
     {
-    	if ( this.loadinBackground == false && MainActivity.currentTabId.equals("search") )
-		{
-	    	if ( this.searchAdapterInterface.getResults().size() <= position + 2 )
-	    	{
+    	if ( this.loadinBackground == false && MainActivity.currentTabId.equals("search") ) {
+    		if (
+    			this.searchAdapterInterface.getHits() > position + this.LOADING_OFFSET &&
+    			this.searchAdapterInterface.getResults().size() <= position + this.LOADING_OFFSET
+    		) {
 	    		this.loadinBackground = true;
 	    		
 	    		// create a dialog
