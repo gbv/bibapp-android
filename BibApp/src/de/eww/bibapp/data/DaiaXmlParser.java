@@ -325,7 +325,11 @@ public class DaiaXmlParser
 		}
 		else
 		{
-			actions = "location";
+			// fix for crash when tryining to access a location entry that does not exists
+			// the default actions depend on the existence of a uri entry
+			if (!uriUrl.isEmpty()) {
+				actions = "location";
+			}
 		}
 		
 		return new AvailableEntry(label, uriUrl, status, statusColor, statusInfo, actions, storage);
