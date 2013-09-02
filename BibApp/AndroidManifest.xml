@@ -2,12 +2,12 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
     package="de.eww.bibapp"
-    android:versionCode="5"
-    android:versionName="1.2.1" >
+    android:versionCode="6"
+    android:versionName="1.2.3" >
 
     <uses-sdk
         android:minSdkVersion="11"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="18" />
     
     <uses-feature
         android:glEsVersion="0x00020000"
