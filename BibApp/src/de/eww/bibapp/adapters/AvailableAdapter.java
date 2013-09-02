@@ -41,13 +41,23 @@ public class AvailableAdapter extends ArrayAdapter<AvailableEntry>
 		
 		AvailableEntry entry = this.getItem(position);
 		
-		if ( !entry.storage.isEmpty() )
-		{
-			departmentView.setText(entry.storage);
+		// prepare department text
+		String departmentText = "";
+		
+		if (!entry.department.isEmpty()) {
+			departmentText = entry.department;
 		}
-		else
-		{
-			departmentView.setText(entry.department);
+		
+		if (!entry.storage.isEmpty()) {
+			if (!departmentText.isEmpty()) {
+				departmentText += ", ";
+			}
+			
+			departmentText += entry.storage;
+		}
+		
+		if (!departmentText.isEmpty()) {
+			departmentView.setText(departmentText);
 		}
 		
 		labelView.setText(entry.label);
