@@ -141,9 +141,12 @@ public class DaiaXmlParser
 				availableItems.put(availableAttributes.get("service"), availableAttributes);
 				String readLimitation = this.readAvailable(parser);
 				
-				if ( !readLimitation.isEmpty() )
-				{
-					limitation = readLimitation;
+				// read limitation only from the "presentation" attribute
+				if (availableAttributes.get("service").equals("presentation")) {
+					if ( !readLimitation.isEmpty() )
+					{
+						limitation = readLimitation;
+					}
 				}
 			}
 			else if ( name.equals("unavailable") )
@@ -153,9 +156,12 @@ public class DaiaXmlParser
 				unavailableItems.put(unavailableAttributes.get("service"), unavailableAttributes);
 				String readLimitation = this.readUnavailable(parser);
 				
-				if ( !readLimitation.isEmpty() )
-				{
-					limitation = readLimitation;
+				// read limitation only from the "presentation" attribute
+				if (unavailableAttributes.get("service").equals("presentation")) {
+					if ( !readLimitation.isEmpty() )
+					{
+						limitation = readLimitation;
+					}
 				}
 			}
 			else if ( name.equals("storage") )
