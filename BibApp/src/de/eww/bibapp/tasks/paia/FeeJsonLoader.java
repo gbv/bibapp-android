@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import de.eww.bibapp.PaiaHelper;
@@ -45,7 +46,10 @@ public class FeeJsonLoader extends AbstractLoader<FeeEntry>
 		List<FeeEntry> response = new ArrayList<FeeEntry>();
 		
 		// get url
-		String paiaUrl = Constants.PAIA_URL + "/core/" + PaiaHelper.getUsername() + "/fees?access_token=" + PaiaHelper.getAccessToken();
+		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		
+		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getUsername() + "/fees?access_token=" + PaiaHelper.getAccessToken();
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl);
 		
 		try

@@ -2,6 +2,7 @@ package de.eww.bibapp.tasks.paia;
 
 import org.json.JSONObject;
 
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import de.eww.bibapp.constants.Constants;
 
@@ -28,7 +29,10 @@ public class PaiaLoginTask extends AbstractPaiaTask
 		JSONObject result = new JSONObject();
 		
 		// get url
-		String paiaUrl = Constants.PAIA_URL + "/auth/login?username=" + username + "&password=" + password + "&grant_type=password";
+		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		
+		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/auth/login?username=" + username + "&password=" + password + "&grant_type=password";
 		
 		try
 		{

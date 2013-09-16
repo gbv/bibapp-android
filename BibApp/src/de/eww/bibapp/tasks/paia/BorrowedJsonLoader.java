@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import de.eww.bibapp.PaiaHelper;
@@ -44,7 +45,10 @@ public class BorrowedJsonLoader extends AbstractLoader<BorrowedEntry>
 		List<BorrowedEntry> response = new ArrayList<BorrowedEntry>();
 		
 		// get url
-		String paiaUrl = Constants.PAIA_URL + "/core/" + PaiaHelper.getUsername() + "/items?access_token=" + PaiaHelper.getAccessToken();
+		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		
+		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getUsername() + "/items?access_token=" + PaiaHelper.getAccessToken();
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl);
 		
 		try

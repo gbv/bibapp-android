@@ -10,9 +10,22 @@ public final class Constants
 	 */
 	
 	/**
-	 * The paia URL
+	 * The PAIA URLs
+	 * 
+	 * @see LOCAL_CATALOGS and keep order in sync
 	 */
-	public static final String PAIA_URL = "https://paia.gbv.de/isil/DE-Hil2";
+	public static final String[] PAIA_URLS = {
+		"https://paia.gbv.de/isil/DE-Hil2",
+		"https://paia.gbv.de/isil/DE-Hil2"
+	};
+	
+	/**
+	 * Returns the current PAIA URL
+	 */
+	public static final String getPaiaUrl(int localCatalogIndex)
+	{
+		return Constants.PAIA_URLS[localCatalogIndex];
+	}
 	
 	/**
 	 * The name of the catalogs used for local search operations
