@@ -10,17 +10,14 @@ public final class Constants
 	 */
 	
 	/**
-	 * The library code used in paia and location requests
+	 * The paia URL
 	 */
-	public static final String BIB_CODE = "DE-Hil2";
-	
-	/**
-	 * The paia URL appended with the bib code
-	 */
-	public static final String PAIA_URL = "https://paia.gbv.de/isil/" + BIB_CODE;
+	public static final String PAIA_URL = "https://paia.gbv.de/isil/DE-Hil2";
 	
 	/**
 	 * The name of the catalogs used for local search operations
+	 * 
+	 * @see BIB_CODES and keep order in sync
 	 */
 	public static final String[][] LOCAL_CATALOGS = {
 		{ "opac-de-hil2", "Lokal 1" },
@@ -35,9 +32,22 @@ public final class Constants
 	public static final String GVK_CATALOG = "gvk";
 	
 	/**
-	 * Address to location information in JSON format
+	 * The library codes used in location requests
+	 * 
+	 * @see LOCAL_CATALOGS and keep order in sync
 	 */
-	public static final String LOCATION_URL = "http://uri.gbv.de/organization/isil/" + BIB_CODE + "?format=json";
+	public static final String[] BIB_CODES = {
+		"DE-Hil2",
+		"DE-Hil2"
+	};
+	
+	/**
+	 * Returns the address to location information in JSON format
+	 */
+	public static String getLocationUrl(int localCatalogIndex)
+	{
+		return "http://uri.gbv.de/organization/isil/" + Constants.BIB_CODES[localCatalogIndex] + "?format=json";
+	}
 	
 	/**
 	 * An URL to a news feed

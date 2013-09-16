@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import de.eww.bibapp.URLConnectionHelper;
@@ -40,7 +41,10 @@ public class LocationsJsonLoader extends AbstractLoader<LocationsEntry>
 	{
 		List<LocationsEntry> response = new ArrayList<LocationsEntry>();
 		
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.LOCATION_URL);
+		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getLocationUrl(spinnerValue));
 		
 		try
 		{
@@ -73,7 +77,7 @@ public class LocationsJsonLoader extends AbstractLoader<LocationsEntry>
 			}
 			
 			// if we did not found a main entry, try to find one with the uri url as key
-			String lookupKey = Constants.LOCATION_URL.substring(0, Constants.LOCATION_URL.length() - 12);
+			String lookupKey = Constants.getLocationUrl(spinnerValue).substring(0, Constants.getLocationUrl(spinnerValue).length() - 12);
 			if (jsonResponse.has(lookupKey)) {
 				mainEntry = (JSONObject) jsonResponse.get(lookupKey);
 			}
