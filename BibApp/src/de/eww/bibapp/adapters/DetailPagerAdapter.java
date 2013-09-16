@@ -62,8 +62,8 @@ public class DetailPagerAdapter extends FragmentStatePagerAdapter
     {
     	if ( this.loadinBackground == false && MainActivity.currentTabId.equals("search") ) {
     		if (
-    			this.searchAdapterInterface.getHits() > position + this.LOADING_OFFSET &&
-    			this.searchAdapterInterface.getResults().size() <= position + this.LOADING_OFFSET
+    			this.searchAdapterInterface.getHits() > position + DetailPagerAdapter.LOADING_OFFSET &&
+    			this.searchAdapterInterface.getResults().size() <= position + DetailPagerAdapter.LOADING_OFFSET
     		) {
 	    		this.loadinBackground = true;
 	    		
