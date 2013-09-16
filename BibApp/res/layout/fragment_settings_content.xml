@@ -6,10 +6,30 @@
     android:scrollbars="vertical"
     android:fillViewport="false">
     
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	<LinearLayout
 	    android:layout_width="fill_parent"
-	    android:layout_height="fill_parent"
+	    android:layout_height="wrap_parent"
 	    android:orientation="vertical">
+	    
+	    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_local_search"
+            android:textStyle="bold"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="10dp" />
+        
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_local_search_description" />
+        
+        <Spinner
+            android:id="@+id/settings_local_search_spinner"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_marginBottom="20dp"
+            android:gravity="left" />
 	
 	    <TextView
 	        android:layout_width="fill_parent"
@@ -25,26 +45,6 @@
 		    android:layout_height="wrap_content"
 		    android:text="@string/settings_description"
 		    android:layout_marginBottom="20dp" />
-		
-		<TextView
-	        android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/settings_local_search"
-		    android:textStyle="bold"
-		    android:gravity="center_horizontal"
-		    android:layout_marginBottom="10dp" />
-		
-		<TextView
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/settings_local_search_description" />
-		
-		<Spinner
-		    android:id="@+id/settings_local_search_spinner"
-		    android:layout_height="wrap_content"
-		    android:layout_width="fill_parent"
-	        android:layout_marginBottom="20dp"
-	        android:gravity="left" />
 		
 		<LinearLayout
 		    android:id="@+id/settings_data_privacy_layout"
