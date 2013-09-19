@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -67,7 +68,10 @@ public class DaiaLoader extends AbstractLoader<AvailableEntry>
 		DaiaXmlParser daiaXmlParser = new DaiaXmlParser(this.item);
 		ArrayList<AvailableEntry> response = new ArrayList<AvailableEntry>();
 		
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getDaiaUrl(this.ppn, this.fromLocalSearch));
+		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getDaiaUrl(this.ppn, this.fromLocalSearch, spinnerValue));
 		
 		try
 		{

@@ -45,34 +45,6 @@ public final class Constants
 	public static final String GVK_CATALOG = "gvk";
 	
 	/**
-	 * The library codes used in location requests
-	 * 
-	 * @see LOCAL_CATALOGS and keep order in sync
-	 */
-	public static final String[] BIB_CODES = {
-		"DE-Hil2",
-		"DE-Hil2"
-	};
-	
-	/**
-	 * Returns the address to location information in JSON format
-	 */
-	public static String getLocationUrl(int localCatalogIndex)
-	{
-		return "http://uri.gbv.de/organization/isil/" + Constants.BIB_CODES[localCatalogIndex] + "?format=json";
-	}
-	
-	/**
-	 * An URL to a news feed
-	 */
-	public static final String NEWS_URL = "https://www.uni-hildesheim.de/index.php?id=8920&type=100";
-	
-	/**
-	 * This is the number of hits display by a single request - without scroll reloads
-	 */
-	public static final int SEARCH_HITS_PER_REQUEST = 20;
-	
-	/**
 	 * This determs the URL for search requests
 	 */
 	public static String getSearchUrl(String search, int start, int numRecords, boolean isLocalSearch, int localCatalogIndex)
@@ -97,6 +69,49 @@ public final class Constants
 	}
 	
 	/**
+	 * The library codes used in location requests
+	 * 
+	 * @see LOCAL_CATALOGS and keep order in sync
+	 */
+	public static final String[] BIB_CODES = {
+		"DE-Hil2",
+		"DE-Hil2"
+	};
+	
+	/**
+	 * Returns the address to location information in JSON format
+	 */
+	public static String getLocationUrl(int localCatalogIndex)
+	{
+		return "http://uri.gbv.de/organization/isil/" + Constants.BIB_CODES[localCatalogIndex] + "?format=json";
+	}
+	
+	/**
+	 * Daia URL for availability requests
+	 */
+	public static String getDaiaUrl(String ppn, boolean isLocal, int localCatalogIndex)
+	{
+		if ( isLocal == true )
+		{
+			return "http://daia.gbv.de/isil/" + Constants.BIB_CODES[localCatalogIndex] + "?id=ppn:" + ppn + "&format=xml";
+		}
+		else
+		{
+			return "http://daia.gbv.de/?id=gvk:ppn:" + ppn + "&format=xml";
+		}
+	}
+	
+	/**
+	 * An URL to a news feed
+	 */
+	public static final String NEWS_URL = "https://www.uni-hildesheim.de/index.php?id=8920&type=100";
+	
+	/**
+	 * This is the number of hits display by a single request - without scroll reloads
+	 */
+	public static final int SEARCH_HITS_PER_REQUEST = 20;
+	
+	/**
 	 * The interlending URL
 	 */
 	public static String getInterlendingUrl(String ppn)
@@ -110,21 +125,6 @@ public final class Constants
 	public static String getUnApiUrl(String ppn)
 	{
 		return "http://unapi.gbv.de/?id=gvk:ppn:" + ppn + "&format=isbd";
-	}
-	
-	/**
-	 * Daia URL for availability requests
-	 */
-	public static String getDaiaUrl(String ppn, boolean isLocal)
-	{
-		if ( isLocal == true )
-		{
-			return "http://daia.gbv.de/isil/DE-Hil2?id=ppn:" + ppn + "&format=xml";
-		}
-		else
-		{
-			return "http://daia.gbv.de/?id=gvk:ppn:" + ppn + "&format=xml";
-		}
 	}
 	
 	/**
