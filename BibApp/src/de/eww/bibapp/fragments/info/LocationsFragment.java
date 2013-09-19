@@ -50,7 +50,9 @@ public class LocationsFragment extends AbstractListFragment implements
         super.onActivityCreated(savedInstanceState);
         
         // create and auto start loader
-        getLoaderManager().initLoader(0, null, this);
+        LoaderManager loaderManager = this.getLoaderManager();
+        loaderManager.destroyLoader(0);
+		loaderManager.initLoader(0, null, this);
         
         this.mAdapter = new LocationsAdapter(getActivity(), R.layout.fragment_locations_item_view);
         
