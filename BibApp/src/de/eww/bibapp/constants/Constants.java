@@ -141,6 +141,11 @@ public final class Constants
 	public static String DBS_COUNTING_URL = "http://dbspixel.hbz-nrw.de/count?id=AN087&page=3";
 	
 	/**
+	 * If true, either the storage or the department location of an exemplar are displayed, otherwise both if available
+	 */
+	public static boolean EXEMPLAR_SHORT_DISPLAY = false;
+	
+	/**
 	 * You probably do not need to change anything below this line
 	 * =====================================================================
 	 */

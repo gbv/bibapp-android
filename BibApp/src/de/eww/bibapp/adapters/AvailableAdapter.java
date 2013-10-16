@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import de.eww.bibapp.R;
+import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.data.AvailableEntry;
 
 public class AvailableAdapter extends ArrayAdapter<AvailableEntry>
@@ -44,16 +45,24 @@ public class AvailableAdapter extends ArrayAdapter<AvailableEntry>
 		// prepare department text
 		String departmentText = "";
 		
-		if (!entry.department.isEmpty()) {
-			departmentText = entry.department;
-		}
-		
-		if (!entry.storage.isEmpty()) {
-			if (!departmentText.isEmpty()) {
-				departmentText += ", ";
+		if (!Constants.EXEMPLAR_SHORT_DISPLAY) {
+			if (!entry.department.isEmpty()) {
+				departmentText = entry.department;
 			}
 			
-			departmentText += entry.storage;
+			if (!entry.storage.isEmpty()) {
+				if (!departmentText.isEmpty()) {
+					departmentText += ", ";
+				}
+				
+				departmentText += entry.storage;
+			}
+		} else {
+			if (!entry.storage.isEmpty()) {
+				departmentText = entry.storage;
+			} else if(!entry.department.isEmpty()) {
+				departmentText = entry.department;
+			}
 		}
 		
 		if (!departmentText.isEmpty()) {
