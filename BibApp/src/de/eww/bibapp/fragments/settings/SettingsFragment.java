@@ -168,6 +168,8 @@ public class SettingsFragment extends Fragment implements
 		editor.putInt("local_catalog", pos);
 		
 		editor.commit();
+		
+		PaiaHelper.reset();
 	}
 
 	@Override
