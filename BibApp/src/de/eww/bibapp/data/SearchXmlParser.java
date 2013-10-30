@@ -158,6 +158,7 @@ public class SearchXmlParser
 		return entry;
 	}
 	
+	@SuppressWarnings("unchecked")
 	private SearchEntry readMods(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
 	{
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "mods");
@@ -172,6 +173,7 @@ public class SearchXmlParser
 		String ppn = null;
 		String isbn = "";
 		String onlineUrl = "";
+		HashMap<String, Object> firstRelatedItem = null;
 		
 		while ( parser.next() != XmlPullParser.END_TAG )
 		{
@@ -204,6 +206,10 @@ public class SearchXmlParser
 			else if ( name.equals("relatedItem") )
 			{
 				HashMap<String, Object> relatedItem = this.readRelatedItem(parser);
+				
+				if (firstRelatedItem == null) {
+					firstRelatedItem = relatedItem;
+				}
 				
 				if ( relatedItem.containsKey("isEssay") && isEssay == false )
 				{
@@ -355,6 +361,12 @@ public class SearchXmlParser
 						}
 					}
 				}
+			}
+		}
+		
+		if (titleInfoMap == null) {
+			if (firstRelatedItem.containsKey("titleInfo")) {
+				titleInfoMap = (HashMap<String, String>) firstRelatedItem.get("titleInfo");
 			}
 		}
 		
@@ -640,6 +652,10 @@ public class SearchXmlParser
 				{
 					index = readIndex;
 				}
+			}
+			else if (name.equals("titleInfo"))
+			{
+					relatedItemContent.put("titleInfo", this.readTitleInfo(parser));
 			}
 			else
 			{
