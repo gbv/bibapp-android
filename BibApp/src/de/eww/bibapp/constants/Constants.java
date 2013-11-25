@@ -87,13 +87,23 @@ public final class Constants
 	}
 	
 	/**
+	 * The library codes used in daia requests
+	 * 
+	 * @see LOCAL_CATALOGS and keep order in sync
+	 */
+	public static final String[] DAIA_BIB_CODES = {
+		"DE-Hil2",
+		"DE-Hil2"
+	};
+	
+	/**
 	 * Daia URL for availability requests
 	 */
 	public static String getDaiaUrl(String ppn, boolean isLocal, int localCatalogIndex)
 	{
 		if ( isLocal == true )
 		{
-			return "http://daia.gbv.de/isil/" + Constants.BIB_CODES[localCatalogIndex] + "?id=ppn:" + ppn + "&format=xml";
+			return "http://daia.gbv.de/isil/" + Constants.DAIA_BIB_CODES[localCatalogIndex] + "?id=ppn:" + ppn + "&format=xml";
 		}
 		else
 		{
