@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.ActionBar;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +20,7 @@ import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 import de.eww.bibapp.SearchAdapterInterface;
 import de.eww.bibapp.adapters.SearchAdapter;
+import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.data.SearchEntry;
 import de.eww.bibapp.fragments.AbstractContainerFragment;
 import de.eww.bibapp.fragments.detail.DetailFragment;
@@ -45,8 +47,16 @@ public class SearchFragment extends AbstractContainerFragment implements
 	    this.mTabHost.setup(getActivity(), this.getChildFragmentManager(), R.id.search_realtabcontent);
 		
 	    Resources resources = this.getResources();
+	    String localTitle = resources.getString(R.string.search_local);
 	    
-	    this.addTab(LocalSearchFragment.class, "local", resources.getString(R.string.search_local));
+	    // if our current local catalog contains a short title, we append it to the basic local tab title
+	    SharedPreferences settings = this.getActivity().getPreferences(0);
+		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+		if (Constants.LOCAL_CATALOGS[spinnerValue].length > 2) {
+			localTitle += " " + Constants.LOCAL_CATALOGS[spinnerValue][2];
+		}
+	    
+	    this.addTab(LocalSearchFragment.class, "local", localTitle);
 	    this.addTab(GVKSearchFragment.class, "gvk", resources.getString(R.string.search_gvk));
 	    
 	    if ( MainActivity.isPadVersion )
