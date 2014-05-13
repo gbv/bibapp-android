@@ -4,23 +4,27 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import android.content.Context;
+import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import de.eww.bibapp.R;
-import de.eww.bibapp.data.BookedEntry;
+import de.eww.bibapp.data.PaiaDocument;
 
-public class BookedAdapter extends ArrayAdapter<BookedEntry>
+public class BookedAdapter extends ArrayAdapter<PaiaDocument>
 {
 	private final Context context;
+    private final boolean isRequestPermitted;
 	
-	public BookedAdapter(Context context, int textViewResourceId)
+	public BookedAdapter(Context context, int textViewResourceId, boolean isRequestPermitted)
 	{
 		super(context, textViewResourceId);
 		
 		this.context = context;
+        this.isRequestPermitted = isRequestPermitted;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -31,14 +35,20 @@ public class BookedAdapter extends ArrayAdapter<BookedEntry>
 		TextView aboutView = (TextView) v.findViewById(R.id.booked_item_about);
 		TextView signatureView = (TextView) v.findViewById(R.id.booked_item_signature);
 		TextView dateView = (TextView) v.findViewById(R.id.booked_item_date);
+
+        PaiaDocument document = this.getItem(position);
 		
-		BookedEntry entry = this.getItem(position);
-		
-		aboutView.setText(entry.about);
-		signatureView.setText(entry.signature);
+		aboutView.setText(document.getAbout());
+		signatureView.setText(document.getLabel());
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-		dateView.setText(dateFormat.format(entry.date));
+		dateView.setText(dateFormat.format(document.getDueDate()));
+
+        // checkbox
+        CheckBox checkbox = (CheckBox) v.findViewById(R.id.booked_item_checkbox);
+        if (document.isCanCancel() && this.isRequestPermitted) {
+            checkbox.setVisibility(View.VISIBLE);
+        }
 		
 		return v;
 	}

@@ -28,7 +28,7 @@ public class PaiaPatronTask extends AbstractPaiaTask
 		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
 		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
 		
-		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getUsername() + "/?access_token=" + PaiaHelper.getAccessToken();
+		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getUsername() + "?access_token=" + PaiaHelper.getAccessToken();
 		
 		JSONObject paiaResponse = new JSONObject();
 		

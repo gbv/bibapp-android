@@ -1,6 +1,8 @@
 package de.eww.bibapp;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.json.JSONObject;
 
@@ -18,9 +20,17 @@ import de.eww.bibapp.tasks.paia.PaiaLoginTask;
 
 public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 {
+    public enum SCOPES {
+        READ_PATRON,
+        READ_FEES,
+        READ_ITEMS,
+        WRITE_ITEMS
+    }
+
 	private static String accessToken = null;
 	private static String username = null;
 	private static Date accessTokenDate = null;
+    private static List<SCOPES> scopes;
 	
 	private Fragment fragment;
 	
@@ -48,12 +58,17 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	{
 		return PaiaHelper.username;
 	}
+
+    public static boolean hasScope(SCOPES scope) {
+        return PaiaHelper.scopes.contains(scope);
+    }
 	
 	public static void reset()
 	{
 		PaiaHelper.accessToken = null;
 		PaiaHelper.username = null;
 		PaiaHelper.accessTokenDate = null;
+        PaiaHelper.scopes = new ArrayList<SCOPES>();
 	}
 	
 	public void ensureConnection()
@@ -82,7 +97,9 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		    	showLoginDialog =	(settings.getString("store_login_username", null) == null) ||
 		    						(settings.getString("store_login_password", null) == null);
 		    }
-		    
+
+            this.reset();
+
 		    if ( showLoginDialog )
 		    {
 		    	LoginDialogFragment dialogFragment = new LoginDialogFragment();
@@ -98,8 +115,9 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		    	
 				try
 				{
-					JSONObject accessToken = loginTask.get();
-					PaiaHelper.accessToken = accessToken.getString("access_token");
+                    JSONObject loginResponse = loginTask.get();
+                    PaiaHelper.accessToken = loginResponse.getString("access_token");
+                    this.setScopes(loginResponse.getString("scopes"));
 					PaiaHelper.updateAccessTokenDate();
 					
 				}
@@ -139,8 +157,8 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 			
 			try
 			{
-				JSONObject accessTokenObject = loginTask.get();
-				String accessToken = accessTokenObject.getString("access_token");
+                JSONObject loginResponse = loginTask.get();
+				String accessToken = loginResponse.getString("access_token");
 				
 				if ( accessToken.isEmpty() )
 				{
@@ -150,6 +168,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				else
 				{
 					PaiaHelper.accessToken = accessToken;
+                    this.setScopes(loginResponse.getString("scopes"));
 					
 					// force soft keyboard to hide
 					InputMethodManager imm = (InputMethodManager) this.fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -212,4 +231,23 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 			mainTabHost.setCurrentTab(0);
 		}
 	}
+
+    private void setScopes(String scopesString) {
+        this.scopes.clear();
+        String[] scopes = scopesString.split(" ");
+
+        if (scopes.length > 0) {
+            for (String scope: scopes) {
+                if (scope.equals("read_patron")) {
+                    PaiaHelper.scopes.add(SCOPES.READ_PATRON);
+                } else if (scope.equals("read_fees")) {
+                    PaiaHelper.scopes.add(SCOPES.READ_FEES);
+                } else if (scope.equals("read_items")) {
+                    PaiaHelper.scopes.add(SCOPES.READ_ITEMS);
+                } else if (scope.equals("write_items")) {
+                    PaiaHelper.scopes.add(SCOPES.WRITE_ITEMS);
+                }
+            }
+        }
+    }
 }

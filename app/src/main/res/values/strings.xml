@@ -26,6 +26,10 @@
         Ihre Anfrage konnte nicht abgeschlossen werden.\n
         Bitte überprüfen Sie ggf. Ihre Netzverbindung und versuchen es erneut!
     </string>
+    <string name="errordialog_rights">
+        Sie verfügen nicht über die notwendigen Rechte um diese Aktion auszuführen.\n
+        Bitte überprüfen Sie Ihr Konto!
+    </string>
     <string name="errordialog_proceed">OK</string>
     
     <!-- swipe dialog -->
@@ -35,9 +39,9 @@
     <string name="paiadialog_heading">Kontozugriff</string>
     <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt</string>
     <string name="paiadialog_proceed">Schließen</string>
-    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert</string>
-    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden</string>
-    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden</string>
+    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert.</string>
+    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
+    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
     <string name="paiadialog_cancel_success">Alle Einträge wurden storniert</string>
     <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden</string>
     <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden</string>

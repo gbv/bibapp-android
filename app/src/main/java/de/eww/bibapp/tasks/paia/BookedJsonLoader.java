@@ -17,7 +17,7 @@ import android.util.Log;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.data.BookedEntry;
+import de.eww.bibapp.data.PaiaDocument;
 import de.eww.bibapp.tasks.AbstractLoader;
 
 /**
@@ -27,7 +27,7 @@ import de.eww.bibapp.tasks.AbstractLoader;
  * =========================================================
  * Gets a list of booked items from paia
  */
-public class BookedJsonLoader extends AbstractLoader<BookedEntry>
+public class BookedJsonLoader extends AbstractLoader<PaiaDocument>
 {
 	public BookedJsonLoader(Context context, Fragment callingFragment)
 	{
@@ -40,9 +40,9 @@ public class BookedJsonLoader extends AbstractLoader<BookedEntry>
      * data to be published by the loader.
      */
 	@Override
-	public List<BookedEntry> loadInBackground()
+	public List<PaiaDocument> loadInBackground()
 	{
-		List<BookedEntry> response = new ArrayList<BookedEntry>();
+		List<PaiaDocument> response = new ArrayList<PaiaDocument>();
 		
 		// get url
 		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
@@ -61,17 +61,8 @@ public class BookedJsonLoader extends AbstractLoader<BookedEntry>
 			
 			String httpResponse = urlConnectionHelper.readStream(inputStream);
 			Log.v("PAIA", httpResponse);
-			
-			JSONObject paiaResponse;
-			if ( httpResponse.substring(0, 1).equals("[") )
-			{
-				paiaResponse = new JSONObject();
-				paiaResponse.put("array", new JSONArray(httpResponse));
-			}
-			else
-			{
-				paiaResponse = new JSONObject(httpResponse);
-			}
+
+            JSONObject paiaResponse = new JSONObject(httpResponse);
 			
 			if ( paiaResponse.has("doc") )
 			{
@@ -98,18 +89,26 @@ public class BookedJsonLoader extends AbstractLoader<BookedEntry>
 						}
 						
 						Date date = simpleDateFormat.parse(bookedEntry.getString("duedate"));
-						
-						
-						response.add(new BookedEntry
-						(
-							bookedEntry.getString("about"),
-							bookedEntry.getString("label"),
-							date,
-							bookedEntry.getString("item"),
-							bookedEntry.getString("edition"),
-							bookedEntry.getString("barcode")
-						)
-						);
+
+                        PaiaDocument document = new PaiaDocument();
+                        document.setStatus(status);
+
+                        document.setItem(bookedEntry.has("item") ? bookedEntry.getString("item") : "");
+                        document.setEdition(bookedEntry.has("edition") ? bookedEntry.getString("edition") : "");
+                        document.setRequested(bookedEntry.has("requested") ? bookedEntry.getString("requested") : "");
+                        document.setAbout(bookedEntry.has("about") ? bookedEntry.getString("about") : "");
+                        document.setLabel(bookedEntry.has("label") ? bookedEntry.getString("label") : "");
+                        document.setQueue(bookedEntry.has("queue") ? bookedEntry.getInt("queue") : 0);
+                        document.setRenewals(bookedEntry.has("renewals") ? bookedEntry.getInt("renewals") : 0);
+                        document.setReminder(bookedEntry.has("reminder") ? bookedEntry.getInt("reminder") : 0);
+                        document.setDueDate(date);
+                        document.setCanCancel(bookedEntry.has("cancancel") ? bookedEntry.getBoolean("cancancel") : true);
+                        document.setCanRenew(bookedEntry.has("canrenew") ? bookedEntry.getBoolean("canrenew") : true);
+                        document.setError(bookedEntry.has("error") ? bookedEntry.getString("error") : "");
+                        document.setStorage(bookedEntry.has("storage") ? bookedEntry.getString("storage") : "");
+                        document.setStorageId(bookedEntry.has("storageid") ? bookedEntry.getString("storageid") : "");
+
+                        response.add(document);
 					}
 				}
 			}

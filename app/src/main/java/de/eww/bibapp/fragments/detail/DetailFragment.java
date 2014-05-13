@@ -445,11 +445,11 @@ public class DetailFragment extends AbstractListFragment implements
 			{
 				actionList.add("location");
 			}
-			if ( actions.contains("request") )
+			if ( actions.contains("request") && PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS) )
 			{
 				actionList.add("request");
 			}
-			if ( actions.contains("order") )
+			if ( actions.contains("order") && PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS) )
 			{
 				actionList.add("order");
 			}

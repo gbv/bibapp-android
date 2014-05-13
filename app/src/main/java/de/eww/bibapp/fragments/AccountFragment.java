@@ -135,10 +135,12 @@ public class AccountFragment extends AbstractContainerFragment implements
 		{
 			this.addPadFragments();
 		}
-		
-		// perform a paia request to get the users name
-	    AsyncTask<String, Void, JSONObject> paiaPatronTask = new PaiaPatronTask(this);
-	    paiaPatronTask.execute(PaiaHelper.getAccessToken(), PaiaHelper.getUsername());
+
+		// perform a paia request to get the users name, if we have the scope to do this
+        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.READ_PATRON)) {
+            AsyncTask<String, Void, JSONObject> paiaPatronTask = new PaiaPatronTask(this);
+            paiaPatronTask.execute(PaiaHelper.getAccessToken(), PaiaHelper.getUsername());
+        }
 	}
 	
 	private void addPadFragments()
