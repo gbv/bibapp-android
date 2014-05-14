@@ -2,10 +2,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <!-- config -->
-    <string name="google_maps_api_key">INSERT YOUR KEY HERE</string>
+    <string name="google_maps_api_key">AIzaSyCAq2pE3SN-U9zK8lV9eQ3EUax3jeHdaz8</string>
 
     <!-- general -->
-    <string name="app_name">BibApp</string>
+    <string name="app_name">BibApp LG</string>
     <string name="empty_list">Keine Einträge vorhanden</string>
     <string name="loading_in_progress">Inhalte werden geladen</string>
     
@@ -29,10 +29,6 @@
         Ihre Anfrage konnte nicht abgeschlossen werden.\n
         Bitte überprüfen Sie ggf. Ihre Netzverbindung und versuchen es erneut!
     </string>
-    <string name="errordialog_rights">
-        Sie verfügen nicht über die notwendigen Rechte um diese Aktion auszuführen.\n
-        Bitte überprüfen Sie Ihr Konto!
-    </string>
     <string name="errordialog_proceed">OK</string>
     
     <!-- swipe dialog -->
@@ -42,9 +38,9 @@
     <string name="paiadialog_heading">Kontozugriff</string>
     <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt</string>
     <string name="paiadialog_proceed">Schließen</string>
-    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert.</string>
-    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
-    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
+    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert</string>
+    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden</string>
+    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden</string>
     <string name="paiadialog_cancel_success">Alle Einträge wurden storniert</string>
     <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden</string>
     <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden</string>
@@ -89,38 +85,37 @@
     
     <!-- contact -->
     <string name="contact_text">
-        <b>Hildesheim</b>\n
+        <b>Lüneburg</b>\n
+        \n
+        <b>Anschrift</b>\n
+        Universitätsbibliothek Lüneburg\n
+		Scharnhorststraße 1\n
+		21335 Lüneburg\n
 		\n
-		<b>Anschrift</b>\n
-		Universitätsbibliothek Hildesheim\n
-		Marienburger Platz 22\n
-		31141 Hildesheim\n
-		\n
-		www.uni-hildesheim.de/bibliothek\n
+		www.leuphana.de/ub\n
 		\n
 		<b>Auskunft</b>\n
-		Telefon: (05121) 883-260\n
-		E-Mail: auskunft@uni-hildesheim.de\n
+		Telefon: (04131) 677-1100\n
+		Telefax: (04131) 677-1111\n
 		\n
-		<b>Ausleihe</b>\n
-		Telefon: (05121) 883-264\n
-		E-Mail: ausleihe@uni-hildesheim.de
+		E-mail: unibib@uni-lueneburg.de
     </string>
     
     <!-- impressum -->
     <string name="impressum_text">
         <b>Anbieter</b>\n
-        Universitätsbibliothek Hildesheim\n
-		Marienburger Platz 22\n
-		31141 Hildesheim\n
+        Universitätsbibliothek Lüneburg\n
+		Scharnhorststr. 1\n
+		21335 Lüneburg\n
 		\n
-		E-Mail: auskunft@uni-hildesheim.de\n
-		Telefon: +49 (0) 51 21 - 883 260\n
-		Telefax: +49 (0) 51 21 - 883 266\n
+		E-Mail: unibib@uni.leuphana.de\n
+		Telefon: +49 (0) 4131 - 677 1100\n
+		Telefax: +49 (0) 4131 - 677 1111\n
 		\n
 		<b>Vertreter</b>\n
-		Die Universitätsbibliothek Hildesheim ist eine Einrichtung der Stiftung Universität Hildesheim, sie wird vertreten durch ihren Leiter, Dr. Ewald Brahms. Die Stiftung Universität Hildesheim ist eine rechtsfähige Stiftung öffentlichen Rechts. Die Stiftung unterhält und fördert die Universität Hildesheim in deren Eigenschaft als Körperschaft des öffentlichen Rechts und übt die Rechtsaufsicht über sie aus. Stiftung Universität Hildesheim und Universität Hildesheim werden vertreten durch ihren Präsidenten Herrn Prof. Dr. Wolfgang-Uwe Friedrich.\n
-Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259506.\n
+		Die Universitätsbibliothek Lüneburg ist eine Einrichtung der Leuphana Universität Lüneburg, sie wird vertreten durch ihren Leiter, Torsten Ahlers.\n
+		Die Leuphana Universität ist eine Körperschaft des öffentlichen Rechts in der Trägerschaft einer Stiftung öffentlichen Rechts. Sie wird durch den Präsidenten Sascha Spoun gesetzlich vertreten.\n
+		Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE 811 305 548\n
 		\n
 		<b>Angaben zum Datenschutz</b>\n
 		Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.\n
