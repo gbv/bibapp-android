@@ -11,17 +11,19 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import de.eww.bibapp.R;
-import de.eww.bibapp.data.BorrowedEntry;
+import de.eww.bibapp.data.PaiaDocument;
 
-public class BorrowedAdapter extends ArrayAdapter<BorrowedEntry>
+public class BorrowedAdapter extends ArrayAdapter<PaiaDocument>
 {
 	private final Context context;
+    private final boolean isRequestPermitted;
 	
-	public BorrowedAdapter(Context context, int textViewResourceId)
+	public BorrowedAdapter(Context context, int textViewResourceId, boolean isRequestPermitted)
 	{
 		super(context, textViewResourceId);
 		
 		this.context = context;
+        this.isRequestPermitted = isRequestPermitted;
 	}
 	
 	public View getView(int position, View convertView, ViewGroup parent)
@@ -36,27 +38,26 @@ public class BorrowedAdapter extends ArrayAdapter<BorrowedEntry>
 		TextView renewalView = (TextView) v.findViewById(R.id.borrowed_item_renewals);
 		TextView statusView = (TextView) v.findViewById(R.id.borrowed_item_status);
 		CheckBox checkBox = (CheckBox) v.findViewById(R.id.borrowed_item_checkbox);
+
+        PaiaDocument document = this.getItem(position);
 		
-		BorrowedEntry entry = this.getItem(position);
-		
-		aboutView.setText(entry.about);
-		signatureView.setText(entry.signature);
+		aboutView.setText(document.getAbout());
+		signatureView.setText(document.getLabel());
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 		
-		if ( entry.duedate != null )
+		if ( document.getDueDate() != null )
 		{
-			dateView.setText(dateFormat.format(entry.duedate));
+			dateView.setText(dateFormat.format(document.getDueDate()));
 		}
 		
-		queueView.setText(String.valueOf(entry.queue));
-		renewalView.setText(String.valueOf(entry.renewals));
-		statusView.setText(entry.status);
-		
-		if ( entry.canRenew == false )
-		{
-			checkBox.setEnabled(false);
-		}
+		queueView.setText(String.valueOf(document.getQueue()));
+		renewalView.setText(String.valueOf(document.getRenewals()));
+		statusView.setText(document.getStorage());
+
+        if (document.isCanRenew() && this.isRequestPermitted) {
+            checkBox.setVisibility(View.VISIBLE);
+        }
 		
 		return v;
 	}

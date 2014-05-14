@@ -48,8 +48,9 @@ public class PaiaLoginTask extends AbstractPaiaTask
 			}
 			else
 			{
-				// login correct - store access token
+				// login correct - store data
 				result.put("access_token", paiaResponse.getString("access_token"));
+                result.put("scopes", paiaResponse.getString("scope"));
 			}
 		}
 		catch (Exception e)

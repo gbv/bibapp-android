@@ -14,7 +14,7 @@
        android:textStyle="bold" />
    
    <LinearLayout
-       android:layout_width="wrap_content"
+       android:layout_width="fill_parent"
        android:layout_height="wrap_content">
        
        <LinearLayout
@@ -64,6 +64,7 @@
 	       android:layout_gravity="center_vertical"
 	       android:clickable="false"
 	       android:focusable="false"
+           android:visibility="gone"
 	       android:minWidth="35dp" />
 	   
 	</LinearLayout>

@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import de.eww.bibapp.AsyncCanceledInterface;
+import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapters.FeeAdapter;
 import de.eww.bibapp.data.FeeEntry;
+import de.eww.bibapp.fragments.dialogs.InsufficentRightsDialogFragment;
 import de.eww.bibapp.fragments.dialogs.LoadCanceledDialogFragment;
 import de.eww.bibapp.tasks.paia.FeeJsonLoader;
 
@@ -46,10 +48,17 @@ public class AccountFeesFragment extends AbstractListFragment implements
         // Show progress indicator.
         this.isListShown = true;
         this.setListShown(false);
-        
-        // Force recreation of loader
-        this.getLoaderManager().destroyLoader(0);
-        this.getLoaderManager().initLoader(0, null, this);
+
+        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.READ_FEES)) {
+            // Force recreation of loader
+            this.getLoaderManager().destroyLoader(0);
+            this.getLoaderManager().initLoader(0, null, this);
+        } else {
+            this.setListShown(true);
+
+            InsufficentRightsDialogFragment dialog = new InsufficentRightsDialogFragment();
+            dialog.show(this.getChildFragmentManager(), "load_rights");
+        }
     }
 	
 	@Override

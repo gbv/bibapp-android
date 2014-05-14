@@ -17,7 +17,7 @@ import android.util.Log;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.data.BorrowedEntry;
+import de.eww.bibapp.data.PaiaDocument;
 import de.eww.bibapp.tasks.AbstractLoader;
 
 /**
@@ -27,7 +27,7 @@ import de.eww.bibapp.tasks.AbstractLoader;
  * =========================================================
  * Gets a list of borrowed items from paia
  */
-public class BorrowedJsonLoader extends AbstractLoader<BorrowedEntry>
+public class BorrowedJsonLoader extends AbstractLoader<PaiaDocument>
 {
 	public BorrowedJsonLoader(Context context, Fragment callingFragment)
 	{
@@ -40,9 +40,9 @@ public class BorrowedJsonLoader extends AbstractLoader<BorrowedEntry>
      * data to be published by the loader.
      */
 	@Override
-	public List<BorrowedEntry> loadInBackground()
+	public List<PaiaDocument> loadInBackground()
 	{
-		List<BorrowedEntry> response = new ArrayList<BorrowedEntry>();
+		List<PaiaDocument> response = new ArrayList<PaiaDocument>();
 		
 		// get url
 		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
@@ -61,17 +61,8 @@ public class BorrowedJsonLoader extends AbstractLoader<BorrowedEntry>
 			
 			String httpResponse = urlConnectionHelper.readStream(inputStream);
 			Log.v("PAIA", httpResponse);
-			
-			JSONObject paiaResponse;
-			if ( httpResponse.substring(0, 1).equals("[") )
-			{
-				paiaResponse = new JSONObject();
-				paiaResponse.put("array", new JSONArray(httpResponse));
-			}
-			else
-			{
-				paiaResponse = new JSONObject(httpResponse);
-			}
+
+            JSONObject paiaResponse = new JSONObject(httpResponse);
 			
 			if ( paiaResponse.has("doc") )
 			{
@@ -103,21 +94,26 @@ public class BorrowedJsonLoader extends AbstractLoader<BorrowedEntry>
 							
 							date = simpleDateFormat.parse(borrowedEntry.getString("duedate"));
 						}
-						
-						response.add(new BorrowedEntry
-						(
-							borrowedEntry.getString("about"),
-							borrowedEntry.getString("label"),
-							date,
-							borrowedEntry.getInt("queue"),
-							borrowedEntry.getInt("renewals"),
-							borrowedEntry.getString("storage"),
-							borrowedEntry.getString("item"),
-							borrowedEntry.getString("edition"),
-							borrowedEntry.getString("barcode"),
-							borrowedEntry.getBoolean("canrenew")
-						)
-						);
+
+                        PaiaDocument document = new PaiaDocument();
+                        document.setStatus(status);
+
+                        document.setItem(borrowedEntry.has("item") ? borrowedEntry.getString("item") : "");
+                        document.setEdition(borrowedEntry.has("edition") ? borrowedEntry.getString("edition") : "");
+                        document.setRequested(borrowedEntry.has("requested") ? borrowedEntry.getString("requested") : "");
+                        document.setAbout(borrowedEntry.has("about") ? borrowedEntry.getString("about") : "");
+                        document.setLabel(borrowedEntry.has("label") ? borrowedEntry.getString("label") : "");
+                        document.setQueue(borrowedEntry.has("queue") ? borrowedEntry.getInt("queue") : 0);
+                        document.setRenewals(borrowedEntry.has("renewals") ? borrowedEntry.getInt("renewals") : 0);
+                        document.setReminder(borrowedEntry.has("reminder") ? borrowedEntry.getInt("reminder") : 0);
+                        document.setDueDate(date);
+                        document.setCanCancel(borrowedEntry.has("cancancel") ? borrowedEntry.getBoolean("cancancel") : true);
+                        document.setCanRenew(borrowedEntry.has("canrenew") ? borrowedEntry.getBoolean("canrenew") : true);
+                        document.setError(borrowedEntry.has("error") ? borrowedEntry.getString("error") : "");
+                        document.setStorage(borrowedEntry.has("storage") ? borrowedEntry.getString("storage") : "");
+                        document.setStorageId(borrowedEntry.has("storageid") ? borrowedEntry.getString("storageid") : "");
+
+                        response.add(document);
 					}
 				}
 			}
