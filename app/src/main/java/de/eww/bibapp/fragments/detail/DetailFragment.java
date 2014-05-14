@@ -50,6 +50,7 @@ import de.eww.bibapp.data.SearchEntry;
 import de.eww.bibapp.fragments.AbstractContainerFragment;
 import de.eww.bibapp.fragments.AbstractListFragment;
 import de.eww.bibapp.fragments.dialogs.DetailActionsDialogFragment;
+import de.eww.bibapp.fragments.dialogs.InsufficentRightsDialogFragment;
 import de.eww.bibapp.fragments.dialogs.LoadCanceledDialogFragment;
 import de.eww.bibapp.fragments.dialogs.PaiaActionDialogFragment;
 import de.eww.bibapp.fragments.info.LocationsDetailFragment;
@@ -441,16 +442,13 @@ public class DetailFragment extends AbstractListFragment implements
 			String actions = availableEntry.actions;
 			
 			// location | request | order
-			if ( actions.contains("location") )
-			{
+			if (actions.contains("location")) {
 				actionList.add("location");
 			}
-			if ( actions.contains("request") && PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS) )
-			{
+			if (actions.contains("request")) {
 				actionList.add("request");
 			}
-			if ( actions.contains("order") && PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS) )
-			{
+			if (actions.contains("order")) {
 				actionList.add("order");
 			}
 		}
@@ -610,14 +608,15 @@ public class DetailFragment extends AbstractListFragment implements
 		Resources resources = this.getActivity().getResources();
 		
 		try {
-			if ( response.getJSONArray("array").length() == 0 )
-			{
-				responseText = (String) resources.getText(R.string.paiadialog_general_failure);
-			}
-			else
-			{
-				responseText = (String) resources.getText(R.string.paiadialog_general_success);
-			}
+            if (response.has("doc")) {
+                JSONArray docArray = response.getJSONArray("doc");
+
+                if (docArray.length() == 0) {
+                    responseText = (String) resources.getText(R.string.paiadialog_general_failure);
+                } else {
+                    responseText = (String) resources.getText(R.string.paiadialog_general_success);
+                }
+            }
 		}
 		catch (JSONException e)
 		{
@@ -637,30 +636,38 @@ public class DetailFragment extends AbstractListFragment implements
 	@Override
 	public void onPaiaConnected()
 	{
-		// start async task to send paia request
-    	JSONArray jsonArray = new JSONArray();
-    	JSONObject itemObject = new JSONObject();
-    	
-    	try
-    	{
-    		// get uri from daia and assemble request array
-    		AvailableEntry daiaEntry = this.mAdapter.getItem(this.lastClickedPosition);
-    		
-			itemObject.put("item", daiaEntry.itemUriUrl);
-			jsonArray.put(itemObject);
-	    	
-			AsyncTask<String, Void, JSONObject> requestTask = new PaiaRequestTask(this);
-			requestTask.execute(jsonArray.toString());
-		}
-    	catch (JSONException e)
-    	{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
-    	// show the action dialog
-    	this.paiaDialog = new PaiaActionDialogFragment();
-		this.paiaDialog.show(this.getChildFragmentManager(), "paia_action");
+        // check for scope
+        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS)) {
+            // start async task to send paia request
+            JSONObject jsonRequest = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            JSONObject itemObject = new JSONObject();
+
+            try
+            {
+                // get uri from daia and assemble request array
+                AvailableEntry daiaEntry = this.mAdapter.getItem(this.lastClickedPosition);
+
+                itemObject.put("item", daiaEntry.itemUriUrl);
+                jsonArray.put(itemObject);
+                jsonRequest.put("doc", jsonArray);
+
+                AsyncTask<String, Void, JSONObject> requestTask = new PaiaRequestTask(this);
+                requestTask.execute(jsonRequest.toString());
+            }
+            catch (JSONException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // show the action dialog
+            this.paiaDialog = new PaiaActionDialogFragment();
+            this.paiaDialog.show(this.getChildFragmentManager(), "paia_action");
+        } else {
+            InsufficentRightsDialogFragment dialog = new InsufficentRightsDialogFragment();
+            dialog.show(this.getChildFragmentManager(), "insufficent_rights");
+        }
 	}
 
 	@Override
