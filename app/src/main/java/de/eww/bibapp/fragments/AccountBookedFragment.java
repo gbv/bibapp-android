@@ -227,6 +227,7 @@ public class AccountBookedFragment extends AbstractListFragment implements
 
                     if (docEntry.has("error")) {
                         numFailedItems++;
+                        continue;
                     }
                 }
 

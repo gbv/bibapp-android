@@ -38,19 +38,16 @@ public class PaiaLoginTask extends AbstractPaiaTask
 		{
 			JSONObject paiaResponse = this.performRequest(paiaUrl);
 			
-			if ( paiaResponse.has("error") )
-			{
-					if ( paiaResponse.getString("code").equals("401") )
-					{
-						// wrong login - return json object with empty access token
-						result.put("access_token", "");
-					}
-			}
-			else
-			{
+			if ( paiaResponse.has("error") ){
+                if (paiaResponse.get("error").equals("access_denied")) {
+                    // wrong login - return json object with empty access token
+                    result.put("access_token", "");
+                }
+			} else {
 				// login correct - store data
 				result.put("access_token", paiaResponse.getString("access_token"));
                 result.put("scopes", paiaResponse.getString("scope"));
+                result.put("expires_in", paiaResponse.getString("expires_in"));
 			}
 		}
 		catch (Exception e)

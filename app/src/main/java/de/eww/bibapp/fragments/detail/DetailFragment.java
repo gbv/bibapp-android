@@ -610,9 +610,25 @@ public class DetailFragment extends AbstractListFragment implements
 		try {
             if (response.has("doc")) {
                 JSONArray docArray = response.getJSONArray("doc");
+                int docArrayLength = docArray.length();
+                int numFailedItems = 0;
 
-                if (docArray.length() == 0) {
+                for (int i=0; i < docArrayLength; i++) {
+                    JSONObject docEntry = docArray.getJSONObject(i);
+
+                    if (docEntry.has("error")) {
+                        numFailedItems++;
+                        continue;
+                    }
+                }
+
+                if (numFailedItems > 0) {
                     responseText = (String) resources.getText(R.string.paiadialog_general_failure);
+
+                    JSONObject errorObject = docArray.getJSONObject(0);
+                    if (errorObject.has("error")) {
+                        responseText += " " + errorObject.get("error");
+                    }
                 } else {
                     responseText = (String) resources.getText(R.string.paiadialog_general_success);
                 }

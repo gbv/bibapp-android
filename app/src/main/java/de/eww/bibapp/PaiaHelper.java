@@ -49,9 +49,10 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		return PaiaHelper.accessToken;
 	}
 	
-	public static void updateAccessTokenDate()
+	public static void updateAccessTokenDate(int expiresIn)
 	{
-		PaiaHelper.accessTokenDate = new Date();
+        Date now = new Date();
+		PaiaHelper.accessTokenDate = new Date(now.getTime() + expiresIn * 1000);
 	}
 	
 	public static String getUsername()
@@ -73,17 +74,9 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	
 	public void ensureConnection()
 	{
-		Date compareDate = null;
-		if ( PaiaHelper.accessTokenDate != null )
-		{
-			compareDate = new Date(PaiaHelper.accessTokenDate.getTime() + (15 * 60 * 1000));
-		}
-		
 		// if we do not already have an access token or the token is expired
 		Date now = new Date();
-	    if ( PaiaHelper.accessToken == null ||
-	    		( compareDate != null && now.after(compareDate)) )
-	    {
+	    if (PaiaHelper.accessToken == null || ( PaiaHelper.accessTokenDate != null && now.after(PaiaHelper.accessTokenDate))) {
 	    	Log.v("PAIA", "not logged in or token expired");
 	    	
 	    	// if login data is not stored or credentials are not set, ask user for them
@@ -118,7 +111,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                     JSONObject loginResponse = loginTask.get();
                     PaiaHelper.accessToken = loginResponse.getString("access_token");
                     this.setScopes(loginResponse.getString("scopes"));
-					PaiaHelper.updateAccessTokenDate();
+					PaiaHelper.updateAccessTokenDate(loginResponse.getInt("expires_in"));
 					
 				}
 				catch (Exception e)
@@ -193,7 +186,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				    	editor.commit();
 				    }
 				    
-				    PaiaHelper.updateAccessTokenDate();
+				    PaiaHelper.updateAccessTokenDate(loginResponse.getInt("expires_in"));
 				    
 				    ((PaiaListener) this.fragment).onPaiaConnected();
 					

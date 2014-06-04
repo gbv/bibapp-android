@@ -77,7 +77,7 @@ abstract public class AbstractPaiaTask extends AsyncTask<String, Void, JSONObjec
 				response = new JSONObject(httpResponse);
 			}
 			
-			PaiaHelper.updateAccessTokenDate();
+			//PaiaHelper.updateAccessTokenDate();
 		}
 		finally
 		{

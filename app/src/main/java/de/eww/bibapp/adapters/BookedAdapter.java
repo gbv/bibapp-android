@@ -40,9 +40,11 @@ public class BookedAdapter extends ArrayAdapter<PaiaDocument>
 		
 		aboutView.setText(document.getAbout());
 		signatureView.setText(document.getLabel());
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-		dateView.setText(dateFormat.format(document.getDueDate()));
+
+        if (document.getDueDate() != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+            dateView.setText(dateFormat.format(document.getDueDate()));
+        }
 
         // checkbox
         CheckBox checkbox = (CheckBox) v.findViewById(R.id.booked_item_checkbox);

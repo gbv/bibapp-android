@@ -46,14 +46,16 @@ public class BorrowedAdapter extends ArrayAdapter<PaiaDocument>
 		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
 		
-		if ( document.getDueDate() != null )
-		{
+		if (document.getDueDate() != null) {
 			dateView.setText(dateFormat.format(document.getDueDate()));
 		}
 		
 		queueView.setText(String.valueOf(document.getQueue()));
 		renewalView.setText(String.valueOf(document.getRenewals()));
-		statusView.setText(document.getStorage());
+
+        int statusCode = document.getStatus();
+        String[] statusTranslations = this.getContext().getResources().getStringArray(R.array.paia_service_status);
+        statusView.setText(statusTranslations[statusCode]);
 
         if (document.isCanRenew() && this.isRequestPermitted) {
             checkBox.setVisibility(View.VISIBLE);

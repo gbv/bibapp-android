@@ -76,24 +76,17 @@ public class BorrowedJsonLoader extends AbstractLoader<PaiaDocument>
 					int status = borrowedEntry.getInt("status");
 					if ( status == 2 || status == 3 || status == 4 )
 					{
-						String borrowedDateString = borrowedEntry.getString("duedate");
-						SimpleDateFormat simpleDateFormat;
-						
-						Date date = null;
-						
-						if ( !borrowedDateString.isEmpty() )
-						{
-							if ( borrowedDateString.substring(2, 3).equals("-") && borrowedDateString.substring(5, 6).equals("-") )
-							{
-								simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
-							}
-							else
-							{
-								simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
-							}
-							
-							date = simpleDateFormat.parse(borrowedEntry.getString("duedate"));
-						}
+                        Date date = null;
+                        if (borrowedEntry.has("duedate")) {
+                            String borrowedDateString = borrowedEntry.getString("duedate");
+                            SimpleDateFormat simpleDateFormat;
+
+
+                            if (!borrowedDateString.isEmpty()) {
+                                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+                                date = simpleDateFormat.parse(borrowedEntry.getString("duedate"));
+                            }
+                        }
 
                         PaiaDocument document = new PaiaDocument();
                         document.setStatus(status);

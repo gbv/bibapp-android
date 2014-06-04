@@ -86,7 +86,16 @@ public class AccountFragment extends AbstractContainerFragment implements
 		
 		try
 		{
-			actionBar.setSubtitle(response.getString("name"));
+			String name = response.getString("name");
+            actionBar.setSubtitle(name);
+
+            if (response.has("status")) {
+                int status = response.getInt("status");
+                if (status > 0) {
+                    String newTitle = actionBar.getTitle() + " " + this.getResources().getText(R.string.account_inactive);
+                    actionBar.setTitle(newTitle);
+                }
+            }
 		}
 		catch (JSONException e)
 		{

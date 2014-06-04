@@ -76,19 +76,17 @@ public class BookedJsonLoader extends AbstractLoader<PaiaDocument>
 					int status = bookedEntry.getInt("status");
 					if ( status != 2 && status != 3 && status != 4 )
 					{
-						String bookedDateString = bookedEntry.getString("duedate");
-						SimpleDateFormat simpleDateFormat;
-						
-						if ( bookedDateString.substring(2, 3).equals("-") && bookedDateString.substring(5, 6).equals("-") )
-						{
-							simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
-						}
-						else
-						{
-							simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
-						}
-						
-						Date date = simpleDateFormat.parse(bookedEntry.getString("duedate"));
+                        Date date = null;
+                        if (bookedEntry.has("duedate")) {
+                            String bookedDateString = bookedEntry.getString("duedate");
+                            SimpleDateFormat simpleDateFormat;
+
+
+                            if (!bookedDateString.isEmpty()) {
+                                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+                                date = simpleDateFormat.parse(bookedEntry.getString("duedate"));
+                            }
+                        }
 
                         PaiaDocument document = new PaiaDocument();
                         document.setStatus(status);

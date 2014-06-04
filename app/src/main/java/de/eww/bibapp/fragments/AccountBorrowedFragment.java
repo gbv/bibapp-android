@@ -230,6 +230,16 @@ public class AccountBorrowedFragment extends AbstractListFragment implements
 
                     if (docEntry.has("error")) {
                         numFailedItems++;
+                        continue;
+                    }
+
+                    if (docEntry.has("renewals")) {
+                        int newNumRenewals = docEntry.getInt("renewals");
+
+                        if (newNumRenewals == this.checkedItems.get(i).getRenewals()) {
+                            numFailedItems++;
+                            continue;
+                        }
                     }
                 }
 
