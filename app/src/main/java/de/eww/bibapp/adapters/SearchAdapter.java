@@ -75,38 +75,41 @@ public class SearchAdapter extends ArrayAdapter<SearchEntry>
 		}
 		
 		SearchEntry entry = this.getItem(position);
-		
-		titleView.setText(entry.title);
-		
-		String subTitle = entry.subTitle;
-		if ( !entry.partName.isEmpty() )
-		{
-			subTitle = entry.partName + "; " + subTitle;
-		}
-		if ( !entry.partNumber.isEmpty() )
-		{
-			subTitle = entry.partNumber + "; " + subTitle;
-		}
-		subView.setText(subTitle);
-		
-		String authorString = "";
-		
-		Iterator<String> it = entry.authors.iterator();
-		while ( it.hasNext() )
-		{
-			String author = it.next();
-			authorString += author;
-			
-			if ( it.hasNext() )
-			{
-				authorString += ", ";
-			}
-		}
-		
-		authorView.setText(authorString);
-		
-		Resources res = this.context.getResources();
-		imageView.setImageResource(res.getIdentifier("mediaicon_" + entry.mediaType.toLowerCase(Locale.GERMANY), "drawable", this.context.getPackageName()));
+
+        if (entry != null) {
+            titleView.setText(entry.title);
+
+            String subTitle = entry.subTitle;
+            if ( !entry.partName.isEmpty() )
+            {
+                subTitle = entry.partName + "; " + subTitle;
+            }
+            if ( !entry.partNumber.isEmpty() )
+            {
+                subTitle = entry.partNumber + "; " + subTitle;
+            }
+            subView.setText(subTitle);
+
+            String authorString = "";
+
+            Iterator<String> it = entry.authors.iterator();
+            while ( it.hasNext() )
+            {
+                String author = it.next();
+                authorString += author;
+
+                if ( it.hasNext() )
+                {
+                    authorString += ", ";
+                }
+            }
+
+            authorView.setText(authorString);
+
+            Resources res = this.context.getResources();
+            imageView.setImageResource(res.getIdentifier("mediaicon_" + entry.mediaType.toLowerCase(Locale.GERMANY), "drawable", this.context.getPackageName()));
+        }
+
 		return v;
 	}
 }

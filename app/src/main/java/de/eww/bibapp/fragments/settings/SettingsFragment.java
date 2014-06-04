@@ -30,7 +30,7 @@ import de.eww.bibapp.constants.Constants;
  * Settings Fragment class, manages user preferences configuration
  */
 public class SettingsFragment extends Fragment implements
-	CompoundButton.OnCheckedChangeListener,
+    View.OnClickListener,
 	OnItemSelectedListener
 {
 	@Override
@@ -58,16 +58,16 @@ public class SettingsFragment extends Fragment implements
 		// store login checkbox
 		CheckBox checkbox = (CheckBox) v.findViewById(R.id.settings_save_checkbox);
 		boolean isChecked = settings.getBoolean("store_login", false);
-		checkbox.setChecked(isChecked);
-		checkbox.setOnCheckedChangeListener(this);
+
+        checkbox.setOnClickListener(this);
+        checkbox.setChecked(isChecked);
 		
 		// local catalog settings
 		Spinner catalogSpinner = (Spinner) v.findViewById(R.id.settings_local_search_spinner);
 		
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_spinner_item);
 		
-		for (int i=0; i < Constants.LOCAL_CATALOGS.length; i++)
-		{
+		for (int i=0; i < Constants.LOCAL_CATALOGS.length; i++) {
 			String[] catalogEntry = Constants.LOCAL_CATALOGS[i];
 			adapter.add(catalogEntry[1]);
 			
@@ -96,7 +96,7 @@ public class SettingsFragment extends Fragment implements
 			dbsCheckBox.setChecked(isDbsChecked);
 			
 			// set the change listener
-			dbsCheckBox.setOnCheckedChangeListener(this);
+            //dbsCheckBox.setOnClickListener(this);
 		}
 		
 		// get the version number and set it in the layout
@@ -123,28 +123,26 @@ public class SettingsFragment extends Fragment implements
 	}
 
 	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+    public void onClick(View v)
 	{
+        boolean isChecked = ((CheckBox) v).isChecked();
+
 		SharedPreferences settings = this.getActivity().getPreferences(0);
 		SharedPreferences.Editor editor = settings.edit();
 		
-		if ( buttonView.getId() == R.id.settings_save_checkbox )
-		{
+		if (v.getId() == R.id.settings_save_checkbox) {
 			// store the login decision
 			editor.putBoolean("store_login", isChecked);
 			
 			// if storing login credentials is disabled, clean old credentials data
-			if ( !isChecked )
-			{
+			if (!isChecked) {
 				editor.putString("store_login_username", null);
 				editor.putString("store_login_password", null);
 				
 				// and remove stored login information
 				PaiaHelper.reset();
 			}
-		}
-		else
-		{
+		} else {
 			// store dbs decision
 			editor.putBoolean("allow_dbs", isChecked);
 		}
