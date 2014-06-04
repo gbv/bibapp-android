@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp HAWK</string>
+    
+    <!-- login dialog -->
+    <string name="logindialog_username">Benutzernummer</string>
+
+    <!-- contact -->
+    <string name="contact_text">
+        <b>HAWK Hochschule für angewandte Wissenschaft und Kunst Hildesheim/Holzminden/Göttingen</b>\n
+        http://www.hawk-hhg.de/bibliothek/default.php\n
+        \n
+        <b>Hildesheim</b>\n
+		\n
+		Bibliothek Bauwesen, Soziale Arbeit und Gesundheit\n
+		Goschentor 1\n
+		31134 Hildesheim\n
+		Tel.: +49(0)5121 881-119\n
+		E-Mail: thekez@hawk-hhg.de\n
+		\n
+		Bibliothek Gestaltung, Erhaltung von Kulturgut\n
+		Am Marienfriedhof 1\n
+		31134 Hildesheim\n
+		Tel.: +49(0)5121 881-363\n
+		E-Mail: thekeg@hawk-hhg.de\n
+		\n
+		<b>Holzminden</b>\n
+		Bibliothek Management, Soziale Arbeit, Bauen\n
+		Billerbeck 2\n
+		37603 Holzminden\n
+		Tel.: +49(0)5531 126-256\n
+		E-Mail: thekeho@hawk-hhg.de\n
+		\n
+		<b>Göttingen</b>\n
+		Bibliothek Ressourcenmanagement\n
+		Büsgenweg 1A\n
+		37077 Göttingen\n
+		Tel.: +49(0)551 5032-153\n
+		E-Mail: thekeR@hawk-hhg.de\n
+		\n
+		Bibliothek Naturwissenschaften und Technik\n
+		Von-Ossietzky-Str. 99\n
+		37085 Göttingen\n
+		Tel.: +49(0)551 3705-156\n
+		E-Mail: BibliothekN@hawk-hhg.de
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <b>Impressum</b>\n
+        Hochschule für angewandte Wissenschaft und Kunst\n
+        Hildesheim/Holzminden/Göttingen\n
+        Präsidentin: Prof. Dr. Christiane Dienel\n
+        Hohnsen 4\n
+        31134 Hildesheim\n
+        \n
+        Telefon: +49(0)5121 881-0\n
+        Telefax: +49(0)5121 881-132\n
+        Internetadresse: http://www.hawk-hhg.de/\n
+        \n
+        Umsatzsteueridentifikationsnummer: 154261014\n
+        Die Hochschule für angewandte Wissenschaft und Kunst - Hildesheim/Holzminden/Göttingen ist eine Körperschaft des öffentlichen Rechts.\n
+        \n
+        Zuständige Aufsichtsbehörde:\n
+        Niedersächsisches Ministerium für Wissenschaft und Kultur (MWK)\n
+        Leibnizufer 9\n
+        30169 Hannover\n
+		\n
+		<b>Angaben zum Datenschutz</b>\n
+		Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.\n
+		Die HAWK BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).\n
+		\n
+		<b>Rechtliche Hinweise zur Haftung</b>\n
+		Diese App wurde von der Bibliothek der HAWK in Kooperation mit den Universitätsbibliotheken Hildesheim und Lüneburg und der Effective Webwork GmbH mit großer Sorgfalt erstellt und geprüft, dennoch kann aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der Bibliothek der HAWK für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt. Die Bibliothek der HAWK behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen. 
+Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.\n
+		\n
+		<b>Gestaltung und Umsetzung</b>\n
+		Entwurf und Konzeption\n
+		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)\n
+		Umsetzung\n
+		Effective Webwork GmbH\n
+    </string>
+</resources>

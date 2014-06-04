@@ -15,6 +15,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    productFlavors {
+        hi {
+            packageName "de.eww.bibapp.hi"
+            versionCode 4
+            versionName "1.2.0"
+        }
+
+        lg {
+            packageName "de.eww.bibapp.lg"
+            versionCode 4
+            versionName "1.2.0"
+        }
+    }
 }
 
 dependencies {

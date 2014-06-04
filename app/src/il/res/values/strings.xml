@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp IL</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <b>Ilmenau</b>\n
+		\n
+		<b>Anschrift</b>\n
+		Universitätsbibliothek Ilmenau\n
+		Langewiesener Str.37\n
+		98693 Ilmenau\n
+		\n
+		http://www.tu-ilmenau.de/ub/\n
+		\n
+		<b>Auskunft</b>\n
+		Tel.: 03677 69-4531\n
+		E-Mail: auskunft.ub@tu-ilmenau.de\n
+		\n
+		<b>Direktion</b>\n
+		Tel.: 03677 69-4701\n
+		E-Mail: direktion.ub@tu-ilmenau.de
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <b>Anbieter</b>\n
+        Universitätsbibliothek Ilmenau\n
+        Der Direktor\n
+		Langewiesener Str.37\n
+		98693 Ilmenau\n
+		\n
+		http://www.tu-ilmenau.de/ub/\n
+		E-Mail: direktion.ub@tu-ilmenau.de\n
+		Tel.: 03677 69-4701\n
+		Fax: 03677 69-4700\n
+		\n
+		<b>Impressum der TU Ilmenau</b>\n
+		http://www.tu-ilmenau.de/impressum/\n
+		\n
+		<b>Angaben zum Datenschutz</b>\n
+		Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Nutzernummer und -passwort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter "Optionen" den Punkt "Zugangsdaten speichern" für das jeweilige Konto. Damit stimmen Sie der Speicherung der Daten auf Ihrem mobilen Endgerät zu.\n
+		Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes (VZG) in Göttingen. Die Datenübertragung geschieht dabei über eine verschlüsselte Verbindung (https).\n
+		\n
+		<b>Zählpixelverfahren Deutsche Bibliotheksstatistik</b>\n
+		Die Universitätsbibliothek der Technischen Universität Ilmenau nutzt im Rahmen ihrer Teilnahme an der Deutschen Bibliotheksstatistik ein Verfahren zur Zählung der Besuche auf den Katalogseiten. Es wird eine Kennung der Bibliothek und der betreffenden Seite, der Zeitpunkt des Aufrufs und eine Signatur des aufrufenden Gerätes gespeichert.\n
+        Die Signatur wird mittels einer Einwegfunktion aus IP-Adresse, Kennung des zugreifenden Programms und Proxy-Information gebildet. Die Erhebung, Speicherung und Auswertung dieser Daten erfolgt in pseudonymisierter Form, d.h. die Signatur ist nicht bestimmten Personen zuzuordnen. Eine Speicherung insbesondere der IP-Adresse findet nicht statt. Die pseudonymen Einzeldaten werden nach spätestens 24 Stunden aufsummiert und damit anonymisiert.\n
+        Die gespeicherten Daten werden statistisch ausgewertet, um die Internetangebote bedarfsgerecht zu gestalten und weiterzuentwickeln. Die Daten werden nur zu diesem Zweck genutzt und im Anschluss an die Auswertung gelöscht.\n
+        Mit der technischen und organisatorischen Umsetzung des Verfahrens ist die Hochschule der Medien Stuttgart beauftragt. Sie hat das Verfahren nach den Maßgaben der gesetzlichen Bestimmungen der Datenschutzgesetze und des Telemediengesetzes (TMG) entwickelt und sich zu deren Einhaltung verpflichtet.\n
+        Sie haben die Möglichkeit, die Erhebung der genannten Daten im Menü "Optionen" im Punkt "Zählpixel" zu deaktivieren.\n
+        \n
+		<b>Rechtliche Hinweise zur Haftung</b>\n
+		Die BibApp wurde mit größter Sorgfalt erstellt und geprüft. Dennoch kann auf Grund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der UB Ilmenau für Schäden, die durch die Nutzung der App, der angebotenen Funktionen oder durch Fehlfunktionen der App entstehen, ist grundsätzlich ausgeschlossen.\n
+		Die UB Ilmenau behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.\n
+		Die App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.\n
+		\n
+		<b>Gestaltung und Umsetzung</b>\n
+		ursprünglich: UB Lüneburg, UB Hildesheim, VZG\n
+		Anpassung: UB Ilmenau\n
+		Umsetzung: effective WEBWORK GmbH\n
+    </string>
+</resources>
