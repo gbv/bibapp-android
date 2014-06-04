@@ -3,83 +3,10 @@
 
     <!-- general -->
     <string name="app_name">BibApp HAWK</string>
-    <string name="empty_list">Keine Einträge vorhanden</string>
-    <string name="loading_in_progress">Inhalte werden geladen</string>
-    
-    <!-- action bar -->
-    <string name="actionbar_account">Konto</string>
-    <string name="actionbar_search">Suche</string>
-    <string name="actionbar_watchlist">Merkliste</string>
-    <string name="actionbar_info">Info</string>
-    <string name="actionbar_settings">Optionen</string>
     
     <!-- login dialog -->
     <string name="logindialog_username">Benutzernummer</string>
-    <string name="logindialog_password">Passwort</string>
-    <string name="logindialog_login">Anmelden</string>
-    <string name="logindialog_cancel">Abbrechen</string>
-    <string name="logindialog_heading">Bitte melden Sie sich an</string>
-    <string name="logindialog_wrong">Bitte überprüfen Sie ihre Logindaten!</string>
-    
-    <!-- error dialog -->
-    <string name="errordialog_connection">
-        Ihre Anfrage konnte nicht abgeschlossen werden.\n
-        Bitte überprüfen Sie ggf. Ihre Netzverbindung und versuchen es erneut!
-    </string>
-    <string name="errordialog_proceed">OK</string>
-    
-    <!-- swipe dialog -->
-    <string name="swipedialog_extending">Einträge werden nachgeladen</string>
-    
-    <!-- paia dialog -->
-    <string name="paiadialog_heading">Kontozugriff</string>
-    <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt</string>
-    <string name="paiadialog_proceed">Schließen</string>
-    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert</string>
-    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden</string>
-    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden</string>
-    <string name="paiadialog_cancel_success">Alle Einträge wurden storniert</string>
-    <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden</string>
-    <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden</string>
-    <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt</string>
-    <string name="paiadialog_general_failure">Die Aktion schlug leider fehl</string>
-    
-    <!-- detail actions dialog -->
-    <string name="detailactionsdialog_heading">Wählen Sie eine Aktion</string>
-    <string name="detailactionsdialog_cancel">Abbrechen</string>
-    <string name="detailactionsdialog_location">Standortinformationen</string>
-    <string name="detailactionsdialog_request">Vormerken</string>
-    <string name="detailactionsdialog_order">Bestellen</string>
-    <string name="detailactionsdialog_online">Online ansehen</string>
 
-    <!-- settings -->
-    <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
-    <string name="settings_dbs_description">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
-    <string name="settings_data_privacy">Anonyme Nutzungsdaten speichern</string>
-    <string name="settings_store">Logindaten speichern</string>
-    <string name="settings_store_on">Login wird gespeichert</string>
-    <string name="settings_store_off">Login wird nicht gespeichert</string>
-    <string name="settings_local_search">Lokaler Katalog</string>
-    <string name="settings_local_search_description">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
-    
-    <!-- info -->
-    <string name="info_button_contact">Kontakt</string>
-    <string name="info_button_locations">Standorte</string>
-    <string name="info_button_impressum">Impressum</string>
-    
-    <!-- account -->
-    <string name="account_borrowed">Ausgeliehen</string>
-    <string name="account_booked">Vorgemerkt</string>
-    <string name="account_fees">Gebühren</string>
-    <string name="account_fees_amount">Gesamt:</string>
-    
-    <!-- search -->
-    <string name="search_hint">Suche</string>
-    <string name="search_hits">Treffer</string>
-    <string name="search_in_progress">Bibliothek wird durchsucht</string>
-    <string name="search_local">Lokal</string>
-    <string name="search_gvk">GVK</string>
-    
     <!-- contact -->
     <string name="contact_text">
         <b>HAWK Hochschule für angewandte Wissenschaft und Kunst Hildesheim/Holzminden/Göttingen</b>\n
@@ -155,41 +82,4 @@ Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt d
 		Umsetzung\n
 		Effective Webwork GmbH\n
     </string>
-    
-    <!-- account -->
-    <string name="account_borrowed_signature">Signatur:</string>
-    <string name="account_borrowed_duedate">Leihfristende:</string>
-    <string name="account_borrowed_queue">Vormerkungen:</string>
-    <string name="account_borrowed_renewals">Verlängerungen:</string>
-    <string name="account_borrowed_status">Status:</string>
-    <string name="account_booked_signature">Signatur:</string>
-    <string name="account_booked_date">Vormerkdatum:</string>
-
-    <!-- paia -->
-    <string-array name="paia_service_status">
-        <item>verfügbar</item>
-        <item>vorgemerkt</item>
-        <item>bestellt</item>
-        <item>ausgeliehen</item>
-        <item>abholbereit</item>
-        <item>abgelehnt</item>
-    </string-array>
-    
-    <!-- menu -->
-    <string name="menu_borrowed_extend">Verlängern</string>
-    <string name="menu_detail_addtowatchlist">Zur Merkliste hinzufügen</string>
-    <string name="menu_detail_addtowatchlist_duplicate">Bereits in Merkliste</string>
-    <string name="menu_booked_cancel">Stornieren</string>
-    <string name="menu_watchlist_remove">Entfernen</string>
-    
-    <!-- detail -->
-    <string name="detail_available">Verfügbarkeit</string>
-    <string name="detail_index">Inhaltsverzeichnis anzeigen</string>
-    <string name="detail_daia_no_department">Ohne Zuordnung</string>
-    <string name="detail_interlending">Fernleihoptionen</string>
-    <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus</string>
-    
-    <!-- toasts -->
-    <string name="toast_watchlist_added">Eintrag in Merkliste kopiert</string>
-    <string name="toast_watchlist_removed">Einträge wurden entfernt</string>
 </resources>

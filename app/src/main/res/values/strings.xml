@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- config -->
-    <string name="google_maps_api_key">INSERT YOUR KEY HERE</string>
-
     <!-- general -->
     <string name="app_name">BibApp</string>
     <string name="empty_list">Keine Einträge vorhanden</string>
@@ -22,7 +19,7 @@
     <string name="logindialog_login">Anmelden</string>
     <string name="logindialog_cancel">Abbrechen</string>
     <string name="logindialog_heading">Bitte melden Sie sich an</string>
-    <string name="logindialog_wrong">Bitte überprüfen Sie ihre Logindaten!</string>
+    <string name="logindialog_wrong">Bitte überprüfen Sie Ihre Logindaten!</string>
     
     <!-- error dialog -->
     <string name="errordialog_connection">
@@ -40,16 +37,16 @@
     
     <!-- paia dialog -->
     <string name="paiadialog_heading">Kontozugriff</string>
-    <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt</string>
+    <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt...</string>
     <string name="paiadialog_proceed">Schließen</string>
     <string name="paiadialog_renew_success">Alle Einträge wurden verlängert.</string>
     <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
     <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
-    <string name="paiadialog_cancel_success">Alle Einträge wurden storniert</string>
-    <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden</string>
-    <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden</string>
-    <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt</string>
-    <string name="paiadialog_general_failure">Die Aktion schlug leider fehl</string>
+    <string name="paiadialog_cancel_success">Alle Einträge wurden storniert.</string>
+    <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden.</string>
+    <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden.</string>
+    <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt.</string>
+    <string name="paiadialog_general_failure">Die Aktion schlug leider fehl.</string>
     
     <!-- detail actions dialog -->
     <string name="detailactionsdialog_heading">Wählen Sie eine Aktion</string>
@@ -61,8 +58,8 @@
     
     <!-- settings -->
     <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
-    <string name="settings_dbs_description">Wenn Sie diese Funktion deaktivieren, verhindern Sie, dass statistische Daten über Ihre Suchen an die DBS gesendet werden.</string>
-    <string name="settings_data_privacy">Datenschutz</string>
+    <string name="settings_dbs_description">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
+    <string name="settings_data_privacy">Anonyme Nutzungsdaten speichern</string>
     <string name="settings_store">Logindaten speichern</string>
     <string name="settings_store_on">Login wird gespeichert</string>
     <string name="settings_store_off">Login wird nicht gespeichert</string>
@@ -79,6 +76,7 @@
     <string name="account_booked">Vorgemerkt</string>
     <string name="account_fees">Gebühren</string>
     <string name="account_fees_amount">Gesamt:</string>
+    <string name="account_inactive">(gesperrt)</string>
     
     <!-- search -->
     <string name="search_hint">Suche</string>
@@ -99,11 +97,11 @@
 		www.uni-hildesheim.de/bibliothek\n
 		\n
 		<b>Auskunft</b>\n
-		Telefon: (05121) 883-260\n
+		Telefon: (05121) 883 93010\n
 		E-Mail: auskunft@uni-hildesheim.de\n
 		\n
 		<b>Ausleihe</b>\n
-		Telefon: (05121) 883-264\n
+		Telefon: (05121) 883 93020\n
 		E-Mail: ausleihe@uni-hildesheim.de
     </string>
     
@@ -115,8 +113,8 @@
 		31141 Hildesheim\n
 		\n
 		E-Mail: auskunft@uni-hildesheim.de\n
-		Telefon: +49 (0) 51 21 - 883 260\n
-		Telefax: +49 (0) 51 21 - 883 266\n
+		Telefon: +49 (0) 51 21 - 883 93010\n
+		Telefax: +49 (0) 51 21 - 883 93011\n
 		\n
 		<b>Vertreter</b>\n
 		Die Universitätsbibliothek Hildesheim ist eine Einrichtung der Stiftung Universität Hildesheim, sie wird vertreten durch ihren Leiter, Dr. Ewald Brahms. Die Stiftung Universität Hildesheim ist eine rechtsfähige Stiftung öffentlichen Rechts. Die Stiftung unterhält und fördert die Universität Hildesheim in deren Eigenschaft als Körperschaft des öffentlichen Rechts und übt die Rechtsaufsicht über sie aus. Stiftung Universität Hildesheim und Universität Hildesheim werden vertreten durch ihren Präsidenten Herrn Prof. Dr. Wolfgang-Uwe Friedrich.\n
@@ -135,6 +133,12 @@ Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259
 		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)\n
 		Umsetzung\n
 		Effective Webwork GmbH\n
+        \n
+        <b>Erhebung von Nutzungsdaten</b>\n
+        Die Universitätsbibliothek Hildesheim nutzt im Rahmen ihrer Teilnahme an der Deutschen Bibliotheksstatistik ein Verfahren zur Zählung der Besuche auf ihren Online-Angeboten. Bei jeder Suche innerhalb der BibApp werden eine Kennung der Bibliothek, der Zeitpunkt des Aufrufs und eine pseudonymisierte Signatur des aufrufenden Gerätes gespeichert. Die Signatur wird mittels einer Einwegfunktion aus IP-Adresse, Browserkennung und Proxy-Information gebildet. Die Erhebung, Speicherung und Auswertung dieser Daten erfolgt in pseudonymisierter Form, d.h. die Signatur ist nicht bestimmten Personen zuzuordnen. Eine Speicherung insbesondere der IP-Adresse findet nicht statt. Die pseudonymen Einzeldaten werden nach spätestens 24 Stunden aufsummiert und damit anonymisiert.\n
+        Die gespeicherten Daten werden statistisch ausgewertet, um unsere Online-Angebote bedarfsgerecht zu gestalten und weiterzuentwickeln. Die Daten werden nur zu diesem Zweck genutzt und im Anschluss an die Auswertung gelöscht. Mit der technischen und organisatorischen Umsetzung des Verfahrens ist die Hochschule der Medien Stuttgart beauftragt. Sie hat das Verfahren nach den Maßgaben der gesetzlichen Bestimmungen der Datenschutzgesetze und des Telemediengesetzes (TMG) entwickelt und sich zu deren Einhaltung verpflichtet.\n
+        \n
+        Sie haben die Möglichkeit, der Erhebung, Verarbeitung und Nutzung der vorbezeichneten Daten Ihrer Besuche zu dem genannten Zweck zu widersprechen. Deaktivieren Sie dazu unter "Optionen / Datenschutz" die Option "Anonyme Nutzungsdaten speichern".
     </string>
     
     <!-- account -->
@@ -145,6 +149,16 @@ Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259
     <string name="account_borrowed_status">Status:</string>
     <string name="account_booked_signature">Signatur:</string>
     <string name="account_booked_date">Vormerkdatum:</string>
+
+    <!-- paia -->
+    <string-array name="paia_service_status">
+        <item>verfügbar</item>
+        <item>vorgemerkt</item>
+        <item>bestellt</item>
+        <item>ausgeliehen</item>
+        <item>abholbereit</item>
+        <item>abgelehnt</item>
+    </string-array>
     
     <!-- menu -->
     <string name="menu_borrowed_extend">Verlängern</string>
