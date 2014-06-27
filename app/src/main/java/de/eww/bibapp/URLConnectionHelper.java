@@ -1,5 +1,8 @@
 package de.eww.bibapp;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -13,10 +16,11 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.KeyStore;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLSocketFactory;
 
-import android.util.Log;
 import de.eww.bibapp.constants.Constants;
 
 public class URLConnectionHelper
@@ -49,6 +53,8 @@ public class URLConnectionHelper
 		else
 		{
 			this.connection = (HttpsURLConnection) this.url.openConnection();
+            ((HttpsURLConnection) this.connection).setSSLSocketFactory(this.createAdditionalCertsSSLSocketFactory());
+            ((HttpsURLConnection) this.connection).setHostnameVerifier(org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 		}
 		
 		this.connection.setReadTimeout(Constants.READ_TIMEOUT);
@@ -153,4 +159,23 @@ public class URLConnectionHelper
 		
 		return writer.toString();
 	}
+
+    private SSLSocketFactory createAdditionalCertsSSLSocketFactory() {
+        try {
+            final KeyStore ks = KeyStore.getInstance("BKS");
+            final Context context = MainActivity.instance.getApplicationContext();
+
+            final InputStream in = context.getResources().openRawResource(R.raw.customstore);
+            try {
+                ks.load(in, context.getString(R.string.customstore_password).toCharArray());
+            } finally {
+                in.close();
+            }
+
+            return new AdditionalKeyStoresSSLSocketFactory(ks);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
