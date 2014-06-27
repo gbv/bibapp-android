@@ -2,7 +2,7 @@ apply plugin: 'android'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 11
@@ -18,15 +18,33 @@ android {
 
     productFlavors {
         hi {
-            packageName "de.eww.bibapp.hi"
+            applicationId "de.eww.bibapp.hi"
             versionCode 4
             versionName "1.2.0"
         }
 
         lg {
-            packageName "de.eww.bibapp.lg"
+            applicationId "de.eww.bibapp.lg"
             versionCode 4
             versionName "1.2.0"
+        }
+
+        il {
+            applicationId "de.eww.bibapp.il"
+            versionCode 6
+            versionName "1.2.3"
+        }
+
+        bls {
+            applicationId "de.eww.bibapp.bls"
+            versionCode 7
+            versionName "1.2.4"
+        }
+
+        hawk {
+            applicationId "de.eww.bibapp.hawk"
+            versionCode 7
+            versionName "1.2.4"
         }
 
         thulb {
