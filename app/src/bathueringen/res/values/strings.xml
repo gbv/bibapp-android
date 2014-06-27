@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- google maps api v2 -->
+    <string name="google_maps_v2_key">AIzaSyBMss6ri-f5x0jdG2FdEWja6wAf_hn2myM</string>
+
+    <!-- general -->
+    <string name="app_name">BibApp BA Thüringen</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <b>Gera</b>\n
+        Bibliothek der Berufsakademie Gera\n
+        Weg der Freundschaft 4A\n
+        07546 Gera\n
+        Tel.: +49 365 / 4341-118 und -119\n
+        Fax: +49 365 / 4341-105\n
+        E-Mail: bibliothek@ba-gera.de\n
+        Internet: http://bibliothek.ba-gera.de\n
+        \n
+        <b>Eisenach</b>\n
+        Bibliothek der Berufsakademie Eisenach\n
+        Am Wartenberg 2\n
+        99817 Eisenach\n
+        Tel.: +49 3691 / 6294-72 und -12\n
+        Fax: +49 3691 / 6294-59\n
+        E-Mail: bibliothek@ba-eisenach.de\n
+        Internet: http://bibliothek.ba-eisenach.de\n
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <b>Staatliche Studienakademie Thüringen</b>\n
+        Berufsakademien Gera und Eisenach\n
+        Direktor Prof. Dr. rer. pol. habil. Burkhard Utecht\n
+        \n
+        Weg der Freundschaft 4A\n
+        07546 Gera\n
+        Tel.: +49 365 / 4341-0\n
+        Fax: +49 365 / 4341-103\n
+        E-Mail: info@ba-gera.de\n
+        Internet: http://www.ba-gera.de\n
+        \n
+        Die Staatliche Studienakademie Thüringen ist eine rechtsfähige Körperschaft des öffentlichen Rechts.\n
+        Zuständige Behörde für die Rechts- und Fachaufsicht\n
+        Thüringer Ministerium für Bildung, Wissenschaft und Kultur\n
+        Postfach 900463\n
+        99107 Erfurt\n
+        Tel.: +49 361 / 37 9-00\n
+        Fax: +49 361 / 37 94 690\n
+        E-Mail: poststelle@tmbwk.thueringen.de\n
+        \n
+        <b>Angaben zum Datenschutz</b>\n
+        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“ für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.\n
+        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).\n
+        \n
+        <b>Rechtliche Hinweise zur Haftung</b>\n
+        Die BibApp wurde mit größter Sorgfalt erstellt und geprüft. Dennoch kann auf Grund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der Staatlichen Studienakademie Thüringen für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen. Die Staatliche Studienakademie behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen. Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.\n
+        \n
+        <b>Gestaltung und Umsetzung</b>\n
+        Ursprünglich: UB Lüneburg, UB Hildesheim, VZG\n
+        Anpassung: Staatliche Studienakademie Thüringen\n
+        Umsetzung: effective WEBWORK GmbH\n
+    </string>
+</resources>
