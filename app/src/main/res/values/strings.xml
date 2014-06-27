@@ -70,6 +70,7 @@
     <string name="info_button_contact">Kontakt</string>
     <string name="info_button_locations">Standorte</string>
     <string name="info_button_impressum">Impressum</string>
+    <string name="info_button_homepage">Homepage</string>
     
     <!-- account -->
     <string name="account_borrowed">Ausgeliehen</string>

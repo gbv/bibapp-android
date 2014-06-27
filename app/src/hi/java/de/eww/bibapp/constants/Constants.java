@@ -113,6 +113,12 @@ public final class Constants
     public static final String NEWS_URL = "https://www.uni-hildesheim.de/index.php?id=8920&type=100";
 
     /**
+     * An URL to a homepage
+     */
+    public static final String[] HOMEPAGE_URLS = {
+    };
+
+    /**
      * This is the number of hits display by a single request - without scroll reloads
      */
     public static final int SEARCH_HITS_PER_REQUEST = 20;

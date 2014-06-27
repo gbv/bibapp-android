@@ -3,6 +3,9 @@ package de.eww.bibapp.fragments.info;
 import java.util.List;
 
 import android.app.ActionBar;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -108,6 +111,23 @@ public class InfoFragment extends AbstractListFragment implements
 				InfoFragment.this.onClickImpressumButton(v);
 			}
 		});
+
+        // check if a homepage url is given
+        SharedPreferences settings = this.getActivity().getPreferences(0);
+        int localCatalog = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+
+        if (Constants.HOMEPAGE_URLS.length >= localCatalog+1) {
+            Button homepageButton = (Button) v.findViewById(R.id.info_button_homepage);
+            homepageButton.setVisibility(View.VISIBLE);
+            homepageButton.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                InfoFragment.this.onClickHomepageButton(v);
+                }
+            });
+        }
 		
 		return v;
 	}
@@ -135,6 +155,19 @@ public class InfoFragment extends AbstractListFragment implements
 		InfoContainerFragment infoFragment = (InfoContainerFragment) this.getActivity().getSupportFragmentManager().findFragmentByTag("info");
 		infoFragment.switchContent(R.id.info_container, ImpressumFragment.class.getName(), "info_impressum", true);
 	}
+
+    private void onClickHomepageButton(View v)
+    {
+        this.getLoaderManager().destroyLoader(0);
+
+        SharedPreferences settings = this.getActivity().getPreferences(0);
+        int localCatalog = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+
+
+        Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[localCatalog]);
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, homepageUrl);
+        this.startActivity(launchBrowser);
+    }
 
 	@Override
 	public Loader<List<NewsEntry>> onCreateLoader(int arg0, Bundle arg1)
