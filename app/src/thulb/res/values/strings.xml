@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- google maps api v2 -->
+    <string name="google_maps_v2_key">AIzaSyAem6AuXLxJciyfHzx-Ngnxt1Zw4vo3Giw</string>
+
+    <!-- general -->
+    <string name="app_name">BibApp ThULB</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <b>Anschrift</b>\n
+        Thüringer Universitäts- und Landesbibliothek Jena Postfach\n
+        07743 Jena\n
+		\n
+        http://www.thulb.uni-jena.de\n
+		\n
+        <b>Auskunft</b>\n
+        Telefon: +49 3641 9-40100\n
+        E-mail: info@thulb.uni-jena.de\n
+        \n
+        <b>Ausleihe</b>\n
+        Telefon: +49 3641 9-40110\n
+        E-mail: thulb_ausleihe@thulb.uni-jena.de
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <b>Anbieter</b>\n
+        Thüringer Universitäts- und Landesbibliothek Jena Bibliotheksplatz 2\n
+        07743 Jena\n
+		\n
+		E-Mail: thulb_direktion@thulb.uni-jena.de\n
+		Telefon: +49 3641 9-40000\n
+		Telefax: +49 3641 9-40002\n
+		\n
+        <b>Kontakt</b>\n
+        Anschrift\n
+        Thüringer Universitäts- und Landesbibliothek Jena Postfach\n
+        07743 Jena\n
+        http://www.thulb.uni-jena.de\n
+        \n
+        Auskunft\n
+        Telefon: +49 3641 9-40100\n
+        E-Mail: info@thulb.uni-jena.de\n
+        \n
+        Ausleihe\n
+        Telefon: +49 3641 9-40110\n
+        E-Mail: thulb_ausleihe@thulb.uni-jena.de
+    </string>
+</resources>
