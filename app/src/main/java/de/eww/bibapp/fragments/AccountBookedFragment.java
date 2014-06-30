@@ -187,7 +187,7 @@ public class AccountBookedFragment extends AbstractListFragment implements
                         PaiaDocument checkedItem = it.next();
 						
 						JSONObject checkedItemObject = new JSONObject();
-						checkedItemObject.put("item", checkedItem.getItem() + "1243151234152");
+						checkedItemObject.put("item", checkedItem.getItem());
                         if (!checkedItem.getEdition().equals("")) {
                             checkedItemObject.put("edition", checkedItem.getEdition());
                         }
