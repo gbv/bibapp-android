@@ -1,8 +1,5 @@
 package de.eww.bibapp.fragments;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
@@ -16,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.CustomFragmentTabHost;
 import de.eww.bibapp.MainActivity;
@@ -49,9 +50,8 @@ public class AccountFragment extends AbstractContainerFragment implements
     public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		
-		PaiaHelper paiaHelper = new PaiaHelper(this);
-	    paiaHelper.ensureConnection();
+
+        PaiaHelper.getInstance().ensureConnection(this);
 	    
 	    this.getActivity().invalidateOptionsMenu();
 	}
@@ -146,9 +146,9 @@ public class AccountFragment extends AbstractContainerFragment implements
 		}
 
 		// perform a paia request to get the users name, if we have the scope to do this
-        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.READ_PATRON)) {
+        if (PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.READ_PATRON)) {
             AsyncTask<String, Void, JSONObject> paiaPatronTask = new PaiaPatronTask(this);
-            paiaPatronTask.execute(PaiaHelper.getAccessToken(), PaiaHelper.getUsername());
+            paiaPatronTask.execute(PaiaHelper.getInstance().getAccessToken(), PaiaHelper.getInstance().getUsername());
         }
 	}
 	

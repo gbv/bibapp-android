@@ -1,11 +1,5 @@
 package de.eww.bibapp;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import org.json.JSONObject;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -15,11 +9,20 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import de.eww.bibapp.fragments.dialogs.LoginDialogFragment;
 import de.eww.bibapp.tasks.paia.PaiaLoginTask;
 
 public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 {
+    private static PaiaHelper instance = new PaiaHelper();
+
     public enum SCOPES {
         READ_PATRON,
         READ_FEES,
@@ -27,107 +30,133 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
         WRITE_ITEMS
     }
 
-	private static String accessToken = null;
-	private static String username = null;
-	private static Date accessTokenDate = null;
-    private static List<SCOPES> scopes;
-	
-	private Fragment fragment;
+	private  String accessToken = null;
+	private  String username = null;
+	private  Date accessTokenDate = null;
+    private  List<SCOPES> scopes;
+
+    private Fragment fragment;
+    private List<PaiaListener> listener;
 	
 	public interface PaiaListener
 	{
 		public void onPaiaConnected();
 	}
 	
-	public PaiaHelper(Fragment fragment)
+	private PaiaHelper()
 	{
-		this.fragment = fragment;
-	}
-	
-	public static String getAccessToken()
-	{
-		return PaiaHelper.accessToken;
-	}
-	
-	public static void updateAccessTokenDate(int expiresIn)
-	{
-        Date now = new Date();
-		PaiaHelper.accessTokenDate = new Date(now.getTime() + expiresIn * 1000);
-	}
-	
-	public static String getUsername()
-	{
-		return PaiaHelper.username;
+        this.listener = new ArrayList<PaiaListener>();
+        this.reset();
 	}
 
-    public static boolean hasScope(SCOPES scope) {
-        return PaiaHelper.scopes.contains(scope);
+    public static PaiaHelper getInstance() {
+        return PaiaHelper.instance;
     }
 	
-	public static void reset()
+	public String getAccessToken()
 	{
-		PaiaHelper.accessToken = null;
-		PaiaHelper.username = null;
-		PaiaHelper.accessTokenDate = null;
-        PaiaHelper.scopes = new ArrayList<SCOPES>();
+		return this.accessToken;
 	}
 	
-	public void ensureConnection()
+	public void updateAccessTokenDate(int expiresIn)
 	{
-		// if we do not already have an access token or the token is expired
-		Date now = new Date();
-	    if (PaiaHelper.accessToken == null || ( PaiaHelper.accessTokenDate != null && now.after(PaiaHelper.accessTokenDate))) {
-	    	Log.v("PAIA", "not logged in or token expired");
-	    	
-	    	// if login data is not stored or credentials are not set, ask user for them
-		    boolean showLoginDialog = false;
-		    
-		    SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
-		    showLoginDialog = !settings.getBoolean("store_login", false);
-		    
-		    if ( !showLoginDialog )
-		    {
-		    	showLoginDialog =	(settings.getString("store_login_username", null) == null) ||
-		    						(settings.getString("store_login_password", null) == null);
-		    }
-
-            this.reset();
-
-		    if ( showLoginDialog )
-		    {
-		    	LoginDialogFragment dialogFragment = new LoginDialogFragment();
-		    	dialogFragment.setListener(this);
-				dialogFragment.show(this.fragment.getChildFragmentManager(), "login");
-		    }
-		    else
-		    {
-		    	PaiaHelper.username = settings.getString("store_login_username", null);
-		    	
-		    	// login
-		    	AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(PaiaHelper.username, settings.getString("store_login_password", null));
-		    	
-				try
-				{
-                    JSONObject loginResponse = loginTask.get();
-                    PaiaHelper.accessToken = loginResponse.getString("access_token");
-                    this.setScopes(loginResponse.getString("scopes"));
-					PaiaHelper.updateAccessTokenDate(loginResponse.getInt("expires_in"));
-					
-				}
-				catch (Exception e)
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				((PaiaListener) this.fragment).onPaiaConnected();
-		    }
-	    }
-	    else
-	    {
-	    	((PaiaListener) this.fragment).onPaiaConnected();
-	    }
+        Date now = new Date();
+		this.accessTokenDate = new Date(now.getTime() + expiresIn * 1000);
 	}
+	
+	public String getUsername()
+	{
+		return this.username;
+	}
+
+    public boolean hasScope(SCOPES scope) {
+        return this.scopes.contains(scope);
+    }
+	
+	public void reset()
+	{
+		this.accessToken = null;
+        this.username = null;
+        this.accessTokenDate = null;
+        this.scopes = new ArrayList<SCOPES>();
+        this.listener.clear();
+	}
+	
+	public synchronized void ensureConnection(Fragment fragment)
+	{
+        // register the listener for later callback
+        if (fragment instanceof PaiaListener) {
+            this.listener.add((PaiaListener) fragment);
+        }
+
+        // if another thread is already trying to login the user,
+        // don't try it again
+        if (this.listener.size() == 1) {
+            this.fragment = fragment;
+
+            // if we do not already have an access token or the token is expired
+            Date now = new Date();
+            if (this.accessToken == null || ( this.accessTokenDate != null && now.after(this.accessTokenDate))) {
+                Log.v("PAIA", "not logged in or token expired");
+
+                // if login data is not stored or credentials are not set, ask user for them
+                boolean showLoginDialog = false;
+
+                SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
+                boolean storeLogin = settings.getBoolean("store_login", false);
+                showLoginDialog = !storeLogin;
+
+                if ( !showLoginDialog )
+                {
+                    showLoginDialog =	(settings.getString("store_login_username", null) == null) ||
+                                        (settings.getString("store_login_password", null) == null);
+                }
+
+                //this.reset();
+
+                if ( showLoginDialog )
+                {
+                    LoginDialogFragment dialogFragment = new LoginDialogFragment();
+                    dialogFragment.setListener(this);
+                    dialogFragment.show(this.fragment.getChildFragmentManager(), "login");
+                }
+                else
+                {
+                    this.username = settings.getString("store_login_username", null);
+
+                    // login
+                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(this.username, settings.getString("store_login_password", null));
+
+                    try
+                    {
+                        JSONObject loginResponse = loginTask.get();
+                        this.accessToken = loginResponse.getString("access_token");
+                        this.setScopes(loginResponse.getString("scopes"));
+                        this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
+
+                    }
+                    catch (Exception e)
+                    {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                    this.connected();
+                }
+            } else {
+                this.connected();
+            }
+        }
+	}
+
+    private void connected() {
+        // call the registered listener and reset the list
+        for (PaiaListener l : this.listener) {
+            l.onPaiaConnected();
+        }
+
+        this.listener.clear();
+    }
 	
 	@Override
 	public void onLoginDialogPositiveClick(DialogFragment dialog, boolean storeData)
@@ -143,7 +172,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		// verify input
 		if ( !username.trim().isEmpty() && !password.trim().isEmpty() )
 		{
-			PaiaHelper.username = username;
+            this.username = username;
 			
 			// perform login
 			AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(username, password);
@@ -160,7 +189,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				}
 				else
 				{
-					PaiaHelper.accessToken = accessToken;
+                    this.accessToken = accessToken;
                     this.setScopes(loginResponse.getString("scopes"));
 					
 					// force soft keyboard to hide
@@ -185,10 +214,10 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				    	
 				    	editor.commit();
 				    }
-				    
-				    PaiaHelper.updateAccessTokenDate(loginResponse.getInt("expires_in"));
-				    
-				    ((PaiaListener) this.fragment).onPaiaConnected();
+
+                    this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
+
+                    this.connected();
 					
 					// close dialog
 					dialog.dismiss();
@@ -214,6 +243,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
 		
 		dialog.getDialog().cancel();
+        this.reset();
 		
 		if ( !this.fragment.getClass().getName().equals("de.eww.bibapp.fragments.DetailFragment") )
 		{
@@ -232,13 +262,13 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
         if (scopes.length > 0) {
             for (String scope: scopes) {
                 if (scope.equals("read_patron")) {
-                    PaiaHelper.scopes.add(SCOPES.READ_PATRON);
+                    this.scopes.add(SCOPES.READ_PATRON);
                 } else if (scope.equals("read_fees")) {
-                    PaiaHelper.scopes.add(SCOPES.READ_FEES);
+                    this.scopes.add(SCOPES.READ_FEES);
                 } else if (scope.equals("read_items")) {
-                    PaiaHelper.scopes.add(SCOPES.READ_ITEMS);
+                    this.scopes.add(SCOPES.READ_ITEMS);
                 } else if (scope.equals("write_items")) {
-                    PaiaHelper.scopes.add(SCOPES.WRITE_ITEMS);
+                    this.scopes.add(SCOPES.WRITE_ITEMS);
                 }
             }
         }

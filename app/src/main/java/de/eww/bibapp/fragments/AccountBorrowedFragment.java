@@ -1,13 +1,5 @@
 package de.eww.bibapp.fragments;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.res.Resources;
 import android.content.res.Resources.NotFoundException;
 import android.os.AsyncTask;
@@ -22,6 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
@@ -43,6 +44,7 @@ import de.eww.bibapp.tasks.paia.PaiaRenewTask;
 public class AccountBorrowedFragment extends AbstractListFragment implements
 	LoaderManager.LoaderCallbacks<List<PaiaDocument>>,
 	PaiaActionDialogFragment.PaiaActionDialogLisener,
+    PaiaHelper.PaiaListener,
 	AsyncCanceledInterface
 {
 	// This is the Adapter being used to display the list's data.
@@ -56,23 +58,29 @@ public class AccountBorrowedFragment extends AbstractListFragment implements
     public void onActivityCreated(Bundle savedInstanceState)
 	{
         super.onActivityCreated(savedInstanceState);
-        
+
         this.checkedItems = new ArrayList<PaiaDocument>();
-        
+
         // We have a menu item to show in action bar.
         this.setHasOptionsMenu(true);
-        
+
         // Create an empty adapter we will use to display the loaded data.
-        this.mAdapter = new BorrowedAdapter(getActivity(), R.layout.fragment_borrowed_item_view, PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS));
+        this.mAdapter = new BorrowedAdapter(getActivity(), R.layout.fragment_borrowed_item_view, PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.WRITE_ITEMS));
         this.setListAdapter(mAdapter);
-        
+
         // Show progress indicator.
         this.isListShown = true;
         this.setListShown(false);
 
-        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.READ_ITEMS)) {
+        this.getLoaderManager().destroyLoader(0);
+        PaiaHelper.getInstance().ensureConnection(this);
+    }
+
+    @Override
+    public void onPaiaConnected()
+    {
+        if (PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.READ_ITEMS)) {
             // Force recreation of loader
-            this.getLoaderManager().destroyLoader(0);
             this.getLoaderManager().initLoader(0, null, this);
         } else {
             this.setListShown(true);

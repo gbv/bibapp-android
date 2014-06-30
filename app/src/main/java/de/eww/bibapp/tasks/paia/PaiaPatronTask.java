@@ -1,8 +1,9 @@
 package de.eww.bibapp.tasks.paia;
 
+import android.content.SharedPreferences;
+
 import org.json.JSONObject;
 
-import android.content.SharedPreferences;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragments.AccountFragment;
@@ -28,7 +29,7 @@ public class PaiaPatronTask extends AbstractPaiaTask
 		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
 		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
 		
-		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getUsername() + "?access_token=" + PaiaHelper.getAccessToken();
+		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getInstance().getUsername() + "?access_token=" + PaiaHelper.getInstance().getAccessToken();
 		
 		JSONObject paiaResponse = new JSONObject();
 		

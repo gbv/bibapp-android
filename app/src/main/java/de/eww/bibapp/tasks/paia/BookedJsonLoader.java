@@ -1,5 +1,13 @@
 package de.eww.bibapp.tasks.paia;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -7,13 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
@@ -48,7 +49,7 @@ public class BookedJsonLoader extends AbstractLoader<PaiaDocument>
 		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
 		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
 		
-		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getUsername() + "/items?access_token=" + PaiaHelper.getAccessToken();
+		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getInstance().getUsername() + "/items?access_token=" + PaiaHelper.getInstance().getAccessToken();
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl);
 		
 		try

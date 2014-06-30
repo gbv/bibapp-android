@@ -1,7 +1,5 @@
 package de.eww.bibapp.fragments;
 
-import java.util.List;
-
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -10,6 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
@@ -28,6 +29,7 @@ import de.eww.bibapp.tasks.paia.FeeJsonLoader;
  */
 public class AccountFeesFragment extends AbstractListFragment implements
 	LoaderManager.LoaderCallbacks<List<FeeEntry>>,
+    PaiaHelper.PaiaListener,
 	AsyncCanceledInterface
 {
 	// This is the Adapter being used to display the list's data.
@@ -49,9 +51,15 @@ public class AccountFeesFragment extends AbstractListFragment implements
         this.isListShown = true;
         this.setListShown(false);
 
-        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.READ_FEES)) {
+        this.getLoaderManager().destroyLoader(0);
+        PaiaHelper.getInstance().ensureConnection(this);
+    }
+
+    @Override
+    public void onPaiaConnected()
+    {
+        if (PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.READ_FEES)) {
             // Force recreation of loader
-            this.getLoaderManager().destroyLoader(0);
             this.getLoaderManager().initLoader(0, null, this);
         } else {
             this.setListShown(true);

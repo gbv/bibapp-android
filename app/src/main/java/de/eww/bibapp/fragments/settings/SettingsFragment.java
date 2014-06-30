@@ -14,10 +14,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
@@ -78,7 +78,7 @@ public class SettingsFragment extends Fragment implements
 		
 		// select the correct item
 		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
-		catalogSpinner.setSelection(spinnerValue);
+		catalogSpinner.setSelection(spinnerValue, false);
 		
 		// set listener
 		catalogSpinner.setOnItemSelectedListener(this);
@@ -140,7 +140,7 @@ public class SettingsFragment extends Fragment implements
 				editor.putString("store_login_password", null);
 				
 				// and remove stored login information
-				PaiaHelper.reset();
+				PaiaHelper.getInstance().reset();
 			}
 		} else {
 			// store dbs decision
@@ -164,10 +164,12 @@ public class SettingsFragment extends Fragment implements
 		SharedPreferences.Editor editor = settings.edit();
 		
 		editor.putInt("local_catalog", pos);
+        editor.putString("store_login_username", null);
+        editor.putString("store_login_password", null);
 		
 		editor.commit();
-		
-		PaiaHelper.reset();
+
+        PaiaHelper.getInstance().reset();
 	}
 
 	@Override

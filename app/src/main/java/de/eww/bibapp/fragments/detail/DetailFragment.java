@@ -1,17 +1,5 @@
 package de.eww.bibapp.fragments.detail;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
@@ -35,6 +23,19 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.DaiaLoaderInterface;
 import de.eww.bibapp.MainActivity;
@@ -580,16 +581,14 @@ public class DetailFragment extends AbstractListFragment implements
 	public void onActionRequest(DialogFragment dialog)
 	{
 		// ensure paia connection
-		PaiaHelper paiaHelper = new PaiaHelper(this);
-		paiaHelper.ensureConnection();
+        PaiaHelper.getInstance().ensureConnection(this);
 	}
 
 	@Override
 	public void onActionOrder(DialogFragment dialog)
 	{
 		// ensure paia connection
-		PaiaHelper paiaHelper = new PaiaHelper(this);
-		paiaHelper.ensureConnection();
+        PaiaHelper.getInstance().ensureConnection(this);
 	}
 	
 	@Override
@@ -653,7 +652,7 @@ public class DetailFragment extends AbstractListFragment implements
 	public void onPaiaConnected()
 	{
         // check for scope
-        if (PaiaHelper.hasScope(PaiaHelper.SCOPES.WRITE_ITEMS)) {
+        if (PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.WRITE_ITEMS)) {
             // start async task to send paia request
             JSONObject jsonRequest = new JSONObject();
             JSONArray jsonArray = new JSONArray();
