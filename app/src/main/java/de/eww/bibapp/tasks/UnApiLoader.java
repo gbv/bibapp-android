@@ -259,6 +259,14 @@ public class UnApiLoader extends AsyncTaskLoader<String>
                             response += " " + searchSplit[1];
                         }
                     }
+
+                    /**
+                     * Wenn die Zeile mit In:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
+                     */
+                    searchSplit = lines[currentLine].split("In: ");
+                    if (searchSplit.length > 1) {
+                        response += " " + searchSplit[currentLine];
+                    }
                 }
             }
         }
