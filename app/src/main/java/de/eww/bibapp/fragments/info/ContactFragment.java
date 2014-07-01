@@ -3,6 +3,8 @@ package de.eww.bibapp.fragments.info;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -44,14 +46,17 @@ public class ContactFragment extends Fragment
 		// inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.fragment_contact_main, container, false);
 		
-		TextView contactView = (TextView) v.findViewById(R.id.contact_text);
-		contactView.setText(this.getText(R.string.contact_text));
-		
 		ActionBar actionBar = MainActivity.instance.getActionBar();
 		
 		// set title
 		actionBar.setTitle(R.string.actionbar_info);
 		actionBar.setSubtitle(R.string.info_button_contact);
+
+        // set text
+        TextView textView = (TextView) v.findViewById(R.id.contact);
+        String contactText = this.getActivity().getResources().getString(R.string.contact_text);
+        textView.setText(Html.fromHtml(contactText));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
 		
 		// enable up navigation
 		actionBar.setDisplayHomeAsUpEnabled(true);

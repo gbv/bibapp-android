@@ -3,11 +3,15 @@ package de.eww.bibapp.fragments.info;
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 
@@ -48,6 +52,12 @@ public class ImpressumFragment extends Fragment
 		// set title
 		actionBar.setTitle(R.string.actionbar_info);
 		actionBar.setSubtitle(R.string.info_button_impressum);
+
+        // set text
+        TextView textView = (TextView) v.findViewById(R.id.impressum);
+        String impressumText = this.getActivity().getResources().getString(R.string.impressum_text);
+        textView.setText(Html.fromHtml(impressumText));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
 		
 		// enable up navigation
 		actionBar.setDisplayHomeAsUpEnabled(true);
