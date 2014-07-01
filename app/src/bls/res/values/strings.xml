@@ -12,48 +12,52 @@
 
     <!-- contact -->
     <string name="contact_text">
-        <b>Bibliothek der Bucerius Law School</b>\n
-        \n
-        <b>Anschrift</b>\n
-        Bibliothek der Bucerius Law School\n
-        Jungiusstrasse 6\n
-        20355 Hamburg\n
-        \n
-        www.law-school.de/bibliothek.html\n
-        \n
-        <b>Kontakt</b>\n
-        Telefon: (040) 307-061-34\n
+        <![CDATA[
+        <b>Bibliothek der Bucerius Law School</b><br/>
+        <br/>
+        <b>Anschrift</b><br/>
+        Bibliothek der Bucerius Law School<br/>
+        Jungiusstrasse 6<br/>
+        20355 Hamburg<br/>
+        <br/>
+        www.law-school.de/bibliothek.html<br/>
+        <br/>
+        <b>Kontakt</b><br/>
+        Telefon: (040) 307-061-34<br/>
         Mobil: (0176) 706-634-47
-        E-Mail: martin.vorberg@law-school.de\n
+        E-Mail: martin.vorberg@law-school.de
+        ]]>
     </string>
 
     <!-- impressum -->
     <string name="impressum_text">
-        <b>Anbieter</b>\n
-        Bibliothek der Bucerius Law School\n
-        Jungiusstrasse 6\n
-        20355 Hamburg\n
-        \n
-        E-Mail: martin.vorberg@law-school.de\n
-        Telefon: (040) 307-061-34\n
-        Mobil: (0176) 706-634-47\n
-        \n
-        <b>Vertreter</b>\n
-        Die Bibliothek der Bucerius Law School ist das Zentrum der juristischen Informationen unserer Hochschule, sie wird verantwortlich geleitet durch Herrn Martin Vorberg. Die Bucerius Law School gGmbH ist die erste private Hochschule für Rechtswissenschaft in Deutschland, sie wird verantwortlich geleitet durch Herrn Dr. Hariolf Wenzler.\n
-        Die Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE 212998891.\n
-        \n
-        <b>Angaben zum Datenschutz</b>\n
-        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.\n
-        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).\n
-        \n
-        <b>Rechtliche Hinweise zur Haftung</b>\n
-        Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.\n
-        Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.\n
-        \n
-        <b>Gestaltung und Umsetzung</b>\n
-        Entwurf und Konzeption\n
-        A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)\n
-        Umsetzung\n
-        Effective Webwork GmbH\n
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        Bibliothek der Bucerius Law School<br/>
+        Jungiusstrasse 6<br/>
+        20355 Hamburg<br/>
+        <br/>
+        E-Mail: martin.vorberg@law-school.de<br/>
+        Telefon: (040) 307-061-34<br/>
+        Mobil: (0176) 706-634-47<br/>
+        <br/>
+        <b>Vertreter</b><br/>
+        Die Bibliothek der Bucerius Law School ist das Zentrum der juristischen Informationen unserer Hochschule, sie wird verantwortlich geleitet durch Herrn Martin Vorberg. Die Bucerius Law School gGmbH ist die erste private Hochschule für Rechtswissenschaft in Deutschland, sie wird verantwortlich geleitet durch Herrn Dr. Hariolf Wenzler.<br/>
+        Die Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE 212998891.<br/>
+        <br/>
+        <b>Angaben zum Datenschutz</b><br/>
+        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
+        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung</b><br/>
+        Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
+        Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
+        <br/>
+        <b>Gestaltung und Umsetzung</b><br/>
+        Entwurf und Konzeption<br/>
+        A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
+        Umsetzung<br/>
+        Effective Webwork GmbH
+        ]]>
     </string>
 </resources>

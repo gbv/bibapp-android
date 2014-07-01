@@ -9,43 +9,53 @@
     
     <!-- contact -->
     <string name="contact_text">
-        <b>Anschrift</b>\n
-        Thüringer Universitäts- und Landesbibliothek Jena Postfach\n
-        07743 Jena\n
-		\n
-        http://www.thulb.uni-jena.de\n
-		\n
-        <b>Auskunft</b>\n
-        Telefon: +49 3641 9-40100\n
-        E-mail: info@thulb.uni-jena.de\n
-        \n
-        <b>Ausleihe</b>\n
-        Telefon: +49 3641 9-40110\n
+        <![CDATA[
+        <b>Anschrift</b><br/>
+        Thüringer Universitäts- und Landesbibliothek Jena Postfach<br/>
+        07743 Jena<br/>
+		<br/>
+        <a href="http://www.thulb.uni-jena.de">http://www.thulb.uni-jena.de</a><br/>
+		<br/>
+        <b>Auskunft</b><br/>
+        Telefon: +49 3641 9-40100<br/>
+        E-mail: info@thulb.uni-jena.de<br/>
+        <br/>
+        <b>Ausleihe</b><br/>
+        Telefon: +49 3641 9-40110<br/>
         E-mail: thulb_ausleihe@thulb.uni-jena.de
+        ]]>
     </string>
-    
+
     <!-- impressum -->
     <string name="impressum_text">
-        <b>Anbieter</b>\n
-        Thüringer Universitäts- und Landesbibliothek Jena Bibliotheksplatz 2\n
-        07743 Jena\n
-		\n
-		E-Mail: thulb_direktion@thulb.uni-jena.de\n
-		Telefon: +49 3641 9-40000\n
-		Telefax: +49 3641 9-40002\n
-		\n
-        <b>Kontakt</b>\n
-        Anschrift\n
-        Thüringer Universitäts- und Landesbibliothek Jena Postfach\n
-        07743 Jena\n
-        http://www.thulb.uni-jena.de\n
-        \n
-        Auskunft\n
-        Telefon: +49 3641 9-40100\n
-        E-Mail: info@thulb.uni-jena.de\n
-        \n
-        Ausleihe\n
-        Telefon: +49 3641 9-40110\n
-        E-Mail: thulb_ausleihe@thulb.uni-jena.de
+        <![CDATA[
+        <b>Anbieter gemäß § 5 TMG</b><br/>
+        Thüringer Universitäts- und Landesbibliothek Jena (ThULB)<br/>
+        Vertreten durch: Dr. Sabine Wefers, Leitende Bibliotheksdirektorin<br/>
+        Bibliotheksplatz 2<br/>
+        07743 Jena<br/>
+        Tel.: +49 3641 9-40000<br/>
+        Fax: +49 3641 9-40002<br/>
+        <a href="http://www.thulb.uni-jena.de/Mailformulare/Direktion-p-1013.html">E-Mail</a><br/>
+        <br/>
+        <b>Vertretung</b><br/>
+        Die Thüringer Universitäts- und Landesbibliothek Jena ist eine Einrichtung der Friedrich-Schiller-Universität Jena. Die Friedrich-Schiller-Universität Jena ist eine Körperschaft des Öffentlichen Rechts. Sie wird gesetzlich vertreten durch den Rektor Prof. Dr. Klaus Dicke.<br/>
+        Friedrich-Schiller-Universität Jena<br/>
+        Fürstengraben 1<br/>
+        07743 Jena<br/>
+        <br/>
+        <b>Umsatzsteueridentifikationsnummer</b><br/>
+        Die Umsatzsteueridentifikationsnummer der Friedrich-Schiller-Universität lautet DE 150546536.<br/>
+        <br/>
+        <b>Angaben zum Datenschutz</b><br/>
+        Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“ für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
+        <br/>
+        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung</b><br/>
+        Diese App wurde mit großer Sorgfalt erstellt und geprüft; dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Thüringer Universitäts- und Landesbibliothek Jena für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt. Die Thüringer Universitäts- und Landesbibliothek behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
+        <br/>
+        Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Links sind ausschließlich deren Anbieter verantwortlich.
+        ]]>
     </string>
 </resources>
