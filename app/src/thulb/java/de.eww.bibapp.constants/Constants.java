@@ -151,7 +151,7 @@ public final class Constants
     /**
      * DBS Counting (called on every search request)
      */
-    public static String DBS_COUNTING_URL = "";
+    public static String DBS_COUNTING_URL = "http://pwk.thulb.uni-jena.de/piwik.php?idsite=1&rec=1";
 
     /**
      * If true, either the storage or the department location of an exemplar are displayed, otherwise both if available
