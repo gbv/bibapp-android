@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- google maps api v2 -->
+    <string name="google_maps_v2_key">AIzaSyDBIpea5Kko0cBAl_3R08vcLJqsWvyPazo</string>
+
+    <!-- general -->
+    <string name="app_name">BibApp SM</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Fachhochschule Schmalkalden</b><br/>
+        <br/>
+        Cellarius Bibliothek<br/>
+        Blechhammer, Haus I<br/>
+        98574 Schmalkalden<br/>
+        <br/>
+        http://www.fh-schmalkalden.de/bibliothek<br/>
+        Tel.: 03683 6881785<br/>
+        Fax: 03683 6881923<br/>
+        E-Mail: bibliothek@fh-schmalkalden.de
+		]]>
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        Fachhochschule Schmalkalden<br/>
+        Cellarius Bibliothek<br/>
+        Blechhammer, Haus I<br/>
+        98574 Schmalkalden<br/>
+        <br/>
+        http://www.fh-schmalkalden.de/bibliothek<br/>
+        Tel.: 03683 6881785<br/>
+        Fax: 03683 6881923<br/>
+        E-Mail: bibliothek@fh-schmalkalden.de<br/>
+        <br/>
+        <b>Impressum der FH Schmalkalden</b><br/>
+        http://www.fh-schmalkalden.de/Impressum.html<br/>
+        <br/>
+        <b>Angaben zum Datenschutz</b><br/>
+        Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Nutzernummer und -passwort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter "Optionen" den Punkt "Zugangsdaten speichern" für das jeweilige Konto. Damit stimmen Sie der Speicherung der Daten auf Ihrem mobilen Endgerät zu.<br/>
+        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes (VZG) in Göttingen. Die Datenübertragung geschieht dabei über eine verschlüsselte Verbindung (https).<br/>
+        <br/>
+        <b>Zählpixelverfahren Deutsche Bibliotheksstatistik</b><br/>
+        Die Cellarius Bibliothek der Fachhochschule Schmalkalden nutzt im Rahmen ihrer Teilnahme an der Deutschen Bibliotheksstatistik ein Verfahren zur Zählung der Besuche auf den Katalogseiten. Es wird eine Kennung der Bibliothek und der betreffenden Seite, der Zeitpunkt des Aufrufs und eine Signatur des aufrufenden Gerätes gespeichert.<br/>
+        Die Signatur wird mittels einer Einwegfunktion aus IP-Adresse, Kennung des zugreifenden Programms und Proxy-Information gebildet. Die Erhebung, Speicherung und Auswertung dieser Daten erfolgt in pseudonymisierter Form, d.h. die Signatur ist nicht bestimmten Personen zuzuordnen. Eine Speicherung insbesondere der IP-Adresse findet nicht statt. Die pseudonymen Einzeldaten werden nach spätestens 24 Stunden aufsummiert und damit anonymisiert.<br/>
+        Die gespeicherten Daten werden statistisch ausgewertet, um die Internetangebote bedarfsgerecht zu gestalten und weiterzuentwickeln. Die Daten werden nur zu diesem Zweck genutzt und im Anschluss an die Auswertung gelöscht.<br/>
+        Mit der technischen und organisatorischen Umsetzung des Verfahrens ist die Hochschule der Medien Stuttgart beauftragt. Sie hat das Verfahren nach den Maßgaben der gesetzlichen Bestimmungen der Datenschutzgesetze und des Telemediengesetzes (TMG) entwickelt und sich zu deren Einhaltung verpflichtet.<br/>
+        Sie haben die Möglichkeit, die Erhebung der genannten Daten im Menü "Optionen" im Punkt "Zählpixel" zu deaktivieren.<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung</b><br/>
+        Die BibApp wurde mit größter Sorgfalt erstellt und geprüft. Dennoch kann auf Grund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der Cellarius Bibliothek Schmalkalden für Schäden, die durch die Nutzung der App, der angebotenen Funktionen oder durch Fehlfunktionen der App entstehen, ist grundsätzlich ausgeschlossen.<br/>
+        Die Cellarius Bibliothek Schmalkalden behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
+        Die App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
+        <br/>
+        <b>Gestaltung und Umsetzung</b>
+        ursprünglich: UB Lüneburg, UB Hildesheim, VZG<br/>
+        Anpassung: FH Schmalkalden<br/>
+        Umsetzung: effective WEBWORK GmbH
+		]]>
+    </string>
+</resources>

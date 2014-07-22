@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- google maps api v2 -->
+    <string name="google_maps_v2_key">AIzaSyDs2-Fool8UzYJrpTIfXh4Xg-xoobxpBJ8</string>
+
+    <!-- general -->
+    <string name="app_name">BibApp UB Weimar</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Fragen an die Bibliothek:</b><br/>
+        Telefon: 03643/582801<br/>
+        E-Mail: info@ub.uni-weimar.de
+        ]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Universitätsbibliothek der Bauhaus-Universität Weimar</b><br/>
+        Steubenstr. 6<br/>
+        99423 Weimar<br/>
+        Telefon: 03643/582801<br/>
+        Fax: 03643/582802<br/>
+        E-Mail: info@ub.uni-weimar.de<br/>
+        <br/>
+        Die Bauhaus-Universität Weimar ist eine Körperschaft des öffentlichen Rechts.<br/>
+        Sie wird durch ihren Rektor, Herrn Prof. Dr. Karl Beucke, gesetzlich vertreten.<br/>
+        Zuständige Aufsichtsbehörde: Thüringer Ministerium für Bildung, Wissenschaft und Kultur.
+        ]]>
+    </string>
+</resources>
