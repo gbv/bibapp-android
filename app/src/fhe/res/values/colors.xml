@@ -19,6 +19,6 @@
     <color name="list_alternate">#CCCCCC</color>
     <color name="second_text_color">#8f8f8f</color>
     
-    <color name="ambient_color">#00599E</color>
+    <color name="ambient_color">#003366</color>
     <color name="actionbar_text_color">#ffffff</color>
 </resources>

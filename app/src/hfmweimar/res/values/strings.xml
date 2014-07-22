@@ -5,30 +5,64 @@
     <string name="google_maps_v2_key">AIzaSyDs2-Fool8UzYJrpTIfXh4Xg-xoobxpBJ8</string>
 
     <!-- general -->
-    <string name="app_name">BibApp UB Weimar</string>
+    <string name="app_name">BibApp HFM We</string>
     
     <!-- contact -->
     <string name="contact_text">
         <![CDATA[
-        <b>Fragen an die Bibliothek:</b><br/>
-        Telefon: 03643/582801<br/>
-        E-Mail: info@ub.uni-weimar.de
+        <b>Hochschule für Musik FRANZ LISZT Weimar</b><br/>
+        Hochschulbibliothek<br/>
+        Platz der Demokratie 2/3<br/>
+        99423 Weimar<br/>
+        <br/>
+        Tel. +49 (0) 3643 | 555 124<br/>
+        Fax +49 (0) 3643 | 555 160 <br/>
+        E-Mail: bibliothek@hfm-weimar.de
         ]]>
     </string>
 
     <!-- impressum -->
     <string name="impressum_text">
         <![CDATA[
-        <b>Universitätsbibliothek der Bauhaus-Universität Weimar</b><br/>
-        Steubenstr. 6<br/>
+        <b>Hochschule für Musik FRANZ LISZT Weimar</b><br/>
+        Hochschulbibliothek<br/>
+        Platz der Demokratie 2/3<br/>
         99423 Weimar<br/>
-        Telefon: 03643/582801<br/>
-        Fax: 03643/582802<br/>
-        E-Mail: info@ub.uni-weimar.de<br/>
+        Tel. +49 (0) 3643 | 555 124<br/>
+        Fax +49 (0) 3643 | 555 160 <br/>
         <br/>
-        Die Bauhaus-Universität Weimar ist eine Körperschaft des öffentlichen Rechts.<br/>
-        Sie wird durch ihren Rektor, Herrn Prof. Dr. Karl Beucke, gesetzlich vertreten.<br/>
-        Zuständige Aufsichtsbehörde: Thüringer Ministerium für Bildung, Wissenschaft und Kultur.
+        Die Hochschule für Musik FRANZ LISZT Weimar ist eine rechtsfähige Körperschaft des öffentlichen Rechts und zugleich eine staatliche Einrichtung gemäß § 2 Absatz 1 Thüringer Hochschulgesetz.<br/>
+        <br/>
+        Sie wird durch ihren Präsidenten, Herrn Prof. Dr. Christoph Stölzl, gesetzlich vertreten.<br/>
+        Zuständige Aufsichtsbehörde: Thüringer Ministerium für Bildung, Wissenschaft und Kultur.<br/>
+        <br/>
+        <b>Hochschule für Musik FRANZ LISZT Weimar</b><br/>
+        Hochschulbibliothek<br/>
+        Platz der Demokratie 2/3<br/>
+        99423 Weimar<br/>
+        Tel. +49 (0) 3643 | 555 124<br/>
+        Fax +49 (0) 3643 | 555 160 <br/>
+        <br/>
+        Die Hochschule für Musik FRANZ LISZT Weimar ist eine rechtsfähige Körperschaft des öffentlichen Rechts und zugleich eine staatliche Einrichtung gemäß § 2 Absatz 1 Thüringer Hochschulgesetz.<br/>
+        <br/>
+        Sie wird durch ihren Präsidenten, Herrn Prof. Dr. Christoph Stölzl, gesetzlich vertreten.<br/>
+        Zuständige Aufsichtsbehörde: Thüringer Ministerium für Bildung, Wissenschaft und Kultur.<br/>
+        <br/>
+        <b>Angaben zum Datenschutz</b><br/>
+        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten  (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“ für das jeweilige Konto. Mit dieser  Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
+        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung</b><br/>
+        Diese App wurde von der Hochschule für Musik FRANZ LISZT Weimar mit großer Sorgfalt erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Hochschule für Musik FRANZ LISZT Weimar für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt. Die Hochschule für Musik FRANZ LISZT Weimar behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
+        <br/>
+        Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
+        <br/>
+        Gestaltung und Umsetzung<br/>
+        Entwurf und Konzeption<br/>
+        K. Hofmann<br/>
+        <br/>
+        Umsetzung<br/>
+        effective WEBWORK GmbH
         ]]>
     </string>
 </resources>

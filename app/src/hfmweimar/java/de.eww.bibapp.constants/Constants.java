@@ -15,7 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "https://paia.gbv.de/DE-Wim2"
+        "https://paia.gbv.de/isil/DE-Wim8"
     };
 
     /**
@@ -32,7 +32,7 @@ public final class Constants
      * @see BIB_CODES and keep order in sync
      */
     public static final String[][] LOCAL_CATALOGS = {
-        { "opac-de-wim2", "OPAC UB Weimar", "UB Weimar" }
+        { "opac-de-wim8", "OPAC HFM We", "HFM Weimar" }
     };
 
     public static final int LOCAL_CATALOG_DEFAULT = 0;
@@ -72,7 +72,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] BIB_CODES = {
-        "DE-Wim2"
+        "DE-Wim8"
     };
 
     /**
@@ -89,7 +89,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] DAIA_BIB_CODES = {
-        "DE-Wim2"
+        "DE-Wim8"
     };
 
     /**
@@ -110,7 +110,7 @@ public final class Constants
     /**
      * An URL to a news feed
      */
-    public static final String NEWS_URL = "http://www.uni-weimar.de/de/universitaet/aktuell/pinnwaende/rss/bereich/bibliothek/";
+    public static final String NEWS_URL = "";
 
     /**
      * An URL to a homepage
@@ -150,7 +150,7 @@ public final class Constants
     /**
      * DBS Counting (called on every search request)
      */
-    public static String DBS_COUNTING_URL = "http://dbspixel.hbz-nrw.de/count?id=EM482&page=2";
+    public static String DBS_COUNTING_URL = "";
 
     /**
      * If true, either the storage or the department location of an exemplar are displayed, otherwise both if available

@@ -15,7 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "https://paia.gbv.de/DE-564"
+        "https://paia.gbv.de/DE-546"
     };
 
     /**
@@ -32,7 +32,7 @@ public final class Constants
      * @see BIB_CODES and keep order in sync
      */
     public static final String[][] LOCAL_CATALOGS = {
-        { "opac-de-564", "OPAC NDH", "NDH" }
+        { "opac-de-546", "OPAC FHE", "FHE" }
     };
 
     public static final int LOCAL_CATALOG_DEFAULT = 0;
@@ -72,7 +72,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] BIB_CODES = {
-        "DE-564"
+        "DE-546"
     };
 
     /**
@@ -89,7 +89,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] DAIA_BIB_CODES = {
-        "DE-564"
+        "DE-546"
     };
 
     /**
@@ -110,7 +110,7 @@ public final class Constants
     /**
      * An URL to a news feed
      */
-    public static final String NEWS_URL = "";
+    public static final String NEWS_URL = "http://www.fh-erfurt.de/fhe/?id=663&type=100&tx_ttnews[cat]=2";
 
     /**
      * An URL to a homepage
