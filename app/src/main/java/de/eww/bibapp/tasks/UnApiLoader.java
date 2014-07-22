@@ -259,13 +259,22 @@ public class UnApiLoader extends AsyncTaskLoader<String>
                             response += " " + searchSplit[1];
                         }
                     }
+                }
+            }
 
+            currentLine++;
+            if (lines.length > currentLine) {
+                /**
+                 * Iteriere alle verbleibenden Zeilen
+                 */
+                for (int i = currentLine; i < lines.length; i++) {
                     /**
                      * Wenn die Zeile mit In:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
                      */
-                    searchSplit = lines[currentLine].split("In: ");
+                    searchSplit = lines[i].split("In: ");
                     if (searchSplit.length > 1) {
-                        response += " " + searchSplit[currentLine];
+                        response += " " + lines[i];
+                        break;
                     }
                 }
             }
