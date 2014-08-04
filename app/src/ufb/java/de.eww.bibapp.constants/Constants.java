@@ -15,9 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "https://paia.gbv.de/DE-1867",
-        "https://paia.gbv.de/DE-547",
-        "https://paia.gbv.de/DE-39"
+        "https://opac.uni-erfurt.de/DE-547"
     };
 
     /**
@@ -34,9 +32,7 @@ public final class Constants
      * @see BIB_CODES and keep order in sync
      */
     public static final String[][] LOCAL_CATALOGS = {
-        { "opac-de-1867", "Universitäts- und Forschungsbibliothek Erfurt/Gotha", "UFB" },
-        { "opac-de-547", "Universitätsbibliothek Erfurt/Gotha", "UB" },
-        { "opac-de-39", "Forschungsbibliothek Gotha", "FB" }
+        { "opac-de-547", "Universitäts- und Forschungsbibliothek Erfurt/Gotha", "UFB" }
     };
 
     public static final int LOCAL_CATALOG_DEFAULT = 0;
@@ -76,9 +72,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] BIB_CODES = {
-        "DE-1867",
-        "DE-547",
-        "DE-39"
+        "DE-547"
     };
 
     /**
@@ -95,9 +89,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] DAIA_BIB_CODES = {
-        "DE-1867",
-        "DE-547",
-        "DE-39"
+        "opac-de-547"
     };
 
     /**
@@ -107,7 +99,7 @@ public final class Constants
     {
         if ( isLocal == true )
         {
-            return "http://daia.gbv.de/isil/" + Constants.DAIA_BIB_CODES[localCatalogIndex] + "?id=ppn:" + ppn + "&format=xml";
+            return "http://daia.gbv.de/?id=" + Constants.DAIA_BIB_CODES[localCatalogIndex] + ":ppn:" + ppn + "&format=xml";
         }
         else
         {
