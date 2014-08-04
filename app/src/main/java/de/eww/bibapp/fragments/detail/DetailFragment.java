@@ -369,18 +369,17 @@ public class DetailFragment extends AbstractListFragment implements
 	private String getIndexUrl()
 	{
 		String indexUrl = "";
-		
-		// determ what actions are available for this location
-		if ( this.item.onlineUrl.isEmpty() )
+
+		if (!this.item.indexArray.isEmpty())
 		{
 			// determ the index to display
 			Iterator<String> it = this.item.indexArray.iterator();
-			
+
 			while ( it.hasNext() )
 			{
 				// try to find pdf version
 				indexUrl = it.next();
-				
+
 				if ( indexUrl.substring(indexUrl.length()-3, indexUrl.length()).equals("pdf") )
 				{
 					break;
