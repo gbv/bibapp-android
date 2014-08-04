@@ -1,6 +1,11 @@
 package de.eww.bibapp;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Build;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
@@ -17,6 +22,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.KeyStore;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
@@ -56,7 +63,24 @@ public class URLConnectionHelper
             ((HttpsURLConnection) this.connection).setSSLSocketFactory(this.createAdditionalCertsSSLSocketFactory());
             ((HttpsURLConnection) this.connection).setHostnameVerifier(org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 		}
-		
+
+        // modify user agent
+        try {
+            PackageInfo packageInfo = MainActivity.instance.getPackageManager().getPackageInfo(MainActivity.instance.getPackageName(), 0);
+
+            List<String> userAgentInformation = new ArrayList<String>();
+            userAgentInformation.add("BibApp/" + packageInfo.versionName);
+            userAgentInformation.add("Android");
+            userAgentInformation.add(Build.MANUFACTURER);
+            userAgentInformation.add(Build.MODEL);
+            userAgentInformation.add(Build.HARDWARE);
+
+            String userAgentString = TextUtils.join(" ", userAgentInformation);
+            this.connection.setRequestProperty("User-Agent", userAgentString);
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
 		this.connection.setReadTimeout(Constants.READ_TIMEOUT);
 		this.connection.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
 		this.connection.setDoInput(true);
