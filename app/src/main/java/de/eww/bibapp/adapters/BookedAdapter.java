@@ -1,6 +1,7 @@
 package de.eww.bibapp.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
@@ -41,9 +42,18 @@ public class BookedAdapter extends ArrayAdapter<PaiaDocument>
 		aboutView.setText(document.getAbout());
 		signatureView.setText(document.getLabel());
 
-        if (document.getDueDate() != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-            dateView.setText(dateFormat.format(document.getDueDate()));
+        if (document.getStartDate() != null) {
+            SimpleDateFormat dateFormatWithoutTime = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+            SimpleDateFormat dateFormatWithTime = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
+
+            Date startDate = document.getStartDate();
+            String startDateString = dateFormatWithTime.format(startDate);
+
+            if (startDateString.contains("00:00")) {
+                startDateString = dateFormatWithoutTime.format(startDate);
+            }
+
+            dateView.setText(startDateString);
         }
 
         // checkbox

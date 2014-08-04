@@ -14,6 +14,8 @@ public class PaiaDocument {
     private int renewals;
     private int reminder;
     private Date dueDate;
+    private Date startDate;
+    private Date endDate;
     private boolean canCancel;
     private boolean canRenew;
     private String error;
@@ -102,6 +104,22 @@ public class PaiaDocument {
 
     public void setDueDate(Date dueDate) {
         this.dueDate = dueDate;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public boolean isCanCancel() {

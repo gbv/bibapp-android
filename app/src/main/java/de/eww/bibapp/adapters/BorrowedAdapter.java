@@ -1,6 +1,7 @@
 package de.eww.bibapp.adapters;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import android.content.Context;
@@ -43,12 +44,30 @@ public class BorrowedAdapter extends ArrayAdapter<PaiaDocument>
 		
 		aboutView.setText(document.getAbout());
 		signatureView.setText(document.getLabel());
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-		
-		if (document.getDueDate() != null) {
-			dateView.setText(dateFormat.format(document.getDueDate()));
-		}
+
+        SimpleDateFormat dateFormatWithoutTime = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		SimpleDateFormat dateFormatWithTime = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
+
+        if (document.getEndDate() != null) {
+            Date endDate = document.getEndDate();
+            String endDateString = dateFormatWithTime.format(endDate);
+
+            if (endDateString.contains("00:00")) {
+                endDateString = dateFormatWithoutTime.format(endDate);
+            }
+
+            dateView.setText(endDateString);
+        } else if(document.getDueDate() != null) {
+            Date dueDate = document.getDueDate();
+
+            String dueDateString = dateFormatWithTime.format(dueDate);
+
+            if (dueDateString.contains("00:00")) {
+                dueDateString = dateFormatWithoutTime.format(dueDate);
+            }
+
+            dateView.setText(dueDateString);
+        }
 		
 		queueView.setText(String.valueOf(document.getQueue()));
 		renewalView.setText(String.valueOf(document.getRenewals()));

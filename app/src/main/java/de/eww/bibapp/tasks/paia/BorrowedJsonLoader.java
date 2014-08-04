@@ -3,12 +3,15 @@ package de.eww.bibapp.tasks.paia;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,15 +80,56 @@ public class BorrowedJsonLoader extends AbstractLoader<PaiaDocument>
 					int status = borrowedEntry.getInt("status");
 					if ( status == 2 || status == 3 || status == 4 )
 					{
+                        String[] acceptedDateFormats = {
+                            "yyyy-MM-dd",
+                            "yyyy-MM-dd'T'HH:mm:sszzz"
+                        };
+
                         Date date = null;
                         if (borrowedEntry.has("duedate")) {
                             String borrowedDateString = borrowedEntry.getString("duedate");
-                            SimpleDateFormat simpleDateFormat;
-
 
                             if (!borrowedDateString.isEmpty()) {
-                                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
-                                date = simpleDateFormat.parse(borrowedEntry.getString("duedate"));
+                                for (String format: acceptedDateFormats) {
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.GERMANY);
+                                        date = sdf.parse(borrowedDateString);
+                                        break;
+                                    } catch (ParseException e) {
+                                    }
+                                }
+                            }
+                        }
+
+                        Date startDate = null;
+                        if (borrowedEntry.has("starttime")) {
+                            String startTime = borrowedEntry.getString("starttime");
+
+                            if (!startTime.isEmpty()) {
+                                for (String format: acceptedDateFormats) {
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.GERMANY);
+                                        startDate = sdf.parse(startTime);
+                                        break;
+                                    } catch (ParseException e) {
+                                    }
+                                }
+                            }
+                        }
+
+                        Date endDate = null;
+                        if (borrowedEntry.has("endtime")) {
+                            String endTime = borrowedEntry.getString("endtime");
+
+                            if (!endTime.isEmpty()) {
+                                for (String format: acceptedDateFormats) {
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.GERMANY);
+                                        endDate = sdf.parse(endTime);
+                                        break;
+                                    } catch (ParseException e) {
+                                    }
+                                }
                             }
                         }
 
@@ -101,6 +145,8 @@ public class BorrowedJsonLoader extends AbstractLoader<PaiaDocument>
                         document.setRenewals(borrowedEntry.has("renewals") ? borrowedEntry.getInt("renewals") : 0);
                         document.setReminder(borrowedEntry.has("reminder") ? borrowedEntry.getInt("reminder") : 0);
                         document.setDueDate(date);
+                        document.setStartDate(startDate);
+                        document.setEndDate(endDate);
                         document.setCanCancel(borrowedEntry.has("cancancel") ? borrowedEntry.getBoolean("cancancel") : true);
                         document.setCanRenew(borrowedEntry.has("canrenew") ? borrowedEntry.getBoolean("canrenew") : true);
                         document.setError(borrowedEntry.has("error") ? borrowedEntry.getString("error") : "");

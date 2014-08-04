@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.InputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -77,15 +78,57 @@ public class BookedJsonLoader extends AbstractLoader<PaiaDocument>
 					int status = bookedEntry.getInt("status");
 					if ( status != 2 && status != 3 && status != 4 )
 					{
+                        String[] acceptedDateFormats = {
+                            "yyyy-MM-dd'T'HH:mm:sszzz",
+                            "yyyy-MM-dd"
+
+                        };
+
                         Date date = null;
                         if (bookedEntry.has("duedate")) {
                             String bookedDateString = bookedEntry.getString("duedate");
-                            SimpleDateFormat simpleDateFormat;
-
 
                             if (!bookedDateString.isEmpty()) {
-                                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
-                                date = simpleDateFormat.parse(bookedEntry.getString("duedate"));
+                                for (String format: acceptedDateFormats) {
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.GERMANY);
+                                        date = sdf.parse(bookedDateString);
+                                        break;
+                                    } catch (ParseException e) {
+                                    }
+                                }
+                            }
+                        }
+
+                        Date startDate = null;
+                        if (bookedEntry.has("starttime")) {
+                            String startTime = bookedEntry.getString("starttime");
+
+                            if (!startTime.isEmpty()) {
+                                for (String format: acceptedDateFormats) {
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.GERMANY);
+                                        startDate = sdf.parse(startTime);
+                                        break;
+                                    } catch (ParseException e) {
+                                    }
+                                }
+                            }
+                        }
+
+                        Date endDate = null;
+                        if (bookedEntry.has("endtime")) {
+                            String endTime = bookedEntry.getString("endtime");
+
+                            if (!endTime.isEmpty()) {
+                                for (String format: acceptedDateFormats) {
+                                    try {
+                                        SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.GERMANY);
+                                        endDate = sdf.parse(endTime);
+                                        break;
+                                    } catch (ParseException e) {
+                                    }
+                                }
                             }
                         }
 
@@ -101,6 +144,8 @@ public class BookedJsonLoader extends AbstractLoader<PaiaDocument>
                         document.setRenewals(bookedEntry.has("renewals") ? bookedEntry.getInt("renewals") : 0);
                         document.setReminder(bookedEntry.has("reminder") ? bookedEntry.getInt("reminder") : 0);
                         document.setDueDate(date);
+                        document.setStartDate(startDate);
+                        document.setEndDate(endDate);
                         document.setCanCancel(bookedEntry.has("cancancel") ? bookedEntry.getBoolean("cancancel") : true);
                         document.setCanRenew(bookedEntry.has("canrenew") ? bookedEntry.getBoolean("canrenew") : true);
                         document.setError(bookedEntry.has("error") ? bookedEntry.getString("error") : "");
