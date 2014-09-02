@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- google maps api v2 -->
-    <string name="google_maps_v2_key">AIzaSyCUMOuE11jt52kG8Y-iwXoIc4eprA8Bjm4</string>
-
     <!-- general -->
     <string name="app_name">BibApp IL</string>
     

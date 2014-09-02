@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- google maps api v2 -->
-    <string name="google_maps_v2_key">AIzaSyBMss6ri-f5x0jdG2FdEWja6wAf_hn2myM</string>
-
     <!-- general -->
     <string name="app_name">BibApp BA Thüringen</string>
     
