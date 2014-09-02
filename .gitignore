@@ -91,3 +91,13 @@ proguard/
 *.ipr
 *.iws
 .idea/
+
+######################
+# Project related    #
+######################
+
+# ignore all maps.xml
+maps.xml
+
+# except the main one
+!app/src/main/res/values/maps.xml
