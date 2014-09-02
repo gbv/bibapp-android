@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -57,6 +58,10 @@ public class ContactFragment extends Fragment
         String contactText = this.getActivity().getResources().getString(R.string.contact_text);
         textView.setText(Html.fromHtml(contactText));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        // linkify
+        Linkify.addLinks(textView, Linkify.EMAIL_ADDRESSES);
+        Linkify.addLinks(textView, Linkify.PHONE_NUMBERS);
 		
 		// enable up navigation
 		actionBar.setDisplayHomeAsUpEnabled(true);

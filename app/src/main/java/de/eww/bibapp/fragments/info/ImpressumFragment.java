@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +59,10 @@ public class ImpressumFragment extends Fragment
         String impressumText = this.getActivity().getResources().getString(R.string.impressum_text);
         textView.setText(Html.fromHtml(impressumText));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
+
+        // linkify
+        Linkify.addLinks(textView, Linkify.EMAIL_ADDRESSES);
+        Linkify.addLinks(textView, Linkify.PHONE_NUMBERS);
 		
 		// enable up navigation
 		actionBar.setDisplayHomeAsUpEnabled(true);
