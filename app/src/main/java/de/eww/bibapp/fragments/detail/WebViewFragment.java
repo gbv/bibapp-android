@@ -69,13 +69,7 @@ public class WebViewFragment extends DialogFragment
 		// if the url points to a pdf file, we will use google docs to display the content
 		if ( this.url.length() >= 3 )
 		{
-			String fileType = this.url.substring(this.url.length()-3, this.url.length());
-			Pattern pattern = Pattern.compile("pdf", Pattern.CASE_INSENSITIVE);
-			Matcher matcher = pattern.matcher(fileType);
-			if ( matcher.find() )
-			{
-				this.url = "https://docs.google.com/viewer?url=" + this.url;
-			}
+            this.url = "https://docs.google.com/viewer?url=" + this.url;
 			webView.loadUrl(this.url);
 		}
 		
