@@ -713,11 +713,8 @@ public class DetailFragment extends AbstractListFragment implements
 	public void onPrepareOptionsMenu(Menu menu)
 	{
 		super.onPrepareOptionsMenu(menu);
-		
-		if ( !MainActivity.currentTabId.equals("watchlist") && !MainActivity.isPadVersion )
-		{
-			menu.clear();
-		}
+
+        menu.clear();
 		
 		if ( this.item != null )
 		{
