@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- custom keystore password -->
+    <string name="customstore_password">[customStoreKey]</string>
+</resources>
