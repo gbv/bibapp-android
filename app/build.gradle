@@ -9,10 +9,20 @@ android {
         targetSdkVersion 19
     }
 
+    signingConfigs {
+        releaseSigning {
+            storeFile file("/")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
+    }
+
     buildTypes {
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.releaseSigning
         }
     }
 
@@ -104,6 +114,6 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:19.1.0+'
-    compile 'com.google.android.gms:play-services:5.0.77+'
+    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.google.android.gms:play-services:5.0.89'
 }
