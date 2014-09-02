@@ -1,7 +1,5 @@
 package de.eww.bibapp.fragments.search;
 
-import java.util.ArrayList;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,6 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import de.eww.bibapp.CustomFragmentTabHost;
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;

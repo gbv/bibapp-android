@@ -1,15 +1,16 @@
 package de.eww.bibapp.adapters;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.Loader;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.SearchAdapterInterface;
 import de.eww.bibapp.data.SearchEntry;

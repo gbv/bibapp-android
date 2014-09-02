@@ -1,8 +1,5 @@
 package de.eww.bibapp.adapters;
 
-import java.util.Iterator;
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
@@ -13,6 +10,10 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.Iterator;
+import java.util.Locale;
+
 import de.eww.bibapp.R;
 import de.eww.bibapp.data.SearchEntry;
 import de.eww.bibapp.fragments.watchlist.WatchlistFragment;

@@ -1,7 +1,5 @@
 package de.eww.bibapp.fragments.info;
 
-import java.util.List;
-
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -12,6 +10,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+
+import java.util.List;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;

@@ -1,14 +1,5 @@
 package de.eww.bibapp.fragments.watchlist;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
@@ -24,6 +15,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 import de.eww.bibapp.SearchAdapterInterface;

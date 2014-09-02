@@ -1,10 +1,11 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.support.v4.app.Fragment;
+
 import java.io.InputStream;
 import java.util.List;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.data.NewsEntry;

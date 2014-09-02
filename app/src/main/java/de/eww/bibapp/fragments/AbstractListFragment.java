@@ -3,6 +3,7 @@ package de.eww.bibapp.fragments;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.view.animation.AnimationUtils;
+
 import de.eww.bibapp.R;
 
 abstract public class AbstractListFragment extends ListFragment

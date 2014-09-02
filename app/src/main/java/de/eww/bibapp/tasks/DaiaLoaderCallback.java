@@ -1,11 +1,5 @@
 package de.eww.bibapp.tasks;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,6 +8,13 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+
 import de.eww.bibapp.DaiaLoaderInterface;
 import de.eww.bibapp.adapters.AvailableAdapter;
 import de.eww.bibapp.constants.Constants;

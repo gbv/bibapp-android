@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
+
 import de.eww.bibapp.R;
 
 public class PaiaActionDialogFragment extends DialogFragment

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
+
 import de.eww.bibapp.fragments.AbstractContainerFragment;
 import de.eww.bibapp.fragments.AccountFragment;
 import de.eww.bibapp.fragments.info.InfoContainerFragment;

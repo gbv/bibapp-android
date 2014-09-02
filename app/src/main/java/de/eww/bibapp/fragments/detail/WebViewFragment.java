@@ -1,8 +1,5 @@
 package de.eww.bibapp.fragments.detail;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.os.Bundle;
@@ -13,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 import de.eww.bibapp.WebURLProvider;

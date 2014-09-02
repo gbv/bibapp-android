@@ -1,7 +1,5 @@
 package de.eww.bibapp.fragments.info;
 
-import java.util.ListIterator;
-
 import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
@@ -17,6 +15,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
+
+import java.util.ListIterator;
 
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;

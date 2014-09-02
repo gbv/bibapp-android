@@ -1,10 +1,10 @@
 package de.eww.bibapp.fragments;
 
-import java.util.HashMap;
-import java.util.Stack;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+
+import java.util.HashMap;
+import java.util.Stack;
 
 abstract public class AbstractContainerFragment extends Fragment
 {

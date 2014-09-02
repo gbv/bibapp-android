@@ -1,9 +1,5 @@
 package de.eww.bibapp.fragments.search;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.res.Resources;
@@ -23,6 +19,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;

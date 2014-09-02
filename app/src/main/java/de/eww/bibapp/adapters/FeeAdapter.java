@@ -1,14 +1,15 @@
 package de.eww.bibapp.adapters;
 
-import java.text.SimpleDateFormat;
-import java.util.Locale;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import de.eww.bibapp.R;
 import de.eww.bibapp.data.FeeEntry;
 

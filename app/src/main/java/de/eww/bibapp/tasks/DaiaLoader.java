@@ -1,5 +1,14 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -7,14 +16,6 @@ import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import de.eww.bibapp.R;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;

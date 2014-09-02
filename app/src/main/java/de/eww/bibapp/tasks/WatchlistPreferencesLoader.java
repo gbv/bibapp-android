@@ -1,5 +1,8 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -8,8 +11,6 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
 import de.eww.bibapp.data.SearchEntry;
 import de.eww.bibapp.fragments.watchlist.WatchlistFragment;
 

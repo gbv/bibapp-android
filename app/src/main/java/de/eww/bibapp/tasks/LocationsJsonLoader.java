@@ -1,18 +1,19 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.util.Log;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.data.LocationsEntry;

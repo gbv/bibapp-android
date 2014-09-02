@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+
 import de.eww.bibapp.R;
 
 public class LoginDialogFragment extends DialogFragment

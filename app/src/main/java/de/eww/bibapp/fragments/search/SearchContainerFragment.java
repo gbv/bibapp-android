@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragments.AbstractContainerFragment;
 

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapters.DetailPagerAdapter;

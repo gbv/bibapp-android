@@ -1,14 +1,15 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.AsyncTaskLoader;
+
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.AsyncTaskLoader;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;

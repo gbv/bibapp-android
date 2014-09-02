@@ -423,8 +423,6 @@ public class DetailFragment extends AbstractListFragment implements
 		else
 		{
 			containerFragment.switchContent(containerId, WebViewFragment.class.getName(), "detail_index", true);
-			/*WebViewFragment webViewFragment = new WebViewFragment();
-			webViewFragment.show(this.getActivity().getSupportFragmentManager(), "web_view_dialog");*/
 		}
 	}
 	

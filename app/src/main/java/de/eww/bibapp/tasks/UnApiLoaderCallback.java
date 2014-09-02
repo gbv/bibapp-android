@@ -7,6 +7,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.TextView;
+
 import de.eww.bibapp.R;
 import de.eww.bibapp.UnApiLoaderInterface;
 

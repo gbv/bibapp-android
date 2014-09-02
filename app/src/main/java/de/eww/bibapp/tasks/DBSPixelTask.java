@@ -1,10 +1,11 @@
 package de.eww.bibapp.tasks;
 
+import android.os.AsyncTask;
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
-import android.os.AsyncTask;
-import android.util.Log;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 

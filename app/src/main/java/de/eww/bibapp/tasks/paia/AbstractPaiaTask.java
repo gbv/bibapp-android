@@ -1,15 +1,15 @@
 package de.eww.bibapp.tasks.paia;
 
-import java.io.InputStream;
+import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.util.Log;
+import java.io.InputStream;
+
 import de.eww.bibapp.AsyncCanceledInterface;
-import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
 
 /**

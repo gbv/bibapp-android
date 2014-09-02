@@ -1,14 +1,15 @@
 package de.eww.bibapp.tasks;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.data.LocationsEntry;

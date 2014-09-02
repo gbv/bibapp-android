@@ -1,11 +1,5 @@
 package de.eww.bibapp.tasks;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,6 +7,13 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Locale;
+
 import de.eww.bibapp.data.SearchEntry;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>

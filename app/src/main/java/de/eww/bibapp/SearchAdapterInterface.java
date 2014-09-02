@@ -1,8 +1,9 @@
 package de.eww.bibapp;
 
+import android.support.v4.app.LoaderManager;
+
 import java.util.ArrayList;
 
-import android.support.v4.app.LoaderManager;
 import de.eww.bibapp.adapters.SearchAdapter;
 import de.eww.bibapp.data.SearchEntry;
 

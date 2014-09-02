@@ -1,14 +1,15 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;

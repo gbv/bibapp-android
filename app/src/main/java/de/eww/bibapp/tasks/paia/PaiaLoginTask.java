@@ -1,9 +1,10 @@
 package de.eww.bibapp.tasks.paia;
 
-import org.json.JSONObject;
-
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
+
+import org.json.JSONObject;
+
 import de.eww.bibapp.constants.Constants;
 
 /**
