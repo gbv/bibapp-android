@@ -23,6 +23,7 @@ import java.net.URL;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSocketFactory;
@@ -128,6 +129,10 @@ public class URLConnectionHelper
 	{
 		this.connection.disconnect();
 	}
+
+    public Map<String, List<String>> getHeader() {
+        return this.connection.getHeaderFields();
+    }
 	
 	public InputStream getStream() throws Exception
 	{
