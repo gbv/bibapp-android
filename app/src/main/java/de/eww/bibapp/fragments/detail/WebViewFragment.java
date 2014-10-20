@@ -11,14 +11,19 @@ import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import java.util.List;
+import java.util.Map;
+
 import de.eww.bibapp.MainActivity;
 import de.eww.bibapp.R;
 import de.eww.bibapp.WebURLProvider;
 import de.eww.bibapp.fragments.AbstractContainerFragment;
+import de.eww.bibapp.tasks.HeaderRequest;
 
 public class WebViewFragment extends DialogFragment
 {
 	private String url;
+    private WebView webView;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -56,23 +61,43 @@ public class WebViewFragment extends DialogFragment
 		// inflate the layout for this fragment
 		View v = inflater.inflate(R.layout.fragment_web_view, container, false);
 		
-		WebView webView = (WebView) v.findViewById(R.id.web_view);
-		webView.getSettings().setJavaScriptEnabled(true);
+		this.webView = (WebView) v.findViewById(R.id.web_view);
+		this.webView.getSettings().setJavaScriptEnabled(true);
 		
 		if ( urlProvider.showWebExtern() == false )
 		{
-			webView.setWebViewClient(new WebViewClient());
+			this.webView.setWebViewClient(new WebViewClient());
 		}
-		
-		// if the url points to a pdf file, we will use google docs to display the content
-		if ( this.url.length() >= 3 )
-		{
-            this.url = "https://docs.google.com/viewer?url=" + this.url;
-			webView.loadUrl(this.url);
-		}
+
+        // try to detect header information
+        new HeaderRequest(this).execute(this.url);
 		
 		return v; 
 	}
+
+    public void onHeaderRequestDone(Map<String, List<String>> header) {
+        // check if we got a pdf file
+        boolean isPDF = false;
+        List<String> types;
+
+        if (header.containsKey("Content-Type")) {
+            types = header.get("Content-Type");
+
+            if (!types.isEmpty()) {
+                String contentType = types.get(0);
+
+                if (contentType.contains("pdf")) {
+                    isPDF = true;
+                }
+            }
+        }
+
+        if (isPDF) {
+            this.url = "https://docs.google.com/viewer?url=" + this.url;
+        }
+
+        this.webView.loadUrl(this.url);
+    }
 	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
