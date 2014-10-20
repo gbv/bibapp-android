@@ -47,11 +47,11 @@ public class AvailableAdapter extends ArrayAdapter<AvailableEntry>
 		String departmentText = "";
 		
 		if (!Constants.EXEMPLAR_SHORT_DISPLAY) {
-			if (!entry.department.isEmpty()) {
+			if (entry.department != null && !entry.department.isEmpty()) {
 				departmentText = entry.department;
 			}
 			
-			if (!entry.storage.isEmpty()) {
+			if (entry.storage != null && !entry.storage.isEmpty()) {
 				if (!departmentText.isEmpty()) {
 					departmentText += ", ";
 				}
@@ -59,9 +59,9 @@ public class AvailableAdapter extends ArrayAdapter<AvailableEntry>
 				departmentText += entry.storage;
 			}
 		} else {
-			if (!entry.storage.isEmpty()) {
+			if (entry.storage != null && !entry.storage.isEmpty()) {
 				departmentText = entry.storage;
-			} else if(!entry.department.isEmpty()) {
+			} else if(entry.department != null && !entry.department.isEmpty()) {
 				departmentText = entry.department;
 			}
 		}
