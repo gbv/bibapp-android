@@ -4,6 +4,7 @@
     <style name="BibAppTheme" parent="@android:Theme.Holo.Light">
         <item name="android:actionBarStyle">@style/BibAppTheme.ActionBar</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_holo_dark</item>
+        <item name="android:actionMenuTextColor">@drawable/actionbar_menu_text_color</item>
     </style>
     
     <style name="BibAppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">

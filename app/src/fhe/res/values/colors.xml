@@ -21,4 +21,6 @@
     
     <color name="ambient_color">#003366</color>
     <color name="actionbar_text_color">#ffffff</color>
+    <color name="actionbar_menu_text_color">#ffffff</color>
+    <color name="actionbar_menu_disabled_text_color">#cccccc</color>
 </resources>
