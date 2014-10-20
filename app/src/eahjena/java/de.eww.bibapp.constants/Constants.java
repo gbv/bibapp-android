@@ -110,7 +110,7 @@ public final class Constants
     /**
      * An URL to a news feed
      */
-    public static final String NEWS_URL = "";
+    public static final String NEWS_URL = "http://www.fh-jena.de/fhj/bib/_layouts/listfeed.aspx?List=%7B3B9D0D4E-3239-4D61-8548-5868B08954AA%7D&Source=http%3A%2F%2Fwww%2Efh-jena%2Ede%2Ffhj%2Fbib%2FLists%2FAnkuendigungen%2FAllItems%2Easpx";
 
     /**
      * An URL to a homepage
