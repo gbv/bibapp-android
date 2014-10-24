@@ -12,19 +12,19 @@ import de.eww.bibapp.data.NewsEntry;
 import de.eww.bibapp.data.NewsXmlParser;
 
 /**
- * @author Christoph Schönfeld - effective WEBWORK GmbH
- * 
- * This file is part of the Android BibApp Project
- * =========================================================
- * Loader for rss feed
- */
+* @author Christoph Schönfeld - effective WEBWORK GmbH
+*
+* This file is part of the Android BibApp Project
+* =========================================================
+* Loader for rss feed
+*/
 public final class NewsRSSLoader extends AbstractLoader<NewsEntry>
 {
 	public NewsRSSLoader(Context context, Fragment callingFragment)
 	{
 		super(context, callingFragment);
 	}
-	
+
 	/**
      * This is where the bulk of our work is done.  This function is
      * called in a background thread and should generate a new set of
@@ -36,31 +36,31 @@ public final class NewsRSSLoader extends AbstractLoader<NewsEntry>
 		// Instantiate the parser
 		NewsXmlParser newsXmlParser = new NewsXmlParser();
 		List<NewsEntry> response = null;
-		
+
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.NEWS_URL);
-		
+
 		try
 		{
 			// open connection
 			urlConnectionHelper.configure();
 			urlConnectionHelper.connect(null);
-			
+
 			InputStream inputStream = urlConnectionHelper.getStream();
-			
+
 			response = newsXmlParser.parse(inputStream);
-			
+
 		}
 		catch ( Exception e )
 		{
 			e.printStackTrace();
-			
+
 			this.raiseFailure();
 		}
 		finally
 		{
 			urlConnectionHelper.disconnect();
 		}
-		
+
 		return response;
 	}
 }

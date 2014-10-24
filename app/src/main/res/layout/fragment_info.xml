@@ -29,6 +29,17 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         android:text="@string/info_button_homepage" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/info_rss_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"/>
+
+
+
+
+    <!--
 	
 	<ListView android:id="@id/android:list"
         android:layout_width="fill_parent"
@@ -63,5 +74,6 @@
         android:gravity="center_horizontal"
         android:padding="5dp"
         android:text="@string/empty_list" />
+        -->
 
 </LinearLayout>

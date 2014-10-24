@@ -5,13 +5,40 @@
     <string name="app_name">BibApp</string>
     <string name="empty_list">Keine Einträge vorhanden</string>
     <string name="loading_in_progress">Inhalte werden geladen</string>
+
+    <!-- navigation -->
+    <string-array name="top_navigation_array">
+        <item>Suche</item>
+        <item>Konto</item>
+        <item>Merkliste</item>
+        <item>Info</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="action_websearch">Web search</string>
+
+    <!-- settings -->
+    <string name="settings_store_login_title">Logindaten speichern</string>
+    <string name="settings_store_login_summary">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
+    <string name="settings_local_catalog_title">Lokaler Katalog</string>
+    <string name="settings_local_catalog_summary">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
+    <string name="settings_data_privacy_title">Anonyme Nutzungsdaten speichern</string>
+    <string name="settings_data_privacy_summary">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
+
+    <!-- actions -->
+    <string name="action_settings">Einstellungen</string>
+
+
+
+
+
     
     <!-- action bar -->
     <string name="actionbar_account">Konto</string>
     <string name="actionbar_search">Suche</string>
     <string name="actionbar_watchlist">Merkliste</string>
     <string name="actionbar_info">Info</string>
-    <string name="actionbar_settings">Optionen</string>
+    <string name="actionbar_settings">Einstellungen</string>
     
     <!-- login dialog -->
     <string name="logindialog_username">Benutzernummer</string>
@@ -55,16 +82,6 @@
     <string name="detailactionsdialog_request">Vormerken</string>
     <string name="detailactionsdialog_order">Bestellen</string>
     <string name="detailactionsdialog_online">Online ansehen</string>
-    
-    <!-- settings -->
-    <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
-    <string name="settings_dbs_description">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
-    <string name="settings_data_privacy">Anonyme Nutzungsdaten speichern</string>
-    <string name="settings_store">Logindaten speichern</string>
-    <string name="settings_store_on">Login wird gespeichert</string>
-    <string name="settings_store_off">Login wird nicht gespeichert</string>
-    <string name="settings_local_search">Lokaler Katalog</string>
-    <string name="settings_local_search_description">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
     
     <!-- info -->
     <string name="info_button_contact">Kontakt</string>

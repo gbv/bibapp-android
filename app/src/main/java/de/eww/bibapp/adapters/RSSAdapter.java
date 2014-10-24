@@ -24,7 +24,7 @@ public class RSSAdapter extends ArrayAdapter<NewsEntry>
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View v = inflater.inflate(R.layout.fragment_news_item_view, parent, false);
+		View v = inflater.inflate(R.layout.rss_item_view, parent, false);
 		
 		TextView titleView = (TextView) v.findViewById(R.id.news_item_title);
 		TextView descriptionView = (TextView) v.findViewById(R.id.news_item_description);

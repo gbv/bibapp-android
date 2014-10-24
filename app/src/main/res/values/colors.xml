@@ -15,10 +15,19 @@
   -->
 
 <resources>
+    <color name="colorPrimary">#d83351</color>
+    <color name="colorNavigationBackground">#cccccc</color>
+
+
+
+
+
     <color name="logindialog_wrong">#FF0000</color>
     <color name="list_alternate">#CCCCCC</color>
     <color name="second_text_color">#8f8f8f</color>
     
     <color name="ambient_color">#d83351</color>
     <color name="actionbar_text_color">#ffffff</color>
+
+
 </resources>
