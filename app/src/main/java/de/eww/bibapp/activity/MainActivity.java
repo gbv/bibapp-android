@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -56,6 +57,9 @@ public class MainActivity extends RoboActionBarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        // Request additional window features
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         super.onCreate(savedInstanceState);
 
         mTitle = mDrawerTitle = getTitle();
@@ -133,7 +137,6 @@ public class MainActivity extends RoboActionBarActivity {
         switch (item.getItemId()) {
             case R.id.action_settings:
                 // Open the app preferences
-                int test = mDrawerList.getSelectedItemPosition();
                 Intent preferencesIntent = new Intent(this, SettingsActivity.class);
                 startActivity(preferencesIntent);
 

@@ -9,7 +9,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.data.RssItem;
+import de.eww.bibapp.model.RssItem;
 
 /**
  * Created by christoph on 24.10.14.
@@ -57,6 +57,17 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
 
         holder.mTitle.setText(item.getTitle());
         holder.mDescription.setText(item.getDescription());
+
+        // TODO
+        //		String entryDescription;
+//		if ( !content.isEmpty() )
+//		{
+//			entryDescription = content;
+//		}
+//		else
+//		{
+//			entryDescription = description;
+//		}
     }
 
     // Return the size of your dataset (invoked by the layout manager)
