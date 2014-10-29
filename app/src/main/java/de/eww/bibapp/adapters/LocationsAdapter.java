@@ -8,9 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.data.LocationsEntry;
+import de.eww.bibapp.model.LocationItem;
 
-public class LocationsAdapter extends ArrayAdapter<LocationsEntry>
+public class LocationsAdapter extends ArrayAdapter<LocationItem>
 {
 	private final Context context;
 	
@@ -28,7 +28,7 @@ public class LocationsAdapter extends ArrayAdapter<LocationsEntry>
 		
 		TextView titleView = (TextView) v.findViewById(R.id.locations_item_title);
 		
-		LocationsEntry entry = this.getItem(position);
+		LocationItem entry = this.getItem(position);
 		
 		titleView.setText(entry.listName);
 		

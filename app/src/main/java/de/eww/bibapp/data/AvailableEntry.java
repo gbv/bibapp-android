@@ -1,5 +1,7 @@
 package de.eww.bibapp.data;
 
+import de.eww.bibapp.model.LocationItem;
+
 public class AvailableEntry implements Comparable<AvailableEntry>
 {
 	public String label;
@@ -9,7 +11,7 @@ public class AvailableEntry implements Comparable<AvailableEntry>
 	public final String statusInfo;
 	public String department;
 	public String actions;
-	public LocationsEntry locationsEntry = null;
+	public LocationItem locationsEntry = null;
 	public Double distance = null;
 	public String itemUriUrl;
 	public final String storage;
@@ -35,7 +37,7 @@ public class AvailableEntry implements Comparable<AvailableEntry>
 		this.itemUriUrl = itemUriUrl;
 	}
 	
-	public void setLocation(LocationsEntry entry)
+	public void setLocation(LocationItem entry)
 	{
 		this.locationsEntry = entry;
 	}

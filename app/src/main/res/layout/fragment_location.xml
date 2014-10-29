@@ -5,7 +5,7 @@
     android:orientation="vertical">
     
     <FrameLayout
-        android:id="@+id/locations_detail_maps_container"
+        android:id="@+id/map"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight=".60"
@@ -24,49 +24,49 @@
 		    android:orientation="vertical">
 		    
 	        <TextView
-	            android:id="@+id/locations_detail_item_title"
+	            android:id="@+id/title"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:textStyle="bold"
 	            android:layout_marginBottom="5dp"/>
 	    
 		    <TextView
-		        android:id="@+id/locations_detail_item_address"
+		        android:id="@+id/address"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_marginBottom="5dp"
 	            android:visibility="gone"/>
 		    
 		    <TextView
-		        android:id="@+id/locations_detail_item_opening_hours"
+		        android:id="@+id/opening_hours"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_marginBottom="5dp"
 	            android:visibility="gone"/>
 		    
 		    <TextView
-		        android:id="@+id/locations_detail_item_email"
+		        android:id="@+id/email"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_marginBottom="5dp"
 	            android:visibility="gone"/>
 		    
 		    <TextView
-		        android:id="@+id/locations_detail_item_url"
+		        android:id="@+id/url"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_marginBottom="5dp"
 	            android:visibility="gone"/>
 		    
 		    <TextView
-		        android:id="@+id/locations_detail_item_phone"
+		        android:id="@+id/phone"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_marginBottom="5dp"
 	            android:visibility="gone"/>
 		    
 		    <TextView
-		        android:id="@+id/locations_detail_item_description"
+		        android:id="@+id/description"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 	            android:layout_marginBottom="5dp"
