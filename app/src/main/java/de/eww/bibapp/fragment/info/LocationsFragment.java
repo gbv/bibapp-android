@@ -8,7 +8,7 @@ import roboguice.fragment.RoboFragment;
 /**
  * Created by christoph on 25.10.14.
  */
-public class LocationsFragment extends RoboFragment implements AdapterView.OnItemClickListener {
+public class LocationsFragment extends RoboFragment {
 
     // The listener we are to notify when a location is selected
     OnLocationSelectedListener mLocationSelectedListener = null;

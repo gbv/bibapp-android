@@ -22,6 +22,7 @@ import butterknife.OnClick;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.ContactActivity;
 import de.eww.bibapp.activity.ImpressumActivity;
+import de.eww.bibapp.activity.LocationsActivity;
 import de.eww.bibapp.adapter.RssAdapter;
 import de.eww.bibapp.model.RssItem;
 import de.eww.bibapp.model.RssFeed;
@@ -96,7 +97,8 @@ public class InfoFragment extends RoboFragment {
     }
 
     @OnClick(R.id.info_button_locations) void onClickLocationsButton() {
-
+        Intent locationsIntent = new Intent(getActivity(), LocationsActivity.class);
+        startActivity(locationsIntent);
     }
 
     @OnClick(R.id.info_button_impressum) void onClickImpressumButton() {
