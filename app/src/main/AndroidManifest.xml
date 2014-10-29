@@ -58,6 +58,8 @@
         <activity android:name=".activity.SettingsActivity" />
         <activity android:name=".activity.ContactActivity" />
         <activity android:name=".activity.ImpressumActivity" />
+        <activity android:name=".activity.LocationActivity" />
+        <activity android:name=".activity.LocationsActivity" />
 
         <service
             android:name="com.octo.android.robospice.XmlSpringAndroidSpiceService"
