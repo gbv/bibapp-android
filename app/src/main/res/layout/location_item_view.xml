@@ -7,7 +7,7 @@
    android:paddingLeft="5dp">
 
     <TextView
-        android:id="@+id/locations_item_title"
+        android:id="@+id/title"
         android:height="20dp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"/>
