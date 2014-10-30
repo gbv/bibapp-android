@@ -34,7 +34,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
         }
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
+    // Suitable constructor for list type
     public RssAdapter(List<RssItem> itemList) {
         mItemList = itemList;
     }

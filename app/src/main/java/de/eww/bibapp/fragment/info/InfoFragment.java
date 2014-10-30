@@ -71,10 +71,6 @@ public class InfoFragment extends RoboFragment {
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        // Specify an adapter
-        //mAdapter = new RssAdapter(mItemList);
-        //mRecyclerView.setAdapter(mAdapter);
-
         // Start the Request
         mRssFeedRequest = new RssFeedRequest();
         getActivity().setProgressBarIndeterminate(false);
