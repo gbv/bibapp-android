@@ -50,7 +50,7 @@
 //            this.getLoaderManager().destroyLoader(0);
 //            getLoaderManager().initLoader(0, null, this);
 //
-//            this.mAdapter = new RSSAdapter(getActivity(), R.layout.rss_item_view);
+//            this.mAdapter = new RSSAdapter(getActivity(), R.layout.item_rss_view);
 //
 //            this.setListAdapter(mAdapter);
 //            this.isListShown = true;

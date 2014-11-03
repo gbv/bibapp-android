@@ -4,10 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.inject.Inject;
+
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.fragment.info.LocationsFragment;
-import roboguice.activity.RoboActivity;
+import de.eww.bibapp.model.source.LocationSource;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectFragment;
@@ -28,6 +30,8 @@ public class LocationsActivity extends RoboFragmentActivity implements
 
     @InjectView(R.id.location) View mLocationView;
 
+    @Inject LocationSource mLocationSource;
+
     // The location index currently being displayed
     int mCurrentLocationIndex = 0;
 
@@ -43,8 +47,7 @@ public class LocationsActivity extends RoboFragmentActivity implements
         mLocationsFragment.setOnLocationSelectedListener(this);
 
         // Set up locations fragment
-        //mHeadlinesFragment.setSelectable(mIsDualPane);
-        //restoreSelection(savedInstanceState);
+        restoreSelection(savedInstanceState);
     }
 
     /**
@@ -76,7 +79,7 @@ public class LocationsActivity extends RoboFragmentActivity implements
 
         if (mIsDualPane) {
             // display it on the location fragment
-            mLocationFragment.displayLocation();
+            mLocationFragment.setLocation(mLocationSource.getLocation(index));
         } else {
             // use separate activity
             Intent locationIntent = new Intent(this, LocationActivity.class);

@@ -14,8 +14,7 @@ import de.eww.bibapp.model.LocationItem;
 /**
  * Created by christoph on 30.10.14.
  */
-public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> implements
-        View.OnClickListener {
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
     private List<LocationItem> mItemList;
 
@@ -42,7 +41,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rss_item_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_location_view, parent, false);
 
         // Set the view's size, margins, paddings and layout parameters
         ViewHolder viewHolder = new ViewHolder(view);
@@ -61,13 +60,5 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public int getItemCount() {
         return (mItemList != null ? mItemList.size() : 0);
-    }
-
-    @Override
-    public void onClick(View view) {
-//        ViewHolder holder = (ViewHolder) view.getTag();
-//        if (view.getId() == holder.mNameTextView.getId()) {
-//            Toast.makeText(sContext, holder.mNameTextView.getText(), Toast.LENGTH_SHORT).show();
-//        }
     }
 }

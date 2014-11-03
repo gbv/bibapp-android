@@ -6,8 +6,12 @@ import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
 import android.widget.TextView;
 
+import com.google.inject.Inject;
+
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
+import de.eww.bibapp.model.LocationItem;
+import de.eww.bibapp.model.source.LocationSource;
 import roboguice.activity.RoboActivity;
 import roboguice.activity.RoboFragmentActivity;
 import roboguice.inject.ContentView;
@@ -29,6 +33,8 @@ import roboguice.inject.InjectView;
  */
 public class LocationActivity extends RoboFragmentActivity {
 
+    @Inject LocationSource mLocationSource;
+
     // The location index we are to display
     int mLocationIndex;
 
@@ -49,7 +55,7 @@ public class LocationActivity extends RoboFragmentActivity {
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, locationFragment).commit();
 
         // Display the correct location on the fragment
-        //NewsArticle article = NewsSource.getInstance().getCategory(mCatIndex).getArticle(mArtIndex);
-        //f.displayArticle(article);
+        LocationItem location = mLocationSource.getLocation(mLocationIndex);
+        locationFragment.setLocation(location);
     }
 }

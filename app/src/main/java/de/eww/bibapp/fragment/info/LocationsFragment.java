@@ -5,6 +5,11 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +17,9 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.LocationAdapter;
+import de.eww.bibapp.listener.RecyclerItemClickListener;
 import de.eww.bibapp.model.LocationItem;
+import de.eww.bibapp.model.source.LocationSource;
 import de.eww.bibapp.tasks.LocationsJsonLoader;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -24,12 +31,12 @@ public class LocationsFragment extends RoboFragment implements
         LoaderManager.LoaderCallbacks<List<LocationItem>>,
         AsyncCanceledInterface {
 
+    @Inject LocationSource mLocationSource;
+
     @InjectView(R.id.locations_view) RecyclerView mRecyclerView;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-
-    private List<LocationItem> mItemList = new ArrayList<LocationItem>();
 
     // The listener we are to notify when a location is selected
     OnLocationSelectedListener mLocationSelectedListener = null;
@@ -55,6 +62,10 @@ public class LocationsFragment extends RoboFragment implements
         mLocationSelectedListener = listener;
     }
 
+    public void setSelection(int position) {
+        mRecyclerView.scrollToPosition(position);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -67,6 +78,14 @@ public class LocationsFragment extends RoboFragment implements
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                if (mLocationSelectedListener != null) {
+                    mLocationSelectedListener.onLocationSelected(position);
+                }
+            }
+        }));
 
         // Start the Request
         LoaderManager loaderManager = getLoaderManager();
@@ -75,17 +94,23 @@ public class LocationsFragment extends RoboFragment implements
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_locations, container, false);
+    }
+
+    @Override
     public Loader<List<LocationItem>> onCreateLoader(int arg0, Bundle arg1) {
         return new LocationsJsonLoader(getActivity().getApplicationContext(), this);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<LocationItem>> loader, List<LocationItem> data) {
-        mItemList.addAll(data);
+    public void onLoadFinished(Loader<List<LocationItem>> loader, List<LocationItem> locations) {
+        mLocationSource.clear();
+        mLocationSource.addLocations(locations);
 
         getActivity().setProgressBarVisibility(false);
 
-        mAdapter = new LocationAdapter(mItemList);
+        mAdapter = new LocationAdapter(locations);
         mRecyclerView.setAdapter(mAdapter);
     }
 

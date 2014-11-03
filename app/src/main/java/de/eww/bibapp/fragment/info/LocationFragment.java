@@ -29,21 +29,37 @@ public class LocationFragment extends RoboFragment {
     @InjectView(R.id.phone) TextView mPhoneView;
     @InjectView(R.id.description) TextView mDescriptionView;
 
+    LocationItem mLocationItem = null;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_location, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_location, container, false);
     }
 
-    public void displayLocation(LocationItem location) {
-        mTitleView.setText(location.getName());
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        if (location.hasOpeningHours()) {
+        displayLocation();
+    }
+
+    public void setLocation(LocationItem location) {
+        mLocationItem = location;
+        displayLocation();
+    }
+
+    private void displayLocation() {
+        if (mTitleView == null) {
+            return;
+        }
+
+        mTitleView.setText(mLocationItem.getName());
+
+        if (mLocationItem.hasOpeningHours()) {
             String finalOpeningHours = "";
 
-            ListIterator<String> it = location.getOpeningHours().listIterator();
+            ListIterator<String> it = mLocationItem.getOpeningHours().listIterator();
             if (it.hasNext()) {
                 String openingHours = it.next();
                 finalOpeningHours += openingHours + "\n";
@@ -53,36 +69,36 @@ public class LocationFragment extends RoboFragment {
             mOpeningHoursView.setVisibility(View.VISIBLE);
         }
 
-        if (location.hasAddress()) {
-            mAddressView.setText(location.getAddress());
+        if (mLocationItem.hasAddress()) {
+            mAddressView.setText(mLocationItem.getAddress());
             mAddressView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mAddressView, Linkify.MAP_ADDRESSES);
         }
 
-        if (location.hasEmail()) {
-            mEmailView.setText(location.getEmail());
+        if (mLocationItem.hasEmail()) {
+            mEmailView.setText(mLocationItem.getEmail());
             mEmailView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mEmailView, Linkify.EMAIL_ADDRESSES);
         }
 
-        if (location.hasUrl()) {
-            mUrlView.setText(location.getUrl());
+        if (mLocationItem.hasUrl()) {
+            mUrlView.setText(mLocationItem.getUrl());
             mUrlView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mUrlView, Linkify.WEB_URLS);
         }
 
-        if (location.hasPhone()) {
-            mPhoneView.setText(location.getPhone());
+        if (mLocationItem.hasPhone()) {
+            mPhoneView.setText(mLocationItem.getPhone());
             mPhoneView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mPhoneView, Linkify.PHONE_NUMBERS);
         }
 
-        if (location.hasDescription()) {
-            mDescriptionView.setText(location.description);
+        if (mLocationItem.hasDescription()) {
+            mDescriptionView.setText(mLocationItem.description);
             mDescriptionView.setVisibility(View.VISIBLE);
         }
 
-        if (location.hasPosition()) {
+        if (mLocationItem.hasPosition()) {
             mFrameLayout.setVisibility(View.VISIBLE);
 
             // TODO

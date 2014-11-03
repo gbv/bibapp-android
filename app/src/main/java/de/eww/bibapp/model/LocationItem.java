@@ -31,11 +31,11 @@ public class LocationItem
 	}
 
     public String getName() {
-        return name;
+        return listName;
     }
 
     public boolean hasOpeningHours() {
-        return openingHours.isEmpty();
+        return !openingHours.isEmpty();
     }
 
     public List<String> getOpeningHours() {
@@ -43,7 +43,7 @@ public class LocationItem
     }
 
     public boolean hasAddress() {
-        return address.isEmpty();
+        return !address.isEmpty();
     }
 
     public String getAddress() {
@@ -51,7 +51,7 @@ public class LocationItem
     }
 
     public boolean hasEmail() {
-        return email.isEmpty();
+        return !email.isEmpty();
     }
 
     public String getEmail() {
@@ -59,7 +59,7 @@ public class LocationItem
     }
 
     public boolean hasUrl() {
-        return url.isEmpty();
+        return !url.isEmpty();
     }
 
     public String getUrl() {
@@ -67,7 +67,7 @@ public class LocationItem
     }
 
     public boolean hasPhone() {
-        return phone.isEmpty();
+        return !phone.isEmpty();
     }
 
     public String getPhone() {
@@ -75,7 +75,7 @@ public class LocationItem
     }
 
     public boolean hasDescription() {
-        return description.isEmpty();
+        return !description.isEmpty();
     }
 
     public String getDescription() {

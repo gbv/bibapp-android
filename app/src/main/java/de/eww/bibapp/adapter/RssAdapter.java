@@ -43,7 +43,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.rss_item_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rss_view, parent, false);
 
         // Set the view's size, margins, paddings and layout parameters
         ViewHolder viewHolder = new ViewHolder(view);
