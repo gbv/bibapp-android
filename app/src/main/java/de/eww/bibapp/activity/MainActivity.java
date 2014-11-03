@@ -21,6 +21,7 @@ import android.widget.ListView;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.InfoFragment;
+import de.eww.bibapp.fragment.search.SearchFragment;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectResource;
@@ -161,7 +162,7 @@ public class MainActivity extends RoboActionBarActivity {
         Fragment fragment;
         switch (position) {
             case 0:         // Search
-                fragment = new InfoFragment();
+                fragment = new SearchFragment();
                 break;
             case 1:         // Account
                 fragment = new InfoFragment();
@@ -173,7 +174,7 @@ public class MainActivity extends RoboActionBarActivity {
                 fragment = new InfoFragment();
                 break;
             default:
-                fragment = new InfoFragment();
+                fragment = new SearchFragment();
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
