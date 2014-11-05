@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Application theme, according to API level -->
+    <style name="BibAppTheme" parent="AppTheme.Base"/>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+         which is used to tint widgets -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+         colorControlHighlight, and colorSwitchThumbNormal. -->
+
+        <item name="searchViewStyle">@style/BibAppSearchViewStyle</item>
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="BibAppSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <!--&lt;!&ndash; Background for the search query section (e.g. EditText) &ndash;&gt;-->
+        <!--<item name="queryBackground">...</item>-->
+        <!--&lt;!&ndash; Background for the actions section (e.g. voice, submit) &ndash;&gt;-->
+        <!--<item name="submitBackground">...</item>-->
+        <!--&lt;!&ndash; Close button icon &ndash;&gt;-->
+        <!--<item name="closeIcon">...</item>-->
+        <!--&lt;!&ndash; Search button icon &ndash;&gt;-->
+        <!--<item name="searchIcon">...</item>-->
+        <!--&lt;!&ndash; Go/commit button icon &ndash;&gt;-->
+        <!--<item name="goIcon">...</item>-->
+        <!--&lt;!&ndash; Voice search button icon &ndash;&gt;-->
+        <!--<item name="voiceIcon">...</item>-->
+        <!--&lt;!&ndash; Commit icon shown in the query suggestion row &ndash;&gt;-->
+        <!--<item name="commitIcon">...</item>-->
+        <!--&lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
+        <!--<item name="suggestionRowLayout">...</item>-->
+    </style>
+
+    <!--
+    <style name="BibAppTheme" parent="@android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/BibAppTheme.ActionBar</item>
+        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_holo_dark</item>
+    </style>
+    
+    <style name="BibAppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
+        <item name="android:background">@color/ambient_color</item>
+        <item name="android:titleTextStyle">@style/BibAppTheme.ActionBar.Text</item>
+        <item name="android:subtitleTextStyle">@style/BibAppTheme.ActionBar.SubText</item>
+        <item name="android:icon">@drawable/icon_actionbar</item>
+    </style>
+    
+    <style name="BibAppTheme.ActionBar.Text" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/actionbar_text_color</item>
+    </style>
+    
+    <style name="BibAppTheme.ActionBar.SubText" parent="BibAppTheme.ActionBar.Text">
+        <item name="android:textSize">12sp</item>
+    </style>
+    -->
+
+</resources>

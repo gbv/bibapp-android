@@ -16,6 +16,8 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.eww.bibapp.model.ModsItem;
+
 public class SearchXmlParser
 {
 	// We don't use namespaces
@@ -42,7 +44,7 @@ public class SearchXmlParser
 	private HashMap<String, Object> readFeed(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
 	{
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<SearchEntry> list = new ArrayList<SearchEntry>();
+		List<ModsItem> list = new ArrayList<ModsItem>();
 		map.put("numberOfRecords", 0);
 		map.put("list", list);
 		
@@ -74,9 +76,9 @@ public class SearchXmlParser
 		return map;
 	}
 	
-	private List<SearchEntry> readRecords(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private List<ModsItem> readRecords(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
 	{
-		List<SearchEntry> entries = new ArrayList<SearchEntry>();
+		List<ModsItem> entries = new ArrayList<ModsItem>();
 		
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "zs:records");
 		
@@ -102,9 +104,9 @@ public class SearchXmlParser
 		return entries;
 	}
 	
-	private SearchEntry readRecord(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private ModsItem readRecord(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
 	{
-		SearchEntry entry = null;
+		ModsItem entry = null;
 		
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "zs:record");
 		
@@ -130,9 +132,9 @@ public class SearchXmlParser
 		return entry;
 	}
 	
-	private SearchEntry readRecordData(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private ModsItem readRecordData(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
 	{
-		SearchEntry entry = null;
+		ModsItem entry = null;
 		
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "zs:recordData");
 		
@@ -159,7 +161,7 @@ public class SearchXmlParser
 	}
 	
 	@SuppressWarnings("unchecked")
-	private SearchEntry readMods(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private ModsItem readMods(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
 	{
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "mods");
 		
@@ -370,7 +372,7 @@ public class SearchXmlParser
 			}
 		}
 		
-		SearchEntry entry = new SearchEntry((String) titleInfoMap.get("title"), (String) titleInfoMap.get("subTitle"), (String) titleInfoMap.get("partNumber"), (String) titleInfoMap.get("partName"), mediaType, ppn, isbn, authors, onlineUrl, indexArray);
+		ModsItem entry = new ModsItem((String) titleInfoMap.get("title"), (String) titleInfoMap.get("subTitle"), (String) titleInfoMap.get("partNumber"), (String) titleInfoMap.get("partName"), mediaType, ppn, isbn, authors, onlineUrl, indexArray);
 		entry.setIsLocalSearch(isLocalSearch);
 		
 		return entry;

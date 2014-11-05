@@ -103,7 +103,7 @@ public class InfoFragment extends RoboFragment {
     }
 
     @OnClick(R.id.info_button_homepage) void onClickHomepageButton() {
-
+        // TODO:
     }
 
     public final class RssRequestListener implements RequestListener<RssFeed> {

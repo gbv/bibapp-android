@@ -20,10 +20,29 @@
              of the action bar -->
         <android.support.v7.widget.Toolbar
             xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimaryDark" />
+            android:minHeight="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+            <!--
+            <SearchView
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/toolbar_search"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:theme="@style/BibAppSearchViewStyle" />
+            -->
+
+            <Spinner
+                android:id="@+id/toolbar_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </android.support.v7.widget.Toolbar>
 
         <!-- the main content -->
         <FrameLayout

@@ -59,7 +59,7 @@
 //        // Prepare the loader.  Either re-connect with an existing one, or start a new one.
 //        getLoaderManager().initLoader(0, null, this);
 //
-//        this.mAdapter = new SearchAdapter(getActivity(), R.layout.fragment_search_item_view);
+//        this.mAdapter = new SearchAdapter(getActivity(), R.layout.item_mods_view);
 //
 //        this.setListAdapter(mAdapter);
 //
@@ -88,7 +88,7 @@
 //	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 //	{
 //		// inflate the layout for this fragment
-//		View v = inflater.inflate(R.layout.fragment_search_local_view, container, false);
+//		View v = inflater.inflate(R.layout.fragment_local_search, container, false);
 //
 //		EditText searchText = (EditText) v.findViewById(R.id.search_local_query);
 //		searchText.setOnEditorActionListener(this);

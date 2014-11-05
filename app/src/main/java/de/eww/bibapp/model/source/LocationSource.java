@@ -13,7 +13,7 @@ import de.eww.bibapp.model.LocationItem;
 @Singleton
 public class LocationSource {
 
-    List<LocationItem> mLocationItems = new ArrayList<LocationItem>();
+    private List<LocationItem> mLocationItems = new ArrayList<LocationItem>();
 
     public void addLocations(List<LocationItem> itemList) {
         mLocationItems.addAll(itemList);

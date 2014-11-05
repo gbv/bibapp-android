@@ -18,10 +18,14 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.fragment.account.AccountFragment;
 import de.eww.bibapp.fragment.info.InfoFragment;
-import de.eww.bibapp.fragment.search.SearchFragment;
+import de.eww.bibapp.fragment.search.GVKSearchFragment;
+import de.eww.bibapp.fragment.search.LocalSearchFragment;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
 import roboguice.inject.InjectResource;
@@ -49,7 +53,13 @@ public class MainActivity extends RoboActionBarActivity {
      */
     @InjectView(R.id.left_drawer) ListView mDrawerList;
 
+    @InjectView(R.id.toolbar_spinner) Spinner mSpinner;
+
     private ActionBarDrawerToggle mDrawerToggle;
+    private SpinnerAdapter mSpinnerAdapter;
+    private AdapterView.OnItemSelectedListener mOnNavigationListener;
+
+    private int mCurrentSpinnerIndex;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -82,9 +92,9 @@ public class MainActivity extends RoboActionBarActivity {
         // ActionBarDrawerToggle ties together the proper interactions between
         // the sliding drawer and the action bar app icon
         mDrawerToggle = new ActionBarDrawerToggle(
-            this,                   // host activitiy
-            mDrawerLayout,          // DrawerLayout object
-            //R.drawable.ic_drawer,   // new drawer image to replace 'Up' caret
+            this,                       // host activitiy
+            mDrawerLayout,              // DrawerLayout object
+            //R.drawable.ic_drawer,     // new drawer image to replace 'Up' caret
             R.string.drawer_open,   // "open drawer" description for accessibility
             R.string.drawer_close   // "close drawer" description for accessibility
         ) {
@@ -99,6 +109,28 @@ public class MainActivity extends RoboActionBarActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        // SpinnerAdapter for search fragment
+        mSpinnerAdapter = ArrayAdapter.createFromResource(
+            getSupportActionBar().getThemedContext(),
+            R.array.search_spinner_list,
+            android.R.layout.simple_spinner_dropdown_item
+        );
+        mSpinner.setAdapter(mSpinnerAdapter);
+
+        mOnNavigationListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mCurrentSpinnerIndex = position;
+                selectItem(0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        mSpinner.setOnItemSelectedListener(mOnNavigationListener);
 
         if (savedInstanceState == null) {
             selectItem(0);
@@ -158,14 +190,24 @@ public class MainActivity extends RoboActionBarActivity {
     }
 
     private void selectItem(int position) {
+        // determine spinner visibility
+        boolean showSpinner = false;
+
         // update the main content by replacing fragments
         Fragment fragment;
         switch (position) {
             case 0:         // Search
-                fragment = new SearchFragment();
+                // show local or gvk search
+                if (mCurrentSpinnerIndex == 0) {
+                    fragment = new LocalSearchFragment();
+                } else {
+                    fragment = new GVKSearchFragment();
+                }
+
+                showSpinner = true;
                 break;
             case 1:         // Account
-                fragment = new InfoFragment();
+                fragment = new AccountFragment();
                 break;
             case 2:         // Watch list
                 fragment = new InfoFragment();
@@ -174,7 +216,14 @@ public class MainActivity extends RoboActionBarActivity {
                 fragment = new InfoFragment();
                 break;
             default:
-                fragment = new SearchFragment();
+                fragment = new LocalSearchFragment();
+        }
+
+        // show/hide spinner
+        if (showSpinner) {
+            mSpinner.setVisibility(View.VISIBLE);
+        } else {
+            mSpinner.setVisibility(View.GONE);
         }
 
         FragmentManager fragmentManager = getSupportFragmentManager();

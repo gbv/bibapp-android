@@ -1,8 +1,8 @@
 package de.eww.bibapp;
 
-import de.eww.bibapp.data.SearchEntry;
+import de.eww.bibapp.model.ModsItem;
 
 public interface UnApiLoaderInterface
 {
-	public SearchEntry getSearchItem();
+	public ModsItem getSearchItem();
 }

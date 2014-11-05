@@ -14,14 +14,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
+import de.eww.bibapp.model.ModsItem;
+
 public class DaiaXmlParser
 {
 	// We don't use namespaces
     private static final String ns = null;
     
-    private SearchEntry item;
+    private ModsItem item;
     
-    public DaiaXmlParser(SearchEntry item)
+    public DaiaXmlParser(ModsItem item)
     {
     	this.item = item;
     }

@@ -27,12 +27,22 @@
 
     <!-- actions -->
     <string name="action_settings">Einstellungen</string>
+    <string name="action_search">Suchen</string>
 
     <!-- info -->
     <string name="info_button_contact">Kontakt</string>
     <string name="info_button_locations">Standorte</string>
     <string name="info_button_impressum">Impressum</string>
     <string name="info_button_homepage">Homepage</string>
+
+    <!-- search spinner -->
+    <string-array name="search_spinner_list">
+        <item>Lokal</item>
+        <item>GVK</item>
+    </string-array>
+
+
+
 
 
 

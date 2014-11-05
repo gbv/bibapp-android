@@ -1,9 +1,9 @@
-package de.eww.bibapp.data;
+package de.eww.bibapp.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SearchEntry implements Serializable
+public class ModsItem implements Serializable
 {
 	/**
 	 * 
@@ -22,7 +22,7 @@ public class SearchEntry implements Serializable
 	
 	public boolean isLocalSearch = true;
 	
-	public SearchEntry(String title, String subTitle, String partNumber, String partName, String mediaType, String ppn, String isbn, ArrayList<String> authors, String onlineUrl, ArrayList<String> indexArray)
+	public ModsItem(String title, String subTitle, String partNumber, String partName, String mediaType, String ppn, String isbn, ArrayList<String> authors, String onlineUrl, ArrayList<String> indexArray)
 	{
 		this.title = title;
 		this.subTitle = subTitle;
@@ -54,7 +54,7 @@ public class SearchEntry implements Serializable
 	        return false;
 	    }
 	    
-	    final SearchEntry compare = (SearchEntry) obj;
+	    final ModsItem compare = (ModsItem) obj;
 		return this.ppn.equals(compare.ppn);
 	}
 }

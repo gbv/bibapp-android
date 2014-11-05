@@ -1,10 +1,10 @@
 package de.eww.bibapp;
 
 import de.eww.bibapp.adapters.AvailableAdapter;
-import de.eww.bibapp.data.SearchEntry;
+import de.eww.bibapp.model.ModsItem;
 
 public interface DaiaLoaderInterface
 {
-	public SearchEntry getSearchItem();
+	public ModsItem getSearchItem();
 	public AvailableAdapter getAdapter();
 }

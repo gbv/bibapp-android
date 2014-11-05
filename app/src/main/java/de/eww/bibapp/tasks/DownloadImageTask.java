@@ -14,15 +14,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Locale;
 
-import de.eww.bibapp.data.SearchEntry;
+import de.eww.bibapp.model.ModsItem;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 {
 	ImageView imageView;
-	SearchEntry item;
+	ModsItem item;
 	Context context;
 	
-	public DownloadImageTask(ImageView imageView, SearchEntry item, Context context)
+	public DownloadImageTask(ImageView imageView, ModsItem item, Context context)
 	{
 		this.imageView = imageView;
 		this.item = item;
