@@ -47,12 +47,40 @@
          The drawer is given a fixed width in dp and extends the full height of
          the container. A solid background is used for contrast
          with the content view. -->
-    <ListView android:id="@+id/left_drawer"
+    <LinearLayout
+        android:id="@+id/drawer_container"
         android:layout_width="220dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@color/colorNavigationDivider"
-        android:dividerHeight="1dp"
-        android:background="@color/colorNavigationBackground"/>
+        android:orientation="vertical"
+        android:background="@color/colorNavigationBackground">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:src="@drawable/book_gradient"
+            android:background="@color/colorNavigationAppImageBackground"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/divider" />
+
+        <ListView
+            android:id="@+id/drawer_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="top"
+            android:choiceMode="singleChoice"
+            android:divider="@color/colorNavigationDivider"
+            android:dividerHeight="1dp" />
+
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/drawer_version"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

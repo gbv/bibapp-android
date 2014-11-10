@@ -1,4 +1,4 @@
-package de.eww.bibapp;
+package de.eww.bibapp.model;
 
 /**
  * Created by christoph on 07.11.14.

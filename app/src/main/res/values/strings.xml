@@ -7,11 +7,11 @@
     <string name="loading_in_progress">Inhalte werden geladen</string>
 
     <!-- navigation -->
-    <string name="drawer_navigation_heading_general">Navigation</string>
     <string name="drawer_navigation_search">Suche</string>
     <string name="drawer_navigation_account">Konto</string>
     <string name="drawer_navigation_watchlist">Merkliste</string>
     <string name="drawer_navigation_info">Info</string>
+    <string name="drawer_navigation_settings">Einstellungen</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="drawer_close">Navigation schließen</string>
 
@@ -24,7 +24,6 @@
     <string name="settings_data_privacy_summary">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
 
     <!-- actions -->
-    <string name="action_settings">Einstellungen</string>
     <string name="action_search">Suchen</string>
 
     <!-- info -->

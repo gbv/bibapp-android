@@ -2,6 +2,8 @@ package de.eww.bibapp.activity;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -18,14 +20,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.eww.bibapp.DrawerItem;
+import de.eww.bibapp.model.DrawerItem;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.CustomDrawerAdapter;
 import de.eww.bibapp.fragment.account.AccountFragment;
@@ -56,7 +61,10 @@ public class MainActivity extends RoboActionBarActivity {
     /**
      * The {@link android.widget.ListView} that containts the navigation drawer content.
      */
-    @InjectView(R.id.left_drawer) ListView mDrawerList;
+    @InjectView(R.id.drawer_list) ListView mDrawerList;
+
+    @InjectView(R.id.drawer_container) LinearLayout mDrawerContainer;
+    @InjectView(R.id.drawer_version) TextView mVersionView;
 
     @InjectView(R.id.toolbar_spinner) Spinner mSpinner;
 
@@ -65,6 +73,7 @@ public class MainActivity extends RoboActionBarActivity {
     private AdapterView.OnItemSelectedListener mOnNavigationListener;
 
     private int mCurrentSpinnerIndex;
+    private int mLastFragmentIndex = 0;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -93,14 +102,23 @@ public class MainActivity extends RoboActionBarActivity {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // Set up the drawer's list view with items and click listener
-        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_heading_general)));
         mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_search), R.drawable.ic_action_search));
         mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_account), R.drawable.ic_action_person));
         mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_watchlist), R.drawable.ic_action_view_as_list));
         mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_info), R.drawable.ic_action_about));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_settings)));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_settings), R.drawable.ic_action_settings));
         mCustomDrawerAdapter = new CustomDrawerAdapter(this, R.layout.drawer_list_item, mNavigationItems);
         mDrawerList.setAdapter(mCustomDrawerAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        // Get the version number and set it in the layout
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            mVersionView.setText("v" + packageInfo.versionName);
+        } catch(PackageManager.NameNotFoundException e) {
+
+        }
 
         // Set the toolbar as our action bar
         setSupportActionBar(mToolbar);
@@ -142,7 +160,7 @@ public class MainActivity extends RoboActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mCurrentSpinnerIndex = position;
-                selectItem(1);
+                selectItem(0);
             }
 
             @Override
@@ -153,29 +171,11 @@ public class MainActivity extends RoboActionBarActivity {
         mSpinner.setOnItemSelectedListener(mOnNavigationListener);
 
         if (savedInstanceState == null) {
-            selectItem(1);
+            selectItem(0);
         }
 
         // Set default values for our preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu items for use in the toolbar
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_activity_actions, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        //menu.findItem(R.id....).setVisible(!drawerOpen);
-
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -186,17 +186,7 @@ public class MainActivity extends RoboActionBarActivity {
             return true;
         }
 
-        // Handle action buttons
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                // Open the app preferences
-                Intent preferencesIntent = new Intent(this, SettingsActivity.class);
-                startActivity(preferencesIntent);
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
     }
 
     /**
@@ -212,47 +202,57 @@ public class MainActivity extends RoboActionBarActivity {
     }
 
     private void selectItem(int position) {
-        // determine spinner visibility
-        boolean showSpinner = false;
+        if (position <= 3) {
+            // determine spinner visibility
+            boolean showSpinner = false;
 
-        // update the main content by replacing fragments
-        Fragment fragment = null;
-        switch (position) {
-            case 1:         // Search
-                // show local or gvk search
-                if (mCurrentSpinnerIndex == 0) {
-                    fragment = new SearchFragment();
-                } else {
-                    fragment = new GVKSearchFragment();
-                }
+            // update the main content by replacing fragments
+            Fragment fragment = null;
+            switch (position) {
+                case 0:         // Search
+                    // show local or gvk search
+                    if (mCurrentSpinnerIndex == 0) {
+                        fragment = new SearchFragment();
+                    } else {
+                        fragment = new GVKSearchFragment();
+                    }
 
-                showSpinner = true;
-                break;
-            case 2:         // Account
-                fragment = new AccountFragment();
-                break;
-            case 3:         // Watch list
-                fragment = new InfoFragment();
-                break;
-            case 4:         // Info
-                fragment = new InfoFragment();
-                break;
-        }
+                    showSpinner = true;
+                    break;
+                case 1:         // Account
+                    fragment = new AccountFragment();
+                    break;
+                case 2:         // Watch list
+                    fragment = new InfoFragment();
+                    break;
+                case 3:         // Info
+                    fragment = new InfoFragment();
+                    break;
+            }
 
-        // show/hide spinner
-        if (showSpinner) {
-            mSpinner.setVisibility(View.VISIBLE);
+            // show/hide spinner
+            if (showSpinner) {
+                mSpinner.setVisibility(View.VISIBLE);
+            } else {
+                mSpinner.setVisibility(View.GONE);
+            }
+
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            // Update selected item and title and close the drawer
+            mDrawerList.setItemChecked(position, true);
+            setTitle(mNavigationItems.get(position).getItemName());
+
+            mLastFragmentIndex = position;
         } else {
-            mSpinner.setVisibility(View.GONE);
+            // Open the app preferences
+            Intent preferencesIntent = new Intent(this, SettingsActivity.class);
+            startActivity(preferencesIntent);
+            mDrawerList.setItemChecked(mLastFragmentIndex, true);
         }
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-        // Update selected item and title and close the drawer
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mNavigationItems.get(position).getItemName());
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawerContainer);
     }
 
     @Override
