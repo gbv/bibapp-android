@@ -6,7 +6,7 @@
 //
 //import de.eww.bibapp.PaiaHelper;
 //import de.eww.bibapp.constants.Constants;
-//import de.eww.bibapp.fragments.detail.DetailFragment;
+//import de.eww.bibapp.fragment.search.DetailFragment;
 //
 ///**
 // * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -30,6 +30,15 @@
 //		// get url
 //		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
 //		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+
+/*
+SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
+        int localCatalogIndex = 0;
+        if (!localCatalogPreference.isEmpty()) {
+            localCatalogIndex = Integer.valueOf(localCatalogPreference);
+        }
+ */
 //
 //		String paiaUrl = Constants.getPaiaUrl(spinnerValue) + "/core/" + PaiaHelper.getInstance().getUsername() + "/request?access_token=" + PaiaHelper.getInstance().getAccessToken();
 //

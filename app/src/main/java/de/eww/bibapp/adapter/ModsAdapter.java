@@ -50,6 +50,10 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
         mContext = context;
     }
 
+    public void addModsItems(List<ModsItem> itemList) {
+        mItemList.addAll(itemList);
+    }
+
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

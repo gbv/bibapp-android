@@ -2,6 +2,7 @@ package de.eww.bibapp.tasks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.AsyncTaskLoader;
 
@@ -12,8 +13,9 @@ import java.util.HashMap;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
+import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.data.SearchXmlParser;
+import de.eww.bibapp.parser.SearchXmlParser;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -171,9 +173,14 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 			e1.printStackTrace();
 		}
 
-		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
-		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, spinnerValue), this.fragment.getActivity());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
+        int localCatalogIndex = 0;
+        if (!localCatalogPreference.isEmpty()) {
+            localCatalogIndex = Integer.valueOf(localCatalogPreference);
+        }
+
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, localCatalogIndex), this.fragment.getActivity());
 
 		try
 		{

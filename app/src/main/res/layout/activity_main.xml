@@ -28,16 +28,6 @@
             android:background="?attr/colorPrimary"
             app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
-            <!--
-            <SearchView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/toolbar_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:theme="@style/BibAppSearchViewStyle" />
-            -->
-
             <Spinner
                 android:id="@+id/toolbar_spinner"
                 android:layout_width="wrap_content"
@@ -58,11 +48,11 @@
          the container. A solid background is used for contrast
          with the content view. -->
     <ListView android:id="@+id/left_drawer"
-        android:layout_width="240dp"
+        android:layout_width="220dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
+        android:divider="@color/colorNavigationDivider"
+        android:dividerHeight="1dp"
         android:background="@color/colorNavigationBackground"/>
 </android.support.v4.widget.DrawerLayout>

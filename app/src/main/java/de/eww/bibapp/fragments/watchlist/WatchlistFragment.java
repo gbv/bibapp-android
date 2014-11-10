@@ -31,7 +31,7 @@
 //import de.eww.bibapp.adapters.SearchAdapter;
 //import de.eww.bibapp.data.SearchEntry;
 //import de.eww.bibapp.fragments.AbstractListFragment;
-//import de.eww.bibapp.fragments.detail.DetailFragment;
+//import de.eww.bibapp.fragment.search.DetailFragment;
 //import de.eww.bibapp.fragments.detail.DetailPagerFragment;
 //import de.eww.bibapp.tasks.WatchlistPreferencesLoader;
 //

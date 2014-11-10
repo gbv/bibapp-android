@@ -16,14 +16,11 @@
 
 <resources>
     <color name="colorPrimary">#d83351</color>
-    <color name="colorPrimaryDark">#cccccc</color>
-    <color name="colorAccent">#dddddd</color>
+    <color name="colorPrimaryDark">#ffaf2b44</color>
+    <color name="colorAccent">#eeeeee</color>
 
-
-
-
-
-    <color name="colorNavigationBackground">#cccccc</color>
+    <color name="colorNavigationBackground">#ffffff</color>
+    <color name="colorNavigationDivider">#dadadc</color>
 
 
 

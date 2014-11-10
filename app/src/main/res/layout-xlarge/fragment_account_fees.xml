@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="24sp"
+        android:text="@string/account_fees" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/divider"/>
+
+    <TextView
+        android:id="@+id/sum"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="5dp"
+	    android:textStyle="bold"
+	    android:layout_marginBottom="3dp"/>
+	
+	<ImageView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/divider"/>
+
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/account_fees_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"/>
+</LinearLayout>

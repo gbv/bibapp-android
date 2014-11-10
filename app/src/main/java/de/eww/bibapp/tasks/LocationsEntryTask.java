@@ -13,7 +13,7 @@
 //import de.eww.bibapp.AsyncCanceledInterface;
 //import de.eww.bibapp.URLConnectionHelper;
 //import de.eww.bibapp.data.LocationsEntry;
-//import de.eww.bibapp.fragments.detail.DetailFragment;
+//import de.eww.bibapp.fragment.search.DetailFragment;
 //
 ///**
 // * @author Christoph Schönfeld - effective WEBWORK GmbH

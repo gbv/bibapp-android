@@ -1,42 +1,3 @@
-//package de.eww.bibapp.fragments.search;
-//
-//import android.app.ActionBar;
-//import android.content.Context;
-//import android.content.res.Resources;
-//import android.os.Bundle;
-//import android.support.v4.app.LoaderManager;
-//import android.support.v4.content.Loader;
-//import android.view.KeyEvent;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.view.inputmethod.EditorInfo;
-//import android.view.inputmethod.InputMethodManager;
-//import android.widget.AbsListView;
-//import android.widget.AbsListView.OnScrollListener;
-//import android.widget.EditText;
-//import android.widget.ListView;
-//import android.widget.ProgressBar;
-//import android.widget.TextView;
-//import android.widget.TextView.OnEditorActionListener;
-//
-//import java.util.ArrayList;
-//import java.util.Collection;
-//import java.util.HashMap;
-//
-//import de.eww.bibapp.AsyncCanceledInterface;
-//import de.eww.bibapp.MainActivity;
-//import de.eww.bibapp.R;
-//import de.eww.bibapp.SearchAdapterInterface;
-//import de.eww.bibapp.adapters.SearchAdapter;
-//import de.eww.bibapp.constants.Constants;
-//import de.eww.bibapp.data.SearchEntry;
-//import de.eww.bibapp.fragments.AbstractListFragment;
-//import de.eww.bibapp.fragments.detail.DetailFragment;
-//import de.eww.bibapp.fragments.detail.DetailPagerFragment;
-//import de.eww.bibapp.fragments.dialogs.LoadCanceledDialogFragment;
-//import de.eww.bibapp.tasks.SearchXmlLoader;
-//
 //public class GVKSearchFragment extends AbstractListFragment implements
 //	LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
 //	OnEditorActionListener,
@@ -164,13 +125,6 @@
 //	}
 //
 //	@Override
-//	public void onLoaderReset(Loader<HashMap<String, Object>> arg0)
-//	{
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
 //	public boolean onEditorAction(TextView v, int actionId, KeyEvent event)
 //	{
 //		if ( actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_NEXT )
@@ -214,38 +168,5 @@
 //				searchXmlLoader.forceLoad();
 //			}
 //		}
-//	}
-//
-//	@Override
-//	public void onScrollStateChanged(AbsListView view, int scrollState)
-//	{
-//		// TODO Auto-generated method stub
-//
-//	}
-//
-//	@Override
-//	public void onAsyncCanceled()
-//	{
-//		this.setListShown(true);
-//		this.getLoaderManager().destroyLoader(0);
-//		this.getLoaderManager().initLoader(0, null, this);
-//
-//		if ( this.getView() != null )
-//		{
-//			LoadCanceledDialogFragment loadCanceledDialog = new LoadCanceledDialogFragment();
-//			loadCanceledDialog.show(this.getChildFragmentManager(), "load_canceled");
-//		}
-//	}
-//
-//	@Override
-//	public SearchAdapter getSearchAdapter()
-//	{
-//		return this.mAdapter;
-//	}
-//
-//	@Override
-//	public int getHits()
-//	{
-//		return this.hits;
 //	}
 //}

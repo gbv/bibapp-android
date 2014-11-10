@@ -1,7 +1,9 @@
 package de.eww.bibapp.activity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -14,21 +16,24 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import de.eww.bibapp.DrawerItem;
 import de.eww.bibapp.R;
+import de.eww.bibapp.adapter.CustomDrawerAdapter;
 import de.eww.bibapp.fragment.account.AccountFragment;
 import de.eww.bibapp.fragment.info.InfoFragment;
 import de.eww.bibapp.fragment.search.GVKSearchFragment;
-import de.eww.bibapp.fragment.search.LocalSearchFragment;
+import de.eww.bibapp.fragment.search.SearchFragment;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.inject.ContentView;
-import roboguice.inject.InjectResource;
 import roboguice.inject.InjectView;
 
 /**
@@ -63,23 +68,38 @@ public class MainActivity extends RoboActionBarActivity {
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
+    private CustomDrawerAdapter mCustomDrawerAdapter;
 
-    @InjectResource(R.array.top_navigation_array) String[] mTopNavigationTitles;
+    private List<DrawerItem> mNavigationItems;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // Request additional window features
-        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-
         super.onCreate(savedInstanceState);
 
+        Resources resources = getResources();
+
+        // Set orientation
+        boolean isLandscape = resources.getBoolean(R.bool.landscape);
+        if (isLandscape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
         mTitle = mDrawerTitle = getTitle();
+        mNavigationItems = new ArrayList<DrawerItem>();
 
         // Set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // Set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mTopNavigationTitles));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_heading_general)));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_search), R.drawable.ic_action_search));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_account), R.drawable.ic_action_person));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_watchlist), R.drawable.ic_action_view_as_list));
+        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_info), R.drawable.ic_action_about));
+        mCustomDrawerAdapter = new CustomDrawerAdapter(this, R.layout.drawer_list_item, mNavigationItems);
+        mDrawerList.setAdapter(mCustomDrawerAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // Set the toolbar as our action bar
@@ -94,9 +114,9 @@ public class MainActivity extends RoboActionBarActivity {
         mDrawerToggle = new ActionBarDrawerToggle(
             this,                       // host activitiy
             mDrawerLayout,              // DrawerLayout object
-            //R.drawable.ic_drawer,     // new drawer image to replace 'Up' caret
-            R.string.drawer_open,   // "open drawer" description for accessibility
-            R.string.drawer_close   // "close drawer" description for accessibility
+            mToolbar,                   // Toolbar
+            R.string.drawer_open,        // "open drawer" description for accessibility
+            R.string.drawer_close      // "close drawer" description for accessibility
         ) {
             public void onDrawerClosed(View view) {
                 getSupportActionBar().setTitle(mTitle);
@@ -122,7 +142,7 @@ public class MainActivity extends RoboActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mCurrentSpinnerIndex = position;
-                selectItem(0);
+                selectItem(1);
             }
 
             @Override
@@ -133,7 +153,7 @@ public class MainActivity extends RoboActionBarActivity {
         mSpinner.setOnItemSelectedListener(mOnNavigationListener);
 
         if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(1);
         }
 
         // Set default values for our preferences
@@ -185,7 +205,9 @@ public class MainActivity extends RoboActionBarActivity {
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            selectItem(position);
+            if (mNavigationItems.get(position).getItemHeading() == null) {
+                selectItem(position);
+            }
         }
     }
 
@@ -194,29 +216,27 @@ public class MainActivity extends RoboActionBarActivity {
         boolean showSpinner = false;
 
         // update the main content by replacing fragments
-        Fragment fragment;
+        Fragment fragment = null;
         switch (position) {
-            case 0:         // Search
+            case 1:         // Search
                 // show local or gvk search
                 if (mCurrentSpinnerIndex == 0) {
-                    fragment = new LocalSearchFragment();
+                    fragment = new SearchFragment();
                 } else {
                     fragment = new GVKSearchFragment();
                 }
 
                 showSpinner = true;
                 break;
-            case 1:         // Account
+            case 2:         // Account
                 fragment = new AccountFragment();
                 break;
-            case 2:         // Watch list
+            case 3:         // Watch list
                 fragment = new InfoFragment();
                 break;
-            case 3:         // Info
+            case 4:         // Info
                 fragment = new InfoFragment();
                 break;
-            default:
-                fragment = new LocalSearchFragment();
         }
 
         // show/hide spinner
@@ -231,7 +251,7 @@ public class MainActivity extends RoboActionBarActivity {
 
         // Update selected item and title and close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(mTopNavigationTitles[position]);
+        setTitle(mNavigationItems.get(position).getItemName());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 

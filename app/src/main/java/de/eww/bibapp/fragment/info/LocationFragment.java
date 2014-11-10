@@ -50,7 +50,7 @@ public class LocationFragment extends RoboFragment {
     }
 
     private void displayLocation() {
-        if (mTitleView == null) {
+        if (mTitleView == null || mLocationItem == null) {
             return;
         }
 
@@ -67,35 +67,47 @@ public class LocationFragment extends RoboFragment {
 
             mOpeningHoursView.setText(finalOpeningHours);
             mOpeningHoursView.setVisibility(View.VISIBLE);
+        } else {
+            mOpeningHoursView.setVisibility(View.GONE);
         }
 
         if (mLocationItem.hasAddress()) {
             mAddressView.setText(mLocationItem.getAddress());
             mAddressView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mAddressView, Linkify.MAP_ADDRESSES);
+        } else {
+            mAddressView.setVisibility(View.GONE);
         }
 
         if (mLocationItem.hasEmail()) {
             mEmailView.setText(mLocationItem.getEmail());
             mEmailView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mEmailView, Linkify.EMAIL_ADDRESSES);
+        } else {
+            mEmailView.setVisibility(View.GONE);
         }
 
         if (mLocationItem.hasUrl()) {
             mUrlView.setText(mLocationItem.getUrl());
             mUrlView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mUrlView, Linkify.WEB_URLS);
+        } else {
+            mUrlView.setVisibility(View.GONE);
         }
 
         if (mLocationItem.hasPhone()) {
             mPhoneView.setText(mLocationItem.getPhone());
             mPhoneView.setVisibility(View.VISIBLE);
             Linkify.addLinks(mPhoneView, Linkify.PHONE_NUMBERS);
+        } else {
+            mPhoneView.setVisibility(View.GONE);
         }
 
         if (mLocationItem.hasDescription()) {
             mDescriptionView.setText(mLocationItem.description);
             mDescriptionView.setVisibility(View.VISIBLE);
+        } else {
+            mDescriptionView.setVisibility(View.GONE);
         }
 
         if (mLocationItem.hasPosition()) {
@@ -109,6 +121,8 @@ public class LocationFragment extends RoboFragment {
 //			FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
 //			transaction.add(R.id.locations_detail_maps_container, mapFragment);
 //			transaction.commit();
+        } else {
+            mFrameLayout.setVisibility(View.GONE);
         }
     }
 }

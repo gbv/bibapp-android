@@ -11,24 +11,18 @@ import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.fragment.info.LocationsFragment;
 import de.eww.bibapp.model.source.LocationSource;
 import roboguice.activity.RoboFragmentActivity;
-import roboguice.inject.ContentView;
-import roboguice.inject.InjectFragment;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 25.10.14.
  */
-@ContentView(R.layout.activity_locations)
 public class LocationsActivity extends RoboFragmentActivity implements
         LocationsFragment.OnLocationSelectedListener {
 
     // Whether or not we are in dual-pane mode
     boolean mIsDualPane = false;
 
-    @InjectFragment(R.id.locations) LocationsFragment mLocationsFragment;
-    @InjectFragment(R.id.location) LocationFragment mLocationFragment;
-
-    @InjectView(R.id.location) View mLocationView;
+    LocationsFragment mLocationsFragment;
+    LocationFragment mLocationFragment;
 
     @Inject LocationSource mLocationSource;
 
@@ -38,10 +32,16 @@ public class LocationsActivity extends RoboFragmentActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_locations);
 
-        // Determe whether we are in single-pane or dual-pane mode by testing the visibility
+        // Find our fragments
+        mLocationFragment = (LocationFragment) getSupportFragmentManager().findFragmentById(R.id.location);
+        mLocationsFragment = (LocationsFragment) getSupportFragmentManager().findFragmentById(R.id.locations);
+
+        // Determine whether we are in single-pane or dual-pane mode by testing the visibility
         // of the location view
-        mIsDualPane = mLocationView != null && mLocationView.getVisibility() == View.VISIBLE;
+        View locationView = findViewById(R.id.location);
+        mIsDualPane = locationView != null && locationView.getVisibility() == View.VISIBLE;
 
         // Register ourselves as the listener for the locations fragment events.
         mLocationsFragment.setOnLocationSelectedListener(this);
@@ -88,6 +88,13 @@ public class LocationsActivity extends RoboFragmentActivity implements
         }
     }
 
+    @Override
+    public void onLocationsLoaded() {
+        // If we are displaying the location on the right, we have to update it
+        if (mIsDualPane) {
+            mLocationFragment.setLocation(mLocationSource.getLocation(0));
+        }
+    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {

@@ -2,6 +2,7 @@ package de.eww.bibapp.tasks;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -15,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.URLConnectionHelper;
+import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.LocationItem;
 
@@ -45,10 +47,14 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 	{
 		List<LocationItem> response = new ArrayList<LocationItem>();
 
-		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
-		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
+        int localCatalogIndex = 0;
+        if (!localCatalogPreference.isEmpty()) {
+            localCatalogIndex = Integer.valueOf(localCatalogPreference);
+        }
 
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getLocationUrl(spinnerValue), mContext);
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getLocationUrl(localCatalogIndex), mContext);
 
 		try
 		{
@@ -81,7 +87,7 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 			}
 
 			// if we did not found a main entry, try to find one with the uri url as key
-			String lookupKey = Constants.getLocationUrl(spinnerValue).substring(0, Constants.getLocationUrl(spinnerValue).length() - 12);
+			String lookupKey = Constants.getLocationUrl(localCatalogIndex).substring(0, Constants.getLocationUrl(localCatalogIndex).length() - 12);
 			if (jsonResponse.has(lookupKey)) {
 				mainEntry = (JSONObject) jsonResponse.get(lookupKey);
 			}

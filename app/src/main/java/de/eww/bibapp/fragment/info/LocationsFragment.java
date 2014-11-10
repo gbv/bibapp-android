@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.inject.Inject;
 
@@ -35,6 +37,9 @@ public class LocationsFragment extends RoboFragment implements
 
     @InjectView(R.id.locations_view) RecyclerView mRecyclerView;
 
+    @InjectView(R.id.progressbar)
+    ProgressBar mProgressBar;
+
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -51,6 +56,8 @@ public class LocationsFragment extends RoboFragment implements
          * @param index the index of the selected location.
          */
         public void onLocationSelected(int index);
+
+        public void onLocationsLoaded();
     }
 
     /**
@@ -88,6 +95,7 @@ public class LocationsFragment extends RoboFragment implements
         }));
 
         // Start the Request
+        mProgressBar.setVisibility(View.VISIBLE);
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.destroyLoader(0);
         loaderManager.initLoader(0, null, this);
@@ -107,8 +115,11 @@ public class LocationsFragment extends RoboFragment implements
     public void onLoadFinished(Loader<List<LocationItem>> loader, List<LocationItem> locations) {
         mLocationSource.clear();
         mLocationSource.addLocations(locations);
+        if (mLocationSelectedListener != null) {
+            mLocationSelectedListener.onLocationsLoaded();
+        }
 
-        getActivity().setProgressBarVisibility(false);
+        mProgressBar.setVisibility(View.GONE);
 
         mAdapter = new LocationAdapter(locations);
         mRecyclerView.setAdapter(mAdapter);
@@ -121,13 +132,9 @@ public class LocationsFragment extends RoboFragment implements
 
     @Override
     public void onAsyncCanceled() {
-        // TODO:
-        //		this.setListShown(true);
-//
-//		if ( this.getView() != null )
-//		{
-//			LoadCanceledDialogFragment loadCanceledDialog = new LoadCanceledDialogFragment();
-//			loadCanceledDialog.show(this.getChildFragmentManager(), "load_canceled");
-//		}
+        Toast toast = Toast.makeText(getActivity(), R.string.toast_locations_error, Toast.LENGTH_LONG);
+        toast.show();
+
+        mProgressBar.setVisibility(View.GONE);
     }
 }

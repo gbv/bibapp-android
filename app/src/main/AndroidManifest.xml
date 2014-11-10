@@ -60,16 +60,15 @@
         <activity android:name=".activity.ImpressumActivity" />
         <activity android:name=".activity.LocationActivity" />
         <activity android:name=".activity.LocationsActivity" />
+        <activity android:name=".activity.ModsActivity" />
 
         <service
             android:name="com.octo.android.robospice.XmlSpringAndroidSpiceService"
             android:exported="false" />
-        
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-        <uses-library android:name="com.google.android.maps" />
+        <!--<uses-library android:name="com.google.android.maps" />-->
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="@string/google_maps_v2_key"/>

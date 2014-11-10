@@ -30,6 +30,13 @@
         android:visibility="gone"
         android:text="@string/info_button_homepage" />
 
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/info_rss_view"
         android:scrollbars="vertical"

@@ -44,12 +44,6 @@ public class LocationActivity extends RoboFragmentActivity {
 
         mLocationIndex = getIntent().getExtras().getInt("locationIndex", 0);
 
-        // If we are in two-pane layout mode, this activity is no longer necessary
-        if (getResources().getBoolean(R.bool.has_two_panes)) {
-            finish();
-            return;
-        }
-
         // Place a LocationFragment as our content pane
         LocationFragment locationFragment = new LocationFragment();
         getSupportFragmentManager().beginTransaction().add(android.R.id.content, locationFragment).commit();

@@ -4,6 +4,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
+        android:id="@+id/progressbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/locations_view"
         android:scrollbars="vertical"

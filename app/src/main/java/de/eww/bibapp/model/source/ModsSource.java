@@ -14,6 +14,7 @@ import de.eww.bibapp.model.ModsItem;
 public class ModsSource {
 
     private List<ModsItem> mModsItems = new ArrayList<ModsItem>();
+    private int mTotalItems = 0;
 
     public void addModsItems(List<ModsItem> itemList) {
         mModsItems.addAll(itemList);
@@ -25,5 +26,17 @@ public class ModsSource {
 
     public void clear() {
         mModsItems.clear();
+    }
+
+    public int getLoadedItems() {
+        return mModsItems.size();
+    }
+
+    public void setTotalItems(int totalItem) {
+        mTotalItems = totalItem;
+    }
+
+    public int getTotalItems() {
+        return mTotalItems;
     }
 }

@@ -20,7 +20,7 @@
 //import de.eww.bibapp.URLConnectionHelper;
 //import de.eww.bibapp.constants.Constants;
 //import de.eww.bibapp.data.AvailableEntry;
-//import de.eww.bibapp.data.DaiaXmlParser;
+//import de.eww.bibapp.parser.DaiaXmlParser;
 //import de.eww.bibapp.data.LocationsEntry;
 //import de.eww.bibapp.data.SearchEntry;
 //
@@ -71,6 +71,15 @@
 //
 //		SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
 //		int spinnerValue = settings.getInt("local_catalog", Constants.LOCAL_CATALOG_DEFAULT);
+
+/*
+SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
+        int localCatalogIndex = 0;
+        if (!localCatalogPreference.isEmpty()) {
+            localCatalogIndex = Integer.valueOf(localCatalogPreference);
+        }
+ */
 //
 //		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getDaiaUrl(this.ppn, this.fromLocalSearch, spinnerValue));
 //
