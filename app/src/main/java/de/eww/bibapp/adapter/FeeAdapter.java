@@ -40,7 +40,7 @@ public class FeeAdapter extends RecyclerView.Adapter<FeeAdapter.ViewHolder> {
     }
 
     // Suitable constructor for list type
-    public FeeAdapter(List<FeeItem> itemList, Context context, boolean isRequestPermitted) {
+    public FeeAdapter(List<FeeItem> itemList) {
         mItemList = itemList;
     }
 

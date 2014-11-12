@@ -1,9 +1,13 @@
 package de.eww.bibapp.fragment.search;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -21,11 +25,16 @@ import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.adapter.ModsAdapter;
-import de.eww.bibapp.listener.RecyclerItemClickListener;
+import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.decoration.DividerItemDecoration;
+import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
+import de.eww.bibapp.tasks.DBSPixelTask;
 import de.eww.bibapp.tasks.SearchXmlLoader;
+import roboguice.activity.RoboActionBarActivity;
 import roboguice.fragment.RoboFragment;
 
 /**
@@ -33,6 +42,7 @@ import roboguice.fragment.RoboFragment;
  */
 public class SearchListFragment extends RoboFragment implements
         LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
+        RecyclerViewOnGestureListener.OnGestureListener,
         AsyncCanceledInterface {
 
     @Inject ModsSource mModsSource;
@@ -76,26 +86,25 @@ public class SearchListFragment extends RoboFragment implements
         mRecyclerView.scrollToPosition(position);
     }
 
+    public void resetAdapter() {
+        mAdapter = new ModsAdapter(mModsSource.getModsItems(), getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Improve performance for RecyclerView by setting it to a fixed size,
-        // since we now that changes in content do not change the layout size
-        // of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mModsItemSelectedListener != null) {
-                    mModsItemSelectedListener.onModsItemSelected(position);
-                }
-            }
-        }));
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        mRecyclerView.addItemDecoration(itemDecoration);
+
+        RecyclerViewOnGestureListener gestureListener = new RecyclerViewOnGestureListener(getActivity(), mRecyclerView);
+        gestureListener.setOnGestureListener(this);
+        mRecyclerView.addOnItemTouchListener(gestureListener);
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -163,7 +172,7 @@ public class SearchListFragment extends RoboFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_local_search, container, false);
+        View view =  inflater.inflate(R.layout.fragment_search_list, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.search_results);
         mSearchView = (SearchView) view.findViewById(R.id.search_query);
@@ -204,31 +213,20 @@ public class SearchListFragment extends RoboFragment implements
 
         mIsLoading = false;
 
-        //		// show the number of results in action bar
-//		this.hits = (Integer) data.get("numberOfRecords");
-//		this.setHits(this.hits);
-//
-//		// dbs counting
-//		if ( Constants.DBS_COUNTING_URL != null && !Constants.DBS_COUNTING_URL.isEmpty() )
-//		{
-//			SharedPreferences settings = this.getActivity().getPreferences(0);
-//			boolean isDbsChecked = settings.getBoolean("allow_dbs", true);
-//
-//			if ( isDbsChecked )
-//			{
-//				AsyncTask<Void, Void, Void> dbsPixelTask = new DBSPixelTask();
-//				dbsPixelTask.execute();
-//			}
-//		}
-    }
+        // dbs counting
+        if (Constants.DBS_COUNTING_URL != null && !Constants.DBS_COUNTING_URL.isEmpty()) {
+            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            boolean isDbsChecked = sharedPref.getBoolean(SettingsActivity.KEY_PREF_DATA_PRIVACY, true);
 
-//	private void setHits(int hits)
-//	{
-//		ActionBar actionBar = this.getActivity().getActionBar();
-//		Resources resources = this.getActivity().getResources();
-//
-//		actionBar.setSubtitle(String.valueOf(hits) + " " + resources.getString(R.string.search_hits));
-//	}
+            if (isDbsChecked) {
+                AsyncTask<Void, Void, Void> dbsPixelTask = new DBSPixelTask(getActivity());
+                dbsPixelTask.execute();
+            }
+        }
+
+        ActionBar actionBar = ((RoboActionBarActivity) getActivity()).getSupportActionBar();
+        actionBar.setSubtitle(String.valueOf(mModsSource.getTotalItems()) + " " + getResources().getString(R.string.search_hits));
+    }
 
     @Override
     public void onLoaderReset(Loader<HashMap<String, Object>> loader) {
@@ -242,5 +240,17 @@ public class SearchListFragment extends RoboFragment implements
 
         mProgressBar.setVisibility(View.GONE);
         getLoaderManager().destroyLoader(0);
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        if (mModsItemSelectedListener != null) {
+            mModsItemSelectedListener.onModsItemSelected(position);
+        }
+    }
+
+    @Override
+    public void onLongPress(View view, int position) {
+
     }
 }

@@ -19,7 +19,8 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.LocationAdapter;
-import de.eww.bibapp.listener.RecyclerItemClickListener;
+import de.eww.bibapp.decoration.DividerItemDecoration;
+import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.source.LocationSource;
 import de.eww.bibapp.tasks.LocationsJsonLoader;
@@ -30,6 +31,7 @@ import roboguice.inject.InjectView;
  * Created by christoph on 25.10.14.
  */
 public class LocationsFragment extends RoboFragment implements
+        RecyclerViewOnGestureListener.OnGestureListener,
         LoaderManager.LoaderCallbacks<List<LocationItem>>,
         AsyncCanceledInterface {
 
@@ -37,8 +39,7 @@ public class LocationsFragment extends RoboFragment implements
 
     @InjectView(R.id.locations_view) RecyclerView mRecyclerView;
 
-    @InjectView(R.id.progressbar)
-    ProgressBar mProgressBar;
+    @InjectView(R.id.progressbar)ProgressBar mProgressBar;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -85,14 +86,12 @@ public class LocationsFragment extends RoboFragment implements
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                if (mLocationSelectedListener != null) {
-                    mLocationSelectedListener.onLocationSelected(position);
-                }
-            }
-        }));
+        RecyclerViewOnGestureListener gestureListener = new RecyclerViewOnGestureListener(getActivity(), mRecyclerView);
+        gestureListener.setOnGestureListener(this);
+        mRecyclerView.addOnItemTouchListener(gestureListener);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        mRecyclerView.addItemDecoration(itemDecoration);
 
         // Start the Request
         mProgressBar.setVisibility(View.VISIBLE);
@@ -136,5 +135,17 @@ public class LocationsFragment extends RoboFragment implements
         toast.show();
 
         mProgressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        if (mLocationSelectedListener != null) {
+            mLocationSelectedListener.onLocationSelected(position);
+        }
+    }
+
+    @Override
+    public void onLongPress(View view, int position) {
+
     }
 }

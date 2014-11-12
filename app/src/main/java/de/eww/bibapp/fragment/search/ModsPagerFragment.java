@@ -1,6 +1,7 @@
 package de.eww.bibapp.fragment.search;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,8 +11,9 @@ import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.adapter.ModsWatchlistPagerAdapter;
 import de.eww.bibapp.model.source.ModsSource;
+import de.eww.bibapp.model.source.WatchlistSource;
 import roboguice.fragment.RoboFragment;
 
 /**
@@ -19,19 +21,25 @@ import roboguice.fragment.RoboFragment;
  */
 public class ModsPagerFragment extends RoboFragment {
 
-    private ModsPagerAdapter mPagerAdapter;
+    private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
 
     private int mCurrentItem = 0;
 
-    @Inject
-    ModsSource mModsSource;
+    private boolean mUseWatchlistSource = false;
+
+    @Inject ModsSource mModsSource;
+    @Inject WatchlistSource mWatchlistSource;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mPagerAdapter = new ModsPagerAdapter(getChildFragmentManager(), mModsSource);
+        if (!mUseWatchlistSource) {
+            mPagerAdapter = new ModsPagerAdapter(getChildFragmentManager(), mModsSource);
+        } else {
+            mPagerAdapter = new ModsWatchlistPagerAdapter(getChildFragmentManager(), mWatchlistSource);
+        }
     }
 
     @Override
@@ -45,6 +53,10 @@ public class ModsPagerFragment extends RoboFragment {
         if (mViewPager != null) {
             mViewPager.setCurrentItem(position);
         }
+    }
+
+    public int getCurrentItemPosition() {
+        return mViewPager.getCurrentItem();
     }
 
     @Override
@@ -61,12 +73,11 @@ public class ModsPagerFragment extends RoboFragment {
 //		{
 //			this.viewPager.setCurrentItem(DetailPagerFragment.listFragment.getLastClickedPosition());
 //		}
-//
-//		ActionBar actionBar = MainActivity.instance.getActionBar();
-//
-//		// enable up navigation
-//		actionBar.setDisplayHomeAsUpEnabled(true);
 
         return view;
+    }
+
+    public void useWatchlistSource() {
+        mUseWatchlistSource = true;
     }
 }

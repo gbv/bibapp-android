@@ -1,6 +1,7 @@
 package de.eww.bibapp.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -30,6 +31,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.fragment.watchlist.WatchlistFragment;
 import de.eww.bibapp.model.DrawerItem;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.CustomDrawerAdapter;
@@ -117,7 +120,6 @@ public class MainActivity extends RoboActionBarActivity {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             mVersionView.setText("v" + packageInfo.versionName);
         } catch(PackageManager.NameNotFoundException e) {
-
         }
 
         // Set the toolbar as our action bar
@@ -149,11 +151,27 @@ public class MainActivity extends RoboActionBarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         // SpinnerAdapter for search fragment
-        mSpinnerAdapter = ArrayAdapter.createFromResource(
-            getSupportActionBar().getThemedContext(),
-            R.array.search_spinner_list,
-            android.R.layout.simple_spinner_dropdown_item
+        String[] searchSpinnerList = resources.getStringArray(R.array.search_spinner_list);
+
+        // If our current local catalog contains a short title, we append it to the default title
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
+        int localCatalogIndex = 0;
+        if (!localCatalogPreference.isEmpty()) {
+            localCatalogIndex = Integer.valueOf(localCatalogPreference);
+        }
+
+        if (Constants.LOCAL_CATALOGS[localCatalogIndex].length > 2) {
+            searchSpinnerList[0] += " " + Constants.LOCAL_CATALOGS[localCatalogIndex][2];
+        }
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                getSupportActionBar().getThemedContext(),
+                android.R.layout.simple_spinner_item,
+                searchSpinnerList
         );
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerAdapter = spinnerArrayAdapter;
         mSpinner.setAdapter(mSpinnerAdapter);
 
         mOnNavigationListener = new AdapterView.OnItemSelectedListener() {
@@ -210,20 +228,22 @@ public class MainActivity extends RoboActionBarActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:         // Search
-                    // show local or gvk search
+                    fragment = new SearchFragment();
+                    showSpinner = true;
+
+                    // local or gvk search
                     if (mCurrentSpinnerIndex == 0) {
-                        fragment = new SearchFragment();
+                        ((SearchFragment) fragment).setSearchMode(SearchFragment.SEARCH_MODE.LOCAL);
                     } else {
-                        fragment = new GVKSearchFragment();
+                        ((SearchFragment) fragment).setSearchMode(SearchFragment.SEARCH_MODE.GVK);
                     }
 
-                    showSpinner = true;
                     break;
                 case 1:         // Account
                     fragment = new AccountFragment();
                     break;
                 case 2:         // Watch list
-                    fragment = new InfoFragment();
+                    fragment = new WatchlistFragment();
                     break;
                 case 3:         // Info
                     fragment = new InfoFragment();
@@ -259,6 +279,7 @@ public class MainActivity extends RoboActionBarActivity {
     public void setTitle(CharSequence title) {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setSubtitle("");
     }
 
     /**

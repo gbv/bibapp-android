@@ -19,6 +19,8 @@
     <color name="colorPrimaryDark">#ffaf2b44</color>
     <color name="colorAccent">#eeeeee</color>
 
+    <color name="colorHighlight">#ffff375a</color>
+
     <color name="colorNavigationBackground">#ffffff</color>
     <color name="colorNavigationAppImageBackground">#b6bdc4</color>
     <color name="colorNavigationDivider">#dadadc</color>

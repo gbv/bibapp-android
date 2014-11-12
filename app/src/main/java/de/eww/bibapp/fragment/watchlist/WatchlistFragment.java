@@ -1,6 +1,5 @@
-package de.eww.bibapp.fragment.search;
+package de.eww.bibapp.fragment.watchlist;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
@@ -13,41 +12,35 @@ import com.google.inject.Inject;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.ModsActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
-import de.eww.bibapp.model.source.ModsSource;
+import de.eww.bibapp.fragment.search.ModsFragment;
+import de.eww.bibapp.model.source.WatchlistSource;
 import roboguice.fragment.RoboFragment;
 
 /**
- * Created by christoph on 08.11.14.
+ * Created by christoph on 11.11.14.
  */
-public class SearchFragment extends RoboFragment implements
-        SearchListFragment.OnModsItemSelectedListener,
-        ModsPagerAdapter.SearchListLoaderInterface {
-
-    public static SearchFragment searchFragmentInstance;
+public class WatchlistFragment extends RoboFragment implements
+        ModsPagerAdapter.SearchListLoaderInterface,
+        WatchlistListFragment.OnModsItemSelectedListener {
 
     // Whether or not we are in dual-pane mode
     boolean mIsDualPane = false;
 
-    SearchListFragment mSearchListFragment;
+    WatchlistListFragment mWatchlistListFragment;
     ModsFragment mModsFragment;
 
-    @Inject ModsSource mModsSource;
+    @Inject WatchlistSource mWatchlistSource;
 
     // The mods item index currently beeing displayed
     int mCurrentModsItemIndex = 0;
-
-    private SEARCH_MODE mSearchMode = SEARCH_MODE.LOCAL;
-
-    public enum SEARCH_MODE {
-        LOCAL,
-        GVK
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        searchFragmentInstance = this;
+        // load watchlist data
+        mWatchlistSource.clear();
+        mWatchlistSource.loadFromFile(getActivity());
     }
 
     @Override
@@ -55,18 +48,26 @@ public class SearchFragment extends RoboFragment implements
         super.onActivityCreated(savedInstanceState);
 
         // Register ourselves as the listener for the search list fragment events.
-        mSearchListFragment.setOnModsItemSelectedListener(this);
+        mWatchlistListFragment.setOnModsItemSelectedListener(this);
 
         // Set up search list fragment
-        //restoreSelection(savedInstanceState);
+        restoreSelection(savedInstanceState);
+
+        // If we are displaying the mods item on the right, we have to update it
+        if (mIsDualPane) {
+            if (mWatchlistSource.getTotalItems() > 0) {
+                mModsFragment.setIsWatchlistFragment(true);
+                mModsFragment.setModsItem(mWatchlistSource.getModsItem(0));
+            }
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_watchlist, container, false);
 
         // Find our fragments
-        mSearchListFragment = (SearchListFragment) getChildFragmentManager().findFragmentById(R.id.search_list);
+        mWatchlistListFragment = (WatchlistListFragment) getChildFragmentManager().findFragmentById(R.id.watchlist_list);
         mModsFragment = (ModsFragment) getChildFragmentManager().findFragmentById(R.id.mods_item);
 
         // Determine whether we are in single-pane or dual-pane mode by testing the visibility
@@ -84,7 +85,7 @@ public class SearchFragment extends RoboFragment implements
         if (savedInstancteState != null) {
             if (mIsDualPane) {
                 int modsItemIndex = savedInstancteState.getInt("modsItemIndex", 0);
-                mSearchListFragment.setSelection(modsItemIndex);
+                mWatchlistListFragment.setSelection(modsItemIndex);
                 onModsItemSelected(modsItemIndex);
             }
         }
@@ -101,22 +102,13 @@ public class SearchFragment extends RoboFragment implements
 
         if (mIsDualPane) {
             // display it on the mods fragment
-            mModsFragment.setModsItem(mModsSource.getModsItem(index));
+            mModsFragment.setModsItem(mWatchlistSource.getModsItem(index));
         } else {
             // use separate activity
             Intent modsIntent = new Intent(getActivity(), ModsActivity.class);
             modsIntent.putExtra("modsItemIndex", index);
-            startActivityForResult(modsIntent, 1);
-        }
-    }
-
-    @Override
-    public void onNewSearchResultsLoaded() {
-        // If we are displaying the mods item on the right, we have to update it
-        if (mIsDualPane) {
-            if (mModsSource.getTotalItems() > 0) {
-                mModsFragment.setModsItem(mModsSource.getModsItem(0));
-            }
+            modsIntent.putExtra("modsItemSource", WatchlistSource.class.getName());
+            startActivity(modsIntent);
         }
     }
 
@@ -125,28 +117,5 @@ public class SearchFragment extends RoboFragment implements
         outState.putInt("modsItemIndex", mCurrentModsItemIndex);
 
         super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK) {
-                // Reset list adapter
-                mSearchListFragment.resetAdapter();
-
-                // Scroll to item
-                int pagerItemPosition = data.getIntExtra("pagerItemPosition", 0);
-                mSearchListFragment.setSelection(pagerItemPosition);
-            }
-        }
-    }
-
-    @Override
-    public LoaderManager getLoaderManager() {
-        return mSearchListFragment.getLoaderManager();
-    }
-
-    public void setSearchMode(SEARCH_MODE searchMode) {
-        mSearchMode = searchMode;
     }
 }

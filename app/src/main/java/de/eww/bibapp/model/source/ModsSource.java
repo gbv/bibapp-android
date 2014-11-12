@@ -24,6 +24,10 @@ public class ModsSource {
         return mModsItems.get(position);
     }
 
+    public List<ModsItem> getModsItems() {
+        return mModsItems;
+    }
+
     public void clear() {
         mModsItems.clear();
     }

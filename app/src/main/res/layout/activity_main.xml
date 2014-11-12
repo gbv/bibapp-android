@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
+            android:elevation="10dp"
             app:theme="@style/ThemeOverlay.AppCompat.ActionBar">
 
             <Spinner

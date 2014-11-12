@@ -14,6 +14,7 @@ import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchFragment;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
+import de.eww.bibapp.model.source.WatchlistSource;
 
 /**
  * Created by christoph on 09.11.14.
@@ -27,12 +28,6 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final int LOADING_OFFSET = 3;
 
-//	private Map<Integer, DetailFragment> mPageReferenceMap = new HashMap<Integer, DetailFragment>();
-//	private SearchAdapterInterface searchAdapterInterface;
-//	private boolean loadinBackground = false;
-//
-//	private ArrayList<SearchEntry> entryArray = new ArrayList<SearchEntry>();
-
     public interface SearchListLoaderInterface {
         public LoaderManager getLoaderManager();
     }
@@ -42,17 +37,6 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
 
         mFragmentManager = fragmentManager;
         mModsSource = modsSource;
-
-//		AbstractContainerFragment containerFragment = (AbstractContainerFragment) MainActivity.instance.getSupportFragmentManager().findFragmentByTag(MainActivity.currentTabId);
-//
-//		if ( MainActivity.currentTabId.equals("search") )
-//		{
-//			this.searchAdapterInterface = (SearchAdapterInterface) containerFragment.getFragment("de.eww.bibapp.fragments.search.SearchFragment");
-//		}
-//		else
-//		{
-//			this.searchAdapterInterface = (SearchAdapterInterface) containerFragment.getFragment("de.eww.bibapp.fragments.watchlist.WatchlistFragment");
-//		}
     }
 
     @Override
@@ -62,7 +46,6 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-//    	if ( this.loadinBackground == false && MainActivity.currentTabId.equals("search") ) {
         if (!mLoading) {
             if (mModsSource.getTotalItems() > position + LOADING_OFFSET) {
                 if (mModsSource.getLoadedItems() <= position + LOADING_OFFSET) {
@@ -99,24 +82,9 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
         }
 
         ModsFragment modsFragment = new ModsFragment();
+        modsFragment.setIsWatchlistFragment(false);
         modsFragment.setModsItem(mModsSource.getModsItem(position));
 
         return modsFragment;
     }
 }
-
-
-//
-//    @Override
-//	public void destroyItem(ViewGroup container, int position, Object object)
-//    {
-//		super.destroyItem(container, position, object);
-//
-//		this.mPageReferenceMap.remove(position);
-//	}
-//
-//    public DetailFragment getFragment(int key)
-//    {
-//		return mPageReferenceMap.get(key);
-//	}
-//}

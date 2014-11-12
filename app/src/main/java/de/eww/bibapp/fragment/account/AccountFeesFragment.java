@@ -92,7 +92,7 @@ public class AccountFeesFragment extends Fragment implements
     public void onLoadFinished(Loader<List<FeeItem>> loader, List<FeeItem> feeItemList) {
         getActivity().setProgressBarVisibility(false);
 
-        mAdapter = new FeeAdapter(feeItemList, getActivity(), PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.WRITE_ITEMS));
+        mAdapter = new FeeAdapter(feeItemList);
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar.setVisibility(View.GONE);

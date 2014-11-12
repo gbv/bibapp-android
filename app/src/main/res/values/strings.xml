@@ -84,21 +84,15 @@
     <string name="toast_locations_error">Standorte konnten nicht geladen werden</string>
     <string name="toast_account_error">Kontoinformationen konnten nicht geladen werden</string>
     <string name="toast_search_error">Suchanfrage konnte nicht abgeschlossen werden</string>
+    <string name="toast_mods_error">Es konnten nicht alle Informationen geladen werden</string>
 
     <!-- search -->
     <string name="search_hint">Suche</string>
     <string name="search_hits">Treffer</string>
     <string name="search_in_progress">Bibliothek wird durchsucht</string>
-    <string name="search_local">Lokal</string>
-    <string name="search_gvk">GVK</string>
 
-
-
-
-
-
-
-
+    <!-- swipe dialog -->
+    <string name="swipedialog_extending">Einträge werden nachgeladen</string>
 
     <!-- error dialog -->
     <string name="errordialog_connection">
@@ -111,22 +105,6 @@
     </string>
     <string name="errordialog_proceed">OK</string>
 
-
-
-
-
-
-    
-    <!-- action bar -->
-    <string name="actionbar_account">Konto</string>
-    <string name="actionbar_search">Suche</string>
-    <string name="actionbar_watchlist">Merkliste</string>
-    <string name="actionbar_info">Info</string>
-    <string name="actionbar_settings">Einstellungen</string>
-    
-    <!-- swipe dialog -->
-    <string name="swipedialog_extending">Einträge werden nachgeladen</string>
-    
     <!-- detail actions dialog -->
     <string name="detailactionsdialog_heading">Wählen Sie eine Aktion</string>
     <string name="detailactionsdialog_cancel">Abbrechen</string>
@@ -157,6 +135,4 @@
     <string name="detail_daia_no_department">Ohne Zuordnung</string>
     <string name="detail_interlending">Fernleihoptionen</string>
     <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus</string>
-    
-
 </resources>

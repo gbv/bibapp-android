@@ -19,6 +19,10 @@ public class LocationSource {
         mLocationItems.addAll(itemList);
     }
 
+    public void addLocation(LocationItem locationItem) {
+        mLocationItems.add(locationItem);
+    }
+
     public LocationItem getLocation(int position) {
         return mLocationItems.get(position);
     }

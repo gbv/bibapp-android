@@ -33,7 +33,7 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.BookedAdapter;
 import de.eww.bibapp.fragment.dialog.InsufficentRightsDialogFragment;
 import de.eww.bibapp.fragment.dialog.PaiaActionDialogFragment;
-import de.eww.bibapp.listener.RecyclerItemClickListener;
+import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.PaiaItem;
 import de.eww.bibapp.tasks.paia.BookedJsonLoader;
 import de.eww.bibapp.tasks.paia.PaiaCancelTask;
@@ -43,8 +43,9 @@ import de.eww.bibapp.tasks.paia.PaiaCancelTask;
  */
 public class AccountBookedFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<List<PaiaItem>>,
+        RecyclerViewOnGestureListener.OnGestureListener,
         PaiaHelper.PaiaListener,
-        PaiaActionDialogFragment.PaiaActionDialogLisener,
+        PaiaActionDialogFragment.PaiaActionDialogListener,
         AsyncCanceledInterface {
 
     PaiaActionDialogFragment mPaiaActionDialog;
@@ -81,28 +82,9 @@ public class AccountBookedFragment extends Fragment implements
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                // Check / Uncheck the checkbox
-                CheckBox checkBoxView = (CheckBox) view.findViewById(R.id.checkbox);
-                if (checkBoxView.isEnabled()) {
-                    checkBoxView.toggle();
-
-                    PaiaItem item = (PaiaItem) mPaiaItemList.get(position);
-
-                    // Update checked items
-                    if (checkBoxView.isShown() && checkBoxView.isChecked()) {
-                        mCheckedItems.add(item);
-                    } else {
-                        mCheckedItems.remove(item);
-                    }
-
-                    // Update menu action
-                    getActivity().supportInvalidateOptionsMenu();
-                }
-            }
-        }));
+        RecyclerViewOnGestureListener gestureListener = new RecyclerViewOnGestureListener(getActivity(), mRecyclerView);
+        gestureListener.setOnGestureListener(this);
+        mRecyclerView.addOnItemTouchListener(gestureListener);
 
         // Destroy loader and ensure paia connection
         mProgressBar.setVisibility(View.VISIBLE);
@@ -287,4 +269,30 @@ public class AccountBookedFragment extends Fragment implements
         // Update menu actions
         getActivity().supportInvalidateOptionsMenu();
 	}
+
+    @Override
+    public void onClick(View view, int position) {
+        // Check / Uncheck the checkbox
+        CheckBox checkBoxView = (CheckBox) view.findViewById(R.id.checkbox);
+        if (checkBoxView.isEnabled()) {
+            checkBoxView.toggle();
+
+            PaiaItem item = (PaiaItem) mPaiaItemList.get(position);
+
+            // Update checked items
+            if (checkBoxView.isShown() && checkBoxView.isChecked()) {
+                mCheckedItems.add(item);
+            } else {
+                mCheckedItems.remove(item);
+            }
+
+            // Update menu action
+            getActivity().supportInvalidateOptionsMenu();
+        }
+    }
+
+    @Override
+    public void onLongPress(View view, int position) {
+
+    }
 }

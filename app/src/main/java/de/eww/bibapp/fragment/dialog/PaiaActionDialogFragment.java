@@ -17,7 +17,7 @@ import de.eww.bibapp.R;
 public class PaiaActionDialogFragment extends DialogFragment
 {
 	// Use this instance of the interface to deliver action events
-	PaiaActionDialogLisener mListener;
+	PaiaActionDialogListener mListener;
     
     View dialogView = null;
     AlertDialog alertDialog;
@@ -31,7 +31,7 @@ public class PaiaActionDialogFragment extends DialogFragment
 	/* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event callbacks.
      * Each method passes the DialogFragment in case the host needs to query it. */
-	public interface PaiaActionDialogLisener
+	public interface PaiaActionDialogListener
 	{
         public void onActionDialogPositiveClick(DialogFragment dialog);
     }
@@ -67,7 +67,7 @@ public class PaiaActionDialogFragment extends DialogFragment
 	    LayoutInflater inflater = getActivity().getLayoutInflater();
 	    
 	    Fragment listenerFragment = PaiaActionDialogFragment.this.getParentFragment();
-	    mListener = (PaiaActionDialogLisener) listenerFragment;
+	    mListener = (PaiaActionDialogListener) listenerFragment;
 
 	    // Inflate and set the layout for the dialog
 	    // Pass null as the parent view because its going in the dialog layout
