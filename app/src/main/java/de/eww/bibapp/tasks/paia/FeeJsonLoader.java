@@ -113,7 +113,6 @@ public class FeeJsonLoader extends AbstractLoader<FeeItem>
 		}
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			this.raiseFailure();

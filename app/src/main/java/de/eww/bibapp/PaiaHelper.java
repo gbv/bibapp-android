@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.fragment.dialog.LoginDialogFragment;
 import de.eww.bibapp.tasks.paia.PaiaLoginTask;
@@ -107,15 +108,11 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                 SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
                 boolean storeLogin = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false);
 
-                showLoginDialog = !storeLogin;
+                // storeLogin could be true without any stored login data, if the user disables and reenables
+                // the corresponding option in the settings activity
+                String usernameForCheck = sharedPref.getString("store_login_username", null);
 
-                /*
-                if ( !showLoginDialog )
-                {
-                    showLoginDialog =	(settings.getString("store_login_username", null) == null) ||
-                                        (settings.getString("store_login_password", null) == null);
-                }
-                */
+                showLoginDialog = !storeLogin || usernameForCheck == null;
 
                 if ( showLoginDialog )
                 {
@@ -138,7 +135,6 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                     }
                     catch (Exception e)
                     {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
 
@@ -246,17 +242,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		dialog.getDialog().cancel();
         this.reset();
 
-        // TODO:
-        /*
-		if ( !this.fragment.getClass().getName().equals("de.eww.bibapp.fragments.DetailFragment") )
-		{
-			// change main navigation tab
-			MainActivity mainActivity = (MainActivity) this.fragment.getActivity();
-
-			CustomFragmentTabHost mainTabHost = (CustomFragmentTabHost) mainActivity.findViewById(R.id.main_tabhost);
-			mainTabHost.setCurrentTab(0);
-		}
-        */
+        ((DrawerActivity) fragment.getActivity()).selectItem(0);
 	}
 
     private void setScopes(String scopesString) {

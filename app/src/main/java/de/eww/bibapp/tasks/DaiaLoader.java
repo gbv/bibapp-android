@@ -172,7 +172,6 @@ public class DaiaLoader extends AbstractLoader<DaiaItem>
 					}
 					catch (Exception e)
 					{
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 
 						// remove location action for this item
@@ -207,7 +206,6 @@ public class DaiaLoader extends AbstractLoader<DaiaItem>
 		}
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			this.raiseFailure();

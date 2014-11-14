@@ -169,7 +169,6 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 		}
 		catch (UnsupportedEncodingException e1)
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 

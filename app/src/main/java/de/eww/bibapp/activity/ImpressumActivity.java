@@ -1,5 +1,7 @@
 package de.eww.bibapp.activity;
 
+import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
@@ -25,6 +27,15 @@ public class ImpressumActivity extends RoboActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set orientation
+        Resources resources = getResources();
+        boolean isLandscape = resources.getBoolean(R.bool.landscape);
+        if (isLandscape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         mTextView.setText(Html.fromHtml(mImpressumText));
         mTextView.setMovementMethod(LinkMovementMethod.getInstance());

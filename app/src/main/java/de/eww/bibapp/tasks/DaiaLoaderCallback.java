@@ -1,7 +1,6 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -29,7 +28,7 @@ import de.eww.bibapp.model.ModsItem;
 */
 public class DaiaLoaderCallback implements
 	LoaderManager.LoaderCallbacks<List<DaiaItem>>,
-	LocationListener
+    LocationListener
 {
 	private DaiaLoaderInterface daiaLoaderInterface = null;
 	private Location userLocation = null;
@@ -64,12 +63,10 @@ public class DaiaLoaderCallback implements
 			// acquire a reference to the system location manager
 			LocationManager locationManager = (LocationManager) ((Fragment) this.daiaLoaderInterface).getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-            Criteria criteria = new Criteria();
-            criteria.setAccuracy(Criteria.ACCURACY_FINE);
-            String provider = locationManager.getBestProvider(criteria, true);
-
-            if (provider != null) {
-                locationManager.requestSingleUpdate(provider, this, null);
+            if ( locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) )
+            {
+                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
+                locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
 
                 // reset user location
                 this.userLocation = null;
@@ -89,16 +86,16 @@ public class DaiaLoaderCallback implements
 		// if the location request is done
 		if ( this.isLocalSearch == true || this.userLocation != null || this.locationServiceAvailable == false )
 		{
-			this.loadingDone();
+			this.loadingDone(false);
 		}
 	}
 
-	private void loadingDone()
+	private void loadingDone(boolean forceWithoutLocation)
 	{
 		/**
 		 * post process data if in gvk search
 		 */
-		if ( this.isLocalSearch == false && this.locationServiceAvailable == true )
+		if ( this.isLocalSearch == false && this.locationServiceAvailable == true || forceWithoutLocation )
 		{
 			HashMap<String, DaiaItem> hashMap = new HashMap<String, DaiaItem>();
 
@@ -118,7 +115,7 @@ public class DaiaLoaderCallback implements
 					hashMap.put(entry.department, entry);
 				}
 
-				if ( entry.locationsEntry != null )
+				if ( entry.locationsEntry != null && !forceWithoutLocation )
 				{
 					// get geo data
 					double b1 = Double.parseDouble(entry.locationsEntry.posLat);
@@ -172,34 +169,34 @@ public class DaiaLoaderCallback implements
 		// empty
 	}
 
-	@Override
-	public void onLocationChanged(Location location) {
-		this.userLocation = location;
+    @Override
+    public void onLocationChanged(Location location) {
+        DaiaLoaderCallback.this.userLocation = location;
 
-		if ( ((Fragment) this.daiaLoaderInterface).isAdded() )
-		{
-			LocationManager locationManager = (LocationManager) ((Fragment) this.daiaLoaderInterface).getActivity().getSystemService(Context.LOCATION_SERVICE);
-			locationManager.removeUpdates(this);
-		}
+        if ( ((Fragment) DaiaLoaderCallback.this.daiaLoaderInterface).isAdded() )
+        {
+            LocationManager locationManager = (LocationManager) ((Fragment) DaiaLoaderCallback.this.daiaLoaderInterface).getActivity().getSystemService(Context.LOCATION_SERVICE);
+            locationManager.removeUpdates(this);
+        }
 
-		if ( this.loaderData != null )
-		{
-			this.loadingDone();
-		}
-	}
+        if ( DaiaLoaderCallback.this.loaderData != null )
+        {
+            DaiaLoaderCallback.this.loadingDone(false);
+        }
+    }
 
-	@Override
-	public void onProviderDisabled(String provider) {
-		// empty
-	}
+    @Override
+    public void onProviderDisabled(String s) {
 
-	@Override
-	public void onProviderEnabled(String provider) {
-		// empty
-	}
+    }
 
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// empty
-	}
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
 }

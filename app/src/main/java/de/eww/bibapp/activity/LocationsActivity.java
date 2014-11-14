@@ -48,7 +48,7 @@ public class LocationsActivity extends DrawerActivity implements
         setActiveNavigationItem(3);
 
         // Set up locations fragment
-        restoreSelection(savedInstanceState);
+        //restoreSelection(savedInstanceState);
     }
 
     /**
@@ -62,11 +62,6 @@ public class LocationsActivity extends DrawerActivity implements
                 onLocationSelected(locationIndex);
             }
         }
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        restoreSelection(savedInstanceState);
     }
 
     /**

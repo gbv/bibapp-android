@@ -17,8 +17,8 @@
 <resources>
     <color name="colorPrimary">#d83351</color>
     <color name="colorPrimaryDark">#ffaf2b44</color>
-    <color name="colorAccent">#eeeeee</color>
-    <color name="colorHighlight">#ffff375a</color>
+    <color name="colorAccent">#d83351</color>
+    <color name="colorHighlight">#d83351</color>
 
     <color name="colorNavigationBackground">#ffffff</color>
     <color name="colorNavigationAppImageBackground">#b6bdc4</color>

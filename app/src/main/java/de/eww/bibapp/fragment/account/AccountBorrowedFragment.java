@@ -191,7 +191,7 @@ public class AccountBorrowedFragment extends Fragment implements
                     }
                 }
 
-                if (numFailedItems == mAdapter.getSelectedItemCount()) {
+                if (numFailedItems == docArrayLength) {
                     responseText = (String) resources.getText(R.string.paiadialog_renew_failure);
                 } else if (numFailedItems > 0) {
                     responseText = (String) resources.getText(R.string.paiadialog_renew_partial);

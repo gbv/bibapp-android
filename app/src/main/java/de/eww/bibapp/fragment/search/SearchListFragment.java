@@ -160,6 +160,8 @@ public class SearchListFragment extends RoboFragment implements
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(mSearchView.getWindowToken(), 0);
 
+                mSearchView.clearFocus();
+
                 return true;
             }
 
@@ -261,8 +263,10 @@ public class SearchListFragment extends RoboFragment implements
 
     @Override
     public void onClick(View view, int position) {
-        if (mModsItemSelectedListener != null) {
-            mModsItemSelectedListener.onModsItemSelected(position);
+        if (!mIsLoading) {
+            if (mModsItemSelectedListener != null) {
+                mModsItemSelectedListener.onModsItemSelected(position);
+            }
         }
     }
 

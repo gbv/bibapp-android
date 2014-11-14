@@ -68,6 +68,8 @@ public class WatchlistListFragment extends RoboFragment implements
          * @param index the index of the selected mods item.
          */
         public void onModsItemSelected(int index);
+
+        public void onEmptyList();
     }
 
     /**
@@ -173,10 +175,16 @@ public class WatchlistListFragment extends RoboFragment implements
                 List<Integer> selectedItemPositions = mAdapter.getSelectedItems();
                 int currentPosition;
 
+                removeItems();
+
                 for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
                     currentPosition = selectedItemPositions.get(i);
-                    removeItem(currentPosition);
                     mAdapter.removeModsItem(currentPosition);
+                }
+
+                if (mAdapter.getItemCount() == 0) {
+                    mEmptyView.setVisibility(View.VISIBLE);
+                    mModsItemSelectedListener.onEmptyList();
                 }
 
                 mActionMode.finish();
@@ -201,7 +209,7 @@ public class WatchlistListFragment extends RoboFragment implements
         mActionMode.setTitle(title);
     }
 
-    private void removeItem(int position) {
+    private void removeItems() {
         // get actual watchlist
         ArrayList<ModsItem> watchlistEntries = new ArrayList<ModsItem>();
 
@@ -236,9 +244,5 @@ public class WatchlistListFragment extends RoboFragment implements
         // Display toast
         Toast toast = Toast.makeText(getActivity(), R.string.toast_watchlist_removed, Toast.LENGTH_LONG);
         toast.show();
-
-        if (mAdapter.getItemCount() == 0) {
-            mEmptyView.setVisibility(View.VISIBLE);
-        }
     }
 }

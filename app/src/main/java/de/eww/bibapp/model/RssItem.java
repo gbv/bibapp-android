@@ -15,10 +15,8 @@ public class RssItem {
     @Element(name="description")
     private String mDescription;
 
-    /*
-    @Element(name="content:encoded", data=true)
+    @Element(name="encoded", data=true, required=false)
     private String mContent;
-    */
 
     public String getTitle() {
         return mTitle;
@@ -28,9 +26,7 @@ public class RssItem {
         return mDescription;
     }
 
-    /*
     public String getContent() {
         return mContent;
     }
-    */
 }

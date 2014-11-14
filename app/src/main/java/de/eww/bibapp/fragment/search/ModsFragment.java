@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -89,6 +90,9 @@ public class ModsFragment extends RoboFragment implements
     @InjectView(R.id.unapi_progressbar) ProgressBar mUnApiProgressBar;
     @InjectView(R.id.empty) TextView mEmptyView;
 
+    LinearLayout mModsView;
+    RelativeLayout mNoneView;
+
     private DaiaAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
@@ -133,7 +137,19 @@ public class ModsFragment extends RoboFragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        mModsView = (LinearLayout) view.findViewById(R.id.mods_layout);
+        mNoneView = (RelativeLayout) view.findViewById(R.id.mods_none);
+
         displayModsItem();
+    }
+
+    public boolean hasModsItem() {
+        return mModsItem != null;
+    }
+
+    public void removeModsItem() {
+        mModsView.setVisibility(View.GONE);
+        mNoneView.setVisibility(View.VISIBLE);
     }
 
     public void setModsItem(ModsItem item) {
@@ -325,7 +341,7 @@ public class ModsFragment extends RoboFragment implements
     public void onPrepareOptionsMenu(Menu menu) {
         if (mModsItem != null) {
             if (mIsWatchlistFragment) {
-                mMenuItem.setVisible(true);
+                mMenuItem.setVisible(false);
                 mMenuItem.setEnabled(false);
                 mMenuItem.setTitle(R.string.menu_detail_addtowatchlist_duplicate);
             } else {
@@ -351,6 +367,8 @@ public class ModsFragment extends RoboFragment implements
                     mMenuItem.setEnabled(true);
                 }
             }
+        } else {
+            mMenuItem.setVisible(false);
         }
 
         super.onPrepareOptionsMenu(menu);
@@ -397,6 +415,7 @@ public class ModsFragment extends RoboFragment implements
                     toast.show();
 
                     // Disable menu item
+                    item.setTitle(R.string.menu_detail_addtowatchlist_duplicate);
                     item.setEnabled(false);
                 }
 
@@ -448,6 +467,11 @@ public class ModsFragment extends RoboFragment implements
         if (mTitleView == null || mModsItem == null) {
             return;
         }
+
+        mModsView.setVisibility(View.VISIBLE);
+        mNoneView.setVisibility(View.GONE);
+
+        getActivity().supportInvalidateOptionsMenu();
 
         loadData();
 

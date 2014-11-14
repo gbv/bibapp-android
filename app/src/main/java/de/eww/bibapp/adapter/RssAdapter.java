@@ -58,16 +58,10 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
         holder.mTitle.setText(item.getTitle());
         holder.mDescription.setText(item.getDescription());
 
-        // TODO
-        //		String entryDescription;
-//		if ( !content.isEmpty() )
-//		{
-//			entryDescription = content;
-//		}
-//		else
-//		{
-//			entryDescription = description;
-//		}
+        String content = item.getContent();
+        if (content != null && !content.isEmpty()) {
+            holder.mDescription.setText(content);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

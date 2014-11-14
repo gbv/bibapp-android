@@ -1,6 +1,8 @@
 package de.eww.bibapp.activity;
 
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -23,6 +25,15 @@ public class SettingsActivity extends RoboPreferenceActivity implements SharedPr
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set orientation
+        Resources resources = getResources();
+        boolean isLandscape = resources.getBoolean(R.bool.landscape);
+        if (isLandscape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
 
         addPreferencesFromResource(R.xml.preferences);
 
@@ -85,6 +96,11 @@ public class SettingsActivity extends RoboPreferenceActivity implements SharedPr
 
                 // and remove stored login information
                 PaiaHelper.getInstance().reset();
+
+                MainActivity instance = MainActivity.instance;
+                if (instance != null) {
+                    instance.selectSearch();
+                }
             }
         }
     }

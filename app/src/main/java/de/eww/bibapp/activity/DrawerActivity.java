@@ -2,6 +2,7 @@ package de.eww.bibapp.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
@@ -79,7 +80,7 @@ public class DrawerActivity extends RoboActionBarActivity {
     private List<DrawerItem> mNavigationItems;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    private static int mCurrentNavigationIndex = 0;
+    private static int mCurrentNavigationIndex = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +88,15 @@ public class DrawerActivity extends RoboActionBarActivity {
 
         mTitle = mDrawerTitle = getTitle();
         mNavigationItems = new ArrayList<DrawerItem>();
+
+        // Set orientation
+        Resources resources = getResources();
+        boolean isLandscape = resources.getBoolean(R.bool.landscape);
+        if (isLandscape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        } else {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     @Override
@@ -124,6 +134,10 @@ public class DrawerActivity extends RoboActionBarActivity {
     }
 
     public void selectItem(int position) {
+        if (position == mCurrentNavigationIndex && position != 0) {
+            return;
+        }
+
         if (position <= 3) {
             if (this instanceof MainActivity) {
                 // determine spinner visibility
@@ -190,6 +204,8 @@ public class DrawerActivity extends RoboActionBarActivity {
                 Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[localCatalogIndex]);
                 Intent launchBrowser = new Intent(Intent.ACTION_VIEW, homepageUrl);
                 startActivity(launchBrowser);
+
+                setActiveNavigationItem(mCurrentNavigationIndex);
             }
         }
 

@@ -168,7 +168,6 @@ public class BorrowedJsonLoader extends AbstractLoader<PaiaItem>
 		}
 		catch (Exception e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 
 			this.raiseFailure();

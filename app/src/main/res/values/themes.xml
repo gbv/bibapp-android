@@ -28,7 +28,7 @@
         <!--<item name="android:textColorPrimary">#0000FF</item>-->
     </style>
 
-    <style name="BibAppSearchViewStyle" parent="Widget.AppCompat.SearchView">
+    <style name="BibAppSearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
         <!--&lt;!&ndash; Background for the search query section (e.g. EditText) &ndash;&gt;-->
         <!--<item name="queryBackground">...</item>-->
         <!--&lt;!&ndash; Background for the actions section (e.g. voice, submit) &ndash;&gt;-->
@@ -45,10 +45,6 @@
         <!--<item name="commitIcon">...</item>-->
         <!--&lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
         <!--<item name="suggestionRowLayout">...</item>-->
-    </style>
-
-    <style name="BibAppTheme.ActionBar" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="android:background">@android:color/white</item>
     </style>
 
 </resources>

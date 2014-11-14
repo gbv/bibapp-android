@@ -81,6 +81,9 @@ public class InfoFragment extends Fragment {
             mEmptyView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             mSpiceManager.execute(mRssFeedRequest, new RssRequestListener());
+        } else {
+            mEmptyView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 

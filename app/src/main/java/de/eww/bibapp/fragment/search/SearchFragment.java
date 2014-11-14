@@ -83,10 +83,10 @@ public class SearchFragment extends RoboFragment implements
     /**
      * Restore mods item selection from saved state
      */
-    private void restoreSelection(Bundle savedInstancteState) {
-        if (savedInstancteState != null) {
+    private void restoreSelection(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
             if (mIsDualPane) {
-                int modsItemIndex = savedInstancteState.getInt("modsItemIndex", 0);
+                int modsItemIndex = savedInstanceState.getInt("modsItemIndex", 0);
                 mSearchListFragment.setSelection(modsItemIndex);
                 onModsItemSelected(modsItemIndex);
             }
@@ -117,7 +117,7 @@ public class SearchFragment extends RoboFragment implements
     public void onNewSearchResultsLoaded() {
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
-            if (mModsSource.getTotalItems() > 0) {
+            if (!mModsFragment.hasModsItem() && mModsSource.getTotalItems() > 0) {
                 mModsFragment.setModsItem(mModsSource.getModsItem(0));
             }
         }

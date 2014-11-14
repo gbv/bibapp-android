@@ -114,6 +114,13 @@ public class WatchlistFragment extends RoboFragment implements
     }
 
     @Override
+    public void onEmptyList() {
+        if (mIsDualPane) {
+            mModsFragment.removeModsItem();
+        }
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putInt("modsItemIndex", mCurrentModsItemIndex);
 

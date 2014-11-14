@@ -124,7 +124,7 @@ public class LocationFragment extends RoboFragment {
 
 			FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
 			transaction.add(R.id.map, mapFragment);
-			transaction.commit();
+			transaction.commitAllowingStateLoss();
         } else {
             mFrameLayout.setVisibility(View.GONE);
         }
