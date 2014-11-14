@@ -9,7 +9,9 @@
     <de.eww.bibapp.view.SlidingTabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:backgroundTint="@color/colorAccent"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"

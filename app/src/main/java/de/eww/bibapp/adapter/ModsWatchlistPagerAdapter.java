@@ -3,13 +3,7 @@ package de.eww.bibapp.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 
-import java.util.HashMap;
-import java.util.List;
-
-import de.eww.bibapp.fragment.dialog.SwipeLoadingDialogFragment;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.model.source.WatchlistSource;
 

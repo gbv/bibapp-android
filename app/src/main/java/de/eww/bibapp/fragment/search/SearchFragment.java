@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.activity.ModsActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.model.source.ModsSource;
@@ -73,6 +74,8 @@ public class SearchFragment extends RoboFragment implements
         // of the mods view
         View modsView = view.findViewById(R.id.mods_item);
         mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
+
+        mSearchListFragment.setSearchMode(mSearchMode);
 
         return view;
     }
@@ -137,6 +140,12 @@ public class SearchFragment extends RoboFragment implements
                 // Scroll to item
                 int pagerItemPosition = data.getIntExtra("pagerItemPosition", 0);
                 mSearchListFragment.setSelection(pagerItemPosition);
+
+                // Set navigation position
+                if (data.hasExtra("navigationIndex")) {
+                    int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                }
             }
         }
     }

@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,19 +25,20 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.BookedAdapter;
+import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.fragment.dialog.InsufficentRightsDialogFragment;
 import de.eww.bibapp.fragment.dialog.PaiaActionDialogFragment;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.PaiaItem;
 import de.eww.bibapp.tasks.paia.BookedJsonLoader;
 import de.eww.bibapp.tasks.paia.PaiaCancelTask;
+import roboguice.activity.RoboActionBarActivity;
 
 /**
  * Created by christoph on 07.11.14.
@@ -46,33 +48,25 @@ public class AccountBookedFragment extends Fragment implements
         RecyclerViewOnGestureListener.OnGestureListener,
         PaiaHelper.PaiaListener,
         PaiaActionDialogFragment.PaiaActionDialogListener,
+        ActionMode.Callback,
         AsyncCanceledInterface {
 
     PaiaActionDialogFragment mPaiaActionDialog;
 
-    MenuItem mMenuItem;
-
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
+    TextView mEmptyView;
 
-    private RecyclerView.Adapter mAdapter;
+    private BookedAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     private List<PaiaItem> mPaiaItemList = new ArrayList<PaiaItem>();
-    private List<PaiaItem> mCheckedItems = new ArrayList<PaiaItem>();
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setHasOptionsMenu(true);
-    }
+    private ActionMode mActionMode;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mCheckedItems.clear();
 
         // Improve performance for RecyclerView by setting it to a fixed size,
         // since we now that changes in content do not change the layout size
@@ -82,14 +76,19 @@ public class AccountBookedFragment extends Fragment implements
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
+
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        mRecyclerView.addItemDecoration(itemDecoration);
+
         RecyclerViewOnGestureListener gestureListener = new RecyclerViewOnGestureListener(getActivity(), mRecyclerView);
         gestureListener.setOnGestureListener(this);
         mRecyclerView.addOnItemTouchListener(gestureListener);
 
         // Destroy loader and ensure paia connection
-        mProgressBar.setVisibility(View.VISIBLE);
         getLoaderManager().destroyLoader(0);
         PaiaHelper.getInstance().ensureConnection(this);
+        mEmptyView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -110,8 +109,9 @@ public class AccountBookedFragment extends Fragment implements
         // inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account_booked, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.account_booked_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        mEmptyView = (TextView) view.findViewById(R.id.empty);
 
         return view;
     }
@@ -123,24 +123,6 @@ public class AccountBookedFragment extends Fragment implements
         return loader;
     }
 
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        // Inflate the menu items for use in the toolbar
-        inflater.inflate(R.menu.account_booked_fragment_actions, menu);
-
-        // disable the extend action
-        mMenuItem = menu.findItem(R.id.menu_account_booked_cancel);
-
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        // Enable / Disable menu action
-        mMenuItem.setEnabled(!mCheckedItems.isEmpty());
-
-        super.onPrepareOptionsMenu(menu);
-    }
-
     @Override
     public void onLoadFinished(Loader<List<PaiaItem>> loader, List<PaiaItem> paiaItemList) {
         getActivity().setProgressBarVisibility(false);
@@ -149,60 +131,17 @@ public class AccountBookedFragment extends Fragment implements
         mPaiaItemList.addAll(paiaItemList);
 
         mProgressBar.setVisibility(View.GONE);
+        if (paiaItemList.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
 
-        mAdapter = new BookedAdapter(paiaItemList, getActivity(), PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.WRITE_ITEMS));
+        mAdapter = new BookedAdapter(paiaItemList);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     @Override
     public void onLoaderReset(Loader<List<PaiaItem>> arg0) {
         // empty
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch ( item.getItemId() ) {
-            case R.id.menu_account_booked_cancel:
-                sendPaiaCancelRequest();
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void sendPaiaCancelRequest() {
-        //start async task to send paia request
-        JSONObject jsonRequest = new JSONObject();
-
-        try {
-            JSONArray jsonArray = new JSONArray();
-            Iterator<PaiaItem> it = mCheckedItems.iterator();
-
-            while (it.hasNext()) {
-                PaiaItem checkedItem = it.next();
-
-                JSONObject checkedItemObject = new JSONObject();
-                checkedItemObject.put("item", checkedItem.getItem());
-                if (!checkedItem.getEdition().equals("")) {
-                    checkedItemObject.put("edition", checkedItem.getEdition());
-                }
-
-                jsonArray.put(checkedItemObject);
-            }
-
-            jsonRequest.put("doc", jsonArray);
-        } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        AsyncTask<String, Void, JSONObject> cancelTask = new PaiaCancelTask(this);
-        cancelTask.execute(jsonRequest.toString());
-
-        // show the action dialog
-        mPaiaActionDialog = new PaiaActionDialogFragment();
-        mPaiaActionDialog.show(this.getChildFragmentManager(), "paia_action");
     }
 
     @Override
@@ -216,6 +155,7 @@ public class AccountBookedFragment extends Fragment implements
         Toast toast = Toast.makeText(getActivity(), R.string.toast_account_error, Toast.LENGTH_LONG);
         toast.show();
 
+        mEmptyView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
     }
 
@@ -241,7 +181,7 @@ public class AccountBookedFragment extends Fragment implements
                     }
                 }
 
-                if (numFailedItems == mCheckedItems.size()) {
+                if (numFailedItems == mAdapter.getSelectedItemCount()) {
                     responseText = (String) resources.getText(R.string.paiadialog_cancel_failure);
                 } else if (numFailedItems > 0) {
                     responseText = (String) resources.getText(R.string.paiadialog_cancel_partial);
@@ -249,11 +189,7 @@ public class AccountBookedFragment extends Fragment implements
                     responseText = (String) resources.getText(R.string.paiadialog_cancel_success);
                 }
             }
-		} catch (Resources.NotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -262,37 +198,117 @@ public class AccountBookedFragment extends Fragment implements
 		// reload list
         mProgressBar.setVisibility(View.VISIBLE);
 		this.getLoaderManager().getLoader(0).forceLoad();
-
-		// reset checked items
-        mCheckedItems.clear();
-
-        // Update menu actions
-        getActivity().supportInvalidateOptionsMenu();
 	}
 
     @Override
     public void onClick(View view, int position) {
-        // Check / Uncheck the checkbox
-        CheckBox checkBoxView = (CheckBox) view.findViewById(R.id.checkbox);
-        if (checkBoxView.isEnabled()) {
-            checkBoxView.toggle();
-
-            PaiaItem item = (PaiaItem) mPaiaItemList.get(position);
-
-            // Update checked items
-            if (checkBoxView.isShown() && checkBoxView.isChecked()) {
-                mCheckedItems.add(item);
-            } else {
-                mCheckedItems.remove(item);
+        if (view.getId() == R.id.booked_item) {
+            // Are we in action mode?
+            if (mActionMode != null) {
+                toggleSelection(position);
+                return;
             }
-
-            // Update menu action
-            getActivity().supportInvalidateOptionsMenu();
         }
     }
 
     @Override
     public void onLongPress(View view, int position) {
+        // ActionMode already active?
+        if (mActionMode != null) {
+            return;
+        }
 
+        if (!PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.WRITE_ITEMS)) {
+            InsufficentRightsDialogFragment dialog = new InsufficentRightsDialogFragment();
+            dialog.show(this.getChildFragmentManager(), "load_rights");
+            return;
+        }
+
+        // Start the CAB
+        mActionMode = ((RoboActionBarActivity) getActivity()).startSupportActionMode(this);
+        int childPosition = mRecyclerView.getChildPosition(view);
+        toggleSelection(childPosition);
+    }
+
+    @Override
+    public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
+        // Inflate a menu resource providing context menu items
+        MenuInflater inflater = actionMode.getMenuInflater();
+        inflater.inflate(R.menu.account_booked_fragment_actions, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
+        return false;
+    }
+
+    @Override
+    public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.menu_account_booked_cancel:
+                sendPaiaCancelRequest();
+
+                mActionMode.finish();
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode actionMode) {
+        mActionMode = null;
+        mAdapter.clearSelection();
+
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (!isVisibleToUser && mActionMode != null) {
+            mActionMode.finish();
+        }
+    }
+
+    private void toggleSelection(int position) {
+        mAdapter.toggleSelection(position);
+        String title = getString(R.string.menu_selected_count, mAdapter.getSelectedItemCount());
+        mActionMode.setTitle(title);
+    }
+
+    private void sendPaiaCancelRequest() {
+        //start async task to send paia request
+        JSONObject jsonRequest = new JSONObject();
+
+        try {
+            JSONArray jsonArray = new JSONArray();
+
+            List<Integer> checkItems = mAdapter.getSelectedItems();
+            for (int i : checkItems) {
+                PaiaItem checkedItem = mAdapter.getPaiaItem(i);
+
+                JSONObject checkedItemObject = new JSONObject();
+                checkedItemObject.put("item", checkedItem.getItem());
+                if (!checkedItem.getEdition().equals("")) {
+                    checkedItemObject.put("edition", checkedItem.getEdition());
+                }
+
+                jsonArray.put(checkedItemObject);
+            }
+
+            jsonRequest.put("doc", jsonArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        AsyncTask<String, Void, JSONObject> cancelTask = new PaiaCancelTask(this);
+        cancelTask.execute(jsonRequest.toString());
+
+        // show the action dialog
+        mPaiaActionDialog = new PaiaActionDialogFragment();
+        mPaiaActionDialog.show(this.getChildFragmentManager(), "paia_action");
     }
 }

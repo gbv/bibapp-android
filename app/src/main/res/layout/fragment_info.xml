@@ -6,8 +6,7 @@
     android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin">
     
 	<Button
 	    android:id="@+id/info_button_contact"
@@ -29,24 +28,5 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/info_button_impressum" />
 
-    <Button
-        android:id="@+id/info_button_homepage"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:elevation="1dp"
-        android:visibility="gone"
-        android:text="@string/info_button_homepage" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/info_rss_view"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"/>
+    <include layout="@layout/include_list" />
 </LinearLayout>

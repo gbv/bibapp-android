@@ -120,7 +120,6 @@
     <orderEntry type="library" exported="" name="play-services-6.1.71" level="project" />
     <orderEntry type="library" exported="" name="velocity-1.7" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.0" level="project" />
-    <orderEntry type="library" exported="" name="butterknife-5.1.2" level="project" />
   </component>
 </module>
 

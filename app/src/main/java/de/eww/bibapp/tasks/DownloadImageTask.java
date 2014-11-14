@@ -68,7 +68,8 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 		{
 			// even if the result is not null, we can not ensure that this is a valid bitmap
 			// maybe checking the byte count should help
-			int byteCount = result.getByteCount();
+			//int byteCount = result.getByteCount();
+            int byteCount = result.getRowBytes() * result.getHeight();
 			
 			if ( byteCount > 1 )
 			{

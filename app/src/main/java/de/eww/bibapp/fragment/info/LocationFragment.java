@@ -1,6 +1,8 @@
 package de.eww.bibapp.fragment.info;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +10,12 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ListIterator;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.fragment.GoogleMapsFragment;
 import de.eww.bibapp.model.LocationItem;
 import roboguice.fragment.RoboFragment;
 import roboguice.inject.InjectView;
@@ -113,14 +118,13 @@ public class LocationFragment extends RoboFragment {
         if (mLocationItem.hasPosition()) {
             mFrameLayout.setVisibility(View.VISIBLE);
 
-            // TODO
-//			GoogleMapsFragment mapFragment = (GoogleMapsFragment) Fragment.instantiate(this.getActivity(), GoogleMapsFragment.class.getName());
-//			LatLng latLng = new LatLng(Double.valueOf(item.posLat), Double.valueOf(item.posLong));
-//			mapFragment.setLatLng(latLng);
-//
-//			FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
-//			transaction.add(R.id.locations_detail_maps_container, mapFragment);
-//			transaction.commit();
+			GoogleMapsFragment mapFragment = (GoogleMapsFragment) Fragment.instantiate(this.getActivity(), GoogleMapsFragment.class.getName());
+			LatLng latLng = new LatLng(Double.valueOf(mLocationItem.posLat), Double.valueOf(mLocationItem.posLong));
+			mapFragment.setLatLng(latLng);
+
+			FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
+			transaction.add(R.id.map, mapFragment);
+			transaction.commit();
         } else {
             mFrameLayout.setVisibility(View.GONE);
         }

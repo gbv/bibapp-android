@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.SettingsActivity;
 
 public class LoginDialogFragment extends DialogFragment
 {
@@ -75,12 +77,11 @@ public class LoginDialogFragment extends DialogFragment
             	   LoginDialogFragment.this.mListener.onLoginDialogNegativeClick(LoginDialogFragment.this);
                }
            });
-	    
-	    SharedPreferences settings = this.getActivity().getPreferences(0);
-		boolean storeLogin = settings.getBoolean("store_login", false);
+
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        boolean storeLogin = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false);
 		
-		if ( storeLogin == false )
-		{
+		if (storeLogin == false) {
 			CheckBox checkBox = (CheckBox) this.dialogView.findViewById(R.id.logindialog_save);
 			checkBox.setVisibility(View.VISIBLE);
 		}

@@ -3,7 +3,8 @@
     android:layout_height="wrap_content"
     android:layout_width="fill_parent"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:paddingTop="@dimen/list_vertical_text_padding"
+    android:paddingBottom="@dimen/list_vertical_text_padding">
     
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -15,6 +16,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:textSize="@dimen/list_secondary_text_size"
+            android:textColor="@android:color/secondary_text_light"
             android:textIsSelectable="true" />
 
         <TextView
@@ -23,6 +26,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
+            android:textSize="@dimen/list_secondary_text_size"
+            android:textColor="@android:color/secondary_text_light"
             android:textIsSelectable="true" />
     </RelativeLayout>
 
@@ -31,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textIsSelectable="true"
-        android:textColor="@color/second_text_color" />
+        android:textSize="@dimen/list_secondary_text_size"
+        android:textColor="@android:color/tertiary_text_light"  />
 
 </LinearLayout>

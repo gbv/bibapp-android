@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
@@ -37,9 +37,9 @@ public class LocationsFragment extends RoboFragment implements
 
     @Inject LocationSource mLocationSource;
 
-    @InjectView(R.id.locations_view) RecyclerView mRecyclerView;
-
-    @InjectView(R.id.progressbar)ProgressBar mProgressBar;
+    @InjectView(R.id.recycler) RecyclerView mRecyclerView;
+    @InjectView(R.id.progressbar) ProgressBar mProgressBar;
+    @InjectView(R.id.empty) TextView mEmptyView;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -78,11 +78,6 @@ public class LocationsFragment extends RoboFragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Improve performance for RecyclerView by setting it to a fixed size,
-        // since we now that changes in content do not change the layout size
-        // of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -94,6 +89,7 @@ public class LocationsFragment extends RoboFragment implements
         mRecyclerView.addItemDecoration(itemDecoration);
 
         // Start the Request
+        mEmptyView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.destroyLoader(0);
@@ -120,6 +116,10 @@ public class LocationsFragment extends RoboFragment implements
 
         mProgressBar.setVisibility(View.GONE);
 
+        if (locations.isEmpty()) {
+            mEmptyView.setVisibility(View.GONE);
+        }
+
         mAdapter = new LocationAdapter(locations);
         mRecyclerView.setAdapter(mAdapter);
     }
@@ -135,6 +135,7 @@ public class LocationsFragment extends RoboFragment implements
         toast.show();
 
         mProgressBar.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
     }
 
     @Override

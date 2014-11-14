@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-   android:layout_height="wrap_content" 
-   android:layout_width="fill_parent" 
-   android:paddingBottom="5dp"
-   android:paddingTop="5dp"
-   android:paddingLeft="5dp">
-   
-   <LinearLayout
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:paddingTop="@dimen/list_vertical_text_padding"
+    android:paddingBottom="@dimen/list_vertical_text_padding"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:textIsSelectable="true"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="@dimen/typo_title_text_size" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="true" />
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textIsSelectable="true"
-            android:textColor="@color/second_text_color" />
-   </LinearLayout>
-
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:textColor="@android:color/secondary_text_light"
+        android:textSize="@dimen/list_primary_text_size" />
 </LinearLayout>

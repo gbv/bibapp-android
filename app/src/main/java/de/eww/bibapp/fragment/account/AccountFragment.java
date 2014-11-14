@@ -8,15 +8,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.json.JSONObject;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.MainActivity;
 import de.eww.bibapp.tasks.paia.PaiaPatronTask;
 import de.eww.bibapp.view.SlidingTabLayout;
 import roboguice.fragment.RoboFragment;
@@ -71,6 +74,7 @@ public class AccountFragment extends RoboFragment implements
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) getView().findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
+        mSlidingTabLayout.setSelectedIndicatorColors(R.color.colorAccent);
     }
 
     /**
@@ -138,29 +142,27 @@ public class AccountFragment extends RoboFragment implements
     }
 
 	public void onPatronLoaded(JSONObject response) {
-		// set action bar sub title
-		// TODO:
-        /*
-        ActionBar actionBar = this.getActivity().getActionBar();
+        // Check if the fragment is still added to its activity
+        if (isAdded()) {
+            // Set action bar sub title
+            ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
 
-		try
-		{
-			String name = response.getString("name");
-            actionBar.setSubtitle(name);
+            try {
+                String name = response.getString("name");
 
-            if (response.has("status")) {
-                int status = response.getInt("status");
-                if (status > 0) {
-                    String newTitle = actionBar.getTitle() + " " + this.getResources().getText(R.string.account_inactive);
-                    actionBar.setTitle(newTitle);
+                if (response.has("status")) {
+                    int status = response.getInt("status");
+
+                    if (status > 0) {
+                        name += " " + getResources().getText(R.string.account_inactive);
+                    }
                 }
+
+                actionBar.setSubtitle(name);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-		}
-		catch (JSONException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
+        }
 	}
 
     @Override
@@ -179,13 +181,8 @@ public class AccountFragment extends RoboFragment implements
     }
 
 	@Override
-	public void onAsyncCanceled()
-	{
-        // TODO:
-//		if ( this.getView() != null )
-//		{
-//			LoadCanceledDialogFragment loadCanceledDialog = new LoadCanceledDialogFragment();
-//			loadCanceledDialog.show(this.getChildFragmentManager(), "load_canceled");
-//		}
+	public void onAsyncCanceled() {
+        Toast toast = Toast.makeText(getActivity(), R.string.toast_account_error, Toast.LENGTH_LONG);
+        toast.show();
 	}
 }

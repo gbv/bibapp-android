@@ -1,6 +1,7 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -63,16 +64,18 @@ public class DaiaLoaderCallback implements
 			// acquire a reference to the system location manager
 			LocationManager locationManager = (LocationManager) ((Fragment) this.daiaLoaderInterface).getActivity().getSystemService(Context.LOCATION_SERVICE);
 
-			if ( locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) )
-			{
-				locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null);
-				locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null);
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            String provider = locationManager.getBestProvider(criteria, true);
 
-				// reset user location
-				this.userLocation = null;
+            if (provider != null) {
+                locationManager.requestSingleUpdate(provider, this, null);
 
-				this.locationServiceAvailable = true;
-			}
+                // reset user location
+                this.userLocation = null;
+
+                this.locationServiceAvailable = true;
+            }
 		}
 
 		return loader;

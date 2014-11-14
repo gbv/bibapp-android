@@ -14,7 +14,6 @@ import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchFragment;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
-import de.eww.bibapp.model.source.WatchlistSource;
 
 /**
  * Created by christoph on 09.11.14.

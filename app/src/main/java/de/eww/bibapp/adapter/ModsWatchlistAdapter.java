@@ -7,7 +7,6 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -35,7 +34,6 @@ public class ModsWatchlistAdapter extends RecyclerView.Adapter<ModsWatchlistAdap
         public TextView mSub;
         public TextView mAuthor;
         public ImageView mImage;
-        public CheckBox mCheckBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -44,7 +42,6 @@ public class ModsWatchlistAdapter extends RecyclerView.Adapter<ModsWatchlistAdap
             mSub = (TextView) itemView.findViewById(R.id.sub);
             mAuthor = (TextView) itemView.findViewById(R.id.author);
             mImage = (ImageView) itemView.findViewById(R.id.image);
-            mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox);
         }
     }
 
@@ -83,15 +80,20 @@ public class ModsWatchlistAdapter extends RecyclerView.Adapter<ModsWatchlistAdap
         return mSelectedItems.size();
     }
 
-    public void addModsItems(List<ModsItem> itemList) {
-        mItemList.addAll(itemList);
+    public ModsItem getModsItem(int position) {
+        return mItemList.get(position);
+    }
+
+    public void removeModsItem(int position) {
+        mItemList.remove(position);
+        notifyDataSetChanged();
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Create a new view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mods_watchlist_view, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mods_view, parent, false);
 
         // Set the view's size, margins, paddings and layout parameters
         ViewHolder viewHolder = new ViewHolder(view);

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.inject.Inject;
@@ -50,11 +51,14 @@ public class SearchListFragment extends RoboFragment implements
     RecyclerView mRecyclerView;
     SearchView mSearchView;
     ProgressBar mProgressBar;
+    TextView mEmptyView;
 
     private ModsAdapter mAdapter;
     private LinearLayoutManager mLayoutManager;
 
     private boolean mIsLoading = false;
+
+    private SearchFragment.SEARCH_MODE mSearchMode = SearchFragment.SEARCH_MODE.LOCAL;
 
     // The listener we are to notify when a mods item is selected
     OnModsItemSelectedListener mModsItemSelectedListener = null;
@@ -141,6 +145,8 @@ public class SearchListFragment extends RoboFragment implements
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mProgressBar.setVisibility(View.VISIBLE);
+                mRecyclerView.setVisibility(View.GONE);
+                mEmptyView.setVisibility(View.GONE);
 
                 Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
                 SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
@@ -164,19 +170,22 @@ public class SearchListFragment extends RoboFragment implements
         });
 
         // Start the Request
-        mProgressBar.setVisibility(View.GONE);
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.destroyLoader(0);
         loaderManager.initLoader(0, null, this);
+        mRecyclerView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.GONE);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_search_list, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.search_results);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         mSearchView = (SearchView) view.findViewById(R.id.search_query);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        mEmptyView = (TextView) view.findViewById(R.id.empty);
 
         return view;
     }
@@ -184,7 +193,7 @@ public class SearchListFragment extends RoboFragment implements
     @Override
     public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
         Loader<HashMap<String, Object>> loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
-        ((SearchXmlLoader) loader).setIsLocalSearch(true);
+        ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchFragment.SEARCH_MODE.LOCAL);
 
         return loader;
     }
@@ -196,6 +205,13 @@ public class SearchListFragment extends RoboFragment implements
         mModsSource.setTotalItems((Integer) data.get("numberOfRecords"));
 
         mProgressBar.setVisibility(View.GONE);
+
+        if (mModsSource.getTotalItems() == 0) {
+            mEmptyView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
+        } else {
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
 
         if (mAdapter == null) {
             mModsSource.clear();
@@ -239,6 +255,7 @@ public class SearchListFragment extends RoboFragment implements
         toast.show();
 
         mProgressBar.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
         getLoaderManager().destroyLoader(0);
     }
 
@@ -252,5 +269,9 @@ public class SearchListFragment extends RoboFragment implements
     @Override
     public void onLongPress(View view, int position) {
 
+    }
+
+    public void setSearchMode(SearchFragment.SEARCH_MODE searchMode) {
+        mSearchMode = searchMode;
     }
 }

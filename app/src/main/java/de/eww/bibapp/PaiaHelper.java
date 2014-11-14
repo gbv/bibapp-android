@@ -3,6 +3,7 @@ package de.eww.bibapp;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.fragment.dialog.LoginDialogFragment;
 import de.eww.bibapp.tasks.paia.PaiaLoginTask;
 
@@ -102,30 +104,29 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                 // if login data is not stored or credentials are not set, ask user for them
                 boolean showLoginDialog = false;
 
-                SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
-                boolean storeLogin = settings.getBoolean("store_login", false);
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+                boolean storeLogin = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false);
+
                 showLoginDialog = !storeLogin;
 
+                /*
                 if ( !showLoginDialog )
                 {
                     showLoginDialog =	(settings.getString("store_login_username", null) == null) ||
                                         (settings.getString("store_login_password", null) == null);
                 }
-
-                //this.reset();
+                */
 
                 if ( showLoginDialog )
                 {
                     LoginDialogFragment dialogFragment = new LoginDialogFragment();
                     dialogFragment.setListener(this);
                     dialogFragment.show(this.fragment.getChildFragmentManager(), "login");
-                }
-                else
-                {
-                    this.username = settings.getString("store_login_username", null);
+                } else {
+                    this.username = sharedPref.getString("store_login_username", null);
 
                     // login
-                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(this.username, settings.getString("store_login_password", null));
+                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(this.username, sharedPref.getString("store_login_password", null));
 
                     try
                     {
@@ -201,20 +202,18 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 					InputMethodManager imm = (InputMethodManager) this.fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
 
-					// store login credentials - if set in preferecnes
+					// store login credentials - if set in preferences
 					// or the checkbox was set in the login dialog
-					SharedPreferences settings = this.fragment.getActivity().getPreferences(0);
-				    boolean storeLoginCredentials = settings.getBoolean("store_login", false) || storeData;
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+                    boolean storeLoginCredentials = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false) || storeData;
 
-				    if ( storeLoginCredentials )
-				    {
-				    	SharedPreferences.Editor editor = settings.edit();
+				    if ( storeLoginCredentials ) {
+				    	SharedPreferences.Editor editor = sharedPref.edit();
 				    	editor.putString("store_login_username", username);
 				    	editor.putString("store_login_password", password);
 
-				    	if ( storeData == true )
-				    	{
-				    		editor.putBoolean("store_login", true);
+				    	if ( storeData == true ) {
+				    		editor.putBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, true);
 				    	}
 
 				    	editor.commit();
@@ -227,10 +226,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 					// close dialog
 					dialog.dismiss();
 				}
-			}
-			catch (Exception e)
-			{
-				// TODO Auto-generated catch block
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

@@ -10,12 +10,11 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.fragment.info.LocationsFragment;
 import de.eww.bibapp.model.source.LocationSource;
-import roboguice.activity.RoboFragmentActivity;
 
 /**
  * Created by christoph on 25.10.14.
  */
-public class LocationsActivity extends RoboFragmentActivity implements
+public class LocationsActivity extends DrawerActivity implements
         LocationsFragment.OnLocationSelectedListener {
 
     // Whether or not we are in dual-pane mode
@@ -45,6 +44,8 @@ public class LocationsActivity extends RoboFragmentActivity implements
 
         // Register ourselves as the listener for the locations fragment events.
         mLocationsFragment.setOnLocationSelectedListener(this);
+
+        setActiveNavigationItem(3);
 
         // Set up locations fragment
         restoreSelection(savedInstanceState);

@@ -3,6 +3,8 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
     android:orientation="vertical" >
     
 	<LinearLayout
@@ -30,24 +32,29 @@
 		    <TextView android:id="@+id/title"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
+                android:textSize="@dimen/list_primary_text_size"
+                android:textColor="@android:color/primary_text_light"
 		        android:textStyle="bold"
 		        android:layout_marginBottom="5dp"/>
 		    
 		    <TextView android:id="@+id/sub"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:textColor="@color/second_text_color"
+                android:textSize="@dimen/list_secondary_text_size"
+                android:textColor="@android:color/tertiary_text_light"
 		        android:ellipsize="end"
 		        android:maxLines="4"
 		        android:layout_marginBottom="5dp"/>
 		    
 		    <ProgressBar
-		        android:id="@+id/progress_bar_small"
+		        android:id="@+id/unapi_progressbar"
 		        style="?android:attr/progressBarStyleSmall"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content" />
 		    
 		    <TextView android:id="@+id/author_extended"
+                android:textSize="@dimen/list_secondary_text_size"
+                android:textColor="@android:color/secondary_text_light"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"/>
 		</LinearLayout>
@@ -113,19 +120,7 @@
 		    android:layout_height="fill_parent"
 		    android:src="@drawable/divider"/>
 
-        <ProgressBar
-            style="?android:attr/progressBarStyle"
-            android:id="@+id/progressbar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/locations_view"
-            android:scrollbars="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent" />
-	    
+        <include layout="@layout/include_list" />
 	</LinearLayout>
 
 </LinearLayout>

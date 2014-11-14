@@ -1,14 +1,14 @@
 package de.eww.bibapp.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -22,8 +22,7 @@ import de.eww.bibapp.model.PaiaItem;
 public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder> {
 
     private List<PaiaItem> mItemList;
-    private Context mContext;
-    private boolean mIsRequestPermitted;
+    private SparseBooleanArray mSelectedItems;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -33,7 +32,6 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder
         public TextView mAbout;
         public TextView mSignature;
         public TextView mDate;
-        public CheckBox mCheckBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -41,15 +39,45 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder
             mAbout = (TextView) itemView.findViewById(R.id.about);
             mSignature = (TextView) itemView.findViewById(R.id.signature);
             mDate = (TextView) itemView.findViewById(R.id.date);
-            mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox);
         }
     }
 
     // Suitable constructor for list type
-    public BookedAdapter(List<PaiaItem> itemList, Context context, boolean isRequestPermitted) {
+    public BookedAdapter(List<PaiaItem> itemList) {
         mItemList = itemList;
-        mContext = context;
-        mIsRequestPermitted = isRequestPermitted;
+        mSelectedItems = new SparseBooleanArray();
+    }
+
+    public void toggleSelection(int position) {
+        if (mSelectedItems.get(position, false)) {
+            mSelectedItems.delete(position);
+        } else {
+            mSelectedItems.put(position, true);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void clearSelection() {
+        mSelectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<Integer>(mSelectedItems.size());
+        for (int i=0; i < mSelectedItems.size(); i++) {
+            items.add(mSelectedItems.keyAt(i));
+        }
+
+        return items;
+    }
+
+    public int getSelectedItemCount() {
+        return mSelectedItems.size();
+    }
+
+    public PaiaItem getPaiaItem(int position) {
+        return mItemList.get(position);
     }
 
     // Create new views (invoked by the layout manager)
@@ -85,9 +113,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder
             holder.mDate.setText(startDateString);
         }
 
-        if (item.isCanCancel() && mIsRequestPermitted) {
-            holder.mCheckBox.setVisibility(View.VISIBLE);
-        }
+        holder.itemView.setSelected(mSelectedItems.get(position, false) && item.isCanCancel());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

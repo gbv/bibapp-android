@@ -1,8 +1,8 @@
 package de.eww.bibapp.fragment.watchlist;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.activity.ModsActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.fragment.search.ModsFragment;
@@ -108,7 +109,7 @@ public class WatchlistFragment extends RoboFragment implements
             Intent modsIntent = new Intent(getActivity(), ModsActivity.class);
             modsIntent.putExtra("modsItemIndex", index);
             modsIntent.putExtra("modsItemSource", WatchlistSource.class.getName());
-            startActivity(modsIntent);
+            startActivityForResult(modsIntent, 1);
         }
     }
 
@@ -117,5 +118,18 @@ public class WatchlistFragment extends RoboFragment implements
         outState.putInt("modsItemIndex", mCurrentModsItemIndex);
 
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Set navigation position
+                if (data.hasExtra("navigationIndex")) {
+                    int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                }
+            }
+        }
     }
 }

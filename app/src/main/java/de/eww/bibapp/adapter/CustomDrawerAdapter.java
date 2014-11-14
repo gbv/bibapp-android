@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.eww.bibapp.model.DrawerItem;
 import de.eww.bibapp.R;
+import de.eww.bibapp.model.DrawerItem;
 
 /**
  * Created by christoph on 07.11.14.

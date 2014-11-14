@@ -24,6 +24,10 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="BibAppToolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!--<item name="android:textColorPrimary">#0000FF</item>-->
+    </style>
+
     <style name="BibAppSearchViewStyle" parent="Widget.AppCompat.SearchView">
         <!--&lt;!&ndash; Background for the search query section (e.g. EditText) &ndash;&gt;-->
         <!--<item name="queryBackground">...</item>-->
@@ -43,26 +47,8 @@
         <!--<item name="suggestionRowLayout">...</item>-->
     </style>
 
-    <!--
-    <style name="BibAppTheme" parent="@android:Theme.Holo.Light">
-        <item name="android:actionBarStyle">@style/BibAppTheme.ActionBar</item>
-        <item name="android:homeAsUpIndicator">@drawable/ic_ab_back_holo_dark</item>
+    <style name="BibAppTheme.ActionBar" parent="@style/Widget.AppCompat.ActionBar">
+        <item name="android:background">@android:color/white</item>
     </style>
-    
-    <style name="BibAppTheme.ActionBar" parent="@android:style/Widget.Holo.Light.ActionBar">
-        <item name="android:background">@color/ambient_color</item>
-        <item name="android:titleTextStyle">@style/BibAppTheme.ActionBar.Text</item>
-        <item name="android:subtitleTextStyle">@style/BibAppTheme.ActionBar.SubText</item>
-        <item name="android:icon">@drawable/icon_actionbar</item>
-    </style>
-    
-    <style name="BibAppTheme.ActionBar.Text" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@color/actionbar_text_color</item>
-    </style>
-    
-    <style name="BibAppTheme.ActionBar.SubText" parent="BibAppTheme.ActionBar.Text">
-        <item name="android:textSize">12sp</item>
-    </style>
-    -->
 
 </resources>

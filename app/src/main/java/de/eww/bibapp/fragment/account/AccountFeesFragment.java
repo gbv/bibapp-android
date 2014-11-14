@@ -20,6 +20,7 @@ import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.FeeAdapter;
+import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.fragment.dialog.InsufficentRightsDialogFragment;
 import de.eww.bibapp.model.FeeItem;
 import de.eww.bibapp.tasks.paia.FeeJsonLoader;
@@ -34,6 +35,7 @@ public class AccountFeesFragment extends Fragment implements
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
+    TextView mEmptyView;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -51,10 +53,14 @@ public class AccountFeesFragment extends Fragment implements
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        mRecyclerView.addItemDecoration(itemDecoration);
+
         // Destroy loader and ensure paia connection
-        mProgressBar.setVisibility(View.VISIBLE);
         getLoaderManager().destroyLoader(0);
         PaiaHelper.getInstance().ensureConnection(this);
+        mEmptyView.setVisibility(View.GONE);
+        mProgressBar.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -75,8 +81,9 @@ public class AccountFeesFragment extends Fragment implements
         // inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_account_fees, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.account_fees_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
+        mEmptyView = (TextView) view.findViewById(R.id.empty);
 
         return view;
     }
@@ -96,6 +103,9 @@ public class AccountFeesFragment extends Fragment implements
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar.setVisibility(View.GONE);
+        if (feeItemList.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
 
         if (!feeItemList.isEmpty()) {
             TextView sumView = (TextView) getView().findViewById(R.id.sum);
@@ -114,6 +124,7 @@ public class AccountFeesFragment extends Fragment implements
         Toast toast = Toast.makeText(getActivity(), R.string.toast_account_error, Toast.LENGTH_LONG);
         toast.show();
 
+        mEmptyView.setVisibility(View.VISIBLE);
         mProgressBar.setVisibility(View.GONE);
     }
 }

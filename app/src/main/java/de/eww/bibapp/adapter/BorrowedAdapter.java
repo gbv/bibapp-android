@@ -2,13 +2,14 @@ package de.eww.bibapp.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -23,7 +24,7 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
 
     private List<PaiaItem> mItemList;
     private Context mContext;
-    private boolean mIsRequestPermitted;
+    private SparseBooleanArray mSelectedItems;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -36,7 +37,6 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         public TextView mQueue;
         public TextView mRenewals;
         public TextView mStatus;
-        public CheckBox mCheckBox;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -47,15 +47,46 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
             mQueue = (TextView) itemView.findViewById(R.id.queue);
             mRenewals = (TextView) itemView.findViewById(R.id.renewals);
             mStatus = (TextView) itemView.findViewById(R.id.status);
-            mCheckBox = (CheckBox) itemView.findViewById(R.id.checkbox);
         }
     }
 
     // Suitable constructor for list type
-    public BorrowedAdapter(List<PaiaItem> itemList, Context context, boolean isRequestPermitted) {
+    public BorrowedAdapter(List<PaiaItem> itemList, Context context) {
         mItemList = itemList;
         mContext = context;
-        mIsRequestPermitted = isRequestPermitted;
+        mSelectedItems = new SparseBooleanArray();
+    }
+
+    public void toggleSelection(int position) {
+        if (mSelectedItems.get(position, false)) {
+            mSelectedItems.delete(position);
+        } else {
+            mSelectedItems.put(position, true);
+        }
+
+        notifyDataSetChanged();
+    }
+
+    public void clearSelection() {
+        mSelectedItems.clear();
+        notifyDataSetChanged();
+    }
+
+    public List<Integer> getSelectedItems() {
+        List<Integer> items = new ArrayList<Integer>(mSelectedItems.size());
+        for (int i=0; i < mSelectedItems.size(); i++) {
+            items.add(mSelectedItems.keyAt(i));
+        }
+
+        return items;
+    }
+
+    public int getSelectedItemCount() {
+        return mSelectedItems.size();
+    }
+
+    public PaiaItem getPaiaItem(int position) {
+        return mItemList.get(position);
     }
 
     // Create new views (invoked by the layout manager)
@@ -108,9 +139,7 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         String[] statusTranslations = mContext.getResources().getStringArray(R.array.paia_service_status);
         holder.mStatus.setText(statusTranslations[statusCode]);
 
-        if (item.isCanRenew() && mIsRequestPermitted) {
-            holder.mCheckBox.setVisibility(View.VISIBLE);
-        }
+        holder.itemView.setSelected(mSelectedItems.get(position, false) && item.isCanRenew());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

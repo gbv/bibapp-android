@@ -1,10 +1,7 @@
 package de.eww.bibapp.fragment.info;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.octo.android.robospice.SpiceManager;
@@ -23,17 +21,16 @@ import com.octo.android.robospice.request.listener.RequestListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.ContactActivity;
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.activity.ImpressumActivity;
 import de.eww.bibapp.activity.LocationsActivity;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.adapter.RssAdapter;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.model.RssItem;
+import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.model.RssFeed;
+import de.eww.bibapp.model.RssItem;
 import de.eww.bibapp.request.RssFeedRequest;
 
 /**
@@ -47,6 +44,7 @@ public class InfoFragment extends Fragment {
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
+    TextView mEmptyView;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -69,20 +67,19 @@ public class InfoFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        // Improve performance for RecyclerView by setting it to a fixed size,
-        // since we now that changes in content do not change the layout size
-        // of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
-
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this.getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        mRecyclerView.addItemDecoration(itemDecoration);
+
         // Do we have a rss feed to display?
         if (!Constants.NEWS_URL.isEmpty()) {
             // Start the Request
-            mProgressBar.setVisibility(View.VISIBLE);
             mRssFeedRequest = new RssFeedRequest();
+            mEmptyView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
             mSpiceManager.execute(mRssFeedRequest, new RssRequestListener());
         }
     }
@@ -91,53 +88,50 @@ public class InfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_info, container, false);
-        ButterKnife.inject(this, view);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.info_rss_view);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+        mEmptyView = (TextView) view.findViewById(R.id.empty);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
 
-        // Check if a homepage url is given
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
+        Button infoButton = (Button) view.findViewById(R.id.info_button_contact);
+        Button locationsButton = (Button) view.findViewById(R.id.info_button_locations);
+        Button impressumButton = (Button) view.findViewById(R.id.info_button_impressum);
 
-        if (Constants.HOMEPAGE_URLS.length >= localCatalogIndex + 1) {
-            Button homepageButton = (Button) view.findViewById(R.id.info_button_homepage);
-            homepageButton.setVisibility(View.VISIBLE);
-        }
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickContactButton();
+            }
+        });
+        locationsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickLocationsButton();
+            }
+        });
+        impressumButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onClickImpressumButton();
+            }
+        });
 
         return view;
     }
 
-    @OnClick(R.id.info_button_contact) void onClickContactButton() {
+    private void onClickContactButton() {
         Intent contactIntent = new Intent(getActivity(), ContactActivity.class);
         startActivity(contactIntent);
     }
 
-    @OnClick(R.id.info_button_locations) void onClickLocationsButton() {
+    private void onClickLocationsButton() {
         Intent locationsIntent = new Intent(getActivity(), LocationsActivity.class);
-        startActivity(locationsIntent);
+        startActivityForResult(locationsIntent, 99);
     }
 
-    @OnClick(R.id.info_button_impressum) void onClickImpressumButton() {
+    private void onClickImpressumButton() {
         Intent impressumIntent = new Intent(getActivity(), ImpressumActivity.class);
         startActivity(impressumIntent);
-    }
-
-    @OnClick(R.id.info_button_homepage) void onClickHomepageButton() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
-        Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[localCatalogIndex]);
-        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, homepageUrl);
-        startActivity(launchBrowser);
     }
 
     public final class RssRequestListener implements RequestListener<RssFeed> {
@@ -147,6 +141,7 @@ public class InfoFragment extends Fragment {
             toast.show();
 
             mProgressBar.setVisibility(View.GONE);
+            mEmptyView.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -154,9 +149,23 @@ public class InfoFragment extends Fragment {
             mItemList.addAll(result.getItems());
 
             mProgressBar.setVisibility(View.GONE);
+            if (result.getItems().isEmpty()) {
+                mEmptyView.setVisibility(View.VISIBLE);
+            }
 
             mAdapter = new RssAdapter(mItemList);
             mRecyclerView.setAdapter(mAdapter);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 99) {
+            if (resultCode == getActivity().RESULT_OK) {
+                // Set navigation position
+                int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+            }
         }
     }
 }

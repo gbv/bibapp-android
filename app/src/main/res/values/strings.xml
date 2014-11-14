@@ -11,6 +11,7 @@
     <string name="drawer_navigation_account">Konto</string>
     <string name="drawer_navigation_watchlist">Merkliste</string>
     <string name="drawer_navigation_info">Info</string>
+    <string name="drawer_navigation_homepage">Homepage</string>
     <string name="drawer_navigation_settings">Einstellungen</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="drawer_close">Navigation schließen</string>
@@ -30,7 +31,6 @@
     <string name="info_button_contact">Kontakt</string>
     <string name="info_button_locations">Standorte</string>
     <string name="info_button_impressum">Impressum</string>
-    <string name="info_button_homepage">Homepage</string>
 
     <!-- search spinner -->
     <string-array name="search_spinner_list">
@@ -128,6 +128,7 @@
     <string name="menu_detail_addtowatchlist_duplicate">Bereits in Merkliste</string>
     <string name="menu_booked_cancel">Stornieren</string>
     <string name="menu_watchlist_remove">Entfernen</string>
+    <string name="menu_selected_count">%1$s ausgewählt</string>
     
     <!-- detail -->
     <string name="detail_available">Verfügbarkeit</string>

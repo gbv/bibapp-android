@@ -84,8 +84,10 @@ public class ModsFragment extends RoboFragment implements
 
     ModsItem mModsItem = null;
 
-    @InjectView(R.id.locations_view) RecyclerView mRecyclerView;
+    @InjectView(R.id.recycler) RecyclerView mRecyclerView;
     @InjectView(R.id.progressbar) ProgressBar mProgressBar;
+    @InjectView(R.id.unapi_progressbar) ProgressBar mUnApiProgressBar;
+    @InjectView(R.id.empty) TextView mEmptyView;
 
     private DaiaAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -144,20 +146,15 @@ public class ModsFragment extends RoboFragment implements
     }
 
     private void loadData() {
-        // Update progress bars
-        mProgressBar.setVisibility(View.VISIBLE);
-
-        //	        // Show progress indicators.
-//	        this.isListShown = true;
-//	        this.setListShown(false);
-//	        this.setUnApiShown(false);
-
         // Perform requests
         LoaderManager loaderManager = getLoaderManager();
         loaderManager.destroyLoader(0);
         loaderManager.destroyLoader(1);
         loaderManager.initLoader(0, null, new DaiaLoaderCallback(this));
         loaderManager.initLoader(1, null, new UnApiLoaderCallback(this, mModsItem));
+
+        mProgressBar.setVisibility(View.VISIBLE);
+        mEmptyView.setVisibility(View.GONE);
     }
 
     @Override
@@ -168,6 +165,9 @@ public class ModsFragment extends RoboFragment implements
     @Override
     public void onDaiaRequestDone(List<DaiaItem> daiaItems) {
         mProgressBar.setVisibility(View.GONE);
+        if (daiaItems.isEmpty()) {
+            mEmptyView.setVisibility(View.VISIBLE);
+        }
 
         mAdapter = new DaiaAdapter(daiaItems);
         mAdapter.setIsLocalSearch(mModsItem.isLocalSearch);
@@ -179,13 +179,8 @@ public class ModsFragment extends RoboFragment implements
         // Set extended author information
         mAuthorExtendedView.setText(authorExtended);
 
-        // unset unapi loading animation
-        // TODO:
-        /*
-		View progressBar = v.findViewById(R.id.progress_bar_small);
-		progressBar.startAnimation(AnimationUtils.loadAnimation(((Fragment) this.unApiLoaderInterface).getActivity(), android.R.anim.fade_out));
-		progressBar.setVisibility(View.GONE);
-        */
+        // Hide UnApi loading animation
+        mUnApiProgressBar.setVisibility(View.GONE);
     }
 
     @Override
@@ -194,6 +189,7 @@ public class ModsFragment extends RoboFragment implements
         toast.show();
 
         mProgressBar.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
 	}
 
     @Override

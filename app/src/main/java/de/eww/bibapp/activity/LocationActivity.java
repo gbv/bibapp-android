@@ -1,22 +1,13 @@
 package de.eww.bibapp.activity;
 
 import android.os.Bundle;
-import android.text.Html;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
-import android.widget.TextView;
 
 import com.google.inject.Inject;
 
-import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.source.LocationSource;
-import roboguice.activity.RoboActivity;
 import roboguice.activity.RoboFragmentActivity;
-import roboguice.inject.ContentView;
-import roboguice.inject.InjectResource;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 25.10.14.

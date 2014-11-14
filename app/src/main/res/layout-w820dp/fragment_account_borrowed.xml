@@ -9,7 +9,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textSize="24sp"
+        android:textSize="@dimen/typo_title_text_size"
+        android:textColor="@android:color/primary_text_light"
         android:text="@string/account_borrowed" />
 
     <ImageView
@@ -18,16 +19,5 @@
         android:layout_marginBottom="10dp"
         android:src="@drawable/divider"/>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyle"
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/account_borrowed_view"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"/>
+    <include layout="@layout/include_list" />
 </LinearLayout>
