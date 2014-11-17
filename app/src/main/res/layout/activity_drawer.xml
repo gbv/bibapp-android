@@ -32,7 +32,8 @@
             <Spinner
                 android:id="@+id/toolbar_spinner"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
         </android.support.v7.widget.Toolbar>
 
         <!-- the main content -->
@@ -82,6 +83,6 @@
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/drawer_version"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

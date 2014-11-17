@@ -13,6 +13,11 @@ public class MainActivity extends DrawerActivity {
     public static MainActivity instance;
     private boolean mForceSelectSearch = false;
 
+    public static final int NAVI_SEARCH = 0;
+    public static final int NAVI_ACCOUNT = 1;
+    public static final int NAVI_WATCHLIST = 2;
+    public static final int NAVI_INFO = 3;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

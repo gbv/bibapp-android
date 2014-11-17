@@ -1,5 +1,6 @@
 package de.eww.bibapp.fragment.info;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ListIterator;
@@ -116,15 +119,24 @@ public class LocationFragment extends RoboFragment {
         }
 
         if (mLocationItem.hasPosition()) {
-            mFrameLayout.setVisibility(View.VISIBLE);
+            // Check for GooglePlay
+            int checkGooglePlay = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+            if (checkGooglePlay != ConnectionResult.SUCCESS) {
+                // Open GooglePlay error dialog
+                Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(checkGooglePlay, getActivity(), 0);
+                errorDialog.show();
+            } else {
+                // everything fine
+                mFrameLayout.setVisibility(View.VISIBLE);
 
-			GoogleMapsFragment mapFragment = (GoogleMapsFragment) Fragment.instantiate(this.getActivity(), GoogleMapsFragment.class.getName());
-			LatLng latLng = new LatLng(Double.valueOf(mLocationItem.posLat), Double.valueOf(mLocationItem.posLong));
-			mapFragment.setLatLng(latLng);
+                GoogleMapsFragment mapFragment = (GoogleMapsFragment) Fragment.instantiate(this.getActivity(), GoogleMapsFragment.class.getName());
+                LatLng latLng = new LatLng(Double.valueOf(mLocationItem.posLat), Double.valueOf(mLocationItem.posLong));
+                mapFragment.setLatLng(latLng);
 
-			FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
-			transaction.add(R.id.map, mapFragment);
-			transaction.commitAllowingStateLoss();
+                FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.add(R.id.map, mapFragment);
+                transaction.commitAllowingStateLoss();
+            }
         } else {
             mFrameLayout.setVisibility(View.GONE);
         }

@@ -57,22 +57,22 @@ public class DrawerActivity extends RoboActionBarActivity {
     /**
      * The {@link android.support.v7.widget.Toolbar} we will use as our action bar.
      */
-    @InjectView(R.id.toolbar) Toolbar mToolbar;
+    Toolbar mToolbar;
 
-    @InjectView(R.id.toolbar_spinner) Spinner mSpinner;
+    Spinner mSpinner;
 
     /**
      * The {@link android.widget.ListView} that containts the navigation drawer content.
      */
-    @InjectView(R.id.drawer_list) ListView mDrawerList;
+    ListView mDrawerList;
 
-    @InjectView(R.id.drawer_container) LinearLayout mDrawerContainer;
-    @InjectView(R.id.drawer_version) TextView mVersionView;
+    LinearLayout mDrawerContainer;
+    TextView mVersionView;
 
     private SpinnerAdapter mSpinnerAdapter;
     private AdapterView.OnItemSelectedListener mOnNavigationListener;
 
-    private int mCurrentSpinnerIndex;
+    private int mCurrentSpinnerIndex = 0;
 
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
@@ -103,11 +103,17 @@ public class DrawerActivity extends RoboActionBarActivity {
     public void setContentView(int layoutResId) {
         mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
         mFrameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
+        mToolbar = (Toolbar) mDrawerLayout.findViewById(R.id.toolbar);
+        mSpinner = (Spinner) mDrawerLayout.findViewById(R.id.toolbar_spinner);
+        mDrawerContainer = (LinearLayout) mDrawerLayout.findViewById(R.id.drawer_container);
+        mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.drawer_list);
+        mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
+
         getLayoutInflater().inflate(layoutResId, mFrameLayout, true);
 
-        super.setContentView(mDrawerLayout);
-
         setupNavigation();
+
+        super.setContentView(mDrawerLayout);
     }
 
     @Override
@@ -129,6 +135,9 @@ public class DrawerActivity extends RoboActionBarActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             if (mNavigationItems.get(position).getItemHeading() == null) {
                 selectItem(position);
+            } else {
+                // If we select a heading, keep the previous selection intact
+                setActiveNavigationItem(mCurrentNavigationIndex);
             }
         }
     }
@@ -149,6 +158,9 @@ public class DrawerActivity extends RoboActionBarActivity {
                     case 0:         // Search
                         fragment = new SearchFragment();
                         showSpinner = true;
+
+                        // setup the search spinner
+                        setupSearchSpinner();
 
                         // local or gvk search
                         if (mCurrentSpinnerIndex == 0) {
@@ -257,6 +269,63 @@ public class DrawerActivity extends RoboActionBarActivity {
         }
     }
 
+    private void setupSearchSpinner() {
+        // Do not setup twice
+        if (mSpinner.getAdapter() != null) {
+            return;
+        }
+
+        Resources resources = getResources();
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
+        int localCatalogIndex = 0;
+        if (!localCatalogPreference.isEmpty()) {
+            localCatalogIndex = Integer.valueOf(localCatalogPreference);
+        }
+
+        // SpinnerAdapter for search fragment
+        String[] searchSpinnerList = resources.getStringArray(R.array.search_spinner_list);
+
+        // If our current local catalog contains a short title, we append it to the default title
+        if (Constants.LOCAL_CATALOGS[localCatalogIndex].length > 2) {
+            searchSpinnerList[0] += " " + Constants.LOCAL_CATALOGS[localCatalogIndex][2];
+        }
+
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                getSupportActionBar().getThemedContext(),
+                android.R.layout.simple_spinner_item,
+                searchSpinnerList
+        );
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerAdapter = spinnerArrayAdapter;
+
+        // It's important to follow this exact sequence:
+        // .setAdapter
+        // .setSelection
+        // .setOnItemSelectedListener
+        //
+        // setSelection(..., false) will set the initial selection before the listener kicks in.
+        // This way, the selection is set without animation which causes the listener to be called.
+        // But the listener is null so it will not run.
+        // This prevents the listener from firing on the initial state.
+        mSpinner.setAdapter(mSpinnerAdapter);
+        mSpinner.setSelection(mCurrentSpinnerIndex, false);
+        mOnNavigationListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mCurrentSpinnerIndex = position;
+                selectItem(0);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        };
+        mSpinner.setOnItemSelectedListener(mOnNavigationListener);
+    }
+
     private void setupNavigation() {
         // Set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -321,36 +390,5 @@ public class DrawerActivity extends RoboActionBarActivity {
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        // SpinnerAdapter for search fragment
-        String[] searchSpinnerList = resources.getStringArray(R.array.search_spinner_list);
-
-        // If our current local catalog contains a short title, we append it to the default title
-        if (Constants.LOCAL_CATALOGS[localCatalogIndex].length > 2) {
-            searchSpinnerList[0] += " " + Constants.LOCAL_CATALOGS[localCatalogIndex][2];
-        }
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getSupportActionBar().getThemedContext(),
-                android.R.layout.simple_spinner_item,
-                searchSpinnerList
-        );
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerAdapter = spinnerArrayAdapter;
-        mSpinner.setAdapter(mSpinnerAdapter);
-
-        mOnNavigationListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCurrentSpinnerIndex = position;
-                selectItem(0);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
-        mSpinner.setOnItemSelectedListener(mOnNavigationListener);
     }
 }

@@ -15,10 +15,8 @@
   -->
 
 <resources>
-    <color name="logindialog_wrong">#FF0000</color>
-    <color name="list_alternate">#CCCCCC</color>
-    <color name="second_text_color">#8f8f8f</color>
-    
-    <color name="ambient_color">#B71A49</color>
-    <color name="actionbar_text_color">#ffffff</color>
+    <color name="colorPrimary">#B71A49</color>
+    <color name="colorPrimaryDark">#ff97163f</color>
+    <color name="colorAccent">#B71A49</color>
+    <color name="colorHighlight">#B71A49</color>
 </resources>

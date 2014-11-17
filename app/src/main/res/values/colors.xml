@@ -20,6 +20,8 @@
     <color name="colorAccent">#d83351</color>
     <color name="colorHighlight">#d83351</color>
 
+    <color name="colorActionbarText">#000000</color>
+
     <color name="colorNavigationBackground">#ffffff</color>
     <color name="colorNavigationAppImageBackground">#b6bdc4</color>
     <color name="colorNavigationDivider">#dadadc</color>

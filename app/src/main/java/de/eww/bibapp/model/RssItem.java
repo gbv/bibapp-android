@@ -12,7 +12,7 @@ public class RssItem {
     @Element(name="title")
     private String mTitle;
 
-    @Element(name="description")
+    @Element(name="description", required=false)
     private String mDescription;
 
     @Element(name="encoded", data=true, required=false)
