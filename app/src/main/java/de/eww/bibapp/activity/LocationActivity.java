@@ -54,6 +54,10 @@ public class LocationActivity extends DrawerActivity {
         LocationItem location = mLocationSource.getLocation(mLocationIndex);
         locationFragment.setLocation(location);
 
-        setActiveNavigationItem(3);
+        if (getIntent().hasExtra("source") && getIntent().getExtras().getString("source").equals("search")) {
+            setActiveNavigationItem(0);
+        } else {
+            setActiveNavigationItem(3);
+        }
     }
 }

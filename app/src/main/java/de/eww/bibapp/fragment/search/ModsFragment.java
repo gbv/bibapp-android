@@ -312,7 +312,8 @@ public class ModsFragment extends RoboFragment implements
 
         Intent locationIntent = new Intent(getActivity(), LocationActivity.class);
         locationIntent.putExtra("locationIndex", 0);
-        startActivity(locationIntent);
+        locationIntent.putExtra("source", "search");
+        startActivityForResult(locationIntent, 99);
     }
 
     public void onPaiaRequestActionDone(JSONObject response) {

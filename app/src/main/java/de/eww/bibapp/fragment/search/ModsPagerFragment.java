@@ -1,5 +1,6 @@
 package de.eww.bibapp.fragment.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.adapter.ModsWatchlistPagerAdapter;
 import de.eww.bibapp.model.source.ModsSource;
@@ -79,5 +81,16 @@ public class ModsPagerFragment extends RoboFragment {
 
     public void useWatchlistSource() {
         mUseWatchlistSource = true;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 99) {
+            if (resultCode == getActivity().RESULT_OK) {
+                // Set navigation position
+                int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+            }
+        }
     }
 }
