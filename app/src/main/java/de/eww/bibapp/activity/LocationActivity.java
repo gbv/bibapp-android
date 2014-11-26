@@ -1,6 +1,5 @@
 package de.eww.bibapp.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.inject.Inject;
@@ -9,7 +8,6 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.source.LocationSource;
-import roboguice.activity.RoboFragmentActivity;
 
 /**
  * Created by christoph on 25.10.14.

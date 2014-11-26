@@ -1,6 +1,5 @@
 package de.eww.bibapp.fragment.info;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -19,7 +18,6 @@ import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.adapter.LocationAdapter;
 import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;

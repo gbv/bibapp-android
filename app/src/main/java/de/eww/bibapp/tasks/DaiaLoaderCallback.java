@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.DaiaItem;
 import de.eww.bibapp.model.ModsItem;
 

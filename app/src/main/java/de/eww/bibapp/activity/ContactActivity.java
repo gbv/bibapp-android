@@ -1,6 +1,5 @@
 package de.eww.bibapp.activity;
 
-import android.content.pm.ActivityInfo;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.Html;
@@ -9,10 +8,6 @@ import android.text.util.Linkify;
 import android.widget.TextView;
 
 import de.eww.bibapp.R;
-import roboguice.activity.RoboActivity;
-import roboguice.inject.ContentView;
-import roboguice.inject.InjectResource;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 25.10.14.

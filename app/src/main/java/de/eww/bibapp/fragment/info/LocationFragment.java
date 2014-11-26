@@ -2,7 +2,6 @@ package de.eww.bibapp.fragment.info;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;

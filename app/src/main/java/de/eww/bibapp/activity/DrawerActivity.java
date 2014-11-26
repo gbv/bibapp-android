@@ -39,7 +39,6 @@ import de.eww.bibapp.fragment.search.SearchFragment;
 import de.eww.bibapp.fragment.watchlist.WatchlistFragment;
 import de.eww.bibapp.model.DrawerItem;
 import roboguice.activity.RoboActionBarActivity;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 10.11.14.
