@@ -29,7 +29,7 @@ import roboguice.fragment.RoboFragment;
  */
 public class LocationFragment extends RoboFragment {
 
-    private FrameLayout mFrameLayout;
+    private View mFragmentView;
     private TextView mTitleView;
     private TextView mAddressView;
     private TextView mOpeningHoursView;
@@ -40,8 +40,6 @@ public class LocationFragment extends RoboFragment {
 
     private LocationItem mLocationItem = null;
 
-    private static final String MAP_FRAGMENT_TAG = "map";
-    private SupportMapFragment mMapFragment;
     private GoogleMap mMap;
 
     @Override
@@ -49,7 +47,7 @@ public class LocationFragment extends RoboFragment {
         // inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_location, container, false);
 
-        mFrameLayout = (FrameLayout) view.findViewById(R.id.map);
+        mFragmentView = view.findViewById(R.id.map);
         mTitleView = (TextView) view.findViewById(R.id.title);
         mAddressView = (TextView) view.findViewById(R.id.address);
         mOpeningHoursView = (TextView) view.findViewById(R.id.opening_hours);
@@ -130,31 +128,15 @@ public class LocationFragment extends RoboFragment {
         }
 
         if (mLocationItem.hasPosition()) {
-            // It isn't possible to set a fragment's id programmatically so we set a tag instead and
-            // search for it using that.
-            mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
-
-            // We only create a fragment if it doesn't already exist.
-            if (mMapFragment == null) {
-                // To programmatically add the map, we first create a SupportMapFragment
-                mMapFragment = SupportMapFragment.newInstance();
-
-                // Then we add it using a FragmentTransaction.
-                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
-                fragmentTransaction.add(R.id.map, mMapFragment, MAP_FRAGMENT_TAG);
-                fragmentTransaction.commit();
-            }
-
-            // We can't be guaranteed that the map is available because Google Play services might
-            // not be available.
             setUpMapIfNeeded();
         } else {
-            mFrameLayout.setVisibility(View.GONE);
+            mFragmentView.setVisibility(View.GONE);
         }
     }
 
     private void setUpMapIfNeeded() {
-        // Check for GooglePlay
+        // We can't be guaranteed that the map is available because Google Play services might
+        // not be available.
         int checkGooglePlay = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
         if (checkGooglePlay != ConnectionResult.SUCCESS) {
             // Open GooglePlay error dialog
@@ -162,12 +144,12 @@ public class LocationFragment extends RoboFragment {
             errorDialog.show();
         } else {
             // everything fine
-            mFrameLayout.setVisibility(View.VISIBLE);
+            mFragmentView.setVisibility(View.VISIBLE);
 
             // Do a null check to confirm that we have not already instantiated the map.
             if (mMap == null) {
                 // Try to obtain the map from SupportMapFragment.
-                mMap = mMapFragment.getMap();
+                mMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
 
                 // Check if we were successful in obtaining the map.
                 if (mMap != null) {
@@ -180,7 +162,7 @@ public class LocationFragment extends RoboFragment {
     private void setUpMap() {
         // Move camera
         float zoomLevel = (float) (mMap.getMinZoomLevel() + (mMap.getMaxZoomLevel() - mMap.getMinZoomLevel()) * 0.7);
-        LatLng latLng = new LatLng(Double.valueOf(mLocationItem.posLat), Double.valueOf(mLocationItem.posLong));
+        LatLng latLng = new LatLng(Double.valueOf(mLocationItem.getLat()), Double.valueOf(mLocationItem.getLong()));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
 
         // Add marker

@@ -4,13 +4,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
     
-    <FrameLayout
+    <fragment
         android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight=".30"
         android:visibility="gone" >
-    </FrameLayout>
+    </fragment>
     
     <ScrollView
         android:layout_width="fill_parent"
