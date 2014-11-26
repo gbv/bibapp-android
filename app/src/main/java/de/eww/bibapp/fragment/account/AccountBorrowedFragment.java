@@ -180,23 +180,14 @@ public class AccountBorrowedFragment extends Fragment implements
                         numFailedItems++;
                         continue;
                     }
-
-                    if (docEntry.has("renewals")) {
-                        int newNumRenewals = docEntry.getInt("renewals");
-
-                        if (newNumRenewals == mAdapter.getPaiaItem(i).getRenewals()) {
-                            numFailedItems++;
-                            continue;
-                        }
-                    }
                 }
 
                 if (numFailedItems == docArrayLength) {
-                    responseText = (String) resources.getText(R.string.paiadialog_renew_failure);
+                    responseText = resources.getString(R.string.paiadialog_renew_failure);
                 } else if (numFailedItems > 0) {
-                    responseText = (String) resources.getText(R.string.paiadialog_renew_partial);
+                    responseText = resources.getString(R.string.paiadialog_renew_partial);
                 } else {
-                    responseText = (String) resources.getText(R.string.paiadialog_renew_success);
+                    responseText = resources.getQuantityString(R.plurals.paiadialog_renew_success, docArrayLength);
                 }
             }
 		} catch (Exception e) {

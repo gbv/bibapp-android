@@ -23,7 +23,6 @@
     <color name="colorActionbarText">#000000</color>
 
     <color name="colorNavigationBackground">#ffffff</color>
-    <color name="colorNavigationAppImageBackground">#b6bdc4</color>
     <color name="colorNavigationDivider">#dadadc</color>
 
     <color name="textColorPrimary">#ffffda60</color>

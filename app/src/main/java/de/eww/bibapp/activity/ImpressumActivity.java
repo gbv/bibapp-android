@@ -18,30 +18,24 @@ import roboguice.inject.InjectView;
  * Created by christoph on 25.10.14.
  */
 @ContentView(R.layout.activity_impressum)
-public class ImpressumActivity extends RoboActivity {
-
-    @InjectView(R.id.impressum) TextView mTextView;
-
-    @InjectResource(R.string.impressum_text) String mImpressumText;
+public class ImpressumActivity extends DrawerActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_impressum);
 
-        // Set orientation
+        TextView textView = (TextView) findViewById(R.id.impressum);
+
         Resources resources = getResources();
-        boolean isLandscape = resources.getBoolean(R.bool.landscape);
-        if (isLandscape) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
 
-        mTextView.setText(Html.fromHtml(mImpressumText));
-        mTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(Html.fromHtml(resources.getString(R.string.impressum_text)));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Linkify
-        Linkify.addLinks(mTextView, Linkify.EMAIL_ADDRESSES);
-        Linkify.addLinks(mTextView, Linkify.PHONE_NUMBERS);
+        Linkify.addLinks(textView, Linkify.EMAIL_ADDRESSES);
+        Linkify.addLinks(textView, Linkify.PHONE_NUMBERS);
+
+        setActiveNavigationItem(3);
     }
 }

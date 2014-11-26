@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.eww.bibapp.R;
@@ -63,6 +64,11 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
 
     public void addDaiaItems(List<DaiaItem> daiaItems) {
         mItemList.addAll(daiaItems);
+    }
+
+    public void sortByDistance() {
+        Collections.sort(mItemList);
+        notifyDataSetChanged();
     }
 
     // Create new views (invoked by the layout manager)
@@ -126,6 +132,8 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
         if (item.distance != null) {
             holder.mDistance.setText(String.format("%.2f km", item.distance));
             holder.mDistance.setVisibility(View.VISIBLE);
+        } else {
+            holder.mDistance.setVisibility(View.GONE);
         }
     }
 

@@ -124,7 +124,7 @@ public class InfoFragment extends Fragment {
 
     private void onClickContactButton() {
         Intent contactIntent = new Intent(getActivity(), ContactActivity.class);
-        startActivity(contactIntent);
+        startActivityForResult(contactIntent, 99);
     }
 
     private void onClickLocationsButton() {
@@ -134,7 +134,7 @@ public class InfoFragment extends Fragment {
 
     private void onClickImpressumButton() {
         Intent impressumIntent = new Intent(getActivity(), ImpressumActivity.class);
-        startActivity(impressumIntent);
+        startActivityForResult(impressumIntent, 99);
     }
 
     public final class RssRequestListener implements RequestListener<RssFeed> {

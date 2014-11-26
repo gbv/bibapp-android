@@ -9,31 +9,31 @@ import java.util.Map;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.tasks.HeaderRequest;
-import roboguice.activity.RoboActivity;
-import roboguice.inject.ContentView;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 10.11.14.
  */
-@ContentView(R.layout.activity_web)
-public class WebViewActivity extends RoboActivity {
+public class WebViewActivity extends DrawerActivity {
 
-    @InjectView(R.id.web) WebView mWebView;
+    private WebView mWebView;
 
     String mUrl;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_web);
 
         mUrl = getIntent().getExtras().getString("url");
 
+        mWebView = (WebView) findViewById(R.id.web);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient());
 
         // Try to detect header information
         new HeaderRequest(this).execute(mUrl);
+
+        setActiveNavigationItem(0);
     }
 
     public void onHeaderRequestDone(Map<String, List<String>> header) {
@@ -54,7 +54,7 @@ public class WebViewActivity extends RoboActivity {
         }
 
         if (isPdf) {
-            mUrl = "https://docs.google.com/viewer?url=" + mUrl;
+            mUrl = "http://docs.google.com/viewer?embedded=true&url=" + mUrl;
         }
 
         mWebView.loadUrl(mUrl);

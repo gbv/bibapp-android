@@ -80,7 +80,7 @@ public class LocationsActivity extends DrawerActivity implements
             // use separate activity
             Intent locationIntent = new Intent(this, LocationActivity.class);
             locationIntent.putExtra("locationIndex", index);
-            startActivity(locationIntent);
+            startActivityForResult(locationIntent, 99);
         }
     }
 
@@ -97,5 +97,16 @@ public class LocationsActivity extends DrawerActivity implements
         outState.putInt("locationIndex", mCurrentLocationIndex);
 
         super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 99) {
+            if (resultCode == RESULT_OK) {
+                // Set navigation position
+                int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                selectItem(navigationPosition);
+            }
+        }
     }
 }

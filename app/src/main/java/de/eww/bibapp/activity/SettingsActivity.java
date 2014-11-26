@@ -49,7 +49,7 @@ public class SettingsActivity extends RoboPreferenceActivity implements SharedPr
             int index = 0;
             for (String[] localCatalog : Constants.LOCAL_CATALOGS) {
                 localCatalogEntries[index] = localCatalog[1];
-                localCatalogValues[index] = localCatalog[0];
+                localCatalogValues[index] = Integer.toString(index);
                 index++;
             }
 

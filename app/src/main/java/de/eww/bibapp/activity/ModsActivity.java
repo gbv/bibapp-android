@@ -34,8 +34,9 @@ public class ModsActivity extends DrawerActivity {
 
         mModsItemIndex = getIntent().getExtras().getInt("modsItemIndex", 0);
 
-        // Place a ModsFragment as our content pane
+        // Place a ModsFragment in our container
         mModsPagerFragment = new ModsPagerFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, mModsPagerFragment).commit();
 
         boolean isFromWatchlist = false;
         if (getIntent().hasExtra("modsItemSource")) {
@@ -45,8 +46,6 @@ public class ModsActivity extends DrawerActivity {
                 isFromWatchlist = true;
             }
         }
-
-        getSupportFragmentManager().beginTransaction().add(R.id.container, mModsPagerFragment).commit();
 
         setActiveNavigationItem(isFromWatchlist ? 2 : 0);
 

@@ -109,10 +109,17 @@ public class DrawerActivity extends RoboActionBarActivity {
         mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.drawer_list);
         mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
 
-        getLayoutInflater().inflate(layoutResId, mFrameLayout, true);
-
         setupNavigation();
 
+        if (mCurrentNavigationIndex == MainActivity.NAVI_SEARCH && this instanceof MainActivity) {
+            // setup the search spinner
+            setupSearchSpinner();
+            mSpinner.setVisibility(View.VISIBLE);
+        } else {
+            mSpinner.setVisibility(View.GONE);
+        }
+
+        getLayoutInflater().inflate(layoutResId, mFrameLayout, true);
         super.setContentView(mDrawerLayout);
     }
 
@@ -147,20 +154,15 @@ public class DrawerActivity extends RoboActionBarActivity {
             return;
         }
 
+        mSpinner.setVisibility(View.GONE);
+
         if (position <= 3) {
             if (this instanceof MainActivity) {
-                // determine spinner visibility
-                boolean showSpinner = false;
-
                 // update the main content by replacing fragments
                 Fragment fragment = null;
                 switch (position) {
                     case 0:         // Search
                         fragment = new SearchFragment();
-                        showSpinner = true;
-
-                        // setup the search spinner
-                        setupSearchSpinner();
 
                         // local or gvk search
                         if (mCurrentSpinnerIndex == 0) {
@@ -168,6 +170,10 @@ public class DrawerActivity extends RoboActionBarActivity {
                         } else {
                             ((SearchFragment) fragment).setSearchMode(SearchFragment.SEARCH_MODE.GVK);
                         }
+
+                        // setup the search spinner
+                        setupSearchSpinner();
+                        mSpinner.setVisibility(View.VISIBLE);
 
                         break;
                     case 1:         // Account
@@ -179,13 +185,6 @@ public class DrawerActivity extends RoboActionBarActivity {
                     case 3:         // Info
                         fragment = new InfoFragment();
                         break;
-                }
-
-                // show/hide spinner
-                if (showSpinner) {
-                    mSpinner.setVisibility(View.VISIBLE);
-                } else {
-                    mSpinner.setVisibility(View.GONE);
                 }
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
@@ -294,7 +293,7 @@ public class DrawerActivity extends RoboActionBarActivity {
 
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                 getSupportActionBar().getThemedContext(),
-                android.R.layout.simple_spinner_item,
+                R.layout.support_simple_spinner_dropdown_item,
                 searchSpinnerList
         );
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -356,7 +355,7 @@ public class DrawerActivity extends RoboActionBarActivity {
         mDrawerList.setAdapter(mCustomDrawerAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-        // Get the version number and set it in the layout
+        // Get the version name and set it in the layout
         try {
             PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
             mVersionView.setText("v" + packageInfo.versionName);

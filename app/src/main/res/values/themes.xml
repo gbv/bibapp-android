@@ -4,9 +4,9 @@
     <!-- Application theme, according to API level -->
     <style name="BibAppTheme" parent="AppTheme.Base"/>
 
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Here we setting appcompat’s actionBarStyle -->
-        <item name="actionBarStyle">@style/BibAppActionBarStyle</item>
+        <!--<item name="actionBarStyle">@style/BibAppActionBarStyle</item>-->
 
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -21,34 +21,35 @@
         <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight, and colorSwitchThumbNormal. -->
 
+        <item name="spinnerDropDownItemStyle">@style/BibAppTextViewSpinnerItem</item>
+
         <item name="searchViewStyle">@style/BibAppSearchViewStyle</item>
 
-        <item name="android:windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
+        <!--<item name="actionModeStyle">@style/BibAppActionModeStyle</item>-->
+        <item name="actionModeBackground">@color/colorPrimary</item>
+
     </style>
 
-    <!-- general styles for the action bar -->
-    <style name="BibAppActionBarStyle" parent="Widget.AppCompat.ActionBar">
-        <item name="titleTextStyle">@style/TitleTextStyle</item>
-        <!--<item name="background">@drawable/actionbar_background</item>-->
-        <!--<item name="backgroundStacked">@drawable/actionbar_background</item>-->
-        <!--<item name="backgroundSplit">@drawable/actionbar_background</item>-->
+    <style name="BibAppTextViewSpinnerItem" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:textAppearance">@style/BibAppTextViewSpinnerAppearance</item>
+
     </style>
 
-    <!-- action bar title text -->
-    <style name="TitleTextStyle"
-        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+    <style name="BibAppTextViewSpinnerAppearance" parent="TextAppearance.AppCompat.Widget.DropDownItem">
         <item name="android:textColor">@color/colorActionbarText</item>
     </style>
 
+    <!-- Toolbar -->
     <style name="BibAppToolbar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:textColor">@color/colorActionbarText</item>
+        <!--<item name="android:textColor">@color/colorActionbarText</item>-->
         <item name="android:textColorPrimary">@color/colorActionbarText</item>
+        <item name="android:textColorSecondary">@color/colorActionbarText</item>
 
 
         <!-- android:textColorPrimaryInverse is the  color of the title
              text in the Toolbar, in the Theme.AppCompat.Light theme:  -->
         <item name="android:textColorPrimaryInverse">@color/colorActionbarText</item>
+        <item name="android:textColorSecondaryInverse">@color/colorActionbarText</item>
 
         <!-- android:actionMenuTextColor is the color of the text of
         action (menu) items in the Toolbar, at least in the
@@ -57,7 +58,7 @@
         when running on API 21, but not on older versions of
         Android, so this is only necessary to support older
         Android versions.-->
-        <!--<item name="actionMenuTextColor">@color/abc_primary_text_material_light</item>-->
+        <item name="actionMenuTextColor">@color/colorActionbarText</item>
         <!-- android:textColorSecondary is the color of the menu
              overflow icon (three vertical dots) -->
         <!--<item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>-->
@@ -68,23 +69,14 @@
         <!-- <item name="android:background">@color/color_primary</item> -->
     </style>
 
+    <!-- ToolbarPopup -->
+    <!-- ThemeOverlay.AppCompat / ThemeOverlay.AppCompat.Light -->
+    <style name="BibAppToolbarPopup" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
+
+
     <style name="BibAppSearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
-        <!--&lt;!&ndash; Background for the search query section (e.g. EditText) &ndash;&gt;-->
-        <!--<item name="queryBackground">...</item>-->
-        <!--&lt;!&ndash; Background for the actions section (e.g. voice, submit) &ndash;&gt;-->
-        <!--<item name="submitBackground">...</item>-->
-        <!--&lt;!&ndash; Close button icon &ndash;&gt;-->
-        <!--<item name="closeIcon">...</item>-->
-        <!--&lt;!&ndash; Search button icon &ndash;&gt;-->
-        <!--<item name="searchIcon">...</item>-->
-        <!--&lt;!&ndash; Go/commit button icon &ndash;&gt;-->
-        <!--<item name="goIcon">...</item>-->
-        <!--&lt;!&ndash; Voice search button icon &ndash;&gt;-->
-        <!--<item name="voiceIcon">...</item>-->
-        <!--&lt;!&ndash; Commit icon shown in the query suggestion row &ndash;&gt;-->
-        <!--<item name="commitIcon">...</item>-->
-        <!--&lt;!&ndash; Layout for query suggestion rows &ndash;&gt;-->
-        <!--<item name="suggestionRowLayout">...</item>-->
     </style>
 
 </resources>

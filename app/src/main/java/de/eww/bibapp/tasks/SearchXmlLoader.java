@@ -163,6 +163,7 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 		searchString = searchString.replaceAll("Ö", "oe");
 		searchString = searchString.replaceAll("Ä", "ae");
         searchString = searchString.replaceAll("\\?", "*");
+        searchString = searchString.replaceAll("ß", "ss");
 		try
 		{
 			searchString = URLEncoder.encode(searchString, "UTF-8");

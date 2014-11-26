@@ -1,6 +1,7 @@
 package de.eww.bibapp.fragment.account;
 
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +16,9 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
@@ -31,6 +35,60 @@ public class AccountFragment extends RoboFragment implements
     PaiaHelper.PaiaListener,
     AsyncCanceledInterface {
 
+    /**
+     * This class represents a tab to be displayed by {@link ViewPager} and it's associated
+     * {@link SlidingTabLayout}
+     */
+    private static class AccountPagerItem {
+
+        private final CharSequence mTitle;
+        private final int mIndicatorColor;
+        private final int mDividerColor;
+
+        public AccountPagerItem(CharSequence title, int indicatorColor, int dividerColor) {
+            mTitle = title;
+            mIndicatorColor = indicatorColor;
+            mDividerColor = dividerColor;
+        }
+
+        /**
+         * @param position The tab position
+         *
+         * @return A new {@link Fragment} to be displayed by a {@link ViewPager}
+         */
+        public Fragment createFragment(int position) {
+            switch (position) {
+                case 2:
+                    return new AccountFeesFragment();
+                case 1:
+                    return new AccountBookedFragment();
+                default:
+                    return new AccountBorrowedFragment();
+            }
+        }
+
+        /**
+         * @return The title which represents this tab.
+         */
+        public CharSequence getTitle() {
+            return mTitle;
+        }
+
+        /**
+         * @return The color to be used for indicator on the {@link SlidingTabLayout}
+         */
+        public int getIndicatorColor() {
+            return mIndicatorColor;
+        }
+
+        /**
+         * @return The color to be used for right divider on the {@link SlidingTabLayout}
+         */
+        public int getDividerColor() {
+            return mDividerColor;
+        }
+    }
+
     // Whether or not we are in dual-pane mode
     boolean mIsDualPane = false;
 
@@ -44,6 +102,11 @@ public class AccountFragment extends RoboFragment implements
      * A {@link ViewPager} which will be used in conjunction with the {@link SlidingTabLayout} above.
      */
     ViewPager mViewPager;
+
+    /**
+     * List of {@link AccountPagerItem} which represents the tabs
+     */
+    private List<AccountPagerItem> mTabs = new ArrayList<AccountPagerItem>();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -67,6 +130,28 @@ public class AccountFragment extends RoboFragment implements
     }
 
     private void addSlidingTabs() {
+        Resources resources = getResources();
+
+        // Populate our tab list with tabs. Each item contains a title, indicator color and divider
+        // color, which are used by {@link SlidingTabLayout}.
+        mTabs.add(new AccountPagerItem(
+                getString(R.string.account_borrowed),
+                resources.getColor(R.color.colorHighlight),
+                Color.GRAY
+        ));
+
+        mTabs.add(new AccountPagerItem(
+                getString(R.string.account_booked),
+                resources.getColor(R.color.colorHighlight),
+                Color.GRAY
+        ));
+
+        mTabs.add(new AccountPagerItem(
+                getString(R.string.account_fees),
+                resources.getColor(R.color.colorHighlight),
+                Color.GRAY
+        ));
+
         // Set the ViewPagers's PagerAdapter so that it can display items
         mViewPager.setAdapter(new AccountPagerAdapter(getChildFragmentManager()));
 
@@ -74,7 +159,20 @@ public class AccountFragment extends RoboFragment implements
         // it's PagerAdapter set.
         mSlidingTabLayout = (SlidingTabLayout) getView().findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
-        mSlidingTabLayout.setSelectedIndicatorColors(R.color.colorAccent);
+
+        // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
+        // the tab at the position, and return it's set color
+        mSlidingTabLayout.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return mTabs.get(position).getIndicatorColor();
+            }
+
+            @Override
+            public int getDividerColor(int position) {
+                return mTabs.get(position).getDividerColor();
+            }
+        });
     }
 
     /**
@@ -94,19 +192,12 @@ public class AccountFragment extends RoboFragment implements
          */
         @Override
         public int getCount() {
-            return 3;
+            return mTabs.size();
         }
 
         @Override
         public Fragment getItem(int position) {
-            switch (position) {
-                case 2:
-                    return new AccountFeesFragment();
-                case 1:
-                    return new AccountBookedFragment();
-                default:
-                    return new AccountBorrowedFragment();
-            }
+            return mTabs.get(position).createFragment(position);
         }
 
         /**
@@ -118,16 +209,7 @@ public class AccountFragment extends RoboFragment implements
          */
         @Override
         public CharSequence getPageTitle(int position) {
-            Resources resources = getResources();
-
-            switch (position) {
-                case 2:
-                    return resources.getString(R.string.account_fees);
-                case 1:
-                    return resources.getString(R.string.account_booked);
-                default:
-                    return resources.getString(R.string.account_borrowed);
-            }
+            return mTabs.get(position).getTitle();
         }
     }
 

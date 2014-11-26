@@ -17,31 +17,24 @@ import roboguice.inject.InjectView;
 /**
  * Created by christoph on 25.10.14.
  */
-@ContentView(R.layout.activity_contacts)
-public class ContactActivity extends RoboActivity {
-
-    @InjectView(R.id.contact) TextView mTextView;
-
-    @InjectResource(R.string.contact_text) String mContactText;
+public class ContactActivity extends DrawerActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contacts);
 
-        // Set orientation
+        TextView textView = (TextView) findViewById(R.id.contact);
+
         Resources resources = getResources();
-        boolean isLandscape = resources.getBoolean(R.bool.landscape);
-        if (isLandscape) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        } else {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        }
 
-        mTextView.setText(Html.fromHtml(mContactText));
-        mTextView.setMovementMethod(LinkMovementMethod.getInstance());
+        textView.setText(Html.fromHtml(resources.getString(R.string.contact_text)));
+        textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Linkify
-        Linkify.addLinks(mTextView, Linkify.EMAIL_ADDRESSES);
-        Linkify.addLinks(mTextView, Linkify.PHONE_NUMBERS);
+        Linkify.addLinks(textView, Linkify.EMAIL_ADDRESSES);
+        Linkify.addLinks(textView, Linkify.PHONE_NUMBERS);
+
+        setActiveNavigationItem(3);
     }
 }

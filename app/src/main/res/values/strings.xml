@@ -68,10 +68,16 @@
     <string name="paiadialog_heading">Kontozugriff</string>
     <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt...</string>
     <string name="paiadialog_proceed">Schließen</string>
-    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert.</string>
+    <plurals name="paiadialog_renew_success">
+        <item quantity="one">Der gewählte Eintrag wurde verlängert.</item>
+        <item quantity="other">Alle Einträge wurden verlängert.</item>
+    </plurals>
     <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
     <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
-    <string name="paiadialog_cancel_success">Alle Einträge wurden storniert.</string>
+    <plurals name="paiadialog_cancel_success">
+        <item quantity="one">Der gewählte Eintrag wurde storniert.</item>
+        <item quantity="other">Alle Einträge wurden storniert.</item>
+    </plurals>
     <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden.</string>
     <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden.</string>
     <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt.</string>
@@ -136,4 +142,7 @@
     <string name="detail_daia_no_department">Ohne Zuordnung</string>
     <string name="detail_interlending">Fernleihoptionen</string>
     <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus!</string>
+
+    <!-- daia -->
+    <string name="daia_default_department">Zusätzliche Exemplare anderer Bibliotheken</string>
 </resources>

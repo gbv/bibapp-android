@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list_item"
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
@@ -13,13 +13,14 @@
         android:layout_height="fill_parent"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_width="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true" />
     
     <LinearLayout
        android:orientation="vertical"
-       android:layout_width="0dip"
-       android:layout_weight="1"
-       android:layout_height="wrap_content">
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_toRightOf="@+id/image">
        
        <TextView android:id="@+id/title"
            android:layout_width="wrap_content"
@@ -31,8 +32,6 @@
        <TextView android:id="@+id/sub"
            android:layout_width="wrap_content" 
            android:layout_height="wrap_content"
-           android:layout_marginStart="15dp"
-           android:layout_marginLeft="15dp"
            android:textSize="@dimen/list_secondary_text_size"
            android:textColor="@android:color/tertiary_text_light" />
        
@@ -42,4 +41,4 @@
            android:textSize="@dimen/list_secondary_text_size"
            android:textColor="@android:color/secondary_text_light"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

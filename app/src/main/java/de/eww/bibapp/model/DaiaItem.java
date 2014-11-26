@@ -24,11 +24,23 @@ public class DaiaItem implements Comparable<DaiaItem>
 		this.actions = actions;
 		this.storage = storage;
 	}
+
+    public boolean hasLabel() {
+        return !this.label.isEmpty();
+    }
 	
 	public void setDepartment(String department)
 	{
 		this.department = department;
 	}
+
+    public String getDepartment() {
+        return this.department;
+    }
+
+    public boolean hasDepartment() {
+        return (this.department != null && !this.department.isEmpty());
+    }
 	
 	public void setItemUriUrl(String itemUriUrl)
 	{
@@ -39,6 +51,18 @@ public class DaiaItem implements Comparable<DaiaItem>
 	{
 		this.locationsEntry = entry;
 	}
+
+    public boolean hasLocation() {
+        return this.locationsEntry != null;
+    }
+
+    public LocationItem getLocation() {
+        return this.locationsEntry;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
 
 	@Override
 	public int compareTo(DaiaItem another)

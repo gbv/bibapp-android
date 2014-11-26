@@ -13,43 +13,55 @@ import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ListIterator;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.fragment.GoogleMapsFragment;
 import de.eww.bibapp.model.LocationItem;
 import roboguice.fragment.RoboFragment;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 25.10.14.
  */
 public class LocationFragment extends RoboFragment {
 
-    @InjectView(R.id.map) FrameLayout mFrameLayout;
-    @InjectView(R.id.title) TextView mTitleView;
-    @InjectView(R.id.address) TextView mAddressView;
-    @InjectView(R.id.opening_hours) TextView mOpeningHoursView;
-    @InjectView(R.id.email) TextView mEmailView;
-    @InjectView(R.id.url) TextView mUrlView;
-    @InjectView(R.id.phone) TextView mPhoneView;
-    @InjectView(R.id.description) TextView mDescriptionView;
+    private FrameLayout mFrameLayout;
+    private TextView mTitleView;
+    private TextView mAddressView;
+    private TextView mOpeningHoursView;
+    private TextView mEmailView;
+    private TextView mUrlView;
+    private TextView mPhoneView;
+    private TextView mDescriptionView;
 
-    LocationItem mLocationItem = null;
+    private LocationItem mLocationItem = null;
+
+    private static final String MAP_FRAGMENT_TAG = "map";
+    private SupportMapFragment mMapFragment;
+    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_location, container, false);
-    }
+        View view =  inflater.inflate(R.layout.fragment_location, container, false);
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        mFrameLayout = (FrameLayout) view.findViewById(R.id.map);
+        mTitleView = (TextView) view.findViewById(R.id.title);
+        mAddressView = (TextView) view.findViewById(R.id.address);
+        mOpeningHoursView = (TextView) view.findViewById(R.id.opening_hours);
+        mEmailView = (TextView) view.findViewById(R.id.email);
+        mUrlView = (TextView) view.findViewById(R.id.url);
+        mPhoneView = (TextView) view.findViewById(R.id.phone);
+        mDescriptionView = (TextView) view.findViewById(R.id.description);
 
         displayLocation();
+
+        return view;
     }
 
     public void setLocation(LocationItem location) {
@@ -119,26 +131,60 @@ public class LocationFragment extends RoboFragment {
         }
 
         if (mLocationItem.hasPosition()) {
-            // Check for GooglePlay
-            int checkGooglePlay = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-            if (checkGooglePlay != ConnectionResult.SUCCESS) {
-                // Open GooglePlay error dialog
-                Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(checkGooglePlay, getActivity(), 0);
-                errorDialog.show();
-            } else {
-                // everything fine
-                mFrameLayout.setVisibility(View.VISIBLE);
+            // It isn't possible to set a fragment's id programmatically so we set a tag instead and
+            // search for it using that.
+            mMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentByTag(MAP_FRAGMENT_TAG);
 
-                GoogleMapsFragment mapFragment = (GoogleMapsFragment) Fragment.instantiate(this.getActivity(), GoogleMapsFragment.class.getName());
-                LatLng latLng = new LatLng(Double.valueOf(mLocationItem.posLat), Double.valueOf(mLocationItem.posLong));
-                mapFragment.setLatLng(latLng);
+            // We only create a fragment if it doesn't already exist.
+            if (mMapFragment == null) {
+                // To programmatically add the map, we first create a SupportMapFragment
+                mMapFragment = SupportMapFragment.newInstance();
 
-                FragmentTransaction transaction = this.getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.add(R.id.map, mapFragment);
-                transaction.commitAllowingStateLoss();
+                // Then we add it using a FragmentTransaction.
+                FragmentTransaction fragmentTransaction = getChildFragmentManager().beginTransaction();
+                fragmentTransaction.add(R.id.map, mMapFragment, MAP_FRAGMENT_TAG);
+                fragmentTransaction.commit();
             }
+
+            // We can't be guaranteed that the map is available because Google Play services might
+            // not be available.
+            setUpMapIfNeeded();
         } else {
             mFrameLayout.setVisibility(View.GONE);
         }
+    }
+
+    private void setUpMapIfNeeded() {
+        // Check for GooglePlay
+        int checkGooglePlay = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+        if (checkGooglePlay != ConnectionResult.SUCCESS) {
+            // Open GooglePlay error dialog
+            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(checkGooglePlay, getActivity(), 0);
+            errorDialog.show();
+        } else {
+            // everything fine
+            mFrameLayout.setVisibility(View.VISIBLE);
+
+            // Do a null check to confirm that we have not already instantiated the map.
+            if (mMap == null) {
+                // Try to obtain the map from SupportMapFragment.
+                mMap = mMapFragment.getMap();
+
+                // Check if we were successful in obtaining the map.
+                if (mMap != null) {
+                    setUpMap();
+                }
+            }
+        }
+    }
+
+    private void setUpMap() {
+        // Move camera
+        float zoomLevel = (float) (mMap.getMinZoomLevel() + (mMap.getMaxZoomLevel() - mMap.getMinZoomLevel()) * 0.7);
+        LatLng latLng = new LatLng(Double.valueOf(mLocationItem.posLat), Double.valueOf(mLocationItem.posLong));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+
+        // Add marker
+        mMap.addMarker(new MarkerOptions().position(latLng));
     }
 }

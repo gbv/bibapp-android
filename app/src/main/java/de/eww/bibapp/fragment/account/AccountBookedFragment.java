@@ -182,11 +182,11 @@ public class AccountBookedFragment extends Fragment implements
                 }
 
                 if (numFailedItems == docArrayLength) {
-                    responseText = (String) resources.getText(R.string.paiadialog_cancel_failure);
+                    responseText = resources.getString(R.string.paiadialog_cancel_failure);
                 } else if (numFailedItems > 0) {
-                    responseText = (String) resources.getText(R.string.paiadialog_cancel_partial);
+                    responseText = resources.getString(R.string.paiadialog_cancel_partial);
                 } else {
-                    responseText = (String) resources.getText(R.string.paiadialog_cancel_success);
+                    responseText = resources.getQuantityString(R.plurals.paiadialog_cancel_success, docArrayLength);
                 }
             }
 		} catch (Exception e) {

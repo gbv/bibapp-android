@@ -1,6 +1,7 @@
 package de.eww.bibapp.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +61,7 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
 
         String content = item.getContent();
         if (content != null && !content.isEmpty()) {
-            holder.mDescription.setText(content);
+            holder.mDescription.setText(Html.fromHtml(content).toString());
         }
     }
 
