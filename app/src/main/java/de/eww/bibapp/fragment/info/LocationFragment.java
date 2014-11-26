@@ -2,12 +2,10 @@ package de.eww.bibapp.fragment.info;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
