@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.1"
 
     defaultConfig {
-        minSdkVersion 10
+        minSdkVersion 14
         targetSdkVersion 21
     }
 
@@ -30,85 +30,85 @@ android {
         hi {
             applicationId "de.eww.bibapp.hi"
             versionCode 5
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         lg {
             applicationId "de.eww.bibapp.lg"
             versionCode 5
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         il {
             applicationId "de.eww.bibapp.il"
             versionCode 8
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         bls {
             applicationId "de.eww.bibapp.bls"
             versionCode 8
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         hawk {
             applicationId "de.eww.bibapp.hawk"
             versionCode 8
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         thulb {
             applicationId "de.eww.bibapp.thulb"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         eahjena {
             applicationId "de.eww.bibapp.eahjena"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         bathueringen {
             applicationId "de.eww.bibapp.bathueringen"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         schmalkalden {
             applicationId "de.eww.bibapp.schmalkalden"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         ubweimar {
             applicationId "de.eww.bibapp.ubweimar"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         hfmweimar {
             applicationId "de.eww.bibapp.hfmweimar"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         ndh {
             applicationId "de.eww.bibapp.ndh"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         fhe {
             applicationId "de.eww.bibapp.fhe"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
 
         ufb {
             applicationId "de.eww.bibapp.ufb"
             versionCode 1
-            versionName "2.0.0-RC1"
+            versionName "2.0.0-RC2"
         }
     }
 
@@ -125,7 +125,7 @@ dependencies {
 
     //compile 'com.android.support:support-annotations:21.0.0'
     //compile 'com.android.support:support-v4:21.0.0'
-    compile 'com.android.support:appcompat-v7:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.2'
     compile 'com.android.support:recyclerview-v7:21.0.0'
     compile 'com.google.android.gms:play-services:6.1.71'
     compile 'com.octo.android.robospice:robospice:1.4.14'
