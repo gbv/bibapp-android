@@ -128,6 +128,7 @@ public class LocationFragment extends RoboFragment {
 
         if (mLocationItem.hasPosition()) {
             setUpMapIfNeeded();
+            updateMap();
         } else {
             mFragmentView.setVisibility(View.GONE);
         }
@@ -149,22 +150,20 @@ public class LocationFragment extends RoboFragment {
             if (mMap == null) {
                 // Try to obtain the map from SupportMapFragment.
                 mMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
-
-                // Check if we were successful in obtaining the map.
-                if (mMap != null) {
-                    setUpMap();
-                }
             }
         }
     }
 
-    private void setUpMap() {
-        // Move camera
-        float zoomLevel = (float) (mMap.getMinZoomLevel() + (mMap.getMaxZoomLevel() - mMap.getMinZoomLevel()) * 0.7);
-        LatLng latLng = new LatLng(Double.valueOf(mLocationItem.getLat()), Double.valueOf(mLocationItem.getLong()));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
+    private void updateMap() {
+        // Check if we were successful in obtaining the map.
+        if (mMap != null) {
+            // Move camera
+            float zoomLevel = (float) (mMap.getMinZoomLevel() + (mMap.getMaxZoomLevel() - mMap.getMinZoomLevel()) * 0.7);
+            LatLng latLng = new LatLng(Double.valueOf(mLocationItem.getLat()), Double.valueOf(mLocationItem.getLong()));
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
 
-        // Add marker
-        mMap.addMarker(new MarkerOptions().position(latLng));
+            // Add marker
+            mMap.addMarker(new MarkerOptions().position(latLng));
+        }
     }
 }
