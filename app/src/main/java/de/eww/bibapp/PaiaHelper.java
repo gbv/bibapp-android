@@ -117,6 +117,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                 if ( showLoginDialog )
                 {
                     LoginDialogFragment dialogFragment = new LoginDialogFragment();
+                    dialogFragment.setCancelable(false);
                     dialogFragment.setListener(this);
                     dialogFragment.show(this.fragment.getChildFragmentManager(), "login");
                 } else {
