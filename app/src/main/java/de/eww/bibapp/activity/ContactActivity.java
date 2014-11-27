@@ -23,12 +23,11 @@ public class ContactActivity extends DrawerActivity {
 
         Resources resources = getResources();
 
+        textView.setMovementMethod(LinkMovementMethod.getInstance());   // needs to be called before setText
         textView.setText(Html.fromHtml(resources.getString(R.string.contact_text)));
-        textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         // Linkify
-        Linkify.addLinks(textView, Linkify.EMAIL_ADDRESSES);
-        Linkify.addLinks(textView, Linkify.PHONE_NUMBERS);
+        Linkify.addLinks(textView, Linkify.EMAIL_ADDRESSES | Linkify.PHONE_NUMBERS);
 
         setActiveNavigationItem(3);
     }
