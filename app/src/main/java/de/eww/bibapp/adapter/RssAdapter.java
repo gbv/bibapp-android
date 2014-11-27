@@ -61,7 +61,13 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
 
         String content = item.getContent();
         if (content != null && !content.isEmpty()) {
-            holder.mDescription.setText(Html.fromHtml(content).toString());
+            String strippedContent = Html.fromHtml(content).toString()
+                    .replace('\n', (char) 32)
+                    .replace((char) 160, (char) 32)
+                    .replace((char) 65532, (char) 32)
+                    .trim();
+
+            holder.mDescription.setText(strippedContent);
         }
     }
 
