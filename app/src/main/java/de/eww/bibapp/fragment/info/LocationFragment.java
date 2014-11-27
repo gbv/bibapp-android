@@ -121,6 +121,7 @@ public class LocationFragment extends RoboFragment {
         if (mLocationItem.hasDescription()) {
             mDescriptionView.setText(mLocationItem.description);
             mDescriptionView.setVisibility(View.VISIBLE);
+            Linkify.addLinks(mDescriptionView, Linkify.WEB_URLS);
         } else {
             mDescriptionView.setVisibility(View.GONE);
         }
