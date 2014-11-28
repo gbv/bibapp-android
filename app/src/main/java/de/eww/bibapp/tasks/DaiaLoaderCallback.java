@@ -25,6 +25,8 @@ import de.eww.bibapp.model.ModsItem;
 public class DaiaLoaderCallback implements
 	LoaderManager.LoaderCallbacks<List<DaiaItem>> {
 
+    private boolean mIsLocalSearch = true;
+
 	private DaiaLoaderInterface daiaLoaderInterface = null;
 
     public interface DaiaLoaderInterface {
@@ -43,15 +45,19 @@ public class DaiaLoaderCallback implements
 		((DaiaLoader) loader).setFromLocalSearch(this.daiaLoaderInterface.getModsItem().isLocalSearch);
 		((DaiaLoader) loader).setItem(this.daiaLoaderInterface.getModsItem());
 
+        mIsLocalSearch = this.daiaLoaderInterface.getModsItem().isLocalSearch;
+
 		return loader;
 	}
 
 	@Override
 	public void onLoadFinished(Loader<List<DaiaItem>> loader, List<DaiaItem> data) {
-        List<DaiaItem> daiaList;
+        List<DaiaItem> daiaList = data;
 
-        // Group by department
-        daiaList = groupByDepartment(data);
+        // Group by department, if we are processing a gvk search
+        if (!mIsLocalSearch) {
+            daiaList = groupByDepartment(data);
+        }
 
         this.daiaLoaderInterface.onDaiaRequestDone(daiaList);
 	}
@@ -60,8 +66,6 @@ public class DaiaLoaderCallback implements
 	public void onLoaderReset(Loader<List<DaiaItem>> arg0) {
 		// empty
 	}
-
-    // GVK: Standortangaben, die statt Signaturen Volltext-URLs enthalten, werden offenbar bei "Ohne Zuordnung" zusammengefasst und ohne diese Signaturen-URLs angezeigt
 
     /**
      * Iterates over a list of given daia items and groups them by department. If any item does not
