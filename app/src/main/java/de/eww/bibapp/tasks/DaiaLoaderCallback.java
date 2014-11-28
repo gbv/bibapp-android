@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -86,10 +87,12 @@ public class DaiaLoaderCallback implements
         while (it.hasNext()) {
             DaiaItem daiaItem = it.next();
 
+            // Update department "Ohne Zuordnung"
             if (!daiaItem.hasDepartment() || daiaItem.getDepartment().equals("Ohne Zuordnung")) {
                 daiaItem.setDepartment(daiaDefaultDepartment);
             }
 
+            // Grouping
             if (hashMap.containsKey(daiaItem.getDepartment())) {
                 DaiaItem daiaHashItem = hashMap.get(daiaItem.getDepartment());
 
@@ -103,6 +106,19 @@ public class DaiaLoaderCallback implements
             }
         }
 
-        return new ArrayList<DaiaItem>(hashMap.values());
+        // Make sure, that the default department fallback is the last one in the list
+        ArrayList<DaiaItem> daiaResponseList = new ArrayList<DaiaItem>(hashMap.values());
+        it = daiaResponseList.iterator();
+        while (it.hasNext()) {
+            DaiaItem daiaItem = it.next();
+
+            if (daiaItem.getDepartment().equals(daiaDefaultDepartment)) {
+                daiaResponseList.remove(daiaItem);
+                daiaResponseList.add(daiaItem);
+                break;
+            }
+        }
+
+        return daiaResponseList;
     }
 }
