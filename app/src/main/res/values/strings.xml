@@ -69,14 +69,14 @@
     <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt...</string>
     <string name="paiadialog_proceed">Schließen</string>
     <plurals name="paiadialog_renew_success">
-        <item quantity="one">Der gewählte Eintrag wurde verlängert.</item>
-        <item quantity="other">Alle Einträge wurden verlängert.</item>
+        <item quantity="one">Der ausgewählte Eintrag wurde verlängert.</item>
+        <item quantity="other">Alle ausgewählten Einträge wurden verlängert.</item>
     </plurals>
     <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
     <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
     <plurals name="paiadialog_cancel_success">
-        <item quantity="one">Der gewählte Eintrag wurde storniert.</item>
-        <item quantity="other">Alle Einträge wurden storniert.</item>
+        <item quantity="one">Der ausgewählte Eintrag wurde storniert.</item>
+        <item quantity="other">Alle ausgewählten Einträge wurden storniert.</item>
     </plurals>
     <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden.</string>
     <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden.</string>
