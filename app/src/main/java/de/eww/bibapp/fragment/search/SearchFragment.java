@@ -117,7 +117,7 @@ public class SearchFragment extends RoboFragment implements
     public void onNewSearchResultsLoaded() {
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
-            if (!mModsFragment.hasModsItem() && mModsSource.getTotalItems() > 0) {
+            if (mModsSource.getTotalItems() > 0) {
                 mModsFragment.setModsItem(mModsSource.getModsItem(0));
             }
         }

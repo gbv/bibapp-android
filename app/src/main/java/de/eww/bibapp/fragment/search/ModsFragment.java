@@ -1,5 +1,6 @@
 package de.eww.bibapp.fragment.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -48,6 +49,7 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.activity.LocationActivity;
 import de.eww.bibapp.activity.WebViewActivity;
 import de.eww.bibapp.adapter.DaiaAdapter;
@@ -177,10 +179,6 @@ public class ModsFragment extends RoboFragment implements
         mNoneView = (RelativeLayout) view.findViewById(R.id.mods_none);
 
         displayModsItem();
-    }
-
-    public boolean hasModsItem() {
-        return mModsItem != null;
     }
 
     public void removeModsItem() {
@@ -567,7 +565,7 @@ public class ModsFragment extends RoboFragment implements
     private void onClickIndex() {
         Intent webIntent = new Intent(getActivity(), WebViewActivity.class);
         webIntent.putExtra("url", getIndexUrl());
-        startActivity(webIntent);
+        startActivityForResult(webIntent, 99);
     }
 
     private String getIndexUrl() {
@@ -686,5 +684,18 @@ public class ModsFragment extends RoboFragment implements
      */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 99) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Set navigation position
+                if (data.hasExtra("navigationIndex")) {
+                    int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                }
+            }
+        }
     }
 }
