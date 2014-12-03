@@ -19,4 +19,6 @@
     <color name="colorPrimaryDark">#ff1a59be</color>
     <color name="colorAccent">#568EBE</color>
     <color name="colorHighlight">#568EBE</color>
+
+    <color name="colorActionbarText">#ffffff</color>
 </resources>
