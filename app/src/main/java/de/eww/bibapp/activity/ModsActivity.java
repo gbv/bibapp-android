@@ -4,8 +4,13 @@ package de.eww.bibapp.activity;
  * Created by christoph on 08.11.14.
  */
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+
+import java.util.List;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsPagerFragment;
@@ -61,4 +66,29 @@ public class ModsActivity extends DrawerActivity {
 
         super.onBackPressed();
     }
+
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        /**
+//         * Fix for https://code.google.com/p/android/issues/detail?id=40537
+//         */
+//
+//        // notifying nested fragments (support library bug fix)
+//        final FragmentManager childFragmentManager = getChildFragmentManager();
+//
+//        if (childFragmentManager != null) {
+//            final List<Fragment> nestedFragments = childFragmentManager.getFragments();
+//
+//            if (nestedFragments == null || nestedFragments.size() == 0) return;
+//
+//            for (Fragment childFragment : nestedFragments) {
+//                if (childFragment != null && !childFragment.isDetached() && !childFragment.isRemoving()) {
+//                    childFragment.onActivityResult(requestCode, resultCode, data);
+//                }
+//            }
+//        }
+//    }
 }
