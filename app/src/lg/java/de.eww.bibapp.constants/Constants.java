@@ -110,7 +110,7 @@ public final class Constants
     /**
      * An URL to a news feed
      */
-    public static final String NEWS_URL = "http://www.leuphana.de/bibliothek/aktuell.html?type=100";
+    public static final String NEWS_URL = "http://www.leuphana.de/bibliothek/aktuell.html?type=777";
 
     /**
      * An URL to a homepage
