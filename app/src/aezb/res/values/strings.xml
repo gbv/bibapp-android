@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp ÄZB</string>
+
+    <!-- custom -->
+    <string name="detailactionsdialog_request">kostenpflichtig (0,80€) vormerken</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Ärztliche Zentralbibliothek</b><br/>
+        Täglich geöffnet von 08.00-22.00 Uhr<br/>
+        Service Mo.-Fr. von 09.00-17.00 Uhr
+        ]]>
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Gestaltung und Umsetzung</b><br/>
+		Entwurf und Konzeption<br/>
+		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
+		Umsetzung<br/>
+		Effective Webwork GmbH
+        ]]>
+    </string>
+</resources>
