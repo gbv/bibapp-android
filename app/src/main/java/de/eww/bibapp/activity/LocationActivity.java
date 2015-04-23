@@ -57,7 +57,7 @@ public class LocationActivity extends DrawerActivity {
         if (getIntent().hasExtra("source") && getIntent().getExtras().getString("source").equals("search")) {
             setActiveNavigationItem(0);
         } else {
-            setActiveNavigationItem(3);
+            setActiveNavigationItem(2);
         }
     }
 }

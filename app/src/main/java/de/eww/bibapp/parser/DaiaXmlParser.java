@@ -297,7 +297,7 @@ public class DaiaXmlParser
 		String actions = "";
 		if ( availableItems.containsKey("loan") )
 		{
-			if ( availableItems.containsKey("presentation") )
+                if ( availableItems.containsKey("presentation") )
 			{
 				if ( availableItems.get("loan").containsKey("href") )
 				{

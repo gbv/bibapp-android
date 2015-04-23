@@ -33,7 +33,11 @@ public class WebViewActivity extends DrawerActivity {
         // Try to detect header information
         new HeaderRequest(this).execute(mUrl);
 
-        setActiveNavigationItem(0);
+        if (getIntent().hasExtra("source") && getIntent().getExtras().getString("source").equals("search")) {
+            setActiveNavigationItem(0);
+        } else {
+            setActiveNavigationItem(2);
+        }
     }
 
     public void onHeaderRequestDone(Map<String, List<String>> header) {

@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -310,8 +311,19 @@ public class ModsFragment extends RoboFragment implements
 
         Intent locationIntent = new Intent(getActivity(), LocationActivity.class);
         locationIntent.putExtra("locationIndex", 0);
-        locationIntent.putExtra("source", "search");
-        startActivityForResult(locationIntent, 99);
+
+        if (mIsWatchlistFragment) {
+            locationIntent.putExtra("source", "watchlist");
+        } else {
+            locationIntent.putExtra("source", "search");
+        }
+
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment != null) {
+            parentFragment.startActivityForResult(locationIntent, 99);
+        } else {
+            startActivityForResult(locationIntent, 99);
+        }
     }
 
     public void onPaiaRequestActionDone(JSONObject response) {
@@ -565,7 +577,19 @@ public class ModsFragment extends RoboFragment implements
     private void onClickIndex() {
         Intent webIntent = new Intent(getActivity(), WebViewActivity.class);
         webIntent.putExtra("url", getIndexUrl());
-        startActivityForResult(webIntent, 99);
+
+        if (mIsWatchlistFragment) {
+            webIntent.putExtra("source", "watchlist");
+        } else {
+            webIntent.putExtra("source", "search");
+        }
+
+        Fragment parentFragment = getParentFragment();
+        if (parentFragment != null) {
+            parentFragment.startActivityForResult(webIntent, 99);
+        } else {
+            startActivityForResult(webIntent, 99);
+        }
     }
 
     private String getIndexUrl() {

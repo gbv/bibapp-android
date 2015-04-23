@@ -19,4 +19,8 @@ public class RssFeed {
     public List<RssItem> getItems() {
         return mItems;
     }
+
+    public void setItems(List<RssItem> items) {
+        mItems = items;
+    }
 }

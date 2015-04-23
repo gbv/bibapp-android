@@ -137,6 +137,14 @@ public class WatchlistFragment extends RoboFragment implements
                     ((DrawerActivity) getActivity()).selectItem(navigationPosition);
                 }
             }
+        } else if (requestCode == 99) {
+        if (resultCode == Activity.RESULT_OK) {
+            // Set navigation position
+            if (data.hasExtra("navigationIndex")) {
+                int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+            }
         }
+    }
     }
 }

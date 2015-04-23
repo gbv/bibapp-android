@@ -15,7 +15,7 @@ import de.eww.bibapp.model.RssItem;
 /**
  * Created by christoph on 24.10.14.
  */
-public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
+public class    RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
 
     private List<RssItem> mItemList;
 
@@ -57,18 +57,21 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
         RssItem item = mItemList.get(position);
 
         holder.mTitle.setText(item.getTitle());
-        holder.mDescription.setText(item.getDescription());
 
+        String description = item.getDescription();
         String content = item.getContent();
         if (content != null && !content.isEmpty()) {
-            String strippedContent = Html.fromHtml(content).toString()
-                    .replace('\n', (char) 32)
-                    .replace((char) 160, (char) 32)
-                    .replace((char) 65532, (char) 32)
-                    .trim();
-
-            holder.mDescription.setText(strippedContent);
+            description = content;
         }
+
+        // replace / strip html
+        description = Html.fromHtml(description).toString()
+                .replace('\n', (char) 32)
+                .replace((char) 160, (char) 32)
+                .replace((char) 65532, (char) 32)
+                .trim();
+
+        holder.mDescription.setText(description);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

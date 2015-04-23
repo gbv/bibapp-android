@@ -1,29 +1,56 @@
 package de.eww.bibapp.request;
 
-import com.octo.android.robospice.request.springandroid.SpringAndroidSpiceRequest;
+import android.content.Context;
+
+import com.octo.android.robospice.request.SpiceRequest;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 
+import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.RssFeed;
-import roboguice.util.Ln;
+import de.eww.bibapp.model.RssItem;
+import de.eww.bibapp.parser.RssXmlParser;
 
 /**
  * Created by christoph on 24.10.14.
  */
-public class RssFeedRequest extends SpringAndroidSpiceRequest<RssFeed> {
+public class RssFeedRequest extends SpiceRequest<RssFeed> {
 
     private String mFeedUrl;
+    private Context mContext;
 
-    public RssFeedRequest() {
+    public RssFeedRequest(Context context) {
         super(RssFeed.class);
-        this.mFeedUrl = Constants.NEWS_URL;
+        mFeedUrl = Constants.NEWS_URL;
+        mContext = context;
     }
 
     @Override
     public RssFeed loadDataFromNetwork() throws IOException {
-        Ln.d("Request RSS feed " + mFeedUrl);
 
-        return getRestTemplate().getForObject(mFeedUrl, RssFeed.class);
+
+        RssXmlParser rssXmlParser = new RssXmlParser();
+        RssFeed rssFeed = new RssFeed();
+
+        URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(mFeedUrl, mContext);
+
+        try {
+            // open connection
+            urlConnectionHelper.configure();
+            urlConnectionHelper.connect(null);
+
+            InputStream inputStream = urlConnectionHelper.getInputStream();
+            List<RssItem> response = rssXmlParser.parse(inputStream);
+            rssFeed.setItems(response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            urlConnectionHelper.disconnect();
+        }
+
+        return rssFeed;
     }
 }

@@ -77,7 +77,7 @@ public class InfoFragment extends Fragment {
         // Do we have a rss feed to display?
         if (!Constants.NEWS_URL.isEmpty()) {
             // Start the Request
-            mRssFeedRequest = new RssFeedRequest();
+            mRssFeedRequest = new RssFeedRequest(getActivity());
             mEmptyView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             mSpiceManager.execute(mRssFeedRequest, new RssRequestListener());
