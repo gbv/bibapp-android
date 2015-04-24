@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp TU BS</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Anschrift</b><br/>
+        Universitätsbibliothek Braunschweig<br/>
+        Pockelsstraße 13<br/>
+        38106 Braunschweig<br/>
+        <br/>
+        www.biblio.tu-braunschweig.de<br/>
+        <br/>
+        <b>Ausleihe</b><br/>
+        Telefon: (0531) 391-5017<br/>
+        E-Mail:ub-leihstelle@tu-braunschweig.de<br/>
+        <br/>
+        <b>Information</b><br/>
+        Telefon: (0531) 391-5018<br/>
+        E-Mail:ub@tu-braunschweig.de<br/>
+        <br/>
+        <b>Geschäftszimmer</b><br/>
+        Telefon: (0531) 391-5011<br/>
+        E-Mail:ub@tu-braunschweig.de
+        ]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        <br/>
+        Universitätsbibliothek Braunschweig<br/>
+        Pockelsstr. 13<br/>
+        38106 Braunschweig<br/>
+        E-Mail: ub@tu-braunschweig.de<br/>
+        Telefon: +49 (0)531 - 391 5011<br/>
+        <br/>
+        <b>Vertreter</b><br/>
+        <br/>
+        Die Universitätsbibliothek Braunschweig ist eine Einrichtung der Technischen Universität Braunschweig. Sie wird vertreten durch ihre Direktorin Katrin Stump M.A.<br/>
+        <br/>
+        Die Technische Universität Braunschweig ist eine Körperschaft des öffentlichen Rechts. Sie wird durch ihren Präsidenten Herrn Prof. Dr.-Ing. Dr. h. c. Jürgen Hesselbach vertreten.<br/>
+        <br/>
+        Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE<br/>
+        152330858.<br/>
+        <br/>
+        <b>Angaben zum Datenschutz</b><br/>
+        <br/>
+        Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter "Optionen" den Punkt "Zugangsdaten speichern" für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu. Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung</b><br/>
+        <br/>
+        Diese App wurde von der Universitätsbibliothek Braunschweig mit großer Sorgfalt  erstellt und  geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Braunschweig für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt. Die Universitätsbibliothek Braunschweig behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen. Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
+        <br/>
+        <b>Gestaltung und Umsetzung</b><br/>
+        <br/>
+        Ursprünglicher Entwurf und Konzeption: UB Lüneburg, UB Hildesheim, VZG<br/>
+        Göttingen<br/>
+        Anpassung: UB Braunschweig<br/>
+        Umsetzung: effective WEBWORK GmbH
+        ]]>
+    </string>
+</resources>

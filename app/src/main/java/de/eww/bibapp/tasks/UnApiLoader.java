@@ -13,20 +13,20 @@ import java.util.regex.Pattern;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.data.SearchEntry;
+import de.eww.bibapp.model.ModsItem;
 
 /**
- * @author Christoph Schönfeld - effective WEBWORK GmbH
- *
- * This file is part of the Android BibApp Project
- * =========================================================
- * Loader for unapi data
- */
+* @author Christoph Schönfeld - effective WEBWORK GmbH
+*
+* This file is part of the Android BibApp Project
+* =========================================================
+* Loader for unapi data
+*/
 public class UnApiLoader extends AsyncTaskLoader<String>
 {
     private String entries;
     private String ppn;
-    private SearchEntry searchEntry;
+    private ModsItem searchEntry;
     private Fragment fragment;
     private boolean failure = false;
 
@@ -47,7 +47,7 @@ public class UnApiLoader extends AsyncTaskLoader<String>
         this.ppn = ppn;
     }
 
-    public void setSearchEntry(SearchEntry searchEntry)
+    public void setSearchEntry(ModsItem searchEntry)
     {
         this.searchEntry = searchEntry;
     }
@@ -127,7 +127,7 @@ public class UnApiLoader extends AsyncTaskLoader<String>
     {
         String response = "";
 
-        URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getUnApiUrl(this.ppn));
+        URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getUnApiUrl(this.ppn), fragment.getActivity());
 
         try
         {

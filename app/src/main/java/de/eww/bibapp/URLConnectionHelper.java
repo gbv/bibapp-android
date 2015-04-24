@@ -30,29 +30,32 @@ import javax.net.ssl.SSLSocketFactory;
 
 import de.eww.bibapp.constants.Constants;
 
-public class URLConnectionHelper
-{
+public class URLConnectionHelper {
+
 	public String urlString;
 	private URL url;
 	private HttpURLConnection connection;
-	
-	public URLConnectionHelper(String url)
+
+    Context mContext;
+
+	public URLConnectionHelper(String url, Context context)
 	{
 		this.urlString = url;
+        mContext = context;
 	}
-	
+
 	public void configure() throws URISyntaxException, MalformedURLException
 	{
 		this.url = new URL(this.urlString);
-		
+
 		URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
 		this.url = uri.toURL();
 	}
-	
+
 	public void connect(String postData) throws Exception
 	{
 		Log.v("URLConnectionHelper", this.url.toExternalForm());
-		
+
 		if ( this.url.getProtocol().equals("http") )
 		{
 			this.connection = (HttpURLConnection) this.url.openConnection();
@@ -66,7 +69,7 @@ public class URLConnectionHelper
 
         // modify user agent
         try {
-            PackageInfo packageInfo = MainActivity.instance.getPackageManager().getPackageInfo(MainActivity.instance.getPackageName(), 0);
+            PackageInfo packageInfo = mContext.getPackageManager().getPackageInfo(mContext.getPackageName(), 0);
 
             List<String> userAgentInformation = new ArrayList<String>();
             userAgentInformation.add("BibApp/" + packageInfo.versionName);
@@ -84,7 +87,7 @@ public class URLConnectionHelper
 		this.connection.setReadTimeout(Constants.READ_TIMEOUT);
 		this.connection.setConnectTimeout(Constants.CONNECTION_TIMEOUT);
 		this.connection.setDoInput(true);
-		
+
 		if ( postData == null )
 		{
 			this.connection.setRequestMethod("GET");
@@ -97,9 +100,9 @@ public class URLConnectionHelper
 			this.connection.setDoOutput(true);
 			this.connection.setUseCaches(false);
 		}
-		
+
 		this.connection.connect();
-		
+
 		if ( postData != null )
 		{
 			DataOutputStream outputStream = new DataOutputStream(this.connection.getOutputStream());
@@ -109,22 +112,22 @@ public class URLConnectionHelper
 			outputStream.close();
 		}
 	}
-	
+
 	public InputStream getInputStream() throws Exception
 	{
 		return this.connection.getInputStream();
 	}
-	
+
 	public int getResponseCode() throws Exception
 	{
 		return this.connection.getResponseCode();
 	}
-	
+
 	public InputStream getErrorStream()
 	{
 		return this.connection.getErrorStream();
 	}
-	
+
 	public void disconnect()
 	{
 		this.connection.disconnect();
@@ -133,7 +136,7 @@ public class URLConnectionHelper
     public Map<String, List<String>> getHeader() {
         return this.connection.getHeaderFields();
     }
-	
+
 	public InputStream getStream() throws Exception
 	{
 		if ( this.getResponseCode() != 200 )
@@ -145,20 +148,20 @@ public class URLConnectionHelper
 			return this.getInputStream();
 		}
 	}
-	
+
 	public String readStream(InputStream input)
 	{
 		Writer writer = new StringWriter();
-		
+
 		try
 		{
 			InputStreamReader streamReader = new InputStreamReader(new BufferedInputStream(input), "UTF-8");
-			
+
 			try
 			{
 				final char[] buffer = new char[1024];
 				int read;
-				
+
 				while ( (read = streamReader.read(buffer)) != -1 )
 				{
 					writer.write(buffer, 0, read);
@@ -184,18 +187,17 @@ public class URLConnectionHelper
 		{
 			e.printStackTrace();
 		}
-		
+
 		return writer.toString();
 	}
 
     private SSLSocketFactory createAdditionalCertsSSLSocketFactory() {
         try {
             final KeyStore ks = KeyStore.getInstance("BKS");
-            final Context context = MainActivity.instance.getApplicationContext();
 
-            final InputStream in = context.getResources().openRawResource(R.raw.customstore);
+            final InputStream in = mContext.getResources().openRawResource(R.raw.customstore);
             try {
-                ks.load(in, context.getString(R.string.customstore_password).toCharArray());
+                ks.load(in, mContext.getString(R.string.customstore_password).toCharArray());
             } finally {
                 in.close();
             }

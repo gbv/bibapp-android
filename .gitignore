@@ -29,37 +29,6 @@ Icon
 .Trashes
 
 ######################
-# Eclipse related    #
-######################
-*.pydevproject
-.project
-.metadata
-bin/**
-tmp/**
-tmp/**/*
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.settings/
-.loadpath
-
-# External tool builders
-.externalToolBuilders/
-
-# Locally stored "Eclipse launch configurations"
-*.launch
-
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
-/vendor
-
-######################
 # Android related    #
 ######################
 
@@ -101,3 +70,5 @@ maps.xml
 
 # except the main one
 !app/src/main/res/values/maps.xml
+
+signing.gradle

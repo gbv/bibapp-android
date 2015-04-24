@@ -1,0 +1,28 @@
+android {
+    signingConfigs {
+        release {
+            storeFile file("")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            //runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            signingConfig signingConfigs.release
+        }
+    }
+
+    productFlavors {
+        yourbib {
+            applicationId "de.org.yourbib"
+            versionCode 1
+            versionName "2.0.0"
+            signingConfig signingConfigs.release
+        }
+    }
+}

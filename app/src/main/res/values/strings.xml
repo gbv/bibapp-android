@@ -5,151 +5,45 @@
     <string name="app_name">BibApp</string>
     <string name="empty_list">Keine Einträge vorhanden</string>
     <string name="loading_in_progress">Inhalte werden geladen</string>
-    
-    <!-- action bar -->
-    <string name="actionbar_account">Konto</string>
-    <string name="actionbar_search">Suche</string>
-    <string name="actionbar_watchlist">Merkliste</string>
-    <string name="actionbar_info">Info</string>
-    <string name="actionbar_settings">Optionen</string>
-    
-    <!-- login dialog -->
-    <string name="logindialog_username">Benutzernummer</string>
-    <string name="logindialog_password">Kennwort</string>
-    <string name="logindialog_login">Anmelden</string>
-    <string name="logindialog_cancel">Abbrechen</string>
-    <string name="logindialog_heading">Bitte melden Sie sich an</string>
-    <string name="logindialog_wrong">Bitte überprüfen Sie Ihre Logindaten!</string>
-    
-    <!-- error dialog -->
-    <string name="errordialog_connection">
-        Ihre Anfrage konnte nicht abgeschlossen werden.\n
-        Bitte überprüfen Sie ggf. Ihre Netzverbindung und versuchen es erneut!
-    </string>
-    <string name="errordialog_rights">
-        Sie verfügen nicht über die notwendigen Rechte um diese Aktion auszuführen.\n
-        Bitte überprüfen Sie Ihr Konto!
-    </string>
-    <string name="errordialog_proceed">OK</string>
-    
-    <!-- swipe dialog -->
-    <string name="swipedialog_extending">Einträge werden nachgeladen</string>
-    
-    <!-- paia dialog -->
-    <string name="paiadialog_heading">Kontozugriff</string>
-    <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt...</string>
-    <string name="paiadialog_proceed">Schließen</string>
-    <string name="paiadialog_renew_success">Alle Einträge wurden verlängert.</string>
-    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
-    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
-    <string name="paiadialog_cancel_success">Alle Einträge wurden storniert.</string>
-    <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden.</string>
-    <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden.</string>
-    <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt.</string>
-    <string name="paiadialog_general_failure">Die Aktion schlug leider fehl.</string>
-    
-    <!-- detail actions dialog -->
-    <string name="detailactionsdialog_heading">Wählen Sie eine Aktion</string>
-    <string name="detailactionsdialog_cancel">Abbrechen</string>
-    <string name="detailactionsdialog_location">Standortinformationen</string>
-    <string name="detailactionsdialog_request">Vormerken</string>
-    <string name="detailactionsdialog_order">Bestellen</string>
-    <string name="detailactionsdialog_online">Online ansehen</string>
-    
+
+    <!-- navigation -->
+    <string name="drawer_navigation_search">Suche</string>
+    <string name="drawer_navigation_account">Konto</string>
+    <string name="drawer_navigation_watchlist">Merkliste</string>
+    <string name="drawer_navigation_info">Info</string>
+    <string name="drawer_navigation_homepage">Homepage</string>
+    <string name="drawer_navigation_settings">Einstellungen</string>
+    <string name="drawer_open">Navigation öffnen</string>
+    <string name="drawer_close">Navigation schließen</string>
+
     <!-- settings -->
-    <string name="settings_description">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
-    <string name="settings_dbs_description">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
-    <string name="settings_data_privacy">Anonyme Nutzungsdaten speichern</string>
-    <string name="settings_store">Logindaten speichern</string>
-    <string name="settings_store_on">Login wird gespeichert</string>
-    <string name="settings_store_off">Login wird nicht gespeichert</string>
-    <string name="settings_local_search">Lokaler Katalog</string>
-    <string name="settings_local_search_description">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
-    
+    <string name="settings_store_login_title">Logindaten speichern</string>
+    <string name="settings_store_login_summary">Wenn Sie Ihre Zugangsdaten speichern, müssen Sie sich für Aktionen innerhalb Ihres Kontos nur einmal anmelden.</string>
+    <string name="settings_local_catalog_title">Lokaler Katalog</string>
+    <string name="settings_local_catalog_summary">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
+    <string name="settings_data_privacy_title">Anonyme Nutzungsdaten speichern</string>
+    <string name="settings_data_privacy_summary">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
+
+    <!-- actions -->
+    <string name="action_search">Suchen</string>
+
     <!-- info -->
     <string name="info_button_contact">Kontakt</string>
     <string name="info_button_locations">Standorte</string>
     <string name="info_button_impressum">Impressum</string>
-    <string name="info_button_homepage">Homepage</string>
-    
+
+    <!-- search spinner -->
+    <string-array name="search_spinner_list">
+        <item>Lokal</item>
+        <item>GVK</item>
+    </string-array>
+
     <!-- account -->
     <string name="account_borrowed">Ausgeliehen</string>
     <string name="account_booked">Vorgemerkt</string>
     <string name="account_fees">Gebühren</string>
     <string name="account_fees_amount">Gesamt:</string>
     <string name="account_inactive">(gesperrt)</string>
-    
-    <!-- search -->
-    <string name="search_hint">Suche</string>
-    <string name="search_hits">Treffer</string>
-    <string name="search_in_progress">Bibliothek wird durchsucht</string>
-    <string name="search_local">Lokal</string>
-    <string name="search_gvk">GVK</string>
-    
-    <!-- contact -->
-    <string name="contact_text">
-        <b>Hildesheim</b>\n
-		\n
-		<b>Anschrift</b>\n
-		Universitätsbibliothek Hildesheim\n
-		Marienburger Platz 22\n
-		31141 Hildesheim\n
-		\n
-		www.uni-hildesheim.de/bibliothek\n
-		\n
-		<b>Auskunft</b>\n
-		Telefon: (05121) 883 93010\n
-		E-Mail: auskunft@uni-hildesheim.de\n
-		\n
-		<b>Ausleihe</b>\n
-		Telefon: (05121) 883 93020\n
-		E-Mail: ausleihe@uni-hildesheim.de
-    </string>
-    
-    <!-- impressum -->
-    <string name="impressum_text">
-        <b>Anbieter</b>\n
-        Universitätsbibliothek Hildesheim\n
-		Marienburger Platz 22\n
-		31141 Hildesheim\n
-		\n
-		E-Mail: auskunft@uni-hildesheim.de\n
-		Telefon: +49 (0) 51 21 - 883 93010\n
-		Telefax: +49 (0) 51 21 - 883 93011\n
-		\n
-		<b>Vertreter</b>\n
-		Die Universitätsbibliothek Hildesheim ist eine Einrichtung der Stiftung Universität Hildesheim, sie wird vertreten durch ihren Leiter, Dr. Ewald Brahms. Die Stiftung Universität Hildesheim ist eine rechtsfähige Stiftung öffentlichen Rechts. Die Stiftung unterhält und fördert die Universität Hildesheim in deren Eigenschaft als Körperschaft des öffentlichen Rechts und übt die Rechtsaufsicht über sie aus. Stiftung Universität Hildesheim und Universität Hildesheim werden vertreten durch ihren Präsidenten Herrn Prof. Dr. Wolfgang-Uwe Friedrich.\n
-Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259506.\n
-		\n
-		<b>Angaben zum Datenschutz</b>\n
-		Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.\n
-		Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).\n
-		\n
-		<b>Rechtliche Hinweise zur Haftung</b>\n
-		Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.\n
-		Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.\n
-		\n
-		<b>Gestaltung und Umsetzung</b>\n
-		Entwurf und Konzeption\n
-		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)\n
-		Umsetzung\n
-		Effective Webwork GmbH\n
-        \n
-        <b>Erhebung von Nutzungsdaten</b>\n
-        Die Universitätsbibliothek Hildesheim nutzt im Rahmen ihrer Teilnahme an der Deutschen Bibliotheksstatistik ein Verfahren zur Zählung der Besuche auf ihren Online-Angeboten. Bei jeder Suche innerhalb der BibApp werden eine Kennung der Bibliothek, der Zeitpunkt des Aufrufs und eine pseudonymisierte Signatur des aufrufenden Gerätes gespeichert. Die Signatur wird mittels einer Einwegfunktion aus IP-Adresse, Browserkennung und Proxy-Information gebildet. Die Erhebung, Speicherung und Auswertung dieser Daten erfolgt in pseudonymisierter Form, d.h. die Signatur ist nicht bestimmten Personen zuzuordnen. Eine Speicherung insbesondere der IP-Adresse findet nicht statt. Die pseudonymen Einzeldaten werden nach spätestens 24 Stunden aufsummiert und damit anonymisiert.\n
-        Die gespeicherten Daten werden statistisch ausgewertet, um unsere Online-Angebote bedarfsgerecht zu gestalten und weiterzuentwickeln. Die Daten werden nur zu diesem Zweck genutzt und im Anschluss an die Auswertung gelöscht. Mit der technischen und organisatorischen Umsetzung des Verfahrens ist die Hochschule der Medien Stuttgart beauftragt. Sie hat das Verfahren nach den Maßgaben der gesetzlichen Bestimmungen der Datenschutzgesetze und des Telemediengesetzes (TMG) entwickelt und sich zu deren Einhaltung verpflichtet.\n
-        \n
-        Sie haben die Möglichkeit, der Erhebung, Verarbeitung und Nutzung der vorbezeichneten Daten Ihrer Besuche zu dem genannten Zweck zu widersprechen. Deaktivieren Sie dazu unter "Optionen / Datenschutz" die Option "Anonyme Nutzungsdaten speichern".
-    </string>
-    
-    <!-- account -->
-    <string name="account_borrowed_signature">Signatur:</string>
-    <string name="account_borrowed_duedate">Leihfristende:</string>
-    <string name="account_borrowed_queue">Vormerkungen:</string>
-    <string name="account_borrowed_renewals">Verlängerungen:</string>
-    <string name="account_borrowed_status">Status:</string>
-    <string name="account_booked_signature">Signatur:</string>
-    <string name="account_booked_date">Vormerkdatum:</string>
 
     <!-- paia -->
     <string-array name="paia_service_status">
@@ -160,6 +54,79 @@ Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259
         <item>abholbereit</item>
         <item>abgelehnt</item>
     </string-array>
+
+    <!-- login dialog -->
+    <string name="logindialog_username">Benutzernummer</string>
+    <string name="logindialog_password">Kennwort</string>
+    <string name="logindialog_login">Anmelden</string>
+    <string name="logindialog_cancel">Abbrechen</string>
+    <string name="logindialog_heading">Bitte melden Sie sich an:</string>
+    <string name="logindialog_wrong">Bitte überprüfen Sie Ihre Logindaten!</string>
+    <string name="logindialog_store">Logindaten speichern</string>
+
+    <!-- paia dialog -->
+    <string name="paiadialog_heading">Kontozugriff</string>
+    <string name="paiadialog_in_progress">Kontoaktion wird ausgeführt...</string>
+    <string name="paiadialog_proceed">Schließen</string>
+    <plurals name="paiadialog_renew_success">
+        <item quantity="one">Der ausgewählte Eintrag wurde verlängert.</item>
+        <item quantity="other">Alle ausgewählten Einträge wurden verlängert.</item>
+    </plurals>
+    <string name="paiadialog_renew_partial">Es konnten nur einige Einträge verlängert werden.</string>
+    <string name="paiadialog_renew_failure">Leider konnten keine Einträge verlängert werden.</string>
+    <plurals name="paiadialog_cancel_success">
+        <item quantity="one">Der ausgewählte Eintrag wurde storniert.</item>
+        <item quantity="other">Alle ausgewählten Einträge wurden storniert.</item>
+    </plurals>
+    <string name="paiadialog_cancel_partial">Es konnten nur einige Einträge storniert werden.</string>
+    <string name="paiadialog_cancel_failure">Leider konnten keine Einträge storniert werden.</string>
+    <string name="paiadialog_general_success">Die Aktion wurde erfolgreich ausgeführt.</string>
+    <string name="paiadialog_general_failure">Die Aktion schlug leider fehl.</string>
+
+    <!-- toasts -->
+    <string name="toast_watchlist_added">Eintrag in Merkliste kopiert</string>
+    <string name="toast_watchlist_removed">Einträge wurden entfernt</string>
+    <string name="toast_info_rss_error">News-Feed konnte nicht geladen werden</string>
+    <string name="toast_locations_error">Standorte konnten nicht geladen werden</string>
+    <string name="toast_account_error">Kontoinformationen konnten nicht geladen werden</string>
+    <string name="toast_search_error">Suchanfrage konnte nicht abgeschlossen werden</string>
+    <string name="toast_mods_error">Es konnten nicht alle Informationen geladen werden</string>
+
+    <!-- search -->
+    <string name="search_hint">Suche</string>
+    <string name="search_hits">Treffer</string>
+    <string name="search_in_progress">Bibliothek wird durchsucht</string>
+
+    <!-- swipe dialog -->
+    <string name="swipedialog_extending">Einträge werden nachgeladen</string>
+
+    <!-- error dialog -->
+    <string name="errordialog_connection">
+        Ihre Anfrage konnte nicht abgeschlossen werden.\n
+        Bitte überprüfen Sie ggf. Ihre Netzverbindung und versuchen es erneut!
+    </string>
+    <string name="errordialog_rights">
+        Sie verfügen nicht über die notwendigen Rechte um diese Aktion auszuführen.\n
+        Bitte überprüfen Sie Ihr Konto!
+    </string>
+    <string name="errordialog_proceed">OK</string>
+
+    <!-- detail actions dialog -->
+    <string name="detailactionsdialog_heading">Wählen Sie eine Aktion</string>
+    <string name="detailactionsdialog_cancel">Abbrechen</string>
+    <string name="detailactionsdialog_location">Standortinformationen</string>
+    <string name="detailactionsdialog_request">Vormerken</string>
+    <string name="detailactionsdialog_order">Bestellen</string>
+    <string name="detailactionsdialog_online">Online ansehen</string>
+    
+    <!-- account -->
+    <string name="account_borrowed_signature">Signatur:</string>
+    <string name="account_borrowed_duedate">Leihfristende:</string>
+    <string name="account_borrowed_queue">Vormerkungen:</string>
+    <string name="account_borrowed_renewals">Verlängerungen:</string>
+    <string name="account_borrowed_status">Status:</string>
+    <string name="account_booked_signature">Signatur:</string>
+    <string name="account_booked_date">Vormerkdatum:</string>
     
     <!-- menu -->
     <string name="menu_borrowed_extend">Verlängern</string>
@@ -167,15 +134,15 @@ Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259
     <string name="menu_detail_addtowatchlist_duplicate">Bereits in Merkliste</string>
     <string name="menu_booked_cancel">Stornieren</string>
     <string name="menu_watchlist_remove">Entfernen</string>
+    <string name="menu_selected_count">%1$s ausgewählt</string>
     
     <!-- detail -->
     <string name="detail_available">Verfügbarkeit</string>
     <string name="detail_index">Inhaltsverzeichnis anzeigen</string>
     <string name="detail_daia_no_department">Ohne Zuordnung</string>
     <string name="detail_interlending">Fernleihoptionen</string>
-    <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus</string>
-    
-    <!-- toasts -->
-    <string name="toast_watchlist_added">Eintrag in Merkliste kopiert</string>
-    <string name="toast_watchlist_removed">Einträge wurden entfernt</string>
+    <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus!</string>
+
+    <!-- daia -->
+    <string name="daia_default_department">Zusätzliche Exemplare anderer Bibliotheken</string>
 </resources>

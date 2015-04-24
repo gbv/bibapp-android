@@ -15,7 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "https://paia.gbv.de/isil/DE-Wim8"
+        "https://paia.gbv.de/DE-Wim8"
     };
 
     /**

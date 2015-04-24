@@ -7,35 +7,30 @@ import java.util.List;
 import java.util.Map;
 
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.fragments.detail.WebViewFragment;
+import de.eww.bibapp.activity.WebViewActivity;
 
-public class HeaderRequest extends AsyncTask<String, Void, Map<String, List<String>>>
-{
-    WebViewFragment fragment = null;
+public class HeaderRequest extends AsyncTask<String, Void, Map<String, List<String>>> {
+    WebViewActivity mActivity = null;
 
-	public HeaderRequest(WebViewFragment fragment) {
-        this.fragment = fragment;
+	public HeaderRequest(WebViewActivity activity) {
+        mActivity = activity;
 	}
 
 	protected Map<String, List<String>> doInBackground(String... urls) {
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(urls[0]);
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(urls[0], mActivity);
 
         Map<String, List<String>> header = new HashMap<String, List<String>>();
-		
-		try
-		{
+
+		try {
 			urlConnectionHelper.configure();
 			urlConnectionHelper.connect(null);
 
             header = urlConnectionHelper.getHeader();
-		}
-		catch ( Exception e )
-		{
+		} catch ( Exception e ) {
 			e.printStackTrace();
 		}
-		
-		finally
-		{
+
+		finally {
 			urlConnectionHelper.disconnect();
 		}
 
@@ -43,6 +38,6 @@ public class HeaderRequest extends AsyncTask<String, Void, Map<String, List<Stri
 	}
 
     protected void onPostExecute(Map<String, List<String>> header) {
-        this.fragment.onHeaderRequestDone(header);
+        mActivity.onHeaderRequestDone(header);
     }
 }

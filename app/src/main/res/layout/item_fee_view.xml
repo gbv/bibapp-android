@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:orientation="vertical"
+    android:paddingTop="@dimen/list_vertical_text_padding"
+    android:paddingBottom="@dimen/list_vertical_text_padding">
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:textSize="@dimen/list_secondary_text_size"
+            android:textColor="@android:color/secondary_text_light"
+            android:textIsSelectable="true" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:textSize="@dimen/list_secondary_text_size"
+            android:textColor="@android:color/secondary_text_light"
+            android:textIsSelectable="true" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:textSize="@dimen/list_secondary_text_size"
+        android:textColor="@android:color/tertiary_text_light"  />
+
+</LinearLayout>

@@ -1,8 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
     <CheckBoxPreference
-        android:key="store_login"
-        android:title="@string/settings_store"
-        android:summary="@string/settings_description"
+        android:key="pref_storeLogin"
+        android:title="@string/settings_store_login_title"
+        android:summary="@string/settings_store_login_summary"
         android:defaultValue="false" />
+
+    <CheckBoxPreference
+        android:key="pref_dataPrivacy"
+        android:title="@string/settings_data_privacy_title"
+        android:summary="@string/settings_data_privacy_summary"
+        android:defaultValue="true" />
+
+    <ListPreference
+        android:key="pref_localCatalog"
+        android:title="@string/settings_local_catalog_title"
+        android:summary="@string/settings_local_catalog_summary"
+        android:defaultValue="" />
 </PreferenceScreen>

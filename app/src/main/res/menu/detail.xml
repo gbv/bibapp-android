@@ -1,5 +1,0 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menu_detail_add_to_watchlist"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_detail_addtowatchlist" />
-</menu>

@@ -54,7 +54,7 @@
         android:layout_marginLeft="4dp"
         android:layout_marginRight="4dp"
         android:layout_marginBottom="5dp"
-	    android:text="@string/settings_store"
+	    android:text="@string/logindialog_store"
 	    android:visibility="gone" />
     
 </LinearLayout>

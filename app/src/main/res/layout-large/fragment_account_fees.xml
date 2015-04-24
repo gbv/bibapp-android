@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:layout_width="0dp"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="@dimen/typo_title_text_size"
+        android:textColor="@android:color/primary_text_light"
+        android:text="@string/account_fees" />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:src="@drawable/divider"/>
+
+    <TextView
+        android:id="@+id/sum"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:padding="5dp"
+        android:textColor="@android:color/primary_text_light"
+        android:textSize="@dimen/list_primary_text_size"
+	    android:textStyle="bold"
+	    android:layout_marginBottom="3dp"/>
+	
+	<ImageView
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:src="@drawable/divider"/>
+
+    <include layout="@layout/include_list" />
+</LinearLayout>

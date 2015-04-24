@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/booked_item"
+   android:layout_height="wrap_content" 
+   android:layout_width="fill_parent" 
+   android:orientation="vertical"
+    android:paddingTop="@dimen/list_vertical_text_padding"
+    android:paddingBottom="@dimen/list_vertical_text_padding"
+    android:background="@drawable/statelist_item_background">
+   
+   <TextView
+       android:id="@+id/about"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:textColor="@android:color/primary_text_light"
+       android:textSize="@dimen/list_primary_text_size"
+       android:textStyle="bold" />
+       
+   <LinearLayout
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_weight="1"
+       android:orientation="vertical">
+
+       <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="130dp"
+                android:textSize="@dimen/list_secondary_text_size"
+                android:textColor="@android:color/secondary_text_light"
+                android:text="@string/account_booked_signature" />
+
+            <TextView
+                android:id="@+id/signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/list_secondary_text_size"
+                android:textColor="@android:color/secondary_text_light" />
+       </LinearLayout>
+
+       <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:width="130dp"
+                android:textSize="@dimen/list_secondary_text_size"
+                android:textColor="@android:color/secondary_text_light"
+                android:text="@string/account_booked_date" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/list_secondary_text_size"
+                android:textColor="@android:color/secondary_text_light" />
+       </LinearLayout>
+
+   </LinearLayout>
+</LinearLayout>
