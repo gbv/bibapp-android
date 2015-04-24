@@ -4,7 +4,7 @@ Die BibApp ermöglicht den Zugriff auf Kataloge und Nutzerkonten von Bibliotheke
 
 Nachnutzung
 -----------
-Alle Informationen zur Nachnutzung der BibApp befinden sich im Wiki unter: https://github.com/gbv/bibapp-android/wiki/Nachnutzung
+Alle Informationen zur Nachnutzung der BibApp befinden sich im Wiki unter: https://github.com/gbv/bibapp-android/wiki
 
 Lizenz
 ------
