@@ -9,8 +9,6 @@ android {
         targetSdkVersion 22
     }
 
-    apply from: '../signing.gradle'
-
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/license.txt'
@@ -33,4 +31,8 @@ dependencies {
     // roboguice
     compile 'org.roboguice:roboguice:3.0'
     provided 'org.roboguice:roboblender:3.0'
+}
+
+if (new File('signing.gradle').exists()) {
+    apply from: '../signing.gradle'
 }
