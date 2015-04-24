@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp UFB</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>UB Erfurt</b><br/>
+        E-Mail: information.ub@uni-erfurt.de<br/>
+        Telefon: 0361/737-5800<br/>
+        <br/>
+        <b>FB Gotha</b><br/>
+        E-Mail: bibliothek.gotha@uni-erfurt.de<br/>
+        Telefon: 0361/737-5540
+        ]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Universitäts- und Forschungsbibliothek Erfurt/Gotha</b><br/>
+        Nordhäuser Straße 63<br/>
+        99089 Erfurt <br/>
+        Telefon: +49 361 737-5800<br/>
+        Fax: +49 361 737-5849<br/>
+        E-Mail: information.ub(at)uni-erfurt.de<br/>
+        <br/>
+        Die Universität Erfurt ist eine Körperschaft des öffentlichen Rechts.<br/>
+        Sie wird durch Prof. Dr. Kai Brodersen, den Präsidenten der Universität Erfurt, gesetzlich vertreten.<br/>
+        USt-Id-Nr: DE 811 627 407<br/>
+        Zuständige Aufsichtsbehörde<br/>
+        Ministerium für Bildung, Wissenschaft und Kultur<br/>
+        Werner-Seelenbinder Straße 7<br/>
+        99096 Erfurt<br/>
+        <br/>
+        Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV<br/>
+        Bibliotheksdirektor (komm.) Dr. Eckart Gerstner<br/>
+        +49 361 737-5500<br/>
+        +49 361 737-5509<br/>
+        eckart.gerstner(at)uni-erfurt.de<br/>
+        <br/>
+        <b>Haftungsausschluss</b><br/>
+        Haftung für Inhalte<br/>
+        Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen.<br/>
+        <br/>
+        <b>Haftung für Links</b><br/>
+        Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend entfernen.<br/>
+        <br/>
+        <b>Urheberrecht</b><br/>
+        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitten wir um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Inhalte umgehend entfernen.<br/>
+        <br/>
+        <b>Datenschutz</b><br/>
+        Die Nutzung unserer Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.<br/>
+        <br/>
+        Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.<br/>
+        <br/>
+        Der Nutzung von im Rahmen der Impressumspflicht veröffentlichten Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angeforderter Werbung und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.<br/>
+        <br/>
+        <b>Erfassung von Seitenbesuchen (DBS-Zählpixelverfahren)</b><br/>
+        Die Universitäts- und Forschungsbibliothek Erfurt/Gotha nutzt im Rahmen ihrer Teilnahme an der Deutschen Bibliotheksstatistik ein Verfahren zur Zählung der Besuche auf ihrer Internetseite. Beim Aufruf der (Haupt-) Homepage und/oder der Katalogseite („OPAC“), sowie der zwei sog. Unter-Homepages  der Universitätsbibliothek Erfurt und der Forschungsbibliothek Gotha werden eine Kennung der Bibliothek und der betreffenden Seite, der Zeitpunkt des Aufrufs und eine Signatur des aufrufenden Rechners gespeichert.<br/>
+        Die Signatur wird mittels einer Einwegfunktion aus IP-Adresse, Browserkennung und Proxy-Information gebildet. Die Erhebung, Speicherung und Auswertung dieser Daten erfolgt in pseudonymisierter Form, d.h. die Signatur ist nicht bestimmten Personen zuzuordnen. Eine Speicherung insbesondere der IP-Adresse findet nicht statt. Die pseudonymen Einzeldaten werden nach spätestens 24 Stunden aufsummiert und damit anonymisiert.<br/>
+        Die gespeicherten Daten werden statistisch ausgewertet, um unsere Internetseite bedarfsgerecht zu gestalten und weiterzuentwickeln. Die Daten werden nur zu diesem Zweck genutzt und im Anschluss an die Auswertung gelöscht.<br/>
+        Mit der technischen und organisatorischen Umsetzung des Verfahrens ist die Hochschule der Medien Stuttgart beauftragt. Sie hat das Verfahren nach den Maßgaben der gesetzlichen Bestimmungen der Datenschutzgesetze und des Telemediengesetzes (TMG) entwickelt und sich zu deren Einhaltung verpflichtet.<br/>
+        Sie haben die Möglichkeit, der Erhebung, Verarbeitung und Nutzung der vorbezeichneten Daten Ihrer Besuche zu dem genannten Zweck zu widersprechen. Klicken Sie dazu bitte auf den folgenden externen Link http://dbspixel.hbz-nrw.de/widerspruch.html.
+        ]]>
+    </string>
+</resources>

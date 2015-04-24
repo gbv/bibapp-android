@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp FHE</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        Altonaer Straße 25<br/>
+        99085 Erfurt<br/>
+        <br/>
+        <b>Ausleihtheke</b><br/>
+        Tel.: 0361 6700-519<br/>
+        Fax: 0361 6700-518<br/>
+        <br/>
+        E-Mail: bibliothek@fh-erfurt.de
+        ]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anschrift</b><br/>
+        Fachhochschule Erfurt<br/>
+        Bibliothek<br/>
+        Altonaer Straße 25<br/>
+        99085 Erfurt<br/>
+        <br/>
+        Tel.: 0361 6700-519<br/>
+        Fax: 0361 6700-518<br/>
+        <br/>
+        Die Fachhochschule Erfurt ist eine Körperschaft des öffentlichen Rechts.<br/>
+        Sie wird durch den Leiter der Hochschule Prof. Dr.-Ing. Volker Zerbe gesetzlich vertreten.<br/>
+        <br/>
+        USt-Id-Nr: DE 241 446 583<br/>
+        <br/>
+        <b>Zuständige Aufsichtsbehörde</b><br/>
+        Thüringer Ministerium für Bildung, Wissenschaft und Kultur<br/>
+        Werner-Seelenbinder Straße 7<br/>
+        99096 Erfurt<br/>
+        <br/>
+        <b>Technische Betreuung</b><br/>
+        Hochschulbibliothek der FHE<br/>
+        Altonaer Straße 25<br/>
+        99085 Erfurt
+        ]]>
+    </string>
+</resources>

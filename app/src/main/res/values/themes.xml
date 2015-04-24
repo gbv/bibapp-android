@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Application theme, according to API level -->
+    <style name="BibAppTheme" parent="AppTheme.Base"/>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Here we setting appcompat’s actionBarStyle -->
+        <!--<item name="actionBarStyle">@style/BibAppActionBarStyle</item>-->
+
+        <!-- colorPrimary is used for the default action bar background -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+
+        <!-- colorPrimaryDark is used for the status bar -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+
+        <!-- colorAccent is used as the default value for colorControlActivated,
+         which is used to tint widgets -->
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <!-- You can also set colorControlNormal, colorControlActivated
+         colorControlHighlight, and colorSwitchThumbNormal. -->
+
+        <item name="spinnerDropDownItemStyle">@style/BibAppTextViewSpinnerItem</item>
+
+        <item name="searchViewStyle">@style/BibAppSearchViewStyle</item>
+
+        <!--<item name="actionModeStyle">@style/BibAppActionModeStyle</item>-->
+        <item name="actionModeBackground">@color/colorPrimary</item>
+
+    </style>
+
+    <style name="BibAppTextViewSpinnerItem" parent="Widget.AppCompat.Light.DropDownItem.Spinner">
+        <item name="android:textAppearance">@style/BibAppTextViewSpinnerAppearance</item>
+
+    </style>
+
+    <style name="BibAppTextViewSpinnerAppearance" parent="TextAppearance.AppCompat.Widget.DropDownItem">
+        <item name="android:textColor">@color/colorActionbarText</item>
+    </style>
+
+    <!-- Toolbar -->
+    <style name="BibAppToolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <!--<item name="android:textColor">@color/colorActionbarText</item>-->
+        <item name="android:textColorPrimary">@color/colorActionbarText</item>
+        <item name="android:textColorSecondary">@color/colorActionbarText</item>
+
+
+        <!-- android:textColorPrimaryInverse is the  color of the title
+             text in the Toolbar, in the Theme.AppCompat.Light theme:  -->
+        <item name="android:textColorPrimaryInverse">@color/colorActionbarText</item>
+        <item name="android:textColorSecondaryInverse">@color/colorActionbarText</item>
+
+        <!-- android:actionMenuTextColor is the color of the text of
+        action (menu) items in the Toolbar, at least in the
+        Theme.AppCompat theme.
+        For some reason, they already get the textColorPrimary
+        when running on API 21, but not on older versions of
+        Android, so this is only necessary to support older
+        Android versions.-->
+        <item name="actionMenuTextColor">@color/colorActionbarText</item>
+        <!-- android:textColorSecondary is the color of the menu
+             overflow icon (three vertical dots) -->
+        <!--<item name="android:textColorSecondary">@color/abc_secondary_text_material_light</item>-->
+
+        <!-- This would set the toolbar's background color,
+              but setting this also changes the popup menu's background,
+              even if we define popupTheme for our <Toolbar> -->
+        <!-- <item name="android:background">@color/color_primary</item> -->
+    </style>
+
+    <!-- ToolbarPopup -->
+    <!-- ThemeOverlay.AppCompat / ThemeOverlay.AppCompat.Light -->
+    <style name="BibAppToolbarPopup" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
+
+
+    <style name="BibAppSearchViewStyle" parent="Widget.AppCompat.Light.SearchView">
+    </style>
+
+</resources>

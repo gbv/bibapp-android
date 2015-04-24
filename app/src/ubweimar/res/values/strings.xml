@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp UB Weimar</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Kontakt</b><br/>
+        Direktor der Bibliothek, Dr. Frank Simon-Ritz<br/>
+        Telefon: +49 03643 - 58 28 00<br/>
+        E-Mail: sekretariat@ub.uni-weimar.de<br/>
+        <br/>
+        <b>Ausleihe</b><br/>
+        Tel.: +49 03643 - 58 28 10<br/>
+        E-Mail: ausleihe@ub.uni-weimar.de<br/>
+        <br/>
+        <b>Information</b><br/>
+        Tel.: +49 03643 - 58 28 20<br/>
+        E-Mail: info@ub.uni-weimar.de<br/>
+        <br/>
+        <b>Fernleihe</b><br/>
+        Tel.: +49 03643 - 58 28 12 oder +49 03643 - 58 28 09<br/>
+        E-Mail: fernleihe@ub.uni-weimar.de<br/>
+        <br/>
+        <b>Bibliothek Baustoffe und Naturwissenschaften</b><br/>
+        Tel.: +49 03643 - 58 28 90
+        ]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Universitätsbibliothek der Bauhaus-Universität Weimar</b><br/>
+        Steubenstr. 6<br/>
+        99423 Weimar<br/>
+        Telefon: +49 03643 - 58 28 01<br/>
+        Fax: +49 03643 - 58 28 02<br/>
+        E-Mail: info@ub.uni-weimar.de<br/>
+        <br/>
+        Die Bauhaus-Universität Weimar ist eine Körperschaft des öffentlichen Rechts.<br/>
+        Sie wird durch ihren Rektor, Herrn Prof. Dr. Karl Beucke, gesetzlich vertreten.<br/>
+        Zuständige Aufsichtsbehörde: Thüringer Ministerium für Bildung, Wissenschaft und Kultur.
+        ]]>
+    </string>
+</resources>

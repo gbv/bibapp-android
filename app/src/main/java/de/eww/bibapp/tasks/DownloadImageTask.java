@@ -1,11 +1,5 @@
 package de.eww.bibapp.tasks;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Locale;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -13,15 +7,22 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
-import de.eww.bibapp.data.SearchEntry;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Locale;
+
+import de.eww.bibapp.model.ModsItem;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 {
 	ImageView imageView;
-	SearchEntry item;
+	ModsItem item;
 	Context context;
 	
-	public DownloadImageTask(ImageView imageView, SearchEntry item, Context context)
+	public DownloadImageTask(ImageView imageView, ModsItem item, Context context)
 	{
 		this.imageView = imageView;
 		this.item = item;
@@ -43,12 +44,10 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 		}
 		catch (MalformedURLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IOException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -67,7 +66,8 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 		{
 			// even if the result is not null, we can not ensure that this is a valid bitmap
 			// maybe checking the byte count should help
-			int byteCount = result.getByteCount();
+			//int byteCount = result.getByteCount();
+            int byteCount = result.getRowBytes() * result.getHeight();
 			
 			if ( byteCount > 1 )
 			{

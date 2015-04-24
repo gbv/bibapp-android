@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp EAH Jena</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Anschrift</b><br/>
+        EAH Jena<br/>
+        Carl Zeiss Promenade 2<br/>
+        07745 Jena<br/>
+        www.fh-jena.de/bib<br/>
+        <br/>
+        Telefon: (03641) 205-270<br/>
+        E-Mail: bibliothek@fh-jena.de<br/>
+        <br/>
+        <b>Ausleihe</b><br/>
+        Telefon: (03641) 205-280  oder …290<br/>
+        E-Mail: ausleihe@fh-jena.de<br/>
+        <br/>
+        <b>Fernleihe</b><br/>
+        Telefon: (03641) 205-283<br/>
+        E-Mail: Fernleihe@fh-jena.de<br/>
+        <br/>
+        <b>Patentinformationszentrum (PIZ)</b><br/>
+        Telefon: (03641) 205-2275 oder …273<br/>
+        E-Mail: PIZ@fh-jena.de
+        ]]>
+    </string>
+    
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        Ernst Abbe Hochschule Jena (EAH Jena)<br/>
+        <br/>
+        Carl Zeiss Promenade 2<br/>
+        07745 Jena<br/>
+        <br/>
+        E-Mail: Bibliothek@fh-jena.de<br/>
+        <br/>
+        Telefon: +49 (0) 3641- 205 270<br/>
+        Telefax: +49 (0) 3641- 205 271<br/>
+        <br/>
+        <b>Vertreter</b><br/>
+        Die Bibliothek der EAH Jena umfasst mehrere Informationsbereiche die Bibliothek, das Patentinformationszentrum (PIZ), das EAH-Patentbüro, die Auftragsrecherche, das Hochschularchiv, die DIN-Auslegestelle und den Verlag der EAH Jena. Als Dienstleister stellen wir gewünschte Fachinformationen für Lehre, Forschung und Studium von der Recherche bis zur Quellenbereitstellung zur Verfügung. Die Bibliothek ist ein Kernzentrum der Lehre. Das abgedeckte Informationsspektrum basiert neben den Grundlagen der Ausbildungsziele in den Fachbereichen der Hochschule, auch auf dem Informationsbedarf der Region. Die Bibliothek versteht sich als:<br/>
+        - Informationsdienstleister<br/>
+        - Vermittler von Informationskompetenz in der Lehre<br/>
+        - als soziale Einrichtung für die Studierenden<br/>
+        - und Lernort.<br/>
+        Die Bibliothek wird vertreten durch ihren Leiter, Dipl.-Math. Lothar Löbnitz. Die EAH Jena ist eine Körperschaft des öffentlichen Rechts, vertreten durch ihre Präsidentin Frau Prof. Gabriele Beibst<br/>
+        <br/>
+        Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:<br/>
+        DE 811481421.<br/>
+        <br/>
+        <b>Angaben zum Datenschutz</b><br/>
+        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“ für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
+        <br/>
+        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung</b><br/>
+        Diese App wurde von der EAH Jena mit großer Sorgfalt erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der EAH Jena  für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt. Die Hochschulbibliothek der EAH Jena behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
+        <br/>
+        Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
+        <br/>
+        <b>Gestaltung und Umsetzung</b><br/>
+        Entwurf und Konzeption<br/>
+        A. Christensen (UB Lüneburg),<br/>
+        L. Löbnitz (EAH Jena),<br/>
+        J. Voss (VZG Göttingen)<br/>
+        <br/>
+        Umsetzung<br/>
+        effective WEBWORK GmbH
+        ]]>
+    </string>
+</resources>

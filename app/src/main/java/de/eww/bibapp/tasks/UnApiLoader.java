@@ -1,31 +1,32 @@
 package de.eww.bibapp.tasks;
 
+import android.content.Context;
+import android.support.v4.app.Fragment;
+import android.support.v4.content.AsyncTaskLoader;
+import android.util.Log;
+
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.data.SearchEntry;
+import de.eww.bibapp.model.ModsItem;
 
 /**
- * @author Christoph Schönfeld - effective WEBWORK GmbH
- *
- * This file is part of the Android BibApp Project
- * =========================================================
- * Loader for unapi data
- */
+* @author Christoph Schönfeld - effective WEBWORK GmbH
+*
+* This file is part of the Android BibApp Project
+* =========================================================
+* Loader for unapi data
+*/
 public class UnApiLoader extends AsyncTaskLoader<String>
 {
     private String entries;
     private String ppn;
-    private SearchEntry searchEntry;
+    private ModsItem searchEntry;
     private Fragment fragment;
     private boolean failure = false;
 
@@ -46,7 +47,7 @@ public class UnApiLoader extends AsyncTaskLoader<String>
         this.ppn = ppn;
     }
 
-    public void setSearchEntry(SearchEntry searchEntry)
+    public void setSearchEntry(ModsItem searchEntry)
     {
         this.searchEntry = searchEntry;
     }
@@ -126,7 +127,7 @@ public class UnApiLoader extends AsyncTaskLoader<String>
     {
         String response = "";
 
-        URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getUnApiUrl(this.ppn));
+        URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getUnApiUrl(this.ppn), fragment.getActivity());
 
         try
         {
@@ -258,6 +259,23 @@ public class UnApiLoader extends AsyncTaskLoader<String>
                         {
                             response += " " + searchSplit[1];
                         }
+                    }
+                }
+            }
+
+            currentLine++;
+            if (lines.length > currentLine) {
+                /**
+                 * Iteriere alle verbleibenden Zeilen
+                 */
+                for (int i = currentLine; i < lines.length; i++) {
+                    /**
+                     * Wenn die Zeile mit In:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
+                     */
+                    searchSplit = lines[i].split("In: ");
+                    if (searchSplit.length > 1) {
+                        response += " " + lines[i];
+                        break;
                     }
                 }
             }

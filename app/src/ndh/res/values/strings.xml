@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp NDH</string>
+    
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        Fachhochschule Nordhausen<br/>
+        Hochschulbibliothek<br/>
+        Weinberghof 4<br/>
+        99734 Nordhausen<br/>
+        Tel. Information: 03631 420-184<br/>
+        Tel. Ausleihe: 03631 420-185<br/>
+        Fax: 03631 420-815<br/>
+        E-Mail: bibliothek@fh-nordhausen.de
+        ]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        Fachhochschulbibliothek Nordhausen<br/>
+        Weinberghof 4<br/>
+        99734 Nordhausen<br/>
+        http://www.fh-nordhausen.de/bibliothek.html<br/>
+        E-Mail: bibliothek@fh-nordhausen.de<br/>
+        Tel.: 03631 420-184<br/>
+        Fax: 03631 420-815<br/>
+        <br/>
+        <b>Impressum der Hochschule</b><br/>
+        http://www.fh-nordhausen.de/impressum.html
+        ]]>
+    </string>
+</resources>
