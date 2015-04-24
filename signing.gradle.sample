@@ -1,0 +1,10 @@
+android {
+    signingConfigs {
+        release {
+            storeFile file("")
+            storePassword ""
+            keyAlias ""
+            keyPassword ""
+        }
+    }
+}
