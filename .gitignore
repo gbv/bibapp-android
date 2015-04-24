@@ -72,3 +72,6 @@ maps.xml
 !app/src/main/res/values/maps.xml
 
 signing.gradle
+
+# travis
+!.travis.yml
