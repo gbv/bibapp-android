@@ -9,6 +9,14 @@ android {
         targetSdkVersion 22
     }
 
+    productFlavors {
+        testing {
+            applicationId "de.eww.bibapp.testing"
+            versionCode 1
+            versionName "2.0.0"
+        }
+    }
+
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/license.txt'
