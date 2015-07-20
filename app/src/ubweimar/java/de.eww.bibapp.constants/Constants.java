@@ -110,7 +110,7 @@ public final class Constants
     /**
      * An URL to a news feed
      */
-    public static final String NEWS_URL = "http://www.uni-weimar.de/de/universitaet/aktuell/pinnwaende/rss/bereich/bibliothek/";
+    public static final String NEWS_URL = "";
 
     /**
      * An URL to a homepage
