@@ -14,6 +14,7 @@ public class ModsItem implements Serializable
 	public final String partNumber;
 	public final String partName;
 	public final String mediaType;
+	public final String issuedDate;
 	public final String ppn;
 	public final String isbn;
 	public final ArrayList<String> authors;
@@ -22,13 +23,14 @@ public class ModsItem implements Serializable
 	
 	public boolean isLocalSearch = true;
 	
-	public ModsItem(String title, String subTitle, String partNumber, String partName, String mediaType, String ppn, String isbn, ArrayList<String> authors, String onlineUrl, ArrayList<String> indexArray)
+	public ModsItem(String title, String subTitle, String partNumber, String partName, String mediaType, String issuedDate, String ppn, String isbn, ArrayList<String> authors, String onlineUrl, ArrayList<String> indexArray)
 	{
 		this.title = title;
 		this.subTitle = subTitle;
 		this.partNumber = partNumber;
 		this.partName = partName;
 		this.mediaType = mediaType;
+        this.issuedDate = issuedDate;
 		this.ppn = ppn;
 		this.isbn = isbn;
 		this.authors = authors;

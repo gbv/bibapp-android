@@ -39,6 +39,12 @@
            android:layout_width="wrap_content" 
            android:layout_height="wrap_content"
            android:textSize="@dimen/list_secondary_text_size"
-           android:textColor="@android:color/secondary_text_light"/>
+           android:textColor="@android:color/secondary_text_light" />
+
+        <TextView android:id="@+id/publication"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@android:color/secondary_text_light" />
     </LinearLayout>
 </RelativeLayout>

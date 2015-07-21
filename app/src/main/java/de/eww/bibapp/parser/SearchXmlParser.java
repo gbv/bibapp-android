@@ -166,12 +166,12 @@ public class SearchXmlParser
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "mods");
 		
 		HashMap<String, String> titleInfoMap = null;
+		HashMap<String, String> originInfoMap = null;
 		ArrayList<String> authors = new ArrayList<String>();
 		String typeOfResource = null;
 		String physicalDescription = null;
 		boolean isEssay = false;
 		ArrayList<String> indexArray = new ArrayList<String>();
-		String originInfo = null;
 		String ppn = null;
 		String isbn = "";
 		String onlineUrl = "";
@@ -233,7 +233,11 @@ public class SearchXmlParser
 			}
 			else if ( name.equals("originInfo") )
 			{
-				originInfo = this.readOriginInfo(parser);
+                if (originInfoMap == null) {
+                    originInfoMap = this.readOriginInfo(parser);
+                } else {
+                    this.skip(parser);
+                }
 			}
 			else if ( name.equals("identifier") )
 			{
@@ -329,7 +333,8 @@ public class SearchXmlParser
 				}
 				else if ( typeOfResource.equals("text") )
 				{
-					if ( originInfo != null && ( originInfo.equals("serial") || originInfo.equals("continuing") ) )
+                    String issuance = originInfoMap.get("issuance");
+					if ( issuance != null && ( issuance.equals("serial") || issuance.equals("continuing") ) )
 					{
 						mediaType = "T";
 					}
@@ -340,7 +345,8 @@ public class SearchXmlParser
 				}
 				else if ( typeOfResource.equals("software, multimedia") )
 				{
-					if ( originInfo != null && ( originInfo.equals("serial") || originInfo.equals("continuing") ) )
+                    String issuance = originInfoMap.get("issuance");
+					if ( issuance != null && ( issuance.equals("serial") || issuance.equals("continuing") ) )
 					{
 						if ( physicalDescription != null && physicalDescription.equals("remote") )
 						{
@@ -372,16 +378,32 @@ public class SearchXmlParser
 			}
 		}
 		
-		ModsItem entry = new ModsItem((String) titleInfoMap.get("title"), (String) titleInfoMap.get("subTitle"), (String) titleInfoMap.get("partNumber"), (String) titleInfoMap.get("partName"), mediaType, ppn, isbn, authors, onlineUrl, indexArray);
+		ModsItem entry = new ModsItem(
+            (String) titleInfoMap.get("title"),
+            (String) titleInfoMap.get("subTitle"),
+            (String) titleInfoMap.get("partNumber"),
+            (String) titleInfoMap.get("partName"),
+            mediaType,
+            (String) originInfoMap.get("dateIssued"),
+            ppn,
+            isbn,
+            authors,
+            onlineUrl,
+            indexArray
+        );
 		entry.setIsLocalSearch(isLocalSearch);
 		
 		return entry;
 	}
 	
-	private String readOriginInfo(XmlPullParser parser) throws XmlPullParserException, IOException
+	private HashMap<String, String> readOriginInfo(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "originInfo");
-		String originInfo = null;
+
+        String issuance = null;
+        String dateIssued = null;
+
+        HashMap<String, String> map = new HashMap<String, String>();
 		
 		while ( parser.next() != XmlPullParser.END_TAG )
 		{
@@ -394,15 +416,21 @@ public class SearchXmlParser
 			
 			if ( name.equals("issuance") )
 			{
-				originInfo = this.readIssuance(parser);
+				issuance = this.readIssuance(parser);
 			}
+            else if (name.equals("dateIssued")) {
+                dateIssued = this.readDateIssued(parser);
+            }
 			else
 			{
 				this.skip(parser);
 			}
 		}
+
+        map.put("issuance", issuance);
+        map.put("dateIssued", dateIssued);
 		
-		return originInfo;
+		return map;
 	}
 	
 	private String readName(XmlPullParser parser) throws XmlPullParserException, IOException
@@ -494,6 +522,14 @@ public class SearchXmlParser
 	    parser.require(XmlPullParser.END_TAG, SearchXmlParser.ns, "issuance");
 	    return issuance;
 	}
+
+    private String readDateIssued(XmlPullParser parser) throws XmlPullParserException, IOException
+    {
+        parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "dateIssued");
+        String issuance = this.readText(parser);
+        parser.require(XmlPullParser.END_TAG, SearchXmlParser.ns, "dateIssued");
+        return issuance;
+    }
 	
 	private String readNamePart(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
