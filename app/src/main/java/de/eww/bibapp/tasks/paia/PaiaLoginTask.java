@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 
 import org.json.JSONObject;
 
+import java.net.URLEncoder;
+
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 
@@ -39,10 +41,13 @@ public class PaiaLoginTask extends AbstractPaiaTask
             localCatalogIndex = Integer.valueOf(localCatalogPreference);
         }
 
-		String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/auth/login?username=" + username + "&password=" + password + "&grant_type=password";
-
 		try
 		{
+			username = URLEncoder.encode(username, "UTF-8");
+            password = URLEncoder.encode(password, "UTF-8");
+
+            String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/auth/login?username=" + username + "&password=" + password + "&grant_type=password";
+
 			JSONObject paiaResponse = this.performRequest(paiaUrl);
 
 			if ( paiaResponse.has("error") ){
