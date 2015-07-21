@@ -138,7 +138,7 @@
     
     <!-- detail -->
     <string name="detail_available">Verfügbarkeit</string>
-    <string name="detail_index">Inhaltsverzeichnis anzeigen</string>
+    <string name="detail_index">Mehr zum Inhalt</string>
     <string name="detail_daia_no_department">Ohne Zuordnung</string>
     <string name="detail_interlending">Fernleihoptionen</string>
     <string name="detail_select">Bitte benutzen Sie zunächst die Suchfunktion oder wählen Sie einen Eintrag aus!</string>
