@@ -11,6 +11,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.activity.MainActivity;
 import de.eww.bibapp.tasks.paia.PaiaPatronTask;
 import de.eww.bibapp.view.SlidingTabLayout;
@@ -107,6 +111,13 @@ public class AccountFragment extends RoboFragment implements
      * List of {@link AccountPagerItem} which represents the tabs
      */
     private List<AccountPagerItem> mTabs = new ArrayList<AccountPagerItem>();
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -267,4 +278,30 @@ public class AccountFragment extends RoboFragment implements
         Toast toast = Toast.makeText(getActivity(), R.string.toast_account_error, Toast.LENGTH_LONG);
         toast.show();
 	}
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.account_fragment_actions, menu);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_account_account_logout:
+                // clean old credentials data
+                PaiaHelper.getInstance().unsetStoredCredentials(getActivity());
+
+                // and remove stored login information
+                PaiaHelper.getInstance().reset();
+
+                ((DrawerActivity) getActivity()).selectItem(0);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

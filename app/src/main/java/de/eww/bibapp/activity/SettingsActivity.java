@@ -6,7 +6,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
-import android.preference.PreferenceManager;
 
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
@@ -83,16 +82,11 @@ public class SettingsActivity extends RoboPreferenceActivity implements SharedPr
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(KEY_PREF_STORE_LOGIN)) {
-            // If storing login credentials is disabled, clean old credentials data
+            // If storing login credentials is disabled
             CheckBoxPreference storeLoginPref = (CheckBoxPreference) findPreference(key);
             if (!storeLoginPref.isChecked()) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-                SharedPreferences.Editor editor = sharedPref.edit();
-
-                editor.putString("store_login_username", null);
-                editor.putString("store_login_password", null);
-
-                editor.commit();
+                // clean old credentials data
+                PaiaHelper.getInstance().unsetStoredCredentials(this);
 
                 // and remove stored login information
                 PaiaHelper.getInstance().reset();

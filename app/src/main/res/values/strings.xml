@@ -135,6 +135,7 @@
     <string name="menu_booked_cancel">Stornieren</string>
     <string name="menu_watchlist_remove">Entfernen</string>
     <string name="menu_selected_count">%1$s ausgewählt</string>
+    <string name="menu_account_logout">Logout</string>
     
     <!-- detail -->
     <string name="detail_available">Verfügbarkeit</string>
