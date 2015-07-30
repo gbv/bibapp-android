@@ -382,7 +382,7 @@ public class ModsFragment extends RoboFragment implements
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate the menu items for use in the toolbar
-        inflater.inflate(R.menu.mods_fragment_actions, menu);
+        inflater.inflate(R.menu.mods_fragment_mode_actions, menu);
 
         mMenuItem = menu.findItem(R.id.menu_mods_add_to_watchlist);
 

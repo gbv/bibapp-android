@@ -97,6 +97,10 @@
     <string name="search_hits">Treffer</string>
     <string name="search_in_progress">Bibliothek wird durchsucht</string>
 
+    <!-- watchlist -->
+    <string name="watchlist_export_subject">BibApp: Export Ihrer Merkliste</string>
+    <string name="watchlist_export_send_to">Export der Merkliste</string>
+
     <!-- swipe dialog -->
     <string name="swipedialog_extending">Einträge werden nachgeladen</string>
 
@@ -134,6 +138,7 @@
     <string name="menu_detail_addtowatchlist_duplicate">Bereits in Merkliste</string>
     <string name="menu_booked_cancel">Stornieren</string>
     <string name="menu_watchlist_remove">Entfernen</string>
+    <string name="menu_watchlist_export">Exportieren</string>
     <string name="menu_selected_count">%1$s ausgewählt</string>
     <string name="menu_account_logout">Logout</string>
     
