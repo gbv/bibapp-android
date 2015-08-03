@@ -32,7 +32,7 @@ public final class Constants
      * @see BIB_CODES and keep order in sync
      */
     public static final String[][] LOCAL_CATALOGS = {
-            { "opac-de-luen4", "OPAC LB", "LB" }
+            { "opac-de-luen4", "OPAC LG", "LG" }
     };
 
     public static final int LOCAL_CATALOG_DEFAULT = 0;
