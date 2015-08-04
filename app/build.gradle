@@ -7,14 +7,9 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 22
-    }
 
-    productFlavors {
-        testing {
-            applicationId "de.eww.bibapp.testing"
-            versionCode 1
-            versionName "2.0.0"
-        }
+        versionCode 9
+        versionName "2.1.0"
     }
 
     packagingOptions {
