@@ -12,7 +12,7 @@ import de.eww.bibapp.R;
 /**
  * Created by christoph on 25.10.14.
  */
-public class ContactActivity extends DrawerActivity {
+public class ContactActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

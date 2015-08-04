@@ -3,9 +3,8 @@ package de.eww.bibapp.activity;
 import android.os.Bundle;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.fragment.settings.SettingsFragment;
 
-public class SettingsActivity extends DrawerActivity {
+public class SettingsActivity extends BaseActivity {
 
     public static final String KEY_PREF_STORE_LOGIN = "pref_storeLogin";
     public static final String KEY_PREF_LOCAL_CATALOG = "pref_localCatalog";
@@ -16,6 +15,6 @@ public class SettingsActivity extends DrawerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        setActiveNavigationItem(DrawerActivity.NAV_ITEM_SETTINGS);
+        setActiveNavigationItem(BaseActivity.NAV_ITEM_SETTINGS);
     }
 }

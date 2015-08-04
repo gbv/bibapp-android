@@ -50,7 +50,7 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
+import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.activity.LocationActivity;
 import de.eww.bibapp.activity.WebViewActivity;
 import de.eww.bibapp.adapter.DaiaAdapter;

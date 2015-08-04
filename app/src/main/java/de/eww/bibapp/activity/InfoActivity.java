@@ -26,7 +26,7 @@ import de.eww.bibapp.model.RssFeed;
 import de.eww.bibapp.model.RssItem;
 import de.eww.bibapp.request.RssFeedRequest;
 
-public class InfoActivity extends DrawerActivity {
+public class InfoActivity extends BaseActivity {
 
     private SpiceManager mSpiceManager = new SpiceManager(XmlSpringAndroidSpiceService.class);
 
@@ -150,7 +150,7 @@ public class InfoActivity extends DrawerActivity {
             if (resultCode == this.RESULT_OK) {
                 // Set navigation position
                 int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                ((DrawerActivity) this).selectItem(navigationPosition);
+                ((BaseActivity) this).selectItem(navigationPosition);
             }
         }
     }

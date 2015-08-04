@@ -4,13 +4,8 @@ package de.eww.bibapp.activity;
  * Created by christoph on 08.11.14.
  */
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-
-import java.util.List;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsPagerFragment;
@@ -25,7 +20,7 @@ import de.eww.bibapp.model.source.WatchlistSource;
  * in that case the location article will be displayed by the {@link de.eww.bibapp.activity.LocationsActivity}
  * and this Activity becomes unnecessary.
  */
-public class ModsActivity extends DrawerActivity {
+public class ModsActivity extends BaseActivity {
 
     // The mods item index we are to display
     int mModsItemIndex;

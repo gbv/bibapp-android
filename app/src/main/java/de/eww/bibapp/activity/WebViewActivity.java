@@ -13,7 +13,7 @@ import de.eww.bibapp.tasks.HeaderRequest;
 /**
  * Created by christoph on 10.11.14.
  */
-public class WebViewActivity extends DrawerActivity {
+public class WebViewActivity extends BaseActivity {
 
     private WebView mWebView;
 

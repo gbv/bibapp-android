@@ -1,6 +1,5 @@
 package de.eww.bibapp.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
@@ -11,10 +10,9 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -34,17 +32,13 @@ import java.util.List;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.CustomDrawerAdapter;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.fragment.account.AccountFragment;
-import de.eww.bibapp.fragment.info.InfoFragment;
-import de.eww.bibapp.fragment.search.SearchFragment;
-import de.eww.bibapp.fragment.watchlist.WatchlistFragment;
 import de.eww.bibapp.model.DrawerItem;
 import roboguice.activity.RoboActionBarActivity;
 
 /**
  * Created by christoph on 10.11.14.
  */
-public class DrawerActivity extends RoboActionBarActivity {
+public class BaseActivity extends RoboActionBarActivity {
 
     /**
      * The {@link android.support.v4.widget.DrawerLayout} that represents the top-level content view,
@@ -77,10 +71,22 @@ public class DrawerActivity extends RoboActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private CustomDrawerAdapter mCustomDrawerAdapter;
-    private List<DrawerItem> mNavigationItems;
+    protected List<DrawerItem> mNavigationItems;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    private static int mCurrentNavigationIndex = -1;
+    protected static int mCurrentNavigationIndex = -1;
+
+    // symbols for navigation
+    protected static final int NAV_ITEM_SEARCH = 0;
+    protected static final int NAV_ITEM_ACCOUNT = 1;
+    protected static final int NAV_ITEM_WATCHLIST = 2;
+    protected static final int NAV_ITEM_INFO = 3;
+    // index 4 is empty
+    protected static final int NAV_ITEM_WEBSITE = 5;
+    protected static final int NAV_ITEM_SETTINGS = 6;
+
+    public static BaseActivity instance;
+    private boolean mForceSelectSearch = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -94,6 +100,14 @@ public class DrawerActivity extends RoboActionBarActivity {
         boolean isLandscape = resources.getBoolean(R.bool.landscape);
         if (!isLandscape) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        // Set default values for our preferences
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+
+        ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
         }
     }
 
@@ -109,7 +123,7 @@ public class DrawerActivity extends RoboActionBarActivity {
 
         setupNavigation();
 
-        if (mCurrentNavigationIndex == MainActivity.NAVI_SEARCH && this instanceof MainActivity) {
+        if (mCurrentNavigationIndex == BaseActivity.NAV_ITEM_SEARCH) {
             // setup the search spinner
             setupSearchSpinner();
             mSpinner.setVisibility(View.VISIBLE);
@@ -154,55 +168,36 @@ public class DrawerActivity extends RoboActionBarActivity {
 
         mSpinner.setVisibility(View.GONE);
 
-        if (position <= 3) {
-            if (this instanceof MainActivity) {
-                // update the main content by replacing fragments
-                Fragment fragment = null;
-                switch (position) {
-                    case 0:         // Search
-                        fragment = new SearchFragment();
+        setActiveNavigationItem(position);
 
-                        // local or gvk search
-                        if (mCurrentSpinnerIndex == 0) {
-                            ((SearchFragment) fragment).setSearchMode(SearchFragment.SEARCH_MODE.LOCAL);
-                        } else {
-                            ((SearchFragment) fragment).setSearchMode(SearchFragment.SEARCH_MODE.GVK);
-                        }
+        Intent intent;
 
-                        // setup the search spinner
-                        setupSearchSpinner();
-                        mSpinner.setVisibility(View.VISIBLE);
+        switch (position) {
+            case NAV_ITEM_SEARCH:
+                // setup the search spinner
+                setupSearchSpinner();
+                mSpinner.setVisibility(View.VISIBLE);
 
-                        break;
-                    case 1:         // Account
-                        fragment = new AccountFragment();
-                        break;
-                    case 2:         // Watch list
-                        fragment = new WatchlistFragment();
-                        break;
-                    case 3:         // Info
-                        fragment = new InfoFragment();
-                        break;
-                }
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-                setActiveNavigationItem(position);
-            } else {
-                Intent intent = new Intent();
-                intent.putExtra("navigationIndex", position);
-                setResult(RESULT_OK, intent);
+                intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
                 finish();
-            }
-        } else {
-            if(position == mNavigationItems.size() - 1) {
-                // Open the app preferences
-                Intent preferencesIntent = new Intent(this, SettingsActivity.class);
-                startActivity(preferencesIntent);
-
-                setActiveNavigationItem(mCurrentNavigationIndex);
-            } else {
+                break;
+            case NAV_ITEM_ACCOUNT:
+                intent = new Intent(this, AccountActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case NAV_ITEM_WATCHLIST:
+                intent = new Intent(this, WatchlistActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case NAV_ITEM_INFO:
+                intent = new Intent(this, InfoActivity.class);
+                startActivity(intent);
+                finish();
+                break;
+            case NAV_ITEM_WEBSITE:
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
                 int localCatalogIndex = 0;
@@ -211,11 +206,15 @@ public class DrawerActivity extends RoboActionBarActivity {
                 }
 
                 Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[localCatalogIndex]);
-                Intent launchBrowser = new Intent(Intent.ACTION_VIEW, homepageUrl);
-                startActivity(launchBrowser);
-
-                setActiveNavigationItem(mCurrentNavigationIndex);
-            }
+                intent = new Intent(Intent.ACTION_VIEW, homepageUrl);
+                startActivity(intent);
+                finish();
+                break;
+            case NAV_ITEM_SETTINGS:
+                intent = new Intent(this, SettingsActivity.class);
+                startActivity(intent);
+                finish();
+                break;
         }
 
         // Close the drawer
@@ -312,7 +311,13 @@ public class DrawerActivity extends RoboActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mCurrentSpinnerIndex = position;
-                selectItem(0);
+
+                // local or gvk search
+                if (mCurrentSpinnerIndex == 0) {
+                    ((SearchActivity) BaseActivity.this).setSearchMode(SearchActivity.SEARCH_MODE.LOCAL);
+                } else {
+                    ((SearchActivity) BaseActivity.this).setSearchMode(SearchActivity.SEARCH_MODE.GVK);
+                }
             }
 
             @Override
@@ -392,5 +397,19 @@ public class DrawerActivity extends RoboActionBarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (mForceSelectSearch) {
+            mForceSelectSearch = false;
+            selectItem(0);
+        }
+    }
+
+    public void selectSearch() {
+        mForceSelectSearch = true;
     }
 }

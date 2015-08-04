@@ -22,7 +22,7 @@ import de.eww.bibapp.model.source.LocationSource;
  * in that case the location article will be displayed by the {@link de.eww.bibapp.activity.LocationsActivity}
  * and this Activity becomes unnecessary.
  */
-public class LocationActivity extends DrawerActivity {
+public class LocationActivity extends BaseActivity {
 
     @Inject LocationSource mLocationSource;
 

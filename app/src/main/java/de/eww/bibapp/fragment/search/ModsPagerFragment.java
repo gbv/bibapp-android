@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
+import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.adapter.ModsWatchlistPagerAdapter;
 import de.eww.bibapp.model.source.ModsSource;
@@ -89,7 +89,7 @@ public class ModsPagerFragment extends RoboFragment {
             if (resultCode == getActivity().RESULT_OK) {
                 // Set navigation position
                 int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                ((BaseActivity) getActivity()).selectItem(navigationPosition);
             }
         }
     }

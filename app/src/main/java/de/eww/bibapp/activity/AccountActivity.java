@@ -27,7 +27,7 @@ import de.eww.bibapp.fragment.account.AccountFeesFragment;
 import de.eww.bibapp.tasks.paia.PaiaPatronTask;
 import de.eww.bibapp.view.SlidingTabLayout;
 
-public class AccountActivity extends DrawerActivity implements
+public class AccountActivity extends BaseActivity implements
         PaiaHelper.PaiaListener,
         AsyncCanceledInterface {
 
@@ -213,7 +213,7 @@ public class AccountActivity extends DrawerActivity implements
 
     public void onPatronLoaded(JSONObject response) {
         // Set action bar sub title
-        ActionBar actionBar = ((DrawerActivity) this).getSupportActionBar();
+        ActionBar actionBar = ((BaseActivity) this).getSupportActionBar();
 
         try {
             String name = response.getString("name");

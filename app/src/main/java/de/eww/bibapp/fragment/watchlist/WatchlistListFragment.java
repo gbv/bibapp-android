@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
+import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.adapter.ModsWatchlistAdapter;
 import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
@@ -158,7 +158,7 @@ public class WatchlistListFragment extends RoboFragment implements
         MenuInflater inflater = actionMode.getMenuInflater();
         inflater.inflate(R.menu.watchlist_fragment_actions, menu);
 
-        ((DrawerActivity) getActivity()).showToolbar(false);
+        ((BaseActivity) getActivity()).showToolbar(false);
 
         return true;
     }
@@ -199,7 +199,7 @@ public class WatchlistListFragment extends RoboFragment implements
         mActionMode = null;
         mAdapter.clearSelection();
 
-        ((DrawerActivity) getActivity()).showToolbar(true);
+        ((BaseActivity) getActivity()).showToolbar(true);
 
     }
 

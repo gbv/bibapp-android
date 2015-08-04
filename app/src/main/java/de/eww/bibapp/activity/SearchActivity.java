@@ -14,7 +14,7 @@ import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.model.source.ModsSource;
 
-public class SearchActivity extends DrawerActivity implements
+public class SearchActivity extends BaseActivity implements
         SearchListFragment.OnModsItemSelectedListener,
         ModsPagerAdapter.SearchListLoaderInterface {
 
@@ -126,7 +126,7 @@ public class SearchActivity extends DrawerActivity implements
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
                     int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                    ((DrawerActivity) this).selectItem(navigationPosition);
+                    ((BaseActivity) this).selectItem(navigationPosition);
                 }
             }
         } else if (requestCode == 99) {
@@ -134,7 +134,7 @@ public class SearchActivity extends DrawerActivity implements
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
                     int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                    ((DrawerActivity) this).selectItem(navigationPosition);
+                    ((BaseActivity) this).selectItem(navigationPosition);
                 }
             }
         }

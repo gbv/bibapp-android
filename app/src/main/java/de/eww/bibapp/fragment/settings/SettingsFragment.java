@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
+import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import roboguice.fragment.provided.RoboPreferenceFragment;
@@ -82,7 +82,7 @@ public class SettingsFragment extends RoboPreferenceFragment implements SharedPr
                 // and remove stored login information
                 PaiaHelper.getInstance().reset();
 
-                DrawerActivity instance = DrawerActivity.instance;
+                BaseActivity instance = BaseActivity.instance;
                 if (instance != null) {
                     instance.selectSearch();
                 }

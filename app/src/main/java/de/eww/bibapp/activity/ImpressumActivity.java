@@ -14,7 +14,7 @@ import roboguice.inject.ContentView;
  * Created by christoph on 25.10.14.
  */
 @ContentView(R.layout.activity_impressum)
-public class ImpressumActivity extends DrawerActivity {
+public class ImpressumActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

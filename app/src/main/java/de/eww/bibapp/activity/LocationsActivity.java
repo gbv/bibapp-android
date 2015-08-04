@@ -14,7 +14,7 @@ import de.eww.bibapp.model.source.LocationSource;
 /**
  * Created by christoph on 25.10.14.
  */
-public class LocationsActivity extends DrawerActivity implements
+public class LocationsActivity extends BaseActivity implements
         LocationsFragment.OnLocationSelectedListener {
 
     // Whether or not we are in dual-pane mode
