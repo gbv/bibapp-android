@@ -1,11 +1,12 @@
 package de.eww.bibapp.tasks.paia;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 
 import org.json.JSONObject;
 
+import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 
@@ -18,9 +19,9 @@ import de.eww.bibapp.constants.Constants;
 */
 public class PaiaLoginTask extends AbstractPaiaTask
 {
-	public PaiaLoginTask(Fragment callingFragment)
+	public PaiaLoginTask(Activity activity, AsyncCanceledInterface asyncCanceledImplementer)
 	{
-		super(callingFragment);
+		super(activity, asyncCanceledImplementer);
 	}
 
 	@Override
@@ -32,7 +33,7 @@ public class PaiaLoginTask extends AbstractPaiaTask
 		JSONObject result = new JSONObject();
 
 		// get url
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
         int localCatalogIndex = 0;
         if (!localCatalogPreference.isEmpty()) {

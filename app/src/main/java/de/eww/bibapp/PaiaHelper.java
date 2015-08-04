@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import de.eww.bibapp.activity.DrawerActivity;
+import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.fragment.dialog.LoginDialogFragment;
 import de.eww.bibapp.tasks.paia.PaiaLoginTask;
@@ -38,12 +38,12 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	private  Date accessTokenDate = null;
     private  List<SCOPES> scopes;
 
-    private Fragment fragment;
+    private FragmentActivity activity;
     private List<PaiaListener> listener;
 
 	public interface PaiaListener
 	{
-		public void onPaiaConnected();
+		void onPaiaConnected();
 	}
 
 	private PaiaHelper()
@@ -85,17 +85,15 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
         this.listener.clear();
 	}
 
-	public synchronized void ensureConnection(Fragment fragment)
+	public synchronized void ensureConnection(PaiaListener listener, FragmentActivity activity, AsyncCanceledInterface asyncCanceledImplementer)
 	{
         // register the listener for later callback
-        if (fragment instanceof PaiaListener) {
-            this.listener.add((PaiaListener) fragment);
-        }
+        this.listener.add(listener);
 
         // if another thread is already trying to login the user,
         // don't try it again
         if (this.listener.size() == 1) {
-            this.fragment = fragment;
+            this.activity = activity;
 
             // if we do not already have an access token or the token is expired
             Date now = new Date();
@@ -105,7 +103,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                 // if login data is not stored or credentials are not set, ask user for them
                 boolean showLoginDialog = false;
 
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
                 boolean storeLogin = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false);
 
                 // storeLogin could be true without any stored login data, if the user disables and reenables
@@ -119,12 +117,12 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                     LoginDialogFragment dialogFragment = new LoginDialogFragment();
                     dialogFragment.setCancelable(false);
                     dialogFragment.setListener(this);
-                    dialogFragment.show(this.fragment.getChildFragmentManager(), "login");
+                    dialogFragment.show(this.activity.getSupportFragmentManager(), "login");
                 } else {
                     this.username = sharedPref.getString("store_login_username", null);
 
                     // login
-                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(this.username, sharedPref.getString("store_login_password", null));
+                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(this.username, sharedPref.getString("store_login_password", null));
 
                     try
                     {
@@ -178,30 +176,26 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
             this.username = username;
 
 			// perform login
-			AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.fragment).execute(username, password);
+			AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(username, password);
 
 			try
 			{
                 JSONObject loginResponse = loginTask.get();
-				String accessToken = loginResponse.getString("access_token");
 
-				if ( accessToken.isEmpty() )
-				{
-					// login was wrong - update dialog
-					((LoginDialogFragment) dialog).setWrongLogin();
-				}
-				else
-				{
-                    this.accessToken = accessToken;
+                if (!loginResponse.has("access_token") || loginResponse.getString("access_token").isEmpty()) {
+                    // login was wrong - update dialog
+                    ((LoginDialogFragment) dialog).setWrongLogin();
+                } else {
+                    accessToken = loginResponse.getString("access_token");
                     this.setScopes(loginResponse.getString("scopes"));
 
 					// force soft keyboard to hide
-					InputMethodManager imm = (InputMethodManager) this.fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+					InputMethodManager imm = (InputMethodManager) this.activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
 
 					// store login credentials - if set in preferences
 					// or the checkbox was set in the login dialog
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.activity);
                     boolean storeLoginCredentials = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false) || storeData;
 
 				    if ( storeLoginCredentials ) {
@@ -237,13 +231,13 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		EditText usernameText = (EditText) dialogView.findViewById(R.id.logindialog_username);
 
 		// force soft keyboard to hide
-		InputMethodManager imm = (InputMethodManager) this.fragment.getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+		InputMethodManager imm = (InputMethodManager) this.activity.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
 
 		dialog.getDialog().cancel();
         this.reset();
 
-        ((DrawerActivity) fragment.getActivity()).selectItem(0);
+        ((BaseActivity) this.activity).selectItem(0);
 	}
 
     private void setScopes(String scopesString) {

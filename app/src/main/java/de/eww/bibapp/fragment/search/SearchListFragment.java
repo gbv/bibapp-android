@@ -26,6 +26,7 @@ import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.SearchActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.adapter.ModsAdapter;
 import de.eww.bibapp.constants.Constants;
@@ -58,7 +59,7 @@ public class SearchListFragment extends RoboFragment implements
 
     private boolean mIsLoading = false;
 
-    private SearchFragment.SEARCH_MODE mSearchMode = SearchFragment.SEARCH_MODE.LOCAL;
+    private SearchActivity.SEARCH_MODE mSearchMode = SearchActivity.SEARCH_MODE.LOCAL;
 
     // The listener we are to notify when a mods item is selected
     OnModsItemSelectedListener mModsItemSelectedListener = null;
@@ -195,7 +196,7 @@ public class SearchListFragment extends RoboFragment implements
     @Override
     public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
         Loader<HashMap<String, Object>> loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
-        ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchFragment.SEARCH_MODE.LOCAL);
+        ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchActivity.SEARCH_MODE.LOCAL);
 
         return loader;
     }
@@ -275,7 +276,7 @@ public class SearchListFragment extends RoboFragment implements
 
     }
 
-    public void setSearchMode(SearchFragment.SEARCH_MODE searchMode) {
+    public void setSearchMode(SearchActivity.SEARCH_MODE searchMode) {
         mSearchMode = searchMode;
     }
 }

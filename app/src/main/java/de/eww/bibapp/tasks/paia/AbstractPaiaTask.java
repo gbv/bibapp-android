@@ -1,7 +1,7 @@
 package de.eww.bibapp.tasks.paia;
 
+import android.app.Activity;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -22,16 +22,18 @@ import de.eww.bibapp.URLConnectionHelper;
 abstract public class AbstractPaiaTask extends AsyncTask<String, Void, JSONObject>
 {
 	private String postParameters = "";
-	protected Fragment fragment;
+    private AsyncCanceledInterface asyncCanceledImplementer;
+	protected Activity activity;
 
-	public AbstractPaiaTask(Fragment callingFragment)
+	public AbstractPaiaTask(Activity activity, AsyncCanceledInterface asyncCanceledImplementer)
 	{
-		this.fragment = callingFragment;
+		this.activity = activity;
+        this.asyncCanceledImplementer = asyncCanceledImplementer;
 	}
 
 	protected void raiseFailure()
 	{
-		((AsyncCanceledInterface) this.fragment).onAsyncCanceled();
+        asyncCanceledImplementer.onAsyncCanceled();
 	}
 
 	public void setPostParameters(String postParameters)
@@ -46,7 +48,7 @@ abstract public class AbstractPaiaTask extends AsyncTask<String, Void, JSONObjec
 	public JSONObject performRequest(String paiaUrl) throws Exception
 	{
 		JSONObject response = new JSONObject();
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl, fragment.getActivity());
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl, activity);
 
 		try
 		{
@@ -76,8 +78,6 @@ abstract public class AbstractPaiaTask extends AsyncTask<String, Void, JSONObjec
 			{
 				response = new JSONObject(httpResponse);
 			}
-
-			//PaiaHelper.updateAccessTokenDate();
 		}
 		finally
 		{

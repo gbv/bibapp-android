@@ -257,13 +257,13 @@ public class ModsFragment extends RoboFragment implements
     @Override
     public void onActionRequest(DialogFragment dialog) {
         // Ensure paia connection
-        PaiaHelper.getInstance().ensureConnection(this);
+        PaiaHelper.getInstance().ensureConnection(this, getActivity(), this);
     }
 
     @Override
     public void onActionOrder(DialogFragment dialog) {
         // Ensure paia connection
-        PaiaHelper.getInstance().ensureConnection(this);
+        PaiaHelper.getInstance().ensureConnection(this, getActivity(), this);
     }
 
     @Override
@@ -290,7 +290,7 @@ public class ModsFragment extends RoboFragment implements
                 jsonArray.put(itemObject);
                 jsonRequest.put("doc", jsonArray);
 
-                AsyncTask<String, Void, JSONObject> requestTask = new PaiaRequestTask(this);
+                AsyncTask<String, Void, JSONObject> requestTask = new PaiaRequestTask(this, getActivity(), this);
                 requestTask.execute(jsonRequest.toString());
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -717,7 +717,7 @@ public class ModsFragment extends RoboFragment implements
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
                     int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                    ((BaseActivity) getActivity()).selectItem(navigationPosition);
                 }
             }
         }

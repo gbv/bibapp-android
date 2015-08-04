@@ -9,9 +9,9 @@ import android.support.v4.content.Loader;
 import java.util.HashMap;
 import java.util.List;
 
+import de.eww.bibapp.activity.SearchActivity;
 import de.eww.bibapp.fragment.dialog.SwipeLoadingDialogFragment;
 import de.eww.bibapp.fragment.search.ModsFragment;
-import de.eww.bibapp.fragment.search.SearchFragment;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
 
@@ -28,7 +28,7 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
     private static final int LOADING_OFFSET = 3;
 
     public interface SearchListLoaderInterface {
-        public LoaderManager getLoaderManager();
+        public LoaderManager getListLoaderManager();
     }
 
     public ModsPagerAdapter(FragmentManager fragmentManager, ModsSource modsSource) {
@@ -55,7 +55,7 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
                     dialogFragment.show(mFragmentManager, "swipe_dialog");
 
                     // Get the list loader
-                    final Loader<Object> listLoader = SearchFragment.searchFragmentInstance.getLoaderManager().getLoader(0);
+                    final Loader<Object> listLoader = SearchActivity.searchActivityInstance.getListLoaderManager().getLoader(0);
 
                     // Register a listener
                     listLoader.registerListener(0, new Loader.OnLoadCompleteListener<Object>() {
@@ -75,7 +75,7 @@ public class ModsPagerAdapter extends FragmentStatePagerAdapter {
                         }
                     });
 
-                    SearchFragment.searchFragmentInstance.getLoaderManager().getLoader(0).forceLoad();
+                    SearchActivity.searchActivityInstance.getListLoaderManager().getLoader(0).forceLoad();
                 }
             }
         }

@@ -58,7 +58,7 @@ public class AccountFeesFragment extends Fragment implements
 
         // Destroy loader and ensure paia connection
         getLoaderManager().destroyLoader(0);
-        PaiaHelper.getInstance().ensureConnection(this);
+        PaiaHelper.getInstance().ensureConnection(this, getActivity(), this);
         mEmptyView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
     }

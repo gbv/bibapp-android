@@ -87,7 +87,7 @@ public class AccountBorrowedFragment extends Fragment implements
 
         // Destroy loader and ensure paia connection
         getLoaderManager().destroyLoader(0);
-        PaiaHelper.getInstance().ensureConnection(this);
+        PaiaHelper.getInstance().ensureConnection(this, getActivity(), this);
         mEmptyView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
     }
@@ -308,7 +308,7 @@ public class AccountBorrowedFragment extends Fragment implements
             e.printStackTrace();
         }
 
-        AsyncTask<String, Void, JSONObject> renewTask = new PaiaRenewTask(this);
+        AsyncTask<String, Void, JSONObject> renewTask = new PaiaRenewTask(this, getActivity(), this);
         renewTask.execute(jsonRequest.toString());
 
         // show the action dialog

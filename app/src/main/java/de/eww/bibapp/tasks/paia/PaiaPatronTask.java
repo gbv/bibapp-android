@@ -1,14 +1,16 @@
 package de.eww.bibapp.tasks.paia;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import org.json.JSONObject;
 
+import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
+import de.eww.bibapp.activity.AccountActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.fragment.account.AccountFragment;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -19,16 +21,16 @@ import de.eww.bibapp.fragment.account.AccountFragment;
 */
 public class PaiaPatronTask extends AbstractPaiaTask
 {
-	public PaiaPatronTask(AccountFragment fragment)
+	public PaiaPatronTask(Activity activity, AsyncCanceledInterface asyncCanceledImplementer)
 	{
-		super(fragment);
+		super(activity, asyncCanceledImplementer);
 	}
 
 	@Override
 	protected JSONObject doInBackground(String... params)
 	{
 		// get url
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
         String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
         int localCatalogIndex = 0;
         if (!localCatalogPreference.isEmpty()) {
@@ -56,6 +58,6 @@ public class PaiaPatronTask extends AbstractPaiaTask
 	@Override
 	protected void onPostExecute(JSONObject result)
 	{
-		((AccountFragment) this.fragment).onPatronLoaded(result);
+		((AccountActivity) activity).onPatronLoaded(result);
 	}
 }
