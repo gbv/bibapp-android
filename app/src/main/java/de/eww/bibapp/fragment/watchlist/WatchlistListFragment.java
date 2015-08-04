@@ -28,6 +28,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.DrawerActivity;
 import de.eww.bibapp.adapter.ModsWatchlistAdapter;
@@ -45,6 +46,7 @@ import roboguice.fragment.RoboFragment;
 public class WatchlistListFragment extends RoboFragment implements
         RecyclerViewOnGestureListener.OnGestureListener,
         UnApiLoaderCallback.UnApiLoaderInterface,
+        AsyncCanceledInterface,
         ActionMode.Callback {
 
     @Inject WatchlistSource mWatchlistSource;
@@ -64,6 +66,9 @@ public class WatchlistListFragment extends RoboFragment implements
     private ActionMode mActionMode;
 
     private MenuItem mExportMenuItem;
+
+    private int mRequestsDone = 0;
+    private String mUnApiResponse = "";
 
     /**
      * Represents a listener that will be notified of mods item selections.
@@ -289,24 +294,10 @@ public class WatchlistListFragment extends RoboFragment implements
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_export_from_watchlist:
-                // create an intent to send an email with a list of watchlist items
-                Intent sendIntent = new Intent(Intent.ACTION_SEND);
 
-                //LoaderManager loaderManager = getLoaderManager();
-                //loaderManager.destroyLoader(0);
-                //loaderManager.destroyLoader(1);
-                //loaderManager.initLoader(1, null, new UnApiLoaderCallback(this, mAdapter.getModsItems()));
-
-                sendIntent.setType("text/plain");
-                sendIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.watchlist_export_subject);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Message");
-
-                PackageManager packageManager = getActivity().getPackageManager();
-                List activities = packageManager.queryIntentActivities(sendIntent, PackageManager.MATCH_DEFAULT_ONLY);
-
-                if (activities.size() > 0) {
-                    startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.watchlist_export_send_to)));
-                }
+                mRequestsDone = 0;
+                mUnApiResponse = "";
+                performUnApiRequests();
 
                 return true;
             default:
@@ -314,12 +305,43 @@ public class WatchlistListFragment extends RoboFragment implements
         }
     }
 
+    private void performUnApiRequests() {
+        int totalRequests = mAdapter.getItemCount();
+
+        if (mRequestsDone < totalRequests) {
+            ModsItem modsItem = mAdapter.getModsItem(mRequestsDone);
+            mUnApiResponse += Integer.toString(mRequestsDone + 1) + ") " + modsItem.title + " - ";
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.destroyLoader(0);
+            loaderManager.initLoader(0, null, new UnApiLoaderCallback(this, modsItem));
+        } else {
+            // create an intent to send an email with a list of watchlist items
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.watchlist_export_subject);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, mUnApiResponse);
+
+            PackageManager packageManager = getActivity().getPackageManager();
+            List activities = packageManager.queryIntentActivities(sendIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+            if (activities.size() > 0) {
+                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.watchlist_export_send_to)));
+            }
+        }
+    }
+
     @Override
     public void onUnApiRequestDone(String authorExtended) {
-        // Set extended author information
-        //mAuthorExtendedView.setText(authorExtended);
+        mRequestsDone++;
+        mUnApiResponse += authorExtended + "\n";
 
-        // Hide UnApi loading animation
-        //mUnApiProgressBar.setVisibility(View.GONE);
+        performUnApiRequests();
+    }
+
+    @Override
+    public void onAsyncCanceled() {
+        Toast toast = Toast.makeText(getActivity(), R.string.toast_mods_error, Toast.LENGTH_LONG);
+        toast.show();
     }
 }
