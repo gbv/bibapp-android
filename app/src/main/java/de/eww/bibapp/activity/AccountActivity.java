@@ -1,4 +1,4 @@
-package de.eww.bibapp.fragment.account;
+package de.eww.bibapp.activity;
 
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -10,9 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import org.json.JSONObject;
@@ -23,17 +21,15 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.MainActivity;
+import de.eww.bibapp.fragment.account.AccountBookedFragment;
+import de.eww.bibapp.fragment.account.AccountBorrowedFragment;
+import de.eww.bibapp.fragment.account.AccountFeesFragment;
 import de.eww.bibapp.tasks.paia.PaiaPatronTask;
 import de.eww.bibapp.view.SlidingTabLayout;
-import roboguice.fragment.RoboFragment;
 
-/**
- * Created by christoph on 05.11.14.
- */
-public class AccountFragment extends RoboFragment implements
-    PaiaHelper.PaiaListener,
-    AsyncCanceledInterface {
+public class AccountActivity extends DrawerActivity implements
+        PaiaHelper.PaiaListener,
+        AsyncCanceledInterface {
 
     /**
      * This class represents a tab to be displayed by {@link ViewPager} and it's associated
@@ -109,24 +105,16 @@ public class AccountFragment extends RoboFragment implements
     private List<AccountPagerItem> mTabs = new ArrayList<AccountPagerItem>();
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_account);
 
         // Determine whether we are in single-pane or dual-pane mode by testing the visibility
         // of the container view
-        mViewPager = (ViewPager) getView().findViewById(R.id.viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mIsDualPane = mViewPager == null || mViewPager.getVisibility() != View.VISIBLE;
 
-        PaiaHelper.getInstance().ensureConnection(this);
-    }
-
-    /**
-     * Inflates the {@link View} which will be displayed by this {@link Fragment}, from the app's
-     * resources.
-     */
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        PaiaHelper.getInstance().ensureConnection(this, this, this);
     }
 
     private void addSlidingTabs() {
@@ -153,11 +141,11 @@ public class AccountFragment extends RoboFragment implements
         ));
 
         // Set the ViewPagers's PagerAdapter so that it can display items
-        mViewPager.setAdapter(new AccountPagerAdapter(getChildFragmentManager()));
+        mViewPager.setAdapter(new AccountPagerAdapter(getSupportFragmentManager()));
 
         // Give the SlidingTabLayout the ViewPager, this must be done AFTER the ViewPager has had
         // it's PagerAdapter set.
-        mSlidingTabLayout = (SlidingTabLayout) getView().findViewById(R.id.sliding_tabs);
+        mSlidingTabLayout = (SlidingTabLayout) findViewById(R.id.sliding_tabs);
         mSlidingTabLayout.setViewPager(mViewPager);
 
         // Set a TabColorizer to customize the indicator and divider colors. Here we just retrieve
@@ -214,38 +202,35 @@ public class AccountFragment extends RoboFragment implements
     }
 
     private void addFragments() {
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.add(R.id.container, Fragment.instantiate(getActivity(), AccountBorrowedFragment.class.getName()));
-        transaction.add(R.id.container, Fragment.instantiate(getActivity(), AccountBookedFragment.class.getName()));
-        transaction.add(R.id.container, Fragment.instantiate(getActivity(), AccountFeesFragment.class.getName()));
+        transaction.add(R.id.container, Fragment.instantiate(this, AccountBorrowedFragment.class.getName()));
+        transaction.add(R.id.container, Fragment.instantiate(this, AccountBookedFragment.class.getName()));
+        transaction.add(R.id.container, Fragment.instantiate(this, AccountFeesFragment.class.getName()));
 
         transaction.commit();
     }
 
-	public void onPatronLoaded(JSONObject response) {
-        // Check if the fragment is still added to its activity
-        if (isAdded()) {
-            // Set action bar sub title
-            ActionBar actionBar = ((MainActivity) getActivity()).getSupportActionBar();
+    public void onPatronLoaded(JSONObject response) {
+        // Set action bar sub title
+        ActionBar actionBar = ((DrawerActivity) this).getSupportActionBar();
 
-            try {
-                String name = response.getString("name");
+        try {
+            String name = response.getString("name");
 
-                if (response.has("status")) {
-                    int status = response.getInt("status");
+            if (response.has("status")) {
+                int status = response.getInt("status");
 
-                    if (status > 0) {
-                        name += " " + getResources().getText(R.string.account_inactive);
-                    }
+                if (status > 0) {
+                    name += " " + getResources().getText(R.string.account_inactive);
                 }
-
-                actionBar.setSubtitle(name);
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+
+            actionBar.setSubtitle(name);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-	}
+    }
 
     @Override
     public void onPaiaConnected() {
@@ -257,14 +242,14 @@ public class AccountFragment extends RoboFragment implements
 
         // Perform a paia request to get the users name, if we have the scope to do this
         if (PaiaHelper.getInstance().hasScope(PaiaHelper.SCOPES.READ_PATRON)) {
-            AsyncTask<String, Void, JSONObject> paiaPatronTask = new PaiaPatronTask(this);
+            AsyncTask<String, Void, JSONObject> paiaPatronTask = new PaiaPatronTask(this, this);
             paiaPatronTask.execute(PaiaHelper.getInstance().getAccessToken(), PaiaHelper.getInstance().getUsername());
         }
     }
 
-	@Override
-	public void onAsyncCanceled() {
-        Toast toast = Toast.makeText(getActivity(), R.string.toast_account_error, Toast.LENGTH_LONG);
+    @Override
+    public void onAsyncCanceled() {
+        Toast toast = Toast.makeText(this, R.string.toast_account_error, Toast.LENGTH_LONG);
         toast.show();
-	}
+    }
 }

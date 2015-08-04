@@ -1,30 +1,24 @@
-package de.eww.bibapp.fragment.search;
+package de.eww.bibapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
-import de.eww.bibapp.activity.ModsActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
+import de.eww.bibapp.fragment.search.ModsFragment;
+import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.model.source.ModsSource;
-import roboguice.fragment.RoboFragment;
 
-/**
- * Created by christoph on 08.11.14.
- */
-public class SearchFragment extends RoboFragment implements
+public class SearchActivity extends DrawerActivity implements
         SearchListFragment.OnModsItemSelectedListener,
         ModsPagerAdapter.SearchListLoaderInterface {
 
-    public static SearchFragment searchFragmentInstance;
+    public static SearchActivity searchActivityInstance;
 
     // Whether or not we are in dual-pane mode
     boolean mIsDualPane = false;
@@ -47,37 +41,25 @@ public class SearchFragment extends RoboFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_search);
 
-        searchFragmentInstance = this;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        // Register ourselves as the listener for the search list fragment events.
-        mSearchListFragment.setOnModsItemSelectedListener(this);
-
-        // Set up search list fragment
-        //restoreSelection(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_search, container, false);
+        searchActivityInstance = this;
 
         // Find our fragments
-        mSearchListFragment = (SearchListFragment) getChildFragmentManager().findFragmentById(R.id.search_list);
-        mModsFragment = (ModsFragment) getChildFragmentManager().findFragmentById(R.id.mods_item);
+        mSearchListFragment = (SearchListFragment) getSupportFragmentManager().findFragmentById(R.id.search_list);
+        mModsFragment = (ModsFragment) getSupportFragmentManager().findFragmentById(R.id.mods_item);
 
         // Determine whether we are in single-pane or dual-pane mode by testing the visibility
         // of the mods view
-        View modsView = view.findViewById(R.id.mods_item);
+        View modsView = findViewById(R.id.mods_item);
         mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
 
         mSearchListFragment.setSearchMode(mSearchMode);
 
-        return view;
+        // Register ourselves as the listener for the search list fragment events.
+        mSearchListFragment.setOnModsItemSelectedListener(this);
+
+        setActiveNavigationItem(0);
     }
 
     /**
@@ -107,7 +89,7 @@ public class SearchFragment extends RoboFragment implements
             mModsFragment.setModsItem(mModsSource.getModsItem(index));
         } else {
             // use separate activity
-            Intent modsIntent = new Intent(getActivity(), ModsActivity.class);
+            Intent modsIntent = new Intent(this, ModsActivity.class);
             modsIntent.putExtra("modsItemIndex", index);
             startActivityForResult(modsIntent, 1);
         }
@@ -144,7 +126,7 @@ public class SearchFragment extends RoboFragment implements
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
                     int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                    ((DrawerActivity) this).selectItem(navigationPosition);
                 }
             }
         } else if (requestCode == 99) {
@@ -152,14 +134,13 @@ public class SearchFragment extends RoboFragment implements
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
                     int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                    ((DrawerActivity) this).selectItem(navigationPosition);
                 }
             }
         }
     }
 
-    @Override
-    public LoaderManager getLoaderManager() {
+    public LoaderManager getListLoaderManager() {
         return mSearchListFragment.getLoaderManager();
     }
 

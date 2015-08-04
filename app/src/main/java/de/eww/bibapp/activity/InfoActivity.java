@@ -1,13 +1,10 @@
-package de.eww.bibapp.fragment.info;
+package de.eww.bibapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -22,10 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.ContactActivity;
-import de.eww.bibapp.activity.DrawerActivity;
-import de.eww.bibapp.activity.ImpressumActivity;
-import de.eww.bibapp.activity.LocationsActivity;
 import de.eww.bibapp.adapter.RssAdapter;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
@@ -33,10 +26,7 @@ import de.eww.bibapp.model.RssFeed;
 import de.eww.bibapp.model.RssItem;
 import de.eww.bibapp.request.RssFeedRequest;
 
-/**
- * Created by christoph on 24.10.14.
- */
-public class InfoFragment extends Fragment {
+public class InfoActivity extends DrawerActivity {
 
     private SpiceManager mSpiceManager = new SpiceManager(XmlSpringAndroidSpiceService.class);
 
@@ -54,7 +44,7 @@ public class InfoFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        mSpiceManager.start(getActivity());
+        mSpiceManager.start(this);
     }
 
     @Override
@@ -64,20 +54,25 @@ public class InfoFragment extends Fragment {
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_info);
+
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
+        mEmptyView = (TextView) findViewById(R.id.empty);
+        mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
 
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
+        mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
+        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         mRecyclerView.addItemDecoration(itemDecoration);
 
         // Do we have a rss feed to display?
         if (!Constants.NEWS_URL.isEmpty()) {
             // Start the Request
-            mRssFeedRequest = new RssFeedRequest(getActivity());
+            mRssFeedRequest = new RssFeedRequest(this);
             mEmptyView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
             mSpiceManager.execute(mRssFeedRequest, new RssRequestListener());
@@ -85,20 +80,10 @@ public class InfoFragment extends Fragment {
             mEmptyView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.GONE);
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_info, container, false);
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        mEmptyView = (TextView) view.findViewById(R.id.empty);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-
-        Button infoButton = (Button) view.findViewById(R.id.info_button_contact);
-        Button locationsButton = (Button) view.findViewById(R.id.info_button_locations);
-        Button impressumButton = (Button) view.findViewById(R.id.info_button_impressum);
+        Button infoButton = (Button) findViewById(R.id.info_button_contact);
+        Button locationsButton = (Button) findViewById(R.id.info_button_locations);
+        Button impressumButton = (Button) findViewById(R.id.info_button_impressum);
 
         infoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,29 +103,27 @@ public class InfoFragment extends Fragment {
                 onClickImpressumButton();
             }
         });
-
-        return view;
     }
 
     private void onClickContactButton() {
-        Intent contactIntent = new Intent(getActivity(), ContactActivity.class);
+        Intent contactIntent = new Intent(this, ContactActivity.class);
         startActivityForResult(contactIntent, 99);
     }
 
     private void onClickLocationsButton() {
-        Intent locationsIntent = new Intent(getActivity(), LocationsActivity.class);
+        Intent locationsIntent = new Intent(this, LocationsActivity.class);
         startActivityForResult(locationsIntent, 99);
     }
 
     private void onClickImpressumButton() {
-        Intent impressumIntent = new Intent(getActivity(), ImpressumActivity.class);
+        Intent impressumIntent = new Intent(this, ImpressumActivity.class);
         startActivityForResult(impressumIntent, 99);
     }
 
     public final class RssRequestListener implements RequestListener<RssFeed> {
         @Override
         public void onRequestFailure(SpiceException spiceException) {
-            Toast toast = Toast.makeText(getActivity(), R.string.toast_info_rss_error, Toast.LENGTH_LONG);
+            Toast toast = Toast.makeText(InfoActivity.this, R.string.toast_info_rss_error, Toast.LENGTH_LONG);
             toast.show();
 
             mProgressBar.setVisibility(View.GONE);
@@ -164,10 +147,10 @@ public class InfoFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 99) {
-            if (resultCode == getActivity().RESULT_OK) {
+            if (resultCode == this.RESULT_OK) {
                 // Set navigation position
                 int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                ((DrawerActivity) this).selectItem(navigationPosition);
             }
         }
     }

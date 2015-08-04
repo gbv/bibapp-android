@@ -1,26 +1,20 @@
-package de.eww.bibapp.fragment.watchlist;
+package de.eww.bibapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v4.app.LoaderManager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.DrawerActivity;
-import de.eww.bibapp.activity.ModsActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.fragment.search.ModsFragment;
+import de.eww.bibapp.fragment.watchlist.WatchlistListFragment;
 import de.eww.bibapp.model.source.WatchlistSource;
-import roboguice.fragment.RoboFragment;
 
-/**
- * Created by christoph on 11.11.14.
- */
-public class WatchlistFragment extends RoboFragment implements
+public class WatchlistActivity extends DrawerActivity implements
         ModsPagerAdapter.SearchListLoaderInterface,
         WatchlistListFragment.OnModsItemSelectedListener {
 
@@ -38,15 +32,20 @@ public class WatchlistFragment extends RoboFragment implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_watchlist);
+
+        // Find our fragments
+        mWatchlistListFragment = (WatchlistListFragment) getSupportFragmentManager().findFragmentById(R.id.watchlist_list);
+        mModsFragment = (ModsFragment) getSupportFragmentManager().findFragmentById(R.id.mods_item);
+
+        // Determine whether we are in single-pane or dual-pane mode by testing the visibility
+        // of the mods view
+        View modsView = findViewById(R.id.mods_item);
+        mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
 
         // load watchlist data
         mWatchlistSource.clear();
-        mWatchlistSource.loadFromFile(getActivity());
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        mWatchlistSource.loadFromFile(this);
 
         // Register ourselves as the listener for the search list fragment events.
         mWatchlistListFragment.setOnModsItemSelectedListener(this);
@@ -61,22 +60,6 @@ public class WatchlistFragment extends RoboFragment implements
                 mModsFragment.setModsItem(mWatchlistSource.getModsItem(0));
             }
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_watchlist, container, false);
-
-        // Find our fragments
-        mWatchlistListFragment = (WatchlistListFragment) getChildFragmentManager().findFragmentById(R.id.watchlist_list);
-        mModsFragment = (ModsFragment) getChildFragmentManager().findFragmentById(R.id.mods_item);
-
-        // Determine whether we are in single-pane or dual-pane mode by testing the visibility
-        // of the mods view
-        View modsView = view.findViewById(R.id.mods_item);
-        mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
-
-        return view;
     }
 
     /**
@@ -106,7 +89,7 @@ public class WatchlistFragment extends RoboFragment implements
             mModsFragment.setModsItem(mWatchlistSource.getModsItem(index));
         } else {
             // use separate activity
-            Intent modsIntent = new Intent(getActivity(), ModsActivity.class);
+            Intent modsIntent = new Intent(this, ModsActivity.class);
             modsIntent.putExtra("modsItemIndex", index);
             modsIntent.putExtra("modsItemSource", WatchlistSource.class.getName());
             startActivityForResult(modsIntent, 1);
@@ -134,17 +117,21 @@ public class WatchlistFragment extends RoboFragment implements
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
                     int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                    ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+                    ((DrawerActivity) this).selectItem(navigationPosition);
                 }
             }
         } else if (requestCode == 99) {
-        if (resultCode == Activity.RESULT_OK) {
-            // Set navigation position
-            if (data.hasExtra("navigationIndex")) {
-                int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                ((DrawerActivity) getActivity()).selectItem(navigationPosition);
+            if (resultCode == Activity.RESULT_OK) {
+                // Set navigation position
+                if (data.hasExtra("navigationIndex")) {
+                    int navigationPosition = data.getIntExtra("navigationIndex", 0);
+                    ((DrawerActivity) this).selectItem(navigationPosition);
+                }
             }
         }
     }
+
+    public LoaderManager getListLoaderManager() {
+        return mWatchlistListFragment.getLoaderManager();
     }
 }
