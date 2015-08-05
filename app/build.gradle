@@ -8,7 +8,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 22
 
-        versionCode 9
+        versionCode 201
         versionName "2.0.1"
     }
 
