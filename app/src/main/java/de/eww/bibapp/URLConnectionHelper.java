@@ -47,9 +47,6 @@ public class URLConnectionHelper {
 	public void configure() throws URISyntaxException, MalformedURLException
 	{
 		this.url = new URL(this.urlString);
-
-		URI uri = new URI(url.getProtocol(), url.getUserInfo(), url.getHost(), url.getPort(), url.getPath(), url.getQuery(), url.getRef());
-		this.url = uri.toURL();
 	}
 
 	public void connect(String postData) throws Exception

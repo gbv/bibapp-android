@@ -2,7 +2,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/menu_remove_from_watchlist"
+        android:id="@+id/menu_export_from_watchlist"
         app:showAsAction="ifRoom"
-        android:title="@string/menu_watchlist_remove" />
+        android:visible="false"
+        android:title="@string/menu_watchlist_export" />
 </menu>

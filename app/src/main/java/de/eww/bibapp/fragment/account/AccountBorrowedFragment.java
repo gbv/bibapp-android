@@ -235,7 +235,7 @@ public class AccountBorrowedFragment extends Fragment implements
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
         // Inflate a menu resource providing context menu items
         MenuInflater inflater = actionMode.getMenuInflater();
-        inflater.inflate(R.menu.account_borrowed_fragment_actions, menu);
+        inflater.inflate(R.menu.account_borrowed_fragment_mode_actions, menu);
 
         ((BaseActivity) getActivity()).showToolbar(false);
 

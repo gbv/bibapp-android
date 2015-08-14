@@ -54,10 +54,16 @@ public class LocationActivity extends BaseActivity {
         LocationItem location = mLocationSource.getLocation(mLocationIndex);
         locationFragment.setLocation(location);
 
-        if (getIntent().hasExtra("source") && getIntent().getExtras().getString("source").equals("search")) {
-            setActiveNavigationItem(0);
+        if (getIntent().hasExtra("source")) {
+            String source = getIntent().getExtras().getString("source");
+
+            if (source.equals("search")) {
+                setActiveNavigationItem(0);
+            } else {
+                setActiveNavigationItem(2);
+            }
         } else {
-            setActiveNavigationItem(2);
+            setActiveNavigationItem(3);
         }
     }
 }

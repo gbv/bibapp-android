@@ -30,6 +30,7 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
         public TextView mTitle;
         public TextView mSub;
         public TextView mAuthor;
+        public TextView mPublication;
         public ImageView mImage;
 
         public ViewHolder(View itemView) {
@@ -38,6 +39,7 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
             mTitle = (TextView) itemView.findViewById(R.id.title);
             mSub = (TextView) itemView.findViewById(R.id.sub);
             mAuthor = (TextView) itemView.findViewById(R.id.author);
+            mPublication = (TextView) itemView.findViewById(R.id.publication);
             mImage = (ImageView) itemView.findViewById(R.id.image);
         }
     }
@@ -91,6 +93,10 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
                 }
             }
             holder.mAuthor.setText(authorString);
+
+            if (item.issuedDate != null) {
+                holder.mPublication.setText(item.issuedDate);
+            }
 
             Resources res = mContext.getResources();
             holder.mImage.setImageResource(res.getIdentifier("mediaicon_" + item.mediaType.toLowerCase(Locale.GERMANY), "drawable", mContext.getPackageName()));

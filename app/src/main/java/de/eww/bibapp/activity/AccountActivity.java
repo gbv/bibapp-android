@@ -10,6 +10,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -251,5 +254,32 @@ public class AccountActivity extends BaseActivity implements
     public void onAsyncCanceled() {
         Toast toast = Toast.makeText(this, R.string.toast_account_error, Toast.LENGTH_LONG);
         toast.show();
+	}
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.account_fragment_actions, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_account_account_logout:
+                // clean old credentials data
+                PaiaHelper.getInstance().unsetStoredCredentials(this);
+
+                // and remove stored login information
+                PaiaHelper.getInstance().reset();
+
+                ((BaseActivity) this).selectItem(0);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -1,7 +1,10 @@
 package de.eww.bibapp.fragment.watchlist;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.LoaderManager;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +28,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.adapter.ModsWatchlistAdapter;
@@ -32,6 +36,7 @@ import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.WatchlistSource;
+import de.eww.bibapp.tasks.UnApiLoaderCallback;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.fragment.RoboFragment;
 
@@ -40,6 +45,8 @@ import roboguice.fragment.RoboFragment;
  */
 public class WatchlistListFragment extends RoboFragment implements
         RecyclerViewOnGestureListener.OnGestureListener,
+        UnApiLoaderCallback.UnApiLoaderInterface,
+        AsyncCanceledInterface,
         ActionMode.Callback {
 
     @Inject WatchlistSource mWatchlistSource;
@@ -57,6 +64,11 @@ public class WatchlistListFragment extends RoboFragment implements
     OnModsItemSelectedListener mModsItemSelectedListener = null;
 
     private ActionMode mActionMode;
+
+    private MenuItem mExportMenuItem;
+
+    private int mRequestsDone = 0;
+    private String mUnApiResponse = "";
 
     /**
      * Represents a listener that will be notified of mods item selections.
@@ -83,6 +95,13 @@ public class WatchlistListFragment extends RoboFragment implements
 
     public void setSelection(int position) {
         mRecyclerView.scrollToPosition(position);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -156,7 +175,7 @@ public class WatchlistListFragment extends RoboFragment implements
     public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
         // Inflate a menu resource providing context menu items
         MenuInflater inflater = actionMode.getMenuInflater();
-        inflater.inflate(R.menu.watchlist_fragment_actions, menu);
+        inflater.inflate(R.menu.watchlist_fragment_mode_actions, menu);
 
         ((BaseActivity) getActivity()).showToolbar(false);
 
@@ -243,6 +262,86 @@ public class WatchlistListFragment extends RoboFragment implements
 
         // Display toast
         Toast toast = Toast.makeText(getActivity(), R.string.toast_watchlist_removed, Toast.LENGTH_LONG);
+        toast.show();
+
+        // refresh menu
+        getActivity().supportInvalidateOptionsMenu();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.watchlist_fragment_actions, menu);
+
+        mExportMenuItem = menu.findItem(R.id.menu_export_from_watchlist);
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        // enable export button, if we have some items
+        if (mAdapter.getItemCount() > 0) {
+            mExportMenuItem.setVisible(true);
+        } else {
+            mExportMenuItem.setVisible(false);
+        }
+
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_export_from_watchlist:
+
+                mRequestsDone = 0;
+                mUnApiResponse = "";
+                performUnApiRequests();
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void performUnApiRequests() {
+        int totalRequests = mAdapter.getItemCount();
+
+        if (mRequestsDone < totalRequests) {
+            ModsItem modsItem = mAdapter.getModsItem(mRequestsDone);
+            mUnApiResponse += Integer.toString(mRequestsDone + 1) + ") " + modsItem.title + " - ";
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.destroyLoader(0);
+            loaderManager.initLoader(0, null, new UnApiLoaderCallback(this, modsItem));
+        } else {
+            // create an intent to send an email with a list of watchlist items
+            Intent sendIntent = new Intent(Intent.ACTION_SEND);
+
+            sendIntent.setType("text/plain");
+            sendIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.watchlist_export_subject);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, mUnApiResponse);
+
+            PackageManager packageManager = getActivity().getPackageManager();
+            List activities = packageManager.queryIntentActivities(sendIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+            if (activities.size() > 0) {
+                startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.watchlist_export_send_to)));
+            }
+        }
+    }
+
+    @Override
+    public void onUnApiRequestDone(String authorExtended) {
+        mRequestsDone++;
+        mUnApiResponse += authorExtended + "\n";
+
+        performUnApiRequests();
+    }
+
+    @Override
+    public void onAsyncCanceled() {
+        Toast toast = Toast.makeText(getActivity(), R.string.toast_mods_error, Toast.LENGTH_LONG);
         toast.show();
     }
 }

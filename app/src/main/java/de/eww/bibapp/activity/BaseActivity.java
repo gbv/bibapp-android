@@ -95,11 +95,15 @@ public class BaseActivity extends RoboActionBarActivity {
         mTitle = mDrawerTitle = getTitle();
         mNavigationItems = new ArrayList<DrawerItem>();
 
-        // force portrait mode on non large devices
+        // set screen orientation
         Resources resources = getResources();
         boolean isLandscape = resources.getBoolean(R.bool.landscape);
-        if (!isLandscape) {
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (isLandscape) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
+        } else {
+            if (!isLandscape) {
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            }
         }
 
         // Set default values for our preferences

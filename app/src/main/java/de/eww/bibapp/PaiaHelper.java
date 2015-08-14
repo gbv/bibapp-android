@@ -1,5 +1,6 @@
 package de.eww.bibapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -144,6 +145,16 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
             }
         }
 	}
+
+    public void unsetStoredCredentials(Activity activity) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("store_login_username", null);
+        editor.putString("store_login_password", null);
+
+        editor.commit();
+    }
 
     private void connected() {
         // Important: Copy the list of registered listener and clear the original one
