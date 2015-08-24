@@ -48,6 +48,10 @@ public class RecyclerViewOnGestureListener extends GestureDetector.SimpleOnGestu
     }
 
     @Override
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept)  {
+    }
+
+    @Override
     public boolean onDown(MotionEvent e) {
         return true;
     }
