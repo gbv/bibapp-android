@@ -1,6 +1,5 @@
 package de.eww.bibapp.parser;
 
-import android.text.Html;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
