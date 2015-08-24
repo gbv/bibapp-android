@@ -9,7 +9,9 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -30,7 +32,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.adapter.CustomDrawerAdapter;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.DrawerItem;
 import roboguice.activity.RoboActionBarActivity;
@@ -38,7 +39,11 @@ import roboguice.activity.RoboActionBarActivity;
 /**
  * Created by christoph on 10.11.14.
  */
-public class BaseActivity extends RoboActionBarActivity {
+public class BaseActivity extends RoboActionBarActivity implements
+        NavigationView.OnNavigationItemSelectedListener {
+
+    private static final long DRAWER_CLOSE_DELAY_MS = 250;
+    private final Handler mDrawerActionHandler = new Handler();
 
     /**
      * The {@link android.support.v4.widget.DrawerLayout} that represents the top-level content view,
@@ -55,6 +60,8 @@ public class BaseActivity extends RoboActionBarActivity {
 
     Spinner mSpinner;
 
+    NavigationView mNavigationView;
+
     /**
      * The {@link android.widget.ListView} that containts the navigation drawer content.
      */
@@ -68,22 +75,10 @@ public class BaseActivity extends RoboActionBarActivity {
 
     private int mCurrentSpinnerIndex = 0;
 
-    private CharSequence mDrawerTitle;
     private CharSequence mTitle;
-    private CustomDrawerAdapter mCustomDrawerAdapter;
-    protected List<DrawerItem> mNavigationItems;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    protected static int mCurrentNavigationIndex = -1;
-
-    // symbols for navigation
-    protected static final int NAV_ITEM_SEARCH = 0;
-    protected static final int NAV_ITEM_ACCOUNT = 1;
-    protected static final int NAV_ITEM_WATCHLIST = 2;
-    protected static final int NAV_ITEM_INFO = 3;
-    // index 4 is empty
-    protected static final int NAV_ITEM_WEBSITE = 5;
-    protected static final int NAV_ITEM_SETTINGS = 6;
+    protected static int mCurrentNavigationIndex = R.id.nav_search;
 
     public static BaseActivity instance;
     private boolean mForceSelectSearch = false;
@@ -92,8 +87,7 @@ public class BaseActivity extends RoboActionBarActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mTitle = mDrawerTitle = getTitle();
-        mNavigationItems = new ArrayList<DrawerItem>();
+        mTitle = getTitle();
 
         // set screen orientation
         Resources resources = getResources();
@@ -108,11 +102,6 @@ public class BaseActivity extends RoboActionBarActivity {
 
         // Set default values for our preferences
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
-
-        ActionBar ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
@@ -120,20 +109,11 @@ public class BaseActivity extends RoboActionBarActivity {
         mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
         mFrameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
         mToolbar = (Toolbar) mDrawerLayout.findViewById(R.id.toolbar);
+        mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
         mSpinner = (Spinner) mDrawerLayout.findViewById(R.id.toolbar_spinner);
-        mDrawerContainer = (LinearLayout) mDrawerLayout.findViewById(R.id.drawer_container);
-        mDrawerList = (ListView) mDrawerLayout.findViewById(R.id.drawer_list);
         mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
 
         setupNavigation();
-
-        if (mCurrentNavigationIndex == BaseActivity.NAV_ITEM_SEARCH) {
-            // setup the search spinner
-            setupSearchSpinner();
-            mSpinner.setVisibility(View.VISIBLE);
-        } else {
-            mSpinner.setVisibility(View.GONE);
-        }
 
         getLayoutInflater().inflate(layoutResId, mFrameLayout, true);
         super.setContentView(mDrawerLayout);
@@ -141,8 +121,7 @@ public class BaseActivity extends RoboActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // The action bar home/up action should open or close the drawer.
-        // ActionBarDrawerToggle will take care of this.
+        // pass events to the ActionBarDrawerToggle
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -150,58 +129,45 @@ public class BaseActivity extends RoboActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * The click listener for ListView in the navigation drawer
-     */
-    private class DrawerItemClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            if (mNavigationItems.get(position).getItemHeading() == null) {
-                selectItem(position);
-            } else {
-                // If we select a heading, keep the previous selection intact
-                setActiveNavigationItem(mCurrentNavigationIndex);
-            }
-        }
+    protected void setActiveNavigationItem(MenuItem menuItem) {
+        // Update selected item and title
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+
+        mCurrentNavigationIndex = menuItem.getItemId();
+    }
+
+    protected void setActiveNavigationItem(int position) {
+        setActiveNavigationItem(mNavigationView.getMenu().getItem(position));
     }
 
     public void selectItem(int position) {
-        if (position == mCurrentNavigationIndex && position != 0) {
+        selectDrawerItem(mNavigationView.getMenu().getItem(position));
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        if (menuItem.getItemId() == mCurrentNavigationIndex && menuItem.getItemId() != R.id.nav_search) {
             return;
         }
 
         mSpinner.setVisibility(View.GONE);
 
-        setActiveNavigationItem(position);
+        // Highlight the selected item, update the title
+        setActiveNavigationItem(menuItem);
 
         Intent intent;
 
-        switch (position) {
-            case NAV_ITEM_SEARCH:
-                // setup the search spinner
-                setupSearchSpinner();
-                mSpinner.setVisibility(View.VISIBLE);
-
-                intent = new Intent(this, SearchActivity.class);
-                startActivity(intent);
-                finish();
-                break;
-            case NAV_ITEM_ACCOUNT:
+        switch (menuItem.getItemId()) {
+                case R.id.nav_account:
                 intent = new Intent(this, AccountActivity.class);
-                startActivity(intent);
-                finish();
                 break;
-            case NAV_ITEM_WATCHLIST:
+            case R.id.nav_watchlist:
                 intent = new Intent(this, WatchlistActivity.class);
-                startActivity(intent);
-                finish();
                 break;
-            case NAV_ITEM_INFO:
+            case R.id.nav_info:
                 intent = new Intent(this, InfoActivity.class);
-                startActivity(intent);
-                finish();
                 break;
-            case NAV_ITEM_WEBSITE:
+            case R.id.nav_homepage:
                 SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
                 String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
                 int localCatalogIndex = 0;
@@ -211,26 +177,24 @@ public class BaseActivity extends RoboActionBarActivity {
 
                 Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[localCatalogIndex]);
                 intent = new Intent(Intent.ACTION_VIEW, homepageUrl);
-                startActivity(intent);
-                finish();
                 break;
-            case NAV_ITEM_SETTINGS:
+            case R.id.nav_settings:
                 intent = new Intent(this, SettingsActivity.class);
-                startActivity(intent);
-                finish();
+                break;
+            default:
+                // setup the search spinner
+                setupSearchSpinner();
+                mSpinner.setVisibility(View.VISIBLE);
+
+                intent = new Intent(this, SearchActivity.class);
                 break;
         }
 
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+
         // Close the drawer
-        mDrawerLayout.closeDrawer(mDrawerContainer);
-    }
-
-    protected void setActiveNavigationItem(int position) {
-        // Update selected item and title
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mNavigationItems.get(position).getItemName());
-
-        mCurrentNavigationIndex = position;
+        mDrawerLayout.closeDrawers();
     }
 
     @Override
@@ -238,27 +202,6 @@ public class BaseActivity extends RoboActionBarActivity {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
         getSupportActionBar().setSubtitle("");
-    }
-
-    /**
-     * When using the ActionBarDrawerToggle, you must call it during
-     * onPostCreate() and onConfigurationChanged()...
-     */
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Pass any configuration change to the drawer toggles
-        mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
     public void showToolbar(boolean showToolbar) {
@@ -332,19 +275,50 @@ public class BaseActivity extends RoboActionBarActivity {
         mSpinner.setOnItemSelectedListener(mOnNavigationListener);
     }
 
+    @Override
+    public boolean onNavigationItemSelected(final MenuItem menuItem) {
+        // allow some time after closing the drawer before performing real navigation
+        // so the user can see what is happening
+        mDrawerActionHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                selectDrawerItem(menuItem);
+            }
+        }, DRAWER_CLOSE_DELAY_MS);
+
+        return true;
+    }
+
     private void setupNavigation() {
+        // Set a Toolbar to replace the ActionBar.
+        setSupportActionBar(mToolbar);
+
+        // Set the menu icon instead of the launcher icon.
+        final ActionBar ab = getSupportActionBar();
+        if (ab != null) {
+            ab.setDisplayHomeAsUpEnabled(true);
+        }
+
+        setActiveNavigationItem(mNavigationView.getMenu().findItem(mCurrentNavigationIndex));
+
+        if (mCurrentNavigationIndex == R.id.nav_search) {
+            // setup the search spinner
+            setupSearchSpinner();
+            mSpinner.setVisibility(View.VISIBLE);
+        } else {
+            mSpinner.setVisibility(View.GONE);
+        }
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
         // Set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
-        Resources resources = getResources();
+        // Set up the navigation listener
+        mNavigationView.setNavigationItemSelectedListener(this);
 
-        // Set up the drawer's list view with items and click listener
-        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_search), R.drawable.ic_action_search));
-        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_account), R.drawable.ic_action_person));
-        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_watchlist), R.drawable.ic_action_view_as_list));
-        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_info), R.drawable.ic_action_about));
-        mNavigationItems.add(new DrawerItem(""));
-
+        // Show homepage menu item, if url is set
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
         int localCatalogIndex = 0;
@@ -353,14 +327,9 @@ public class BaseActivity extends RoboActionBarActivity {
         }
 
         if (Constants.HOMEPAGE_URLS.length >= localCatalogIndex + 1) {
-            mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_homepage), R.drawable.ic_action_web_site));
+            MenuItem homepageItem = mNavigationView.getMenu().findItem(R.id.nav_homepage);
+            homepageItem.setVisible(true);
         }
-
-        mNavigationItems.add(new DrawerItem(resources.getString(R.string.drawer_navigation_settings), R.drawable.ic_action_settings));
-
-        mCustomDrawerAdapter = new CustomDrawerAdapter(this, R.layout.drawer_list_item, mNavigationItems);
-        mDrawerList.setAdapter(mCustomDrawerAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         // Get the version name and set it in the layout
         try {
@@ -368,34 +337,10 @@ public class BaseActivity extends RoboActionBarActivity {
             mVersionView.setText("v" + packageInfo.versionName);
         } catch(PackageManager.NameNotFoundException e) {
         }
+    }
 
-        // Set the toolbar as our action bar
-        setSupportActionBar(mToolbar);
-
-        // Enable ActionBar app icon to behave as action to toggle nav drawer
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        // ActionBarDrawerToggle ties together the proper interactions between
-        // the sliding drawer and the action bar app icon
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                       // host activitiy
-                mDrawerLayout,              // DrawerLayout object
-                mToolbar,                   // Toolbar
-                R.string.drawer_open,        // "open drawer" description for accessibility
-                R.string.drawer_close      // "close drawer" description for accessibility
-        ) {
-            public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
-                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                getSupportActionBar().setTitle(mDrawerTitle);
-                supportInvalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    public void selectSearch() {
+        mForceSelectSearch = true;
     }
 
     @Override
@@ -404,16 +349,28 @@ public class BaseActivity extends RoboActionBarActivity {
     }
 
     @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
 
         if (mForceSelectSearch) {
             mForceSelectSearch = false;
-            selectItem(0);
+            selectDrawerItem(mNavigationView.getMenu().getItem(0));
         }
-    }
-
-    public void selectSearch() {
-        mForceSelectSearch = true;
     }
 }

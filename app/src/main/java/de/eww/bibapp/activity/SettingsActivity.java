@@ -15,6 +15,6 @@ public class SettingsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        setActiveNavigationItem(BaseActivity.NAV_ITEM_SETTINGS);
+        //setActiveNavigationItem(BaseActivity.NAV_ITEM_SETTINGS);
     }
 }
