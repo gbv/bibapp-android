@@ -28,7 +28,6 @@ import android.widget.TextView;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.model.DrawerItem;
 import de.eww.bibapp.util.PrefUtils;
 import roboguice.activity.RoboActionBarActivity;
 
@@ -57,13 +56,6 @@ public class BaseActivity extends RoboActionBarActivity implements
     Spinner mSpinner;
 
     NavigationView mNavigationView;
-
-    /**
-     * The {@link android.widget.ListView} that containts the navigation drawer content.
-     */
-    ListView mDrawerList;
-
-    LinearLayout mDrawerContainer;
     TextView mVersionView;
 
     private SpinnerAdapter mSpinnerAdapter;
