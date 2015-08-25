@@ -16,6 +16,7 @@ import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.parser.SearchXmlParser;
+import de.eww.bibapp.util.PrefUtils;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -173,13 +174,7 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 			e1.printStackTrace();
 		}
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
+		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(fragment.getActivity());
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, localCatalogIndex), this.fragment.getActivity());
 
 		try

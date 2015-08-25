@@ -1,7 +1,6 @@
 package de.eww.bibapp.activity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,7 +9,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,12 +26,10 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.DrawerItem;
+import de.eww.bibapp.util.PrefUtils;
 import roboguice.activity.RoboActionBarActivity;
 
 /**
@@ -87,6 +83,8 @@ public class BaseActivity extends RoboActionBarActivity implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        PrefUtils.init(this);
+
         mTitle = getTitle();
 
         // set screen orientation
@@ -99,9 +97,6 @@ public class BaseActivity extends RoboActionBarActivity implements
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
             }
         }
-
-        // Set default values for our preferences
-        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override
@@ -168,14 +163,7 @@ public class BaseActivity extends RoboActionBarActivity implements
                 intent = new Intent(this, InfoActivity.class);
                 break;
             case R.id.nav_homepage:
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-                String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-                int localCatalogIndex = 0;
-                if (!localCatalogPreference.isEmpty()) {
-                    localCatalogIndex = Integer.valueOf(localCatalogPreference);
-                }
-
-                Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[localCatalogIndex]);
+                Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[PrefUtils.getLocalCatalogIndex(this)]);
                 intent = new Intent(Intent.ACTION_VIEW, homepageUrl);
                 break;
             case R.id.nav_settings:
@@ -319,13 +307,7 @@ public class BaseActivity extends RoboActionBarActivity implements
         mNavigationView.setNavigationItemSelectedListener(this);
 
         // Show homepage menu item, if url is set
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
+        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(this);
         if (Constants.HOMEPAGE_URLS.length >= localCatalogIndex + 1) {
             MenuItem homepageItem = mNavigationView.getMenu().findItem(R.id.nav_homepage);
             homepageItem.setVisible(true);

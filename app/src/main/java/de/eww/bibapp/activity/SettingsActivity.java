@@ -6,10 +6,6 @@ import de.eww.bibapp.R;
 
 public class SettingsActivity extends BaseActivity {
 
-    public static final String KEY_PREF_STORE_LOGIN = "pref_storeLogin";
-    public static final String KEY_PREF_LOCAL_CATALOG = "pref_localCatalog";
-    public static final String KEY_PREF_DATA_PRIVACY = "pref_dataPrivacy";
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

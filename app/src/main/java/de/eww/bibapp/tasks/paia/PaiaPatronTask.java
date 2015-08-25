@@ -11,6 +11,7 @@ import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.activity.AccountActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.util.PrefUtils;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -30,13 +31,7 @@ public class PaiaPatronTask extends AbstractPaiaTask
 	protected JSONObject doInBackground(String... params)
 	{
 		// get url
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
+		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(activity);
 		String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/core/" + PaiaHelper.getInstance().getUsername() + "?access_token=" + PaiaHelper.getInstance().getAccessToken();
 
 		JSONObject paiaResponse = new JSONObject();

@@ -19,6 +19,7 @@ import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.LocationItem;
+import de.eww.bibapp.util.PrefUtils;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -47,13 +48,7 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 	{
 		List<LocationItem> response = new ArrayList<LocationItem>();
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
+		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getLocationUrl(localCatalogIndex), mContext);
 
 		try

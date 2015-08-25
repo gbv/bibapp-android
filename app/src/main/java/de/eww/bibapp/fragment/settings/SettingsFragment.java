@@ -11,6 +11,7 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.util.PrefUtils;
 import roboguice.fragment.provided.RoboPreferenceFragment;
 
 public class SettingsFragment extends RoboPreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -25,7 +26,7 @@ public class SettingsFragment extends RoboPreferenceFragment implements SharedPr
         // Get the local catalog list preference and check if we need to present it
         // to the user, which is only the case, if there is more than one local
         // catalog pre-configured
-        ListPreference localCatalogPreference = (ListPreference) findPreference(SettingsActivity.KEY_PREF_LOCAL_CATALOG);
+        ListPreference localCatalogPreference = (ListPreference) findPreference(PrefUtils.PREF_LOCAL_CATALOG);
 
         if (Constants.LOCAL_CATALOGS.length > 1) {
             // Set entries and values for the local catalog list
@@ -48,7 +49,7 @@ public class SettingsFragment extends RoboPreferenceFragment implements SharedPr
         // Check if we need to present the dbs privacy checkbox preference
         // to the user, which is only the case, if there is an url pre-configured
         if (Constants.DBS_COUNTING_URL.isEmpty()) {
-            getPreferenceScreen().removePreference(findPreference(SettingsActivity.KEY_PREF_DATA_PRIVACY));
+            getPreferenceScreen().removePreference(findPreference(PrefUtils.PREF_DATA_PRIVACY));
         }
     }
 
@@ -67,7 +68,7 @@ public class SettingsFragment extends RoboPreferenceFragment implements SharedPr
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals(SettingsActivity.KEY_PREF_STORE_LOGIN)) {
+        if (key.equals(PrefUtils.PREF_STORE_LOGIN)) {
             // If storing login credentials is disabled, clean old credentials data
             CheckBoxPreference storeLoginPref = (CheckBoxPreference) findPreference(key);
             if (!storeLoginPref.isChecked()) {

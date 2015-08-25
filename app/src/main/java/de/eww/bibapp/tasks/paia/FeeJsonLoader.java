@@ -23,6 +23,7 @@ import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.FeeItem;
 import de.eww.bibapp.tasks.AbstractLoader;
+import de.eww.bibapp.util.PrefUtils;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -53,13 +54,7 @@ public class FeeJsonLoader extends AbstractLoader<FeeItem>
 		List<FeeItem> response = new ArrayList<FeeItem>();
 
 		// get url
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(fragment.getActivity());
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
+		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
 		String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/core/" + PaiaHelper.getInstance().getUsername() + "/fees?access_token=" + PaiaHelper.getInstance().getAccessToken();
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl, mContext);
 

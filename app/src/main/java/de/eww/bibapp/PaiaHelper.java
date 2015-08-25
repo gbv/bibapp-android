@@ -22,6 +22,7 @@ import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.fragment.dialog.LoginDialogFragment;
 import de.eww.bibapp.tasks.paia.PaiaLoginTask;
+import de.eww.bibapp.util.PrefUtils;
 
 public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 {
@@ -104,12 +105,11 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                 // if login data is not stored or credentials are not set, ask user for them
                 boolean showLoginDialog = false;
 
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
-                boolean storeLogin = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false);
+                boolean storeLogin = PrefUtils.isLoginStored(activity);
 
                 // storeLogin could be true without any stored login data, if the user disables and reenables
                 // the corresponding option in the settings activity
-                String usernameForCheck = sharedPref.getString("store_login_username", null);
+                String usernameForCheck = PrefUtils.getStoredUsername(activity);
 
                 showLoginDialog = !storeLogin || usernameForCheck == null;
 
@@ -120,10 +120,10 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                     dialogFragment.setListener(this);
                     dialogFragment.show(this.activity.getSupportFragmentManager(), "login");
                 } else {
-                    this.username = sharedPref.getString("store_login_username", null);
+                    this.username = usernameForCheck;
 
                     // login
-                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(this.username, sharedPref.getString("store_login_password", null));
+                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(this.username, PrefUtils.getStoredPassword(activity));
 
                     try
                     {
@@ -206,19 +206,12 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 
 					// store login credentials - if set in preferences
 					// or the checkbox was set in the login dialog
-                    SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this.activity);
-                    boolean storeLoginCredentials = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false) || storeData;
+                    boolean storeLoginCredentials = PrefUtils.isLoginStored(this.activity) || storeData;
 
 				    if ( storeLoginCredentials ) {
-				    	SharedPreferences.Editor editor = sharedPref.edit();
-				    	editor.putString("store_login_username", username);
-				    	editor.putString("store_login_password", password);
-
-				    	if ( storeData == true ) {
-				    		editor.putBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, true);
-				    	}
-
-				    	editor.commit();
+                        PrefUtils.setStoredUsername(this.activity, username);
+                        PrefUtils.setStoredPassword(this.activity, password);
+                        PrefUtils.setLoginStored(this.activity, storeData);
 				    }
 
                     this.updateAccessTokenDate(loginResponse.getInt("expires_in"));

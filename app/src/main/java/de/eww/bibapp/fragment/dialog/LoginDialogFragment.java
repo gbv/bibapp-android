@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.SettingsActivity;
+import de.eww.bibapp.util.PrefUtils;
 
 public class LoginDialogFragment extends DialogFragment
 {
@@ -78,9 +79,7 @@ public class LoginDialogFragment extends DialogFragment
                }
            });
 
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        boolean storeLogin = sharedPref.getBoolean(SettingsActivity.KEY_PREF_STORE_LOGIN, false);
-		
+		boolean storeLogin = PrefUtils.isLoginStored(getActivity());
 		if (storeLogin == false) {
 			CheckBox checkBox = (CheckBox) this.dialogView.findViewById(R.id.logindialog_save);
 			checkBox.setVisibility(View.VISIBLE);

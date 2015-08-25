@@ -11,6 +11,7 @@ import java.net.URLEncoder;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.util.PrefUtils;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -35,12 +36,7 @@ public class PaiaLoginTask extends AbstractPaiaTask
 		JSONObject result = new JSONObject();
 
 		// get url
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
+		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(activity);
 
 		try
 		{

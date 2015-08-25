@@ -1,10 +1,8 @@
 package de.eww.bibapp.fragment.search;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -27,7 +25,6 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.SearchActivity;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.adapter.ModsAdapter;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
@@ -36,6 +33,7 @@ import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
 import de.eww.bibapp.tasks.DBSPixelTask;
 import de.eww.bibapp.tasks.SearchXmlLoader;
+import de.eww.bibapp.util.PrefUtils;
 import roboguice.activity.RoboActionBarActivity;
 import roboguice.fragment.RoboFragment;
 
@@ -234,8 +232,7 @@ public class SearchListFragment extends RoboFragment implements
 
         // dbs counting
         if (Constants.DBS_COUNTING_URL != null && !Constants.DBS_COUNTING_URL.isEmpty()) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            boolean isDbsChecked = sharedPref.getBoolean(SettingsActivity.KEY_PREF_DATA_PRIVACY, true);
+            boolean isDbsChecked = PrefUtils.isDbsChecked(getActivity());
 
             if (isDbsChecked) {
                 AsyncTask<Void, Void, Void> dbsPixelTask = new DBSPixelTask(getActivity());

@@ -25,6 +25,7 @@ import de.eww.bibapp.model.DaiaItem;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.parser.DaiaXmlParser;
+import de.eww.bibapp.util.PrefUtils;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -73,13 +74,7 @@ public class DaiaLoader extends AbstractLoader<DaiaItem>
 		DaiaXmlParser daiaXmlParser = new DaiaXmlParser(this.item);
 		ArrayList<DaiaItem> response = new ArrayList<DaiaItem>();
 
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
+		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getDaiaUrl(this.ppn, this.fromLocalSearch, localCatalogIndex), mContext);
 
 		try
