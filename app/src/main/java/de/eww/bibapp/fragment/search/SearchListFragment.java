@@ -29,6 +29,7 @@ import de.eww.bibapp.activity.SearchActivity;
 import de.eww.bibapp.adapter.ModsAdapter;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
+import de.eww.bibapp.listener.EndlessScrollListener;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
@@ -77,18 +78,9 @@ public class SearchListFragment extends RoboFragment implements
          *
          * @param index the index of the selected mods item.
          */
-        public void onModsItemSelected(int index);
+        void onModsItemSelected(int index);
 
-        public void onNewSearchResultsLoaded();
-    }
-
-    /**
-     * Sets the listener that should be notified of mods item selection events.
-     *
-     * @param listener the listener to notify.
-     */
-    public void setOnModsItemSelectedListener(OnModsItemSelectedListener listener) {
-        mModsItemSelectedListener = listener;
+        void onNewSearchResultsLoaded();
     }
 
     public void setSelection(int position) {
@@ -126,33 +118,15 @@ public class SearchListFragment extends RoboFragment implements
         RecyclerViewOnGestureListener gestureListener = new RecyclerViewOnGestureListener(getActivity(), mRecyclerView);
         gestureListener.setOnGestureListener(this);
         mRecyclerView.addOnItemTouchListener(gestureListener);
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.addOnScrollListener(new EndlessScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+            public void onLoadMore(int page, int totalItemCount) {
+                mIsLoading = true;
 
-                int visibleItemCount = mRecyclerView.getChildCount();
-                int totalItemCount = mLayoutManager.getItemCount();
-                int firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
-
-                // Are we already loading?
-                if (!mIsLoading) {
-                    // Are there more items than we can display on one page?
-                    if (totalItemCount > visibleItemCount) {
-                        // Did we reach the last item from response?
-                        if (totalItemCount < mModsSource.getTotalItems()) {
-                            // Did we reach the end of the list?
-                            if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + 0)) {
-                                mIsLoading = true;
-
-                                mProgressBar.setVisibility(View.VISIBLE);
-                                Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
-                                SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
-                                searchXmlLoader.forceLoad();
-                            }
-                        }
-                    }
-                }
+                mProgressBar.setVisibility(View.VISIBLE);
+                Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
+                SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
+                searchXmlLoader.forceLoad();
             }
         });
 
