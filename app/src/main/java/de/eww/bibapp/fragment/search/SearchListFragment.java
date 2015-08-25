@@ -1,5 +1,6 @@
 package de.eww.bibapp.fragment.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -57,7 +58,12 @@ public class SearchListFragment extends RoboFragment implements
 
     private boolean mIsLoading = false;
 
-    private SearchActivity.SEARCH_MODE mSearchMode = SearchActivity.SEARCH_MODE.LOCAL;
+    public static enum SEARCH_MODE {
+        LOCAL,
+        GVK
+    }
+
+    private SEARCH_MODE mSearchMode = SEARCH_MODE.LOCAL;
 
     // The listener we are to notify when a mods item is selected
     OnModsItemSelectedListener mModsItemSelectedListener = null;
@@ -92,6 +98,18 @@ public class SearchListFragment extends RoboFragment implements
     public void resetAdapter() {
         mAdapter = new ModsAdapter(mModsSource.getModsItems(), getActivity());
         mRecyclerView.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            // Register the fragments activity as the listener for select events.
+            mModsItemSelectedListener = (OnModsItemSelectedListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement OnModsItemSelectedListener");
+        }
     }
 
     @Override
@@ -194,7 +212,7 @@ public class SearchListFragment extends RoboFragment implements
     @Override
     public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
         Loader<HashMap<String, Object>> loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
-        ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchActivity.SEARCH_MODE.LOCAL);
+        ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchListFragment.SEARCH_MODE.LOCAL);
 
         return loader;
     }
@@ -273,7 +291,7 @@ public class SearchListFragment extends RoboFragment implements
 
     }
 
-    public void setSearchMode(SearchActivity.SEARCH_MODE searchMode) {
+    public void setSearchMode(SEARCH_MODE searchMode) {
         mSearchMode = searchMode;
     }
 }

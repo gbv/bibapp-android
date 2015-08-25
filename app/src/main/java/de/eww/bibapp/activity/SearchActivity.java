@@ -4,14 +4,19 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.view.View;
 
 import com.google.inject.Inject;
+
+import java.io.FileDescriptor;
+import java.io.PrintWriter;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchListFragment;
+import de.eww.bibapp.fragment.search.SearchListViewPager;
 import de.eww.bibapp.model.source.ModsSource;
 
 public class SearchActivity extends BaseActivity implements
@@ -23,20 +28,13 @@ public class SearchActivity extends BaseActivity implements
     // Whether or not we are in dual-pane mode
     boolean mIsDualPane = false;
 
-    SearchListFragment mSearchListFragment;
+    SearchListViewPager mSearchListViewPager;
     ModsFragment mModsFragment;
 
     @Inject ModsSource mModsSource;
 
     // The mods item index currently beeing displayed
     int mCurrentModsItemIndex = 0;
-
-    private SEARCH_MODE mSearchMode = SEARCH_MODE.LOCAL;
-
-    public enum SEARCH_MODE {
-        LOCAL,
-        GVK
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,18 +44,13 @@ public class SearchActivity extends BaseActivity implements
         searchActivityInstance = this;
 
         // Find our fragments
-        mSearchListFragment = (SearchListFragment) getSupportFragmentManager().findFragmentById(R.id.search_list);
+        mSearchListViewPager = (SearchListViewPager) getSupportFragmentManager().findFragmentById(R.id.search_list_pager);
         mModsFragment = (ModsFragment) getSupportFragmentManager().findFragmentById(R.id.mods_item);
 
         // Determine whether we are in single-pane or dual-pane mode by testing the visibility
         // of the mods view
         View modsView = findViewById(R.id.mods_item);
         mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
-
-        mSearchListFragment.setSearchMode(mSearchMode);
-
-        // Register ourselves as the listener for the search list fragment events.
-        mSearchListFragment.setOnModsItemSelectedListener(this);
 
         setActiveNavigationItem(0);
     }
@@ -69,7 +62,7 @@ public class SearchActivity extends BaseActivity implements
         if (savedInstanceState != null) {
             if (mIsDualPane) {
                 int modsItemIndex = savedInstanceState.getInt("modsItemIndex", 0);
-                mSearchListFragment.setSelection(modsItemIndex);
+                //mSearchListFragment.setSelection(modsItemIndex);
                 onModsItemSelected(modsItemIndex);
             }
         }
@@ -117,11 +110,11 @@ public class SearchActivity extends BaseActivity implements
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 // Reset list adapter
-                mSearchListFragment.resetAdapter();
+                //mSearchListFragment.resetAdapter();
 
                 // Scroll to item
                 int pagerItemPosition = data.getIntExtra("pagerItemPosition", 0);
-                mSearchListFragment.setSelection(pagerItemPosition);
+                //mSearchListFragment.setSelection(pagerItemPosition);
 
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {
@@ -141,10 +134,32 @@ public class SearchActivity extends BaseActivity implements
     }
 
     public LoaderManager getListLoaderManager() {
-        return mSearchListFragment.getLoaderManager();
-    }
+        //return mSearchListFragment.getLoaderManager();
+        return new LoaderManager() {
+            @Override
+            public <D> Loader<D> initLoader(int id, Bundle args, LoaderCallbacks<D> callback) {
+                return null;
+            }
 
-    public void setSearchMode(SEARCH_MODE searchMode) {
-        mSearchMode = searchMode;
+            @Override
+            public <D> Loader<D> restartLoader(int id, Bundle args, LoaderCallbacks<D> callback) {
+                return null;
+            }
+
+            @Override
+            public void destroyLoader(int id) {
+
+            }
+
+            @Override
+            public <D> Loader<D> getLoader(int id) {
+                return null;
+            }
+
+            @Override
+            public void dump(String prefix, FileDescriptor fd, PrintWriter writer, String[] args) {
+
+            }
+        };
     }
 }

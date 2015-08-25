@@ -53,15 +53,8 @@ public class BaseActivity extends RoboActionBarActivity implements
      */
     Toolbar mToolbar;
 
-    Spinner mSpinner;
-
     NavigationView mNavigationView;
     TextView mVersionView;
-
-    private SpinnerAdapter mSpinnerAdapter;
-    private AdapterView.OnItemSelectedListener mOnNavigationListener;
-
-    private int mCurrentSpinnerIndex = 0;
 
     private CharSequence mTitle;
 
@@ -97,7 +90,6 @@ public class BaseActivity extends RoboActionBarActivity implements
         mFrameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
         mToolbar = (Toolbar) mDrawerLayout.findViewById(R.id.toolbar);
         mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
-        mSpinner = (Spinner) mDrawerLayout.findViewById(R.id.toolbar_spinner);
         mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
 
         setupNavigation();
@@ -133,11 +125,9 @@ public class BaseActivity extends RoboActionBarActivity implements
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        if (menuItem.getItemId() == mCurrentNavigationIndex && menuItem.getItemId() != R.id.nav_search) {
+        if (menuItem.getItemId() == mCurrentNavigationIndex) {
             return;
         }
-
-        mSpinner.setVisibility(View.GONE);
 
         // Highlight the selected item, update the title
         setActiveNavigationItem(menuItem);
@@ -162,10 +152,6 @@ public class BaseActivity extends RoboActionBarActivity implements
                 intent = new Intent(this, SettingsActivity.class);
                 break;
             default:
-                // setup the search spinner
-                setupSearchSpinner();
-                mSpinner.setVisibility(View.VISIBLE);
-
                 intent = new Intent(this, SearchActivity.class);
                 break;
         }
@@ -190,69 +176,6 @@ public class BaseActivity extends RoboActionBarActivity implements
         } else {
             mToolbar.setVisibility(View.GONE);
         }
-    }
-
-    private void setupSearchSpinner() {
-        // Do not setup twice
-        if (mSpinner.getAdapter() != null) {
-            return;
-        }
-
-        Resources resources = getResources();
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String localCatalogPreference = sharedPreferences.getString(SettingsActivity.KEY_PREF_LOCAL_CATALOG, "");
-        int localCatalogIndex = 0;
-        if (!localCatalogPreference.isEmpty()) {
-            localCatalogIndex = Integer.valueOf(localCatalogPreference);
-        }
-
-        // SpinnerAdapter for search fragment
-        String[] searchSpinnerList = resources.getStringArray(R.array.search_spinner_list);
-
-        // If our current local catalog contains a short title, we append it to the default title
-        if (Constants.LOCAL_CATALOGS[localCatalogIndex].length > 2) {
-            searchSpinnerList[0] += " " + Constants.LOCAL_CATALOGS[localCatalogIndex][2];
-        }
-
-        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                getSupportActionBar().getThemedContext(),
-                R.layout.support_simple_spinner_dropdown_item,
-                searchSpinnerList
-        );
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerAdapter = spinnerArrayAdapter;
-
-        // It's important to follow this exact sequence:
-        // .setAdapter
-        // .setSelection
-        // .setOnItemSelectedListener
-        //
-        // setSelection(..., false) will set the initial selection before the listener kicks in.
-        // This way, the selection is set without animation which causes the listener to be called.
-        // But the listener is null so it will not run.
-        // This prevents the listener from firing on the initial state.
-        mSpinner.setAdapter(mSpinnerAdapter);
-        mSpinner.setSelection(mCurrentSpinnerIndex, false);
-        mOnNavigationListener = new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCurrentSpinnerIndex = position;
-
-                // local or gvk search
-                if (mCurrentSpinnerIndex == 0) {
-                    ((SearchActivity) BaseActivity.this).setSearchMode(SearchActivity.SEARCH_MODE.LOCAL);
-                } else {
-                    ((SearchActivity) BaseActivity.this).setSearchMode(SearchActivity.SEARCH_MODE.GVK);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        };
-        mSpinner.setOnItemSelectedListener(mOnNavigationListener);
     }
 
     @Override
@@ -280,14 +203,6 @@ public class BaseActivity extends RoboActionBarActivity implements
         }
 
         setActiveNavigationItem(mNavigationView.getMenu().findItem(mCurrentNavigationIndex));
-
-        if (mCurrentNavigationIndex == R.id.nav_search) {
-            // setup the search spinner
-            setupSearchSpinner();
-            mSpinner.setVisibility(View.VISIBLE);
-        } else {
-            mSpinner.setVisibility(View.GONE);
-        }
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);

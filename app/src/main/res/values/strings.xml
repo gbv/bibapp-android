@@ -33,7 +33,7 @@
     <string name="info_button_impressum">Impressum</string>
 
     <!-- search spinner -->
-    <string-array name="search_spinner_list">
+    <string-array name="search_catalogs">
         <item>Lokal</item>
         <item>GVK</item>
     </string-array>

@@ -6,8 +6,8 @@
     android:orientation="vertical" >
 
     <fragment
-        android:id="@+id/search_list"
+        android:id="@+id/search_list_pager"
         android:layout_height="fill_parent"
         android:layout_width="match_parent"
-        android:name="de.eww.bibapp.fragment.search.SearchListFragment" />
+        android:name="de.eww.bibapp.fragment.search.SearchListViewPager" />
 </LinearLayout>
