@@ -110,12 +110,9 @@ public class SearchActivity extends BaseActivity implements
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
-                // Reset list adapter
-                //mSearchListFragment.resetAdapter();
-
                 // Scroll to item
                 int pagerItemPosition = data.getIntExtra("pagerItemPosition", 0);
-                //mSearchListFragment.setSelection(pagerItemPosition);
+                mSearchListViewPager.setSelection(pagerItemPosition);
 
                 // Set navigation position
                 if (data.hasExtra("navigationIndex")) {

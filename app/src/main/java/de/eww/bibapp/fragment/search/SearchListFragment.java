@@ -85,14 +85,14 @@ public class SearchListFragment extends RoboFragment implements
         void onNewSearchResultsLoaded(SEARCH_MODE searchMode);
     }
 
-//    public void setSelection(int position) {
-//        mRecyclerView.scrollToPosition(position);
-//    }
-//
-//    public void resetAdapter() {
-//        mAdapter = new ModsAdapter(mModsSource.getModsItems(), getActivity());
-//        mRecyclerView.setAdapter(mAdapter);
-//    }
+    public void setSelection(int position) {
+        mRecyclerView.scrollToPosition(position);
+    }
+
+    public void resetAdapter() {
+        mAdapter = new ModsAdapter(mModsSource.getModsItems(mSearchMode.toString()), getActivity());
+        mRecyclerView.setAdapter(mAdapter);
+    }
 
     @Override
     public void onAttach(Context context) {

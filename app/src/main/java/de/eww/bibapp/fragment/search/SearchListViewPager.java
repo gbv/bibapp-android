@@ -54,6 +54,17 @@ public class SearchListViewPager extends RoboFragment {
         }
     }
 
+
+    public void setSelection(int position) {
+        String fragmentTag = "android:switcher:" + R.id.search_list_viewpager + ":" + mViewPager.getCurrentItem();
+        Fragment fragment = getChildFragmentManager().findFragmentByTag(fragmentTag);
+        if (fragment != null) {
+            SearchListFragment searchListFragment = (SearchListFragment) fragment;
+            searchListFragment.resetAdapter();
+            searchListFragment.setSelection(position);
+        }
+    }
+
     private static class TabLayoutOnPageChangeListener implements ViewPager.OnPageChangeListener {
 
         private final WeakReference<TabLayout> mTabLayoutRef;
