@@ -72,6 +72,10 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 		return this.offset;
 	}
 
+	public void setOffset(int offset) {
+		this.offset = offset;
+	}
+
 	public void setIsLocalSearch(boolean isLocalSearch)
 	{
 		this.isLocalSearch = isLocalSearch;

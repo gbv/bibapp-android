@@ -47,6 +47,16 @@ public class ModsActivity extends BaseActivity {
             }
         }
 
+        if (getIntent().hasExtra("searchMode")) {
+            String searchMode = getIntent().getExtras().getString("searchMode");
+            mModsPagerFragment.setSearchMode(searchMode);
+        }
+
+        if (getIntent().hasExtra("searchString")) {
+            String searchString = getIntent().getExtras().getString("searchString");
+            mModsPagerFragment.setSearchString(searchString);
+        }
+
         setActiveNavigationItem(isFromWatchlist ? 2 : 0);
 
         // Display the correct mods item on the fragment

@@ -96,6 +96,8 @@
     <string name="search_hint">Suche</string>
     <string name="search_hits">Treffer</string>
     <string name="search_in_progress">Bibliothek wird durchsucht</string>
+    <string name="search_no_results">Ihre Suche erbrachte leider keine Treffer :(</string>
+    <string name="search_gvk">Suche im GVK-Katalog</string>
 
     <!-- watchlist -->
     <string name="watchlist_export_subject">BibApp: Export Ihrer Merkliste</string>

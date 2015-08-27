@@ -12,6 +12,8 @@ import java.util.List;
 import de.eww.bibapp.activity.SearchActivity;
 import de.eww.bibapp.fragment.dialog.SwipeLoadingDialogFragment;
 import de.eww.bibapp.fragment.search.ModsFragment;
+import de.eww.bibapp.fragment.search.ModsPagerFragment;
+import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
 
@@ -20,69 +22,36 @@ import de.eww.bibapp.model.source.ModsSource;
  */
 public class ModsPagerAdapter extends FragmentStatePagerAdapter {
 
-    FragmentManager mFragmentManager;
-    ModsSource mModsSource;
-
-    private boolean mLoading = false;
+    private ModsPagerFragment mFragment;
+    private ModsSource mModsSource;
+    private String mSearchMode;
 
     private static final int LOADING_OFFSET = 3;
 
-    public interface SearchListLoaderInterface {
-        public LoaderManager getListLoaderManager();
-    }
-
-    public ModsPagerAdapter(FragmentManager fragmentManager, ModsSource modsSource) {
+    public ModsPagerAdapter(ModsPagerFragment fragment, FragmentManager fragmentManager, ModsSource modsSource, String searchMode) {
         super(fragmentManager);
 
-        mFragmentManager = fragmentManager;
+        mFragment = fragment;
         mModsSource = modsSource;
+        mSearchMode = searchMode;
     }
 
     @Override
     public int getCount() {
-        return mModsSource.getTotalItems();
+        return mModsSource.getTotalItems(mSearchMode);
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (!mLoading) {
-            if (mModsSource.getTotalItems() > position + LOADING_OFFSET) {
-                if (mModsSource.getLoadedItems() <= position + LOADING_OFFSET) {
-                    mLoading = true;
-
-                    // Create a dialog
-                    final SwipeLoadingDialogFragment dialogFragment = new SwipeLoadingDialogFragment();
-                    dialogFragment.show(mFragmentManager, "swipe_dialog");
-
-                    // Get the list loader
-                    final Loader<Object> listLoader = SearchActivity.searchActivityInstance.getListLoaderManager().getLoader(0);
-
-                    // Register a listener
-                    listLoader.registerListener(0, new Loader.OnLoadCompleteListener<Object>() {
-                        @Override
-                        public void onLoadComplete(Loader<Object> loader, Object data) {
-                            // Add data
-                            HashMap<String, Object> dataHashMap = (HashMap<String, Object>) data;
-                            List<ModsItem> modsItems = (List<ModsItem>) dataHashMap.get("list");
-                            mModsSource.addModsItems(modsItems);
-
-                            // Unregister
-                            listLoader.unregisterListener(this);
-                            mLoading = false;
-
-                            // Dismiss dialog
-                            dialogFragment.dismiss();
-                        }
-                    });
-
-                    SearchActivity.searchActivityInstance.getListLoaderManager().getLoader(0).forceLoad();
-                }
+        if (mModsSource.getTotalItems(mSearchMode) > position + LOADING_OFFSET) {
+            if (mModsSource.getLoadedItems(mSearchMode) <= position + LOADING_OFFSET) {
+                mFragment.onLoadMore();
             }
         }
 
         ModsFragment modsFragment = new ModsFragment();
         modsFragment.setIsWatchlistFragment(false);
-        modsFragment.setModsItem(mModsSource.getModsItem(position));
+        modsFragment.setModsItem(mModsSource.getModsItem(mSearchMode, position));
 
         return modsFragment;
     }

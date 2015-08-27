@@ -35,7 +35,7 @@ public class WatchlistSource extends ModsSource {
             e.printStackTrace();
         }
 
-        addModsItems(response);
-        setTotalItems(response.size());
+        addModsItems("watchlist", response);
+        setTotalItems("watchlist", response.size());
     }
 }

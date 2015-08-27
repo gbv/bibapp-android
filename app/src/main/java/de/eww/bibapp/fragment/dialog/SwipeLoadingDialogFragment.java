@@ -30,6 +30,7 @@ public class SwipeLoadingDialogFragment extends DialogFragment
 	    View view = inflater.inflate(R.layout.dialog_swipe_loading, null);
 	    
 	    builder.setView(view);
+		setCancelable(false);
 	    
 	    return builder.create();
 	}

@@ -20,8 +20,7 @@ import de.eww.bibapp.fragment.search.SearchListViewPager;
 import de.eww.bibapp.model.source.ModsSource;
 
 public class SearchActivity extends BaseActivity implements
-        SearchListFragment.OnModsItemSelectedListener,
-        ModsPagerAdapter.SearchListLoaderInterface {
+        SearchListFragment.OnModsItemSelectedListener {
 
     public static SearchActivity searchActivityInstance;
 
@@ -58,15 +57,15 @@ public class SearchActivity extends BaseActivity implements
     /**
      * Restore mods item selection from saved state
      */
-    private void restoreSelection(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            if (mIsDualPane) {
-                int modsItemIndex = savedInstanceState.getInt("modsItemIndex", 0);
-                //mSearchListFragment.setSelection(modsItemIndex);
-                onModsItemSelected(modsItemIndex);
-            }
-        }
-    }
+//    private void restoreSelection(Bundle savedInstanceState) {
+//        if (savedInstanceState != null) {
+//            if (mIsDualPane) {
+//                int modsItemIndex = savedInstanceState.getInt("modsItemIndex", 0);
+//                //mSearchListFragment.setSelection(modsItemIndex);
+//                onModsItemSelected(modsItemIndex);
+//            }
+//        }
+//    }
 
     /**
      * Called when a mods item is selected.
@@ -74,26 +73,28 @@ public class SearchActivity extends BaseActivity implements
      * @param index the index of the selected mods item.
      */
     @Override
-    public void onModsItemSelected(int index) {
+    public void onModsItemSelected(SearchListFragment.SEARCH_MODE searchMode, int index, String searchString) {
         mCurrentModsItemIndex = index;
 
         if (mIsDualPane) {
             // display it on the mods fragment
-            mModsFragment.setModsItem(mModsSource.getModsItem(index));
+            mModsFragment.setModsItem(mModsSource.getModsItem(searchMode.toString(), index));
         } else {
             // use separate activity
             Intent modsIntent = new Intent(this, ModsActivity.class);
             modsIntent.putExtra("modsItemIndex", index);
+            modsIntent.putExtra("searchString", searchString);
+            modsIntent.putExtra("searchMode", searchMode.toString());
             startActivityForResult(modsIntent, 1);
         }
     }
 
     @Override
-    public void onNewSearchResultsLoaded() {
+    public void onNewSearchResultsLoaded(SearchListFragment.SEARCH_MODE searchMode) {
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
-            if (mModsSource.getTotalItems() > 0) {
-                mModsFragment.setModsItem(mModsSource.getModsItem(0));
+            if (mModsSource.getTotalItems(searchMode.toString()) > 0) {
+                mModsFragment.setModsItem(mModsSource.getModsItem(searchMode.toString(), 0));
             }
         }
     }
@@ -131,35 +132,5 @@ public class SearchActivity extends BaseActivity implements
                 }
             }
         }
-    }
-
-    public LoaderManager getListLoaderManager() {
-        //return mSearchListFragment.getLoaderManager();
-        return new LoaderManager() {
-            @Override
-            public <D> Loader<D> initLoader(int id, Bundle args, LoaderCallbacks<D> callback) {
-                return null;
-            }
-
-            @Override
-            public <D> Loader<D> restartLoader(int id, Bundle args, LoaderCallbacks<D> callback) {
-                return null;
-            }
-
-            @Override
-            public void destroyLoader(int id) {
-
-            }
-
-            @Override
-            public <D> Loader<D> getLoader(int id) {
-                return null;
-            }
-
-            @Override
-            public void dump(String prefix, FileDescriptor fd, PrintWriter writer, String[] args) {
-
-            }
-        };
     }
 }

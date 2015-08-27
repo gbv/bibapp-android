@@ -15,7 +15,6 @@ import de.eww.bibapp.fragment.watchlist.WatchlistListFragment;
 import de.eww.bibapp.model.source.WatchlistSource;
 
 public class WatchlistActivity extends BaseActivity implements
-        ModsPagerAdapter.SearchListLoaderInterface,
         WatchlistListFragment.OnModsItemSelectedListener {
 
     // Whether or not we are in dual-pane mode
@@ -44,7 +43,7 @@ public class WatchlistActivity extends BaseActivity implements
         mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
 
         // load watchlist data
-        mWatchlistSource.clear();
+        mWatchlistSource.clear("watchlist");
         mWatchlistSource.loadFromFile(this);
 
         // Register ourselves as the listener for the search list fragment events.
@@ -55,9 +54,9 @@ public class WatchlistActivity extends BaseActivity implements
 
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
-            if (mWatchlistSource.getTotalItems() > 0) {
+            if (mWatchlistSource.getTotalItems("watchlist") > 0) {
                 mModsFragment.setIsWatchlistFragment(true);
-                mModsFragment.setModsItem(mWatchlistSource.getModsItem(0));
+                mModsFragment.setModsItem(mWatchlistSource.getModsItem("watchlist", 0));
             }
         }
     }
@@ -86,7 +85,7 @@ public class WatchlistActivity extends BaseActivity implements
 
         if (mIsDualPane) {
             // display it on the mods fragment
-            mModsFragment.setModsItem(mWatchlistSource.getModsItem(index));
+            mModsFragment.setModsItem(mWatchlistSource.getModsItem("watchlist", index));
         } else {
             // use separate activity
             Intent modsIntent = new Intent(this, ModsActivity.class);
@@ -129,9 +128,5 @@ public class WatchlistActivity extends BaseActivity implements
                 }
             }
         }
-    }
-
-    public LoaderManager getListLoaderManager() {
-        return mWatchlistListFragment.getLoaderManager();
     }
 }

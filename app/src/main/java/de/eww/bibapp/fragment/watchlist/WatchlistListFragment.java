@@ -120,7 +120,7 @@ public class WatchlistListFragment extends RoboFragment implements
         mRecyclerView.addItemDecoration(itemDecoration);
 
         // Get data from source
-        mAdapter = new ModsWatchlistAdapter(mWatchlistSource.getModsItems(), getActivity());
+        mAdapter = new ModsWatchlistAdapter(mWatchlistSource.getModsItems("watchlist"), getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar.setVisibility(View.GONE);

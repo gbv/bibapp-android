@@ -3,6 +3,7 @@ package de.eww.bibapp.model.source;
 import com.google.inject.Singleton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import de.eww.bibapp.model.ModsItem;
@@ -13,34 +14,44 @@ import de.eww.bibapp.model.ModsItem;
 @Singleton
 public class ModsSource {
 
-    private List<ModsItem> mModsItems = new ArrayList<ModsItem>();
-    private int mTotalItems = 0;
+    private HashMap<String, List<ModsItem>> mHashMap = new HashMap<>();
+    private HashMap<String, Integer> mTotalItemsMap = new HashMap<>();
 
-    public void addModsItems(List<ModsItem> itemList) {
-        mModsItems.addAll(itemList);
+    public void addModsItems(String hashMap, List<ModsItem> itemList) {
+        if (!mHashMap.containsKey(hashMap)) {
+            mHashMap.put(hashMap, new ArrayList<ModsItem>());
+        }
+
+        mHashMap.get(hashMap).addAll(itemList);
     }
 
-    public ModsItem getModsItem(int position) {
-        return mModsItems.get(position);
+    public ModsItem getModsItem(String hashMap, int position) {
+        return mHashMap.get(hashMap).get(position);
     }
 
-    public List<ModsItem> getModsItems() {
-        return mModsItems;
+    public List<ModsItem> getModsItems(String hashMap) {
+        return mHashMap.get(hashMap);
     }
 
-    public void clear() {
-        mModsItems.clear();
+    public void clear(String hashMap) {
+        if (mHashMap.containsKey(hashMap)) {
+            mHashMap.get(hashMap).clear();
+        }
     }
 
-    public int getLoadedItems() {
-        return mModsItems.size();
+    public int getLoadedItems(String hashMap) {
+        return mHashMap.get(hashMap).size();
     }
 
-    public void setTotalItems(int totalItem) {
-        mTotalItems = totalItem;
+    public void setTotalItems(String hashMap, int totalItems) {
+        mTotalItemsMap.put(hashMap, totalItems);
     }
 
-    public int getTotalItems() {
-        return mTotalItems;
+    public int getTotalItems(String hashMap) {
+        if (mTotalItemsMap.containsKey(hashMap)) {
+            return mTotalItemsMap.get(hashMap);
+        }
+
+        return 0;
     }
 }

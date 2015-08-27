@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
@@ -44,6 +45,7 @@ import roboguice.fragment.RoboFragment;
  */
 public class SearchListFragment extends RoboFragment implements
         LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
+        View.OnClickListener,
         RecyclerViewOnGestureListener.OnGestureListener,
         AsyncCanceledInterface {
 
@@ -55,11 +57,11 @@ public class SearchListFragment extends RoboFragment implements
     TextView mEmptyView;
 
     private ModsAdapter mAdapter;
-    private LinearLayoutManager mLayoutManager;
 
     private boolean mIsLoading = false;
+    private String mLastSearchQuery;
 
-    public static enum SEARCH_MODE {
+    public enum SEARCH_MODE {
         LOCAL,
         GVK
     }
@@ -78,19 +80,19 @@ public class SearchListFragment extends RoboFragment implements
          *
          * @param index the index of the selected mods item.
          */
-        void onModsItemSelected(int index);
+        void onModsItemSelected(SEARCH_MODE searchMode, int index, String searchString);
 
-        void onNewSearchResultsLoaded();
+        void onNewSearchResultsLoaded(SEARCH_MODE searchMode);
     }
 
-    public void setSelection(int position) {
-        mRecyclerView.scrollToPosition(position);
-    }
-
-    public void resetAdapter() {
-        mAdapter = new ModsAdapter(mModsSource.getModsItems(), getActivity());
-        mRecyclerView.setAdapter(mAdapter);
-    }
+//    public void setSelection(int position) {
+//        mRecyclerView.scrollToPosition(position);
+//    }
+//
+//    public void resetAdapter() {
+//        mAdapter = new ModsAdapter(mModsSource.getModsItems(), getActivity());
+//        mRecyclerView.setAdapter(mAdapter);
+//    }
 
     @Override
     public void onAttach(Context context) {
@@ -109,8 +111,7 @@ public class SearchListFragment extends RoboFragment implements
         super.onActivityCreated(savedInstanceState);
 
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST);
         mRecyclerView.addItemDecoration(itemDecoration);
@@ -136,11 +137,13 @@ public class SearchListFragment extends RoboFragment implements
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mProgressBar.setVisibility(View.VISIBLE);
-                mRecyclerView.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.GONE);
 
                 Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
                 SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
+
+                mLastSearchQuery = query;
 
                 searchXmlLoader.setSearchString(query);
                 searchXmlLoader.resetOffset();
@@ -171,6 +174,10 @@ public class SearchListFragment extends RoboFragment implements
         mEmptyView.setVisibility(View.GONE);
     }
 
+    public void forceSearch(String searchQuery) {
+        mSearchView.setQuery(searchQuery, true);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_search_list, container, false);
@@ -185,6 +192,11 @@ public class SearchListFragment extends RoboFragment implements
 
     @Override
     public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
+        // Reset source
+        mModsSource.clear(mSearchMode.toString());
+        mModsSource.setTotalItems(mSearchMode.toString(), 0);
+        updateSubtitle();
+
         Loader<HashMap<String, Object>> loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
         ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchListFragment.SEARCH_MODE.LOCAL);
 
@@ -195,11 +207,11 @@ public class SearchListFragment extends RoboFragment implements
     public void onLoadFinished(Loader<HashMap<String, Object>> loader, HashMap<String, Object> data) {
         List<ModsItem> modsItems = (List<ModsItem>) data.get("list");
 
-        mModsSource.setTotalItems((Integer) data.get("numberOfRecords"));
+        mModsSource.setTotalItems(mSearchMode.toString(), (Integer) data.get("numberOfRecords"));
 
         mProgressBar.setVisibility(View.GONE);
 
-        if (mModsSource.getTotalItems() == 0) {
+        if (mModsSource.getTotalItems(mSearchMode.toString()) == 0) {
             mEmptyView.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         } else {
@@ -207,7 +219,7 @@ public class SearchListFragment extends RoboFragment implements
         }
 
         if (mAdapter == null) {
-            mModsSource.clear();
+            mModsSource.clear(mSearchMode.toString());
             mAdapter = new ModsAdapter(modsItems, getActivity());
             mRecyclerView.setAdapter(mAdapter);
         } else {
@@ -215,9 +227,9 @@ public class SearchListFragment extends RoboFragment implements
             mAdapter.notifyDataSetChanged();
         }
 
-        mModsSource.addModsItems(modsItems);
+        mModsSource.addModsItems(mSearchMode.toString(), modsItems);
         if (mModsItemSelectedListener != null) {
-            mModsItemSelectedListener.onNewSearchResultsLoaded();
+            mModsItemSelectedListener.onNewSearchResultsLoaded(mSearchMode);
         }
 
         mIsLoading = false;
@@ -232,13 +244,50 @@ public class SearchListFragment extends RoboFragment implements
             }
         }
 
-        ActionBar actionBar = ((RoboActionBarActivity) getActivity()).getSupportActionBar();
-        actionBar.setSubtitle(String.valueOf(mModsSource.getTotalItems()) + " " + getResources().getString(R.string.search_hits));
+        updateSubtitle();
+
+        /**
+         * If this is a local catalog search and we could not find any results
+         * suggest to use the global gvk search
+         */
+        if (mSearchMode == SEARCH_MODE.LOCAL) {
+            if (mModsSource.getTotalItems(mSearchMode.toString()) == 0) {
+                Snackbar
+                    .make(getActivity().findViewById(R.id.content_frame), R.string.search_no_results, Snackbar.LENGTH_LONG)
+                    .setAction(R.string.search_gvk, this)
+                    .show();
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        SearchListViewPager searchViewPager = (SearchListViewPager) getParentFragment();
+        searchViewPager.searchGvk(mLastSearchQuery);
     }
 
     @Override
     public void onLoaderReset(Loader<HashMap<String, Object>> loader) {
         // empty
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
+
+        if (visible) {
+            updateSubtitle();
+        }
+    }
+
+    public void updateSubtitle() {
+        Activity activity = getActivity();
+        if (activity != null) {
+            ActionBar actionBar = ((RoboActionBarActivity) activity).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setSubtitle(String.valueOf(mModsSource.getTotalItems(mSearchMode.toString())) + " " + getResources().getString(R.string.search_hits));
+            }
+        }
     }
 
     @Override
@@ -255,7 +304,7 @@ public class SearchListFragment extends RoboFragment implements
     public void onClick(View view, int position) {
         if (!mIsLoading) {
             if (mModsItemSelectedListener != null) {
-                mModsItemSelectedListener.onModsItemSelected(position);
+                mModsItemSelectedListener.onModsItemSelected(mSearchMode, position, mLastSearchQuery);
             }
         }
     }
