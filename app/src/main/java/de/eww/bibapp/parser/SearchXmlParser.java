@@ -419,7 +419,12 @@ public class SearchXmlParser
 				issuance = this.readIssuance(parser);
 			}
             else if (name.equals("dateIssued")) {
-                dateIssued = this.readDateIssued(parser);
+				// ensure we are using the first possible value
+				if (dateIssued == null || dateIssued.isEmpty()) {
+					dateIssued = this.readDateIssued(parser);
+				} else {
+                    this.skip(parser);
+                }
             }
 			else
 			{
