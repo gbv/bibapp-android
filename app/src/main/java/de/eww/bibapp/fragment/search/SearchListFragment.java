@@ -2,6 +2,7 @@ package de.eww.bibapp.fragment.search;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -255,6 +256,7 @@ public class SearchListFragment extends RoboFragment implements
                 Snackbar
                     .make(getActivity().findViewById(R.id.content_frame), R.string.search_no_results, Snackbar.LENGTH_LONG)
                     .setAction(R.string.search_gvk, this)
+                    .setActionTextColor(Color.WHITE)
                     .show();
             }
         }
