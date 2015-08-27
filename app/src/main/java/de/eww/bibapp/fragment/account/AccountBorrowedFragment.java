@@ -239,7 +239,7 @@ public class AccountBorrowedFragment extends Fragment implements
 
         // Start the CAB
         mActionMode = ((RoboActionBarActivity) getActivity()).startSupportActionMode(this);
-        int childPosition = mRecyclerView.getChildPosition(view);
+        int childPosition = mRecyclerView.getChildLayoutPosition(view);
         toggleSelection(childPosition);
     }
 
@@ -248,6 +248,9 @@ public class AccountBorrowedFragment extends Fragment implements
         // Inflate a menu resource providing context menu items
         MenuInflater inflater = actionMode.getMenuInflater();
         inflater.inflate(R.menu.account_borrowed_fragment_mode_actions, menu);
+
+        mAdapter.setSelectionMode(true);
+        mAdapter.notifyDataSetChanged();
 
         ((BaseActivity) getActivity()).showToolbar(false);
 
@@ -276,6 +279,9 @@ public class AccountBorrowedFragment extends Fragment implements
         mActionMode = null;
         mAdapter.clearSelection();
 
+        mAdapter.setSelectionMode(false);
+        mAdapter.notifyDataSetChanged();
+
         ((BaseActivity) getActivity()).showToolbar(true);
     }
 
@@ -289,7 +295,11 @@ public class AccountBorrowedFragment extends Fragment implements
     }
 
     private void toggleSelection(int position) {
-        mAdapter.toggleSelection(position);
+        // Check if the item is renewable
+        if (mAdapter.getPaiaItem(position).isCanRenew()) {
+            mAdapter.toggleSelection(position);
+        }
+
         String title = getString(R.string.menu_selected_count, mAdapter.getSelectedItemCount());
         mActionMode.setTitle(title);
     }

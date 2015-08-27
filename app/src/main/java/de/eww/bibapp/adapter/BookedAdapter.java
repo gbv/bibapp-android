@@ -23,6 +23,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder
 
     private List<PaiaItem> mItemList;
     private SparseBooleanArray mSelectedItems;
+    private boolean mSelectionMode;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -56,6 +57,10 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder
         }
 
         notifyDataSetChanged();
+    }
+
+    public void setSelectionMode(boolean selectionMode) {
+        mSelectionMode = selectionMode;
     }
 
     public void clearSelection() {
@@ -114,6 +119,12 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.ViewHolder
         }
 
         holder.itemView.setSelected(mSelectedItems.get(position, false) && item.isCanCancel());
+
+        if (mSelectionMode && !item.isCanCancel()) {
+            holder.itemView.setAlpha(0.3f);
+        } else {
+            holder.itemView.setAlpha(1.0f);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

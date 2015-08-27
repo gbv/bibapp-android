@@ -25,6 +25,7 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
     private List<PaiaItem> mItemList;
     private Context mContext;
     private SparseBooleanArray mSelectedItems;
+    private boolean mSelectionMode;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -65,6 +66,10 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         }
 
         notifyDataSetChanged();
+    }
+
+    public void setSelectionMode(boolean selectionMode) {
+        mSelectionMode = selectionMode;
     }
 
     public void clearSelection() {
@@ -140,6 +145,12 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         holder.mStatus.setText(statusTranslations[statusCode]);
 
         holder.itemView.setSelected(mSelectedItems.get(position, false) && item.isCanRenew());
+
+        if (mSelectionMode && !item.isCanRenew()) {
+            holder.itemView.setAlpha(0.3f);
+        } else {
+            holder.itemView.setAlpha(1.0f);
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

@@ -30,6 +30,7 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
+import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.adapter.BookedAdapter;
 import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.fragment.dialog.InsufficentRightsDialogFragment;
@@ -226,7 +227,7 @@ public class AccountBookedFragment extends Fragment implements
 
         // Start the CAB
         mActionMode = ((RoboActionBarActivity) getActivity()).startSupportActionMode(this);
-        int childPosition = mRecyclerView.getChildPosition(view);
+        int childPosition = mRecyclerView.getChildLayoutPosition(view);
         toggleSelection(childPosition);
     }
 
@@ -235,6 +236,11 @@ public class AccountBookedFragment extends Fragment implements
         // Inflate a menu resource providing context menu items
         MenuInflater inflater = actionMode.getMenuInflater();
         inflater.inflate(R.menu.account_booked_fragment_mode_actions, menu);
+
+        mAdapter.setSelectionMode(true);
+        mAdapter.notifyDataSetChanged();
+
+        ((BaseActivity) getActivity()).showToolbar(false);
 
         return true;
     }
@@ -262,6 +268,10 @@ public class AccountBookedFragment extends Fragment implements
         mActionMode = null;
         mAdapter.clearSelection();
 
+        mAdapter.setSelectionMode(false);
+        mAdapter.notifyDataSetChanged();
+
+        ((BaseActivity) getActivity()).showToolbar(true);
     }
 
     @Override
@@ -274,7 +284,11 @@ public class AccountBookedFragment extends Fragment implements
     }
 
     private void toggleSelection(int position) {
-        mAdapter.toggleSelection(position);
+        // Check if the item is cancelable
+        if (mAdapter.getPaiaItem(position).isCanCancel()) {
+            mAdapter.toggleSelection(position);
+        }
+
         String title = getString(R.string.menu_selected_count, mAdapter.getSelectedItemCount());
         mActionMode.setTitle(title);
     }
