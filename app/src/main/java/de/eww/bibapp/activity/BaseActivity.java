@@ -34,7 +34,7 @@ import roboguice.activity.RoboActionBarActivity;
 /**
  * Created by christoph on 10.11.14.
  */
-public class BaseActivity extends RoboActionBarActivity implements
+public abstract class BaseActivity extends RoboActionBarActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;
@@ -46,8 +46,6 @@ public class BaseActivity extends RoboActionBarActivity implements
      */
     private DrawerLayout mDrawerLayout;
 
-    private FrameLayout mFrameLayout;
-
     /**
      * The {@link android.support.v7.widget.Toolbar} we will use as our action bar.
      */
@@ -56,10 +54,8 @@ public class BaseActivity extends RoboActionBarActivity implements
     NavigationView mNavigationView;
     TextView mVersionView;
 
-    private CharSequence mTitle;
-
     private ActionBarDrawerToggle mDrawerToggle;
-    protected static int mCurrentNavigationIndex = R.id.nav_search;
+    protected static int mNextNavigationIndex = R.id.nav_search;
 
     public static BaseActivity instance;
     private boolean mForceSelectSearch = false;
@@ -69,8 +65,6 @@ public class BaseActivity extends RoboActionBarActivity implements
         super.onCreate(savedInstanceState);
 
         PrefUtils.init(this);
-
-        mTitle = getTitle();
 
         // set screen orientation
         Resources resources = getResources();
@@ -87,14 +81,15 @@ public class BaseActivity extends RoboActionBarActivity implements
     @Override
     public void setContentView(int layoutResId) {
         mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
-        mFrameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
         mToolbar = (Toolbar) mDrawerLayout.findViewById(R.id.toolbar);
         mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
         mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
 
+        FrameLayout frameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
+
         setupNavigation();
 
-        getLayoutInflater().inflate(layoutResId, mFrameLayout, true);
+        getLayoutInflater().inflate(layoutResId, frameLayout, true);
         super.setContentView(mDrawerLayout);
     }
 
@@ -112,8 +107,6 @@ public class BaseActivity extends RoboActionBarActivity implements
         // Update selected item and title
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
-
-        mCurrentNavigationIndex = menuItem.getItemId();
     }
 
     protected void setActiveNavigationItem(int position) {
@@ -121,16 +114,16 @@ public class BaseActivity extends RoboActionBarActivity implements
     }
 
     public void selectItem(int position) {
-        selectDrawerItem(mNavigationView.getMenu().getItem(position));
+        navigate(mNavigationView.getMenu().getItem(position));
     }
 
-    public void selectDrawerItem(MenuItem menuItem) {
-        if (menuItem.getItemId() == mCurrentNavigationIndex) {
+    public void navigate(MenuItem menuItem) {
+        // Only navigate, if the user selected a different item
+        if (menuItem.getItemId() == mNextNavigationIndex) {
             return;
         }
 
-        // Highlight the selected item, update the title
-        setActiveNavigationItem(menuItem);
+        mNextNavigationIndex = menuItem.getItemId();
 
         Intent intent;
 
@@ -156,8 +149,10 @@ public class BaseActivity extends RoboActionBarActivity implements
                 break;
         }
 
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
+
         startActivity(intent);
+        finish();
 
         // Close the drawer
         mDrawerLayout.closeDrawers();
@@ -165,8 +160,7 @@ public class BaseActivity extends RoboActionBarActivity implements
 
     @Override
     public void setTitle(CharSequence title) {
-        mTitle = title;
-        getSupportActionBar().setTitle(mTitle);
+        getSupportActionBar().setTitle(title);
         getSupportActionBar().setSubtitle("");
     }
 
@@ -185,7 +179,7 @@ public class BaseActivity extends RoboActionBarActivity implements
         mDrawerActionHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                selectDrawerItem(menuItem);
+                navigate(menuItem);
             }
         }, DRAWER_CLOSE_DELAY_MS);
 
@@ -202,7 +196,7 @@ public class BaseActivity extends RoboActionBarActivity implements
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        setActiveNavigationItem(mNavigationView.getMenu().findItem(mCurrentNavigationIndex));
+        setActiveNavigationItem(mNavigationView.getMenu().findItem(mNextNavigationIndex));
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
@@ -259,7 +253,7 @@ public class BaseActivity extends RoboActionBarActivity implements
 
         if (mForceSelectSearch) {
             mForceSelectSearch = false;
-            selectDrawerItem(mNavigationView.getMenu().getItem(0));
+            navigate(mNavigationView.getMenu().getItem(0));
         }
     }
 }

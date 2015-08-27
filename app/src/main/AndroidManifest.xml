@@ -43,8 +43,7 @@
             android:name="de.eww.bibapp.activity.SearchActivity"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop">
+            android:configChanges="orientation|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -56,8 +55,7 @@
             android:name=".activity.AccountActivity"
             android:label="@string/drawer_navigation_account"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop">
+            android:configChanges="orientation|keyboardHidden">
         </activity>
 
         <!-- Watchlist -->
@@ -65,8 +63,7 @@
             android:name=".activity.WatchlistActivity"
             android:label="@string/drawer_navigation_watchlist"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop">
+            android:configChanges="orientation|keyboardHidden">
         </activity>
 
         <!-- Info -->
@@ -74,15 +71,13 @@
             android:name=".activity.InfoActivity"
             android:label="@string/drawer_navigation_info"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop">
+            android:configChanges="orientation|keyboardHidden">
         </activity>
         <activity
             android:name=".activity.ContactActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden"
-            android:parentActivityName=".activity.InfoActivity"
-            android:launchMode="singleTop">
+            android:parentActivityName=".activity.InfoActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -92,8 +87,7 @@
             android:name=".activity.ImpressumActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden"
-            android:parentActivityName=".activity.InfoActivity"
-            android:launchMode="singleTop">
+            android:parentActivityName=".activity.InfoActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -104,13 +98,11 @@
         <activity
             android:name=".activity.LocationActivity"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".activity.LocationsActivity"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop" />
+            android:configChanges="orientation|keyboardHidden" />
 
         <!-- Settings -->
         <activity
@@ -118,8 +110,7 @@
             android:label="@string/drawer_navigation_settings"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden"
-            android:parentActivityName=".activity.SearchActivity"
-            android:launchMode="singleTop">
+            android:parentActivityName=".activity.SearchActivity">
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -130,13 +121,11 @@
         <activity
             android:name=".activity.ModsActivity"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop" />
+            android:configChanges="orientation|keyboardHidden" />
         <activity
             android:name=".activity.WebViewActivity"
             android:screenOrientation="fullSensor"
-            android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTop" />
+            android:configChanges="orientation|keyboardHidden" />
 
         <service
             android:name="com.octo.android.robospice.XmlSpringAndroidSpiceService"
