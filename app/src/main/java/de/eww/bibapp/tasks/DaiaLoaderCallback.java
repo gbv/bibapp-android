@@ -7,6 +7,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -69,8 +71,8 @@ public class DaiaLoaderCallback implements
 
     /**
      * Iterates over a list of given daia items and groups them by department. If any item does not
-     * have a department value (or the value of "Ohne Zuordnung"), a default one will be created and all related items will be grouped under
-     * the default one.
+     * have a department value (or the value of "Ohne Zuordnung"), a default one will be created and
+     * all related items will be grouped under the default one.
      *
      * @param ungroupedList The list of ungrouped daia items loaded online
      *
@@ -105,8 +107,17 @@ public class DaiaLoaderCallback implements
             }
         }
 
-        // Make sure, that the default department fallback is the last one in the list
         ArrayList<DaiaItem> daiaResponseList = new ArrayList<DaiaItem>(hashMap.values());
+
+        // Sort alphabetically
+        Collections.sort(daiaResponseList, new Comparator<DaiaItem>() {
+            @Override
+            public int compare(DaiaItem lhs, DaiaItem rhs) {
+                return lhs.getDepartment().compareTo(rhs.getDepartment());
+            }
+        });
+
+        // Make sure, that the default department fallback is the last one in the list
         it = daiaResponseList.iterator();
         while (it.hasNext()) {
             DaiaItem daiaItem = it.next();
