@@ -158,6 +158,8 @@ public class AccountBorrowedFragment extends Fragment implements
 
         mProgressBar.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.VISIBLE);
+
+        mActionMode.finish();
 	}
 
 	public void onRenew(JSONObject response) {
@@ -171,23 +173,33 @@ public class AccountBorrowedFragment extends Fragment implements
                 JSONArray docArray = response.getJSONArray("doc");
 
                 int docArrayLength = docArray.length();
+                String failedResponseText = "";
                 int numFailedItems = 0;
 
                 for (int i=0; i < docArrayLength; i++) {
                     JSONObject docEntry = docArray.getJSONObject(i);
 
                     if (docEntry.has("error")) {
+                        failedResponseText += "\n";
+                        failedResponseText += mAdapter.getPaiaItem(i).getAbout() + ": ";
+                        failedResponseText += docEntry.get("error");
+
                         numFailedItems++;
                         continue;
                     }
                 }
 
-                if (numFailedItems == docArrayLength) {
-                    responseText = resources.getString(R.string.paiadialog_renew_failure);
-                } else if (numFailedItems > 0) {
-                    responseText = resources.getString(R.string.paiadialog_renew_partial);
-                } else {
+                if (numFailedItems == 0) {
                     responseText = resources.getQuantityString(R.plurals.paiadialog_renew_success, docArrayLength);
+                } else {
+                    if (docArrayLength == numFailedItems) {
+                        responseText = resources.getString(R.string.paiadialog_renew_failure);
+                    } else {
+                        responseText = resources.getString(R.string.paiadialog_renew_partial);
+                    }
+
+                    responseText += "\n";
+                    responseText += failedResponseText;
                 }
             }
 		} catch (Exception e) {
@@ -253,7 +265,6 @@ public class AccountBorrowedFragment extends Fragment implements
             case R.id.menu_account_borrowed_extend:
                 sendPaiaExtendRequest();
 
-                mActionMode.finish();
                 return true;
             default:
                 return false;
@@ -314,5 +325,7 @@ public class AccountBorrowedFragment extends Fragment implements
         // show the action dialog
         mPaiaActionDialog = new PaiaActionDialogFragment();
         mPaiaActionDialog.show(this.getChildFragmentManager(), "paia_action");
+
+        mActionMode.finish();
     }
 }
