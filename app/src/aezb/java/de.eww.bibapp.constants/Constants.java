@@ -156,7 +156,7 @@ public final class Constants
     /**
      * If true, either the storage or the department location of an exemplar are displayed, otherwise both if available
      */
-    public static boolean EXEMPLAR_SHORT_DISPLAY = false;
+    public static boolean EXEMPLAR_SHORT_DISPLAY = true;
 
     /**
      * You probably do not need to change anything below this line
