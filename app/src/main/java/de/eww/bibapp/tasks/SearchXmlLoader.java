@@ -181,24 +181,17 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(fragment.getActivity());
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, localCatalogIndex), this.fragment.getActivity());
 
-		try
-		{
-			this.offset += Constants.SEARCH_HITS_PER_REQUEST;
-
+		try {
 			urlConnectionHelper.configure();
 			urlConnectionHelper.connect(null);
 
 			input = urlConnectionHelper.getInputStream();
 			response = searchXmlParser.parse(input, this.isLocalSearch);
-		}
-		catch (Exception e)
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 
 			this.raiseFailure();
-		}
-		finally
-		{
+		} finally {
 			urlConnectionHelper.disconnect();
 		}
 

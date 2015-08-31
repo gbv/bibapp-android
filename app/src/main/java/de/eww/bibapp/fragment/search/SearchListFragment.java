@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,7 +92,10 @@ public class SearchListFragment extends RoboFragment implements
     }
 
     public void resetAdapter() {
-        mAdapter = new ModsAdapter(mModsSource.getModsItems(mSearchMode.toString()), getActivity());
+        ArrayList<ModsItem> modsItemList = new ArrayList<>();
+        modsItemList.addAll(mModsSource.getModsItems(mSearchMode.toString()));
+
+        mAdapter = new ModsAdapter(modsItemList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
     }
 
@@ -122,12 +126,13 @@ public class SearchListFragment extends RoboFragment implements
         mRecyclerView.addOnItemTouchListener(gestureListener);
         mRecyclerView.addOnScrollListener(new EndlessScrollListener() {
             @Override
-            public void onLoadMore(int page, int totalItemCount) {
+            public void onLoadMore() {
                 mIsLoading = true;
 
                 mProgressBar.setVisibility(View.VISIBLE);
                 Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
                 SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
+                searchXmlLoader.setOffset(mModsSource.getLoadedItems(mSearchMode.toString()) + 1);
                 searchXmlLoader.forceLoad();
             }
         });
