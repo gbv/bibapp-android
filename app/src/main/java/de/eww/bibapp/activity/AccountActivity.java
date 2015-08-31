@@ -27,6 +27,7 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.account.AccountBookedFragment;
 import de.eww.bibapp.fragment.account.AccountBorrowedFragment;
 import de.eww.bibapp.fragment.account.AccountFeesFragment;
+import de.eww.bibapp.tasks.paia.PaiaLogoutTask;
 import de.eww.bibapp.tasks.paia.PaiaPatronTask;
 import de.eww.bibapp.view.SlidingTabLayout;
 
@@ -269,13 +270,21 @@ public class AccountActivity extends BaseActivity implements
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_account_account_logout:
+                // paia logout
+                String patron = PaiaHelper.getInstance().getPatron();
+                if (patron != null) {
+                    AsyncTask<String, Void, JSONObject> paiaLogoutTask = new PaiaLogoutTask(this, this);
+                    paiaLogoutTask.execute(patron);
+                }
+
                 // clean old credentials data
                 PaiaHelper.getInstance().unsetStoredCredentials(this);
 
                 // and remove stored login information
                 PaiaHelper.getInstance().reset();
 
-                ((BaseActivity) this).selectItem(0);
+                // go to search
+                this.selectItem(0);
 
                 return true;
             default:

@@ -35,10 +35,11 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
         WRITE_ITEMS
     }
 
-	private  String accessToken = null;
-	private  String username = null;
-	private  Date accessTokenDate = null;
-    private  List<SCOPES> scopes;
+    private String patron = null;
+	private String accessToken = null;
+	private String username = null;
+	private Date accessTokenDate = null;
+    private List<SCOPES> scopes;
 
     private FragmentActivity activity;
     private List<PaiaListener> listener;
@@ -63,6 +64,10 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 		return this.accessToken;
 	}
 
+    public String getPatron() {
+        return this.patron;
+    }
+
 	public void updateAccessTokenDate(int expiresIn)
 	{
         Date now = new Date();
@@ -80,6 +85,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 
 	public void reset()
 	{
+        this.patron = null;
 		this.accessToken = null;
         this.username = null;
         this.accessTokenDate = null;
@@ -215,6 +221,10 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 				    }
 
                     this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
+
+                    if (loginResponse.has("patron")) {
+                        this.patron = loginResponse.getString("patron");
+                    }
 
                     this.connected();
 

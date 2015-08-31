@@ -57,6 +57,10 @@ public class PaiaLoginTask extends AbstractPaiaTask
 				result.put("access_token", paiaResponse.getString("access_token"));
                 result.put("scopes", paiaResponse.getString("scope"));
                 result.put("expires_in", paiaResponse.getString("expires_in"));
+
+				if (paiaResponse.has("patron")) {
+					result.put("patron", paiaResponse.get("patron"));
+				}
 			}
 		}
 		catch (Exception e)
