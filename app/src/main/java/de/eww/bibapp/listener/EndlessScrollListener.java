@@ -14,11 +14,6 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
     private int mVisibleThreshold = 3;
 
     /**
-     * The current offset index of data we have loaded.
-     */
-    private int mCurrentPage = 0;
-
-    /**
      * The total number of items in the dataset after the last load.
      */
     private int mPreviousTotalItemCount = 0;
@@ -28,23 +23,8 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
      */
     private boolean mLoading = true;
 
-    /**
-     * The starting page index
-     */
-    private int mStartingPageIndex = 0;
-
     public EndlessScrollListener() {
 
-    }
-
-    public EndlessScrollListener(int visibleThreshold) {
-        mVisibleThreshold = visibleThreshold;
-    }
-
-    public EndlessScrollListener(int visibleThreshold, int startPage) {
-        mVisibleThreshold = visibleThreshold;
-        mStartingPageIndex = startPage;
-        mCurrentPage = startPage;
     }
 
     @Override
@@ -62,43 +42,24 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
         int totalItemCount = layoutManager.getItemCount();
         int firstVisibleItem = layoutManager.findFirstVisibleItemPosition();
 
-        /**
-         * If the total item count is lower than the previous, assume the
-         * list is invalidated and should be reset back to initial state.
-         */
-        if (totalItemCount < mPreviousTotalItemCount) {
-            mCurrentPage = mStartingPageIndex;
-            mPreviousTotalItemCount = totalItemCount;
-
-            if (totalItemCount == 0) {
-                mLoading = true;
+        if (mLoading) {
+            if (totalItemCount > mPreviousTotalItemCount) {
+                mLoading = false;
+                mPreviousTotalItemCount = totalItemCount;
             }
         }
 
-        /**
-         * If it's still loading, we check to see if the dataset count has
-         * changed, if so we conclude it has finished loading and update the
-         * current page number and total item count.
-         */
-        if (mLoading && (totalItemCount > mPreviousTotalItemCount)) {
-            mLoading = false;
-            mPreviousTotalItemCount = totalItemCount;
-            mCurrentPage++;
-        }
+        if (!mLoading) {
+            // Did we reach the end of the list?
+            if ((totalItemCount - visibleItemCount) <= (firstVisibleItem + mVisibleThreshold)) {
+                mLoading = true;
 
-        /**
-         * If it isn't currently loading, we check to see if we have breached
-         * the visibleThreshold and need to reload more data.
-         * If we do need to reload some more data, we execute onLoadMore to fetch
-         * the data.
-         */
-        if (!mLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + mVisibleThreshold)) {
-            onLoadMore(mCurrentPage + 1, totalItemCount);
-            mLoading = true;
+                onLoadMore();
+            }
         }
     }
 
-    public abstract void onLoadMore(int page, int totalItemCount);
+    public abstract void onLoadMore();
 
     public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
