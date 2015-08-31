@@ -28,7 +28,6 @@ import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.SearchActivity;
 import de.eww.bibapp.adapter.ModsAdapter;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;

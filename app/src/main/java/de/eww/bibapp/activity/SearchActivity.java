@@ -3,17 +3,11 @@ package de.eww.bibapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.view.View;
 
 import com.google.inject.Inject;
 
-import java.io.FileDescriptor;
-import java.io.PrintWriter;
-
 import de.eww.bibapp.R;
-import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.fragment.search.SearchListViewPager;

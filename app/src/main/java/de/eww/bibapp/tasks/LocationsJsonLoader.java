@@ -1,8 +1,6 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -16,7 +14,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.util.PrefUtils;

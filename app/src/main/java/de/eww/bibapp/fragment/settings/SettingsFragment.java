@@ -9,7 +9,6 @@ import android.preference.PreferenceManager;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.PrefUtils;
 import roboguice.fragment.provided.RoboPreferenceFragment;

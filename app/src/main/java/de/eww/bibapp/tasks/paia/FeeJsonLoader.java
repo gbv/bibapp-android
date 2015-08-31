@@ -1,8 +1,6 @@
 package de.eww.bibapp.tasks.paia;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -19,7 +17,6 @@ import java.util.Locale;
 
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.FeeItem;
 import de.eww.bibapp.tasks.AbstractLoader;

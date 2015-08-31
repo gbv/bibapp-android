@@ -1,15 +1,12 @@
 package de.eww.bibapp.tasks.paia;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
 
 import de.eww.bibapp.AsyncCanceledInterface;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.PrefUtils;
 

@@ -1,9 +1,7 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
@@ -19,7 +17,6 @@ import java.util.regex.Pattern;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.DaiaItem;
 import de.eww.bibapp.model.LocationItem;

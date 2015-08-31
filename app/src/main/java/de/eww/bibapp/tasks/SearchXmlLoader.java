@@ -1,8 +1,6 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.AsyncTaskLoader;
 
@@ -13,7 +11,6 @@ import java.util.HashMap;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.parser.SearchXmlParser;
 import de.eww.bibapp.util.PrefUtils;

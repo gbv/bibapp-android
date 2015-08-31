@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.activity.SettingsActivity;
 
 /**
  * Created by christoph on 25.08.15.

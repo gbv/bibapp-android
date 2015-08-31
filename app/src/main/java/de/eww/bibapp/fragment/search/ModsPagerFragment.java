@@ -1,7 +1,6 @@
 package de.eww.bibapp.fragment.search;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
@@ -20,18 +19,13 @@ import java.util.List;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
-import de.eww.bibapp.adapter.ModsAdapter;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.adapter.ModsWatchlistPagerAdapter;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragment.dialog.SwipeLoadingDialogFragment;
-import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
 import de.eww.bibapp.model.source.WatchlistSource;
-import de.eww.bibapp.tasks.DBSPixelTask;
 import de.eww.bibapp.tasks.SearchXmlLoader;
-import de.eww.bibapp.util.PrefUtils;
 import roboguice.fragment.RoboFragment;
 
 /**

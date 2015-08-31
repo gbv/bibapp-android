@@ -1,15 +1,12 @@
 package de.eww.bibapp.tasks.paia;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 
 import org.json.JSONObject;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.util.PrefUtils;

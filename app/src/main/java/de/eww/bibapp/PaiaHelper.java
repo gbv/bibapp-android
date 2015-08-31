@@ -19,7 +19,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.eww.bibapp.activity.BaseActivity;
-import de.eww.bibapp.activity.SettingsActivity;
 import de.eww.bibapp.fragment.dialog.LoginDialogFragment;
 import de.eww.bibapp.tasks.paia.PaiaLoginTask;
 import de.eww.bibapp.util.PrefUtils;

@@ -3,13 +3,11 @@ package de.eww.bibapp.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.LoaderManager;
 import android.view.View;
 
 import com.google.inject.Inject;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.adapter.ModsPagerAdapter;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.watchlist.WatchlistListFragment;
 import de.eww.bibapp.model.source.WatchlistSource;
