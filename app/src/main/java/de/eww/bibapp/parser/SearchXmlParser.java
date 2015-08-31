@@ -795,28 +795,32 @@ public class SearchXmlParser
 			{
 				// read attributes
 				HashMap<String, String> attributes = this.readAttributes(parser);
-				
-				Iterator<Entry<String, String>> it = attributes.entrySet().iterator();
-				if ( it.hasNext() )
-				{
-					Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
-					
-					if ( pair.getKey().equals("authority") && pair.getValue().contains("marc") )
-					{
-						String form = this.readForm(parser);
-						
-						if ( form.equals("microform") || form.equals("remote") )
-						{
-							mediatype = form;
-						}
-					}
-					else
-					{
-						this.skip(parser);
-					}
-					
-					it.remove();
-				}
+
+                if (!attributes.isEmpty()) {
+                    Iterator<Entry<String, String>> it = attributes.entrySet().iterator();
+                    if ( it.hasNext() )
+                    {
+                        Map.Entry<String, String> pair = (Map.Entry<String, String>) it.next();
+
+                        if ( pair.getKey().equals("authority") && pair.getValue().contains("marc") )
+                        {
+                            String form = this.readForm(parser);
+
+                            if ( form.equals("microform") || form.equals("remote") )
+                            {
+                                mediatype = form;
+                            }
+                        }
+                        else
+                        {
+                            this.skip(parser);
+                        }
+
+                        it.remove();
+                    }
+                } else {
+                    this.skip(parser);
+                }
 			}
 			else
 			{
