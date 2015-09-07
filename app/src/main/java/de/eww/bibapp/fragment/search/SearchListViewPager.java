@@ -8,8 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.lang.ref.WeakReference;
-
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.SearchListPagerAdapter;
 import roboguice.fragment.RoboFragment;
@@ -34,12 +32,6 @@ public class SearchListViewPager extends RoboFragment {
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.search_list_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        /**
-         * Workaround for #183123 @see https://code.google.com/p/android/issues/detail?id=183123
-         */
-        mViewPager.clearOnPageChangeListeners();
-        mViewPager.addOnPageChangeListener(new TabLayoutOnPageChangeListener(tabLayout));
-
         return view;
     }
 
@@ -62,42 +54,6 @@ public class SearchListViewPager extends RoboFragment {
             SearchListFragment searchListFragment = (SearchListFragment) fragment;
             searchListFragment.resetAdapter();
             searchListFragment.setSelection(position);
-        }
-    }
-
-    private static class TabLayoutOnPageChangeListener implements ViewPager.OnPageChangeListener {
-
-        private final WeakReference<TabLayout> mTabLayoutRef;
-        private int mPreviousScrollState;
-        private int mScrollState;
-
-        public TabLayoutOnPageChangeListener(TabLayout tabLayout) {
-            mTabLayoutRef = new WeakReference<>(tabLayout);
-        }
-
-        @Override
-        public void onPageScrollStateChanged(int state) {
-            mPreviousScrollState = mScrollState;
-            mScrollState = state;
-        }
-
-        @Override
-        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            final TabLayout tabLayout = mTabLayoutRef.get();
-            if (tabLayout != null) {
-                final boolean updateText = (mScrollState == ViewPager.SCROLL_STATE_DRAGGING)
-                        || (mScrollState == ViewPager.SCROLL_STATE_SETTLING
-                        && mPreviousScrollState == ViewPager.SCROLL_STATE_DRAGGING);
-                tabLayout.setScrollPosition(position, positionOffset, updateText);
-            }
-        }
-
-        @Override
-        public void onPageSelected(int position) {
-            final TabLayout tabLayout = mTabLayoutRef.get();
-            if (tabLayout != null) {
-                tabLayout.getTabAt(position).select();
-            }
         }
     }
 }
