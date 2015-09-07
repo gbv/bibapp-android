@@ -6,7 +6,10 @@ package de.eww.bibapp.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
+import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsPagerFragment;
 import de.eww.bibapp.model.source.WatchlistSource;
@@ -20,7 +23,8 @@ import de.eww.bibapp.model.source.WatchlistSource;
  * in that case the location article will be displayed by the {@link de.eww.bibapp.activity.LocationsActivity}
  * and this Activity becomes unnecessary.
  */
-public class ModsActivity extends BaseActivity {
+public class ModsActivity extends BaseActivity implements
+        AsyncCanceledInterface {
 
     // The mods item index we are to display
     int mModsItemIndex;
@@ -70,5 +74,11 @@ public class ModsActivity extends BaseActivity {
         setResult(RESULT_OK, intent);
 
         super.onBackPressed();
+    }
+
+    @Override
+    public void onAsyncCanceled() {
+        Toast toast = Toast.makeText(this, R.string.toast_account_error, Toast.LENGTH_LONG);
+        toast.show();
     }
 }
