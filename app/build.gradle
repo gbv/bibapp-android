@@ -18,6 +18,57 @@ android {
         exclude 'META-INF/NOTICE.txt'
         exclude 'META-INF/notice.txt'
     }
+
+    productFlavors {
+        hi {
+            applicationId "de.eww.bibapp.hi"
+        }
+        lg {
+            applicationId "de.eww.bibapp.lg"
+        }
+        il {
+            applicationId "de.eww.bibapp.il"
+        }
+        bls {
+            applicationId "de.eww.bibapp.bls"
+        }
+        hawk {
+            applicationId "de.eww.bibapp.hawk"
+        }
+        thulb {
+            applicationId "de.eww.bibapp.thulb"
+        }
+        eahjena {
+            applicationId "de.eww.bibapp.eahjena"
+        }
+        bathueringen {
+            applicationId "de.eww.bibapp.bathueringen"
+        }
+        schmalkalden {
+            applicationId "de.eww.bibapp.schmalkalden"
+        }
+        ubweimar {
+            applicationId "de.eww.bibapp.ubweimar"
+        }
+        hfmweimar {
+            applicationId "de.eww.bibapp.hfmweimar"
+        }
+        ndh {
+            applicationId "de.eww.bibapp.ndh"
+        }
+        fhe {
+            applicationId "de.eww.bibapp.fhe"
+        }
+        ufb {
+            applicationId "de.eww.bibapp.ufb"
+        }
+        tubs {
+            applicationId 'de.eww.bibapp.tubs'
+        }
+        aezb {
+            applicationId 'de.eww.bibapp.aezb'
+        }
+    }
 }
 
 dependencies {

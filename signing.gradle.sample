@@ -19,7 +19,6 @@ android {
 
     productFlavors {
         yourbib {
-            applicationId "de.org.yourbib"
             signingConfig signingConfigs.release
         }
     }

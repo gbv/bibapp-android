@@ -34,4 +34,4 @@ android:
 
 script:
     - ./gradlew clean assembleAndroidTest
-#connectedAndroidTestTestingDebug
+#    - ./gradlew clean build connectedCheck
