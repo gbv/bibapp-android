@@ -259,6 +259,7 @@ public class SearchListFragment extends RoboFragment implements
             if (mModsSource.getTotalItems(mSearchMode.toString()) == 0) {
                 Snackbar
                     .make(getActivity().findViewById(R.id.content_frame), R.string.search_no_results, Snackbar.LENGTH_LONG)
+                    .setDuration(5000)
                     .setAction(R.string.search_gvk, this)
                     .setActionTextColor(Color.WHITE)
                     .show();
