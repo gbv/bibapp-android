@@ -15,7 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "https://jenopc5.thulb.uni-jena.de:7242/DE-27"
+        "https://jenlbs6.thulb.uni-jena.de:7242/DE-27"
     };
 
     /**
