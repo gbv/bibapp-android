@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.inject.Inject;
 
+import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchListFragment;
@@ -14,7 +16,8 @@ import de.eww.bibapp.fragment.search.SearchListViewPager;
 import de.eww.bibapp.model.source.ModsSource;
 
 public class SearchActivity extends BaseActivity implements
-        SearchListFragment.OnModsItemSelectedListener {
+        SearchListFragment.OnModsItemSelectedListener,
+        AsyncCanceledInterface {
 
     public static SearchActivity searchActivityInstance;
 
@@ -123,5 +126,11 @@ public class SearchActivity extends BaseActivity implements
                 }
             }
         }
+    }
+
+    @Override
+    public void onAsyncCanceled() {
+        Toast toast = Toast.makeText(this, R.string.toast_account_error, Toast.LENGTH_LONG);
+        toast.show();
     }
 }
