@@ -68,6 +68,10 @@ public class BookedJsonLoader extends AbstractLoader<PaiaItem>
 
             JSONObject paiaResponse = new JSONObject(httpResponse);
 
+            if (paiaResponse.has("error")) {
+                throw new Exception();
+            }
+
 			if ( paiaResponse.has("doc") )
 			{
 				JSONArray bookedArray = paiaResponse.getJSONArray("doc");

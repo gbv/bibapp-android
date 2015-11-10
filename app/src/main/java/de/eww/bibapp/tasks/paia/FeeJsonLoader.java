@@ -76,6 +76,10 @@ public class FeeJsonLoader extends AbstractLoader<FeeItem>
 				return response;
 			}
 
+			if (paiaResponse.has("error")) {
+				throw new Exception();
+			}
+
 			String sum = paiaResponse.getString("amount");
 
 			JSONArray feeArray = paiaResponse.getJSONArray("fee");
