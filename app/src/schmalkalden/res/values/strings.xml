@@ -7,16 +7,16 @@
     <!-- contact -->
     <string name="contact_text">
         <![CDATA[
-        <b>Fachhochschule Schmalkalden</b><br/>
+        <b>Hochschule Schmalkalden</b><br/>
         <br/>
         Cellarius Bibliothek<br/>
         Blechhammer, Haus I<br/>
         98574 Schmalkalden<br/>
         <br/>
-        http://www.fh-schmalkalden.de/bibliothek<br/>
+        http://www.hs-schmalkalden.de/bibliothek<br/>
         Tel.: 03683 6881785<br/>
         Fax: 03683 6881923<br/>
-        E-Mail: bibliothek@fh-schmalkalden.de
+        E-Mail: bibliothek@hs-schmalkalden.de
 		]]>
     </string>
     
@@ -24,18 +24,18 @@
     <string name="impressum_text">
         <![CDATA[
         <b>Anbieter</b><br/>
-        Fachhochschule Schmalkalden<br/>
+        Hochschule Schmalkalden<br/>
         Cellarius Bibliothek<br/>
         Blechhammer, Haus I<br/>
         98574 Schmalkalden<br/>
         <br/>
-        http://www.fh-schmalkalden.de/bibliothek<br/>
+        http://www.hs-schmalkalden.de/bibliothek<br/>
         Tel.: 03683 6881785<br/>
         Fax: 03683 6881923<br/>
-        E-Mail: bibliothek@fh-schmalkalden.de<br/>
+        E-Mail: bibliothek@hs-schmalkalden.de<br/>
         <br/>
-        <b>Impressum der FH Schmalkalden</b><br/>
-        http://www.fh-schmalkalden.de/Impressum.html<br/>
+        <b>Impressum der Hochschule Schmalkalden</b><br/>
+        http://www.hs-schmalkalden.de/Impressum.html<br/>
         <br/>
         <b>Angaben zum Datenschutz</b><br/>
         Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Nutzernummer und -passwort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter "Optionen" den Punkt "Zugangsdaten speichern" für das jeweilige Konto. Damit stimmen Sie der Speicherung der Daten auf Ihrem mobilen Endgerät zu.<br/>
@@ -55,7 +55,7 @@
         <br/>
         <b>Gestaltung und Umsetzung</b>
         ursprünglich: UB Lüneburg, UB Hildesheim, VZG<br/>
-        Anpassung: FH Schmalkalden<br/>
+        Anpassung: Hochschule Schmalkalden<br/>
         Umsetzung: effective WEBWORK GmbH
 		]]>
     </string>
