@@ -71,22 +71,31 @@ public class SettingsFragment extends RoboPreferenceFragment implements SharedPr
             // If storing login credentials is disabled, clean old credentials data
             CheckBoxPreference storeLoginPref = (CheckBoxPreference) findPreference(key);
             if (!storeLoginPref.isChecked()) {
-                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-                SharedPreferences.Editor editor = sharedPref.edit();
-
-                editor.putString("store_login_username", null);
-                editor.putString("store_login_password", null);
-
-                editor.commit();
-
-                // and remove stored login information
-                PaiaHelper.getInstance().reset();
-
-                BaseActivity instance = BaseActivity.instance;
-                if (instance != null) {
-                    instance.selectSearch();
-                }
+                cleanStoredCredentials();
             }
+        }
+
+        if (key.equals(PrefUtils.PREF_LOCAL_CATALOG)) {
+            // reset login
+            cleanStoredCredentials();
+        }
+    }
+
+    private void cleanStoredCredentials() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPref.edit();
+
+        editor.putString("store_login_username", null);
+        editor.putString("store_login_password", null);
+
+        editor.commit();
+
+        // and remove stored login information
+        PaiaHelper.getInstance().reset();
+
+        BaseActivity instance = BaseActivity.instance;
+        if (instance != null) {
+            instance.selectSearch();
         }
     }
 }
