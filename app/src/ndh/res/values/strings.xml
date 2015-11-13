@@ -7,14 +7,15 @@
     <!-- contact -->
     <string name="contact_text">
         <![CDATA[
-        Fachhochschule Nordhausen<br/>
+        Hochschule Nordhausen<br/>
         Hochschulbibliothek<br/>
         Weinberghof 4<br/>
         99734 Nordhausen<br/>
+        <br/>
         Tel. Information: 03631 420-184<br/>
         Tel. Ausleihe: 03631 420-185<br/>
         Fax: 03631 420-815<br/>
-        E-Mail: bibliothek@fh-nordhausen.de
+        E-Mail: bibliothek@hs-nordhausen.de
         ]]>
     </string>
 
@@ -22,16 +23,17 @@
     <string name="impressum_text">
         <![CDATA[
         <b>Anbieter</b><br/>
-        Fachhochschulbibliothek Nordhausen<br/>
+        Hochschulbibliothek Nordhausen<br/>
         Weinberghof 4<br/>
         99734 Nordhausen<br/>
-        http://www.fh-nordhausen.de/bibliothek.html<br/>
-        E-Mail: bibliothek@fh-nordhausen.de<br/>
+        <br/>
+        http://www.hs-nordhausen.de/service/bibliothek/<br/>
+        E-Mail: bibliothek@hs-nordhausen.de<br/>
         Tel.: 03631 420-184<br/>
         Fax: 03631 420-815<br/>
         <br/>
         <b>Impressum der Hochschule</b><br/>
-        http://www.fh-nordhausen.de/impressum.html
+        http://www.hs-nordhausen.de/allgemeines/impressum/?T=0
         ]]>
     </string>
 </resources>
