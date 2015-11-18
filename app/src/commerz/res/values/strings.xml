@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp Commerz</string>
+
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Commerzbibliothek und Archiv</b><br/>
+        Handelskammer Hamburg<br/>
+		<br/>
+		<b>Anschrift</b><br/>
+		Adolphsplatz 1<br/>
+		20457 Hamburg<br/>
+		<br/>
+		http://www.hk24.de<br/>
+		<br/>
+		Telefon: +49 40 36138-371<br/>
+		Fax: +49 40 36138-437<br/>
+		E-Mail: frank.schlatermund@hk24.de
+		]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        Commerzbibliothek und Archiv<br/>
+        Handelskammer Hamburg<br/>
+		Adolphsplatz 1<br/>
+		20457 Hamburg<br/>
+		<br/>
+		Telefon: +49 40 36138-371<br/>
+		Telefax: +49 40 36138-437<br/>
+		E-Mail: frank.schlatermund@hk24.de<br/>
+		<br/>
+		<b>Gestaltung und Umsetzung</b><br/>
+		Entwurf und Konzeption<br/>
+		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
+		Umsetzung<br/>
+		Effective Webwork GmbH<br/>
+        <br/>
+        ]]>
+    </string>
+</resources>

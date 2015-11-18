@@ -68,6 +68,9 @@ android {
         aezb {
             applicationId 'de.eww.bibapp.aezb'
         }
+        commerz {
+            applicationId 'de.eww.bibapp.commerz'
+        }
     }
 }
 
