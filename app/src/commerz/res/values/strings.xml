@@ -25,22 +25,55 @@
     <!-- impressum -->
     <string name="impressum_text">
         <![CDATA[
-        <b>Anbieter</b><br/>
-        Commerzbibliothek und Archiv<br/>
-        Handelskammer Hamburg<br/>
+        <b>Anbieter im Sinne von § 5 TMG</b><br/>
+		Handelskammer Hamburg<br/>
 		Adolphsplatz 1<br/>
 		20457 Hamburg<br/>
+		Telefon: +49 40 36138-138<br/>
+		Telefax: +49 40 36138-401<br/>
+		E-Mail: service@hk24.de<br/>
 		<br/>
-		Telefon: +49 40 36138-371<br/>
-		Telefax: +49 40 36138-437<br/>
-		E-Mail: frank.schlatermund@hk24.de<br/>
+		Die Handelskammer Hamburg ist eine Körperschaft des öffentlichen Rechts.<br/>
+		<br/>
+		<b>Vertretungsberechtigte</b><br/>
+		Gem. § 7 Abs. 2 Gesetz zur vorläufigen Regelung des Rechts der Industrie- und Handelskammern (IHKG) in Verbindung mit § 3 Abs. 1 der Satzung der Handelskammer Hamburg vertreten der Präses und der Hauptgeschäftsführer die IHK rechtsgeschäftlich und gerichtlich. Für die Geschäfte der laufenden Verwaltung ist der Hauptgeschäftsführer allein vertretungsberechtigt (§ 3 Abs. 2 Satzung der Handelskammer Hamburg).<br/>
+		<br/>
+		<b>Präses</b><br/>
+		Fritz Horst Melsheimer<br/>
+		Adolphsplatz 1<br/>
+		20457 Hamburg<br/>
+		Telefon +49 40 36138-138<br/>
+		Telefax +49 40 36138-401<br/>
+		E-Mail service@hk24.de<br/>
+		<br/>
+		<b>Hauptgeschäftsführer</b><br/>
+		Prof. Dr. Hans-Jörg Schmidt-Trenz<br/>
+		Adolphsplatz 1<br/>
+		20457 Hamburg<br/>
+		Telefon +49 40 36138-138<br/>
+		Telefax +49 40 36138-401<br/>
+		E-Mail service@hk24.de<br/>
+		<br/>
+		Umsatzsteuer-Identifikationsnummer: DE 118510412<br/>
+		<br/>
+		<b>Aufsichtsbehörde</b><br/>
+		Zuständige Aufsichtsbehörde ist gemäß § 11 Abs. 1 IHKG in Verbindung mit Artikel 1 § 15 Abs. 1 des Hamburger Kammergesetzes die Behörde für Wirtschaft, Verkehr und Innovation.<br/>
+		Behörde für Wirtschaft, Verkehr und Innovation<br/>
+		Alter Steinweg 4 / Wexstraße 7<br/>
+		20459 Hamburg<br/>
+		Telefon: +49 40 42841-0<br/>
+		Telefax: +49 40 42841-1620<br/>
+		E-Mail: poststelle@bwa.hamburg.de<br/>
+		<br/>
+		<b>Angaben zum Datenschutz</b><br/>
+		Sie haben die Möglichkeit, Ihre bibliotheksspezischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“ für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu. Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
+		<br/>
+		<b>Rechtliche Hinweise zur Haftung</b><br/>
+		Diese App wurde mit großer Sorgfalt erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen, ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt. Wir behalten uns vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen. Die App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
 		<br/>
 		<b>Gestaltung und Umsetzung</b><br/>
-		Entwurf und Konzeption<br/>
-		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
-		Umsetzung<br/>
-		Effective Webwork GmbH<br/>
-        <br/>
+		Entwurf und Konzeption: A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
+		Umsetzung: effective WEBWORK GmbH<br/>
         ]]>
     </string>
 </resources>
