@@ -15,12 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "http://paia-hawk.effective-webwork.de",
-        "http://paia-hawk-1.effective-webwork.de",
-        "http://paia-hawk-2.effective-webwork.de",
-        "http://paia-hawk-3.effective-webwork.de",
-        "http://paia-hawk-4.effective-webwork.de",
-        "http://paia-hawk-9.effective-webwork.de"
+        "http://paia-hawk-neu.effective-webwork.de"
     };
 
     /**
@@ -37,12 +32,7 @@ public final class Constants
      * @see BIB_CODES and keep order in sync
      */
     public static final String[][] LOCAL_CATALOGS = {
-        { "opac-de-hil3", "HAWK Bibliothek – Gesamtbestand" },
-        { "opac-de-hil3-1", "Göttingen, Naturwissenschaften", "N" },
-        { "opac-de-hil3-2", "Göttingen, Ressourcenmanagement", "R" },
-        { "opac-de-hil3-3", "Holzminden, Management, Soziale Arbeit, Bauen", "MSB" },
-        { "opac-de-hil3-4", "Hildesheim, Gestaltung, Erhaltung von Kulturgut", "GK" },
-        { "opac-de-hil3-9", "Hildesheim, Bauwesen, Soziale Arbeit und Gesundheit", "BSG" }
+        { "opac-de-hil3", "HAWK Bibliothek – Gesamtbestand" }
     };
 
     public static final int LOCAL_CATALOG_DEFAULT = 0;
@@ -82,12 +72,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] BIB_CODES = {
-        "DE-Hil3",
-        "DE-Hil3",
-        "DE-Hil3",
-        "DE-Hil3",
-        "DE-Hil3",
-        "DE-Hil3",
+        "DE-Hil3"
     };
 
     /**
@@ -104,12 +89,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] DAIA_BIB_CODES = {
-        "DE-Hil3",
-        "DE-Hil3-1",
-        "DE-Hil3-2",
-        "DE-Hil3-3",
-        "DE-Hil3-4",
-        "DE-Hil3-9"
+        "DE-Hil3"
     };
 
     /**
