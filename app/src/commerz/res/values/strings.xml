@@ -2,7 +2,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <!-- general -->
-    <string name="app_name">BibApp Commerz</string>
+    <string name="app_name">BibApp Cobi</string>
 
     <!-- contact -->
     <string name="contact_text">
