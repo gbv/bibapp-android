@@ -6,19 +6,22 @@
 
     <!-- contact -->
     <string name="contact_text">
-        <![CDATA[
-        <b>Commerzbibliothek und Archiv</b><br/>
-        Handelskammer Hamburg<br/>
-		<br/>
-		<b>Anschrift</b><br/>
+		<![CDATA[
+		<b>Adresse</b><br/>
+		Commerzbibliothek<br/>
+		Handelskammer Hamburg<br/>
 		Adolphsplatz 1<br/>
 		20457 Hamburg<br/>
 		<br/>
-		http://www.hk24.de<br/>
+		<b>Bibliothekarische Auskunft</b><br/>
+		Telefon: 040-36138-377<br/>
+		Fax: 040-36138-437<br/>
+		E-Mail: info@commerzbibliothek.de<br/>
 		<br/>
-		Telefon: +49 40 36138-371<br/>
-		Fax: +49 40 36138-437<br/>
-		E-Mail: frank.schlatermund@hk24.de
+		<b>Ausleihe</b><br/>
+		Telefon: 040-36138-374<br/>
+		Fax: 040-36138-437<br/>
+		E-Mail: ausleihe@commerzbibliothek.de
 		]]>
     </string>
 
