@@ -8,8 +8,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
         
-        versionCode 212
-        versionName "2.1.3"
+        versionCode 214
+        versionName "2.1.4"
     }
 
     packagingOptions {
@@ -67,6 +67,9 @@ android {
         }
         aezb {
             applicationId 'de.eww.bibapp.aezb'
+        }
+        commerz {
+            applicationId 'de.eww.bibapp.commerz'
         }
     }
 }
