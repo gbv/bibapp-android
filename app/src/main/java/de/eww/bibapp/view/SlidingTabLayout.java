@@ -29,6 +29,8 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 
+import de.eww.bibapp.R;
+
 /**
  * To be used with ViewPager to provide a tab indicator component which give constant feedback as to
  * the user's scroll progress.
@@ -219,6 +221,8 @@ public class SlidingTabLayout extends HorizontalScrollView {
 
             tabTitleView.setText(adapter.getPageTitle(i));
             tabView.setOnClickListener(tabClickListener);
+
+            tabTitleView.setTextColor(getResources().getColorStateList(R.color.tab_selector));
 
             mTabStrip.addView(tabView);
         }
