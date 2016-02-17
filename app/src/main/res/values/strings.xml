@@ -93,7 +93,7 @@
     <string name="toast_mods_error">Es konnten nicht alle Informationen geladen werden</string>
 
     <!-- search -->
-    <string name="search_hint">Suche</string>
+    <string name="search_hint">Suchbegriff</string>
     <string name="search_hits">Treffer</string>
     <string name="search_in_progress">Bibliothek wird durchsucht</string>
     <string name="search_no_results">Ihre Suche erbrachte leider keine Treffer :(</string>

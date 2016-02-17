@@ -23,6 +23,7 @@
 
         <item name="actionModeBackground">@color/colorAccent</item>
 
+        <item name="searchViewStyle">@style/BibAppTheme.SearchView</item>
     </style>
 
     <!-- Toolbar -->
@@ -53,6 +54,11 @@
               but setting this also changes the popup menu's background,
               even if we define popupTheme for our <Toolbar> -->
         <!-- <item name="android:background">@color/color_primary</item> -->
+    </style>
+
+    <style name="BibAppTheme.SearchView" parent="Widget.AppCompat.SearchView">
+        <!--<item name="queryBackground">?android:editTextBackground</item>-->
+        <item name="queryHint">@string/search_hint</item>
     </style>
 
 </resources>
