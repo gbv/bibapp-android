@@ -8,8 +8,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 23
 
-        versionCode 215
-        versionName "2.1.5"
+        versionCode buildVersionCode()
+        versionName version
     }
 
     packagingOptions {
