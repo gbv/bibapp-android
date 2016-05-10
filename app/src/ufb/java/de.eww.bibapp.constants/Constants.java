@@ -103,11 +103,11 @@ public final class Constants
     {
         if ( isLocal == true )
         {
-            return "http://daia.gbv.de/?id=" + Constants.DAIA_BIB_CODES[localCatalogIndex] + ":ppn:" + ppn + "&format=xml";
+            return "http://daia.gbv.de/?id=" + Constants.DAIA_BIB_CODES[localCatalogIndex] + ":ppn:" + ppn + "&format=json";
         }
         else
         {
-            return "http://daia.gbv.de/?id=gvk:ppn:" + ppn + "&format=xml";
+            return "http://daia.gbv.de/?id=gvk:ppn:" + ppn + "&format=json";
         }
     }
 

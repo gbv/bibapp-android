@@ -21,7 +21,6 @@ import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.DaiaItem;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.ModsItem;
-import de.eww.bibapp.parser.DaiaXmlParser;
 import de.eww.bibapp.util.PrefUtils;
 
 /**
@@ -67,8 +66,6 @@ public class DaiaLoader extends AbstractLoader<DaiaItem>
 	@Override
 	public ArrayList<DaiaItem> loadInBackground()
 	{
-		// Instantiate the parser
-		DaiaXmlParser daiaXmlParser = new DaiaXmlParser(this.item);
 		ArrayList<DaiaItem> response = new ArrayList<DaiaItem>();
 
 		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
@@ -80,9 +77,31 @@ public class DaiaLoader extends AbstractLoader<DaiaItem>
 			urlConnectionHelper.configure();
 			urlConnectionHelper.connect(null);
 
-			InputStream inputStream = urlConnectionHelper.getStream();
+			InputStream inputStream = new BufferedInputStream(urlConnectionHelper.getStream());
+			String httpResponse = urlConnectionHelper.readStream(inputStream);
+			Log.v("DAIA", httpResponse);
 
-			ArrayList<DaiaItem> daiaResponse = daiaXmlParser.parse(inputStream);
+            ArrayList<DaiaItem> daiaResponse = new ArrayList<>();
+
+            JSONObject daiaJsonResponse = new JSONObject(httpResponse);
+            if (daiaJsonResponse.has("document")) {
+                JSONArray documentArray = daiaJsonResponse.getJSONArray("document");
+
+                for (int i=0; i < documentArray.length(); i++) {
+                    JSONObject documentObject = documentArray.getJSONObject(i);
+
+                    if (documentObject.has("item")) {
+                        JSONArray itemArray = documentObject.getJSONArray("item");
+
+                        for (int j=0; j < itemArray.length(); j++) {
+                            JSONObject itemObject = itemArray.getJSONObject(j);
+
+                            DaiaItem daiaItem = new DaiaItem(itemObject, item);
+                            daiaResponse.add(daiaItem);
+                        }
+                    }
+                }
+            }
 
 			// each item contains a uri url from which we can request additional department information
 			Iterator<DaiaItem> it = daiaResponse.iterator();
