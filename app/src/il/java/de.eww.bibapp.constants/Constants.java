@@ -150,7 +150,7 @@ public final class Constants
     /**
      * DBS Counting (called on every search request)
      */
-    public static String DBS_COUNTING_URL = "http://dbspixel.hbz-nrw.de/count?id=EL039&amp;page=20";
+    public static String DBS_COUNTING_URL = "https://pw.bibliothek.tu-ilmenau.de/piwik.php?idsite=3&rec=1";
 
     /**
      * If true, either the storage or the department location of an exemplar are displayed, otherwise both if available

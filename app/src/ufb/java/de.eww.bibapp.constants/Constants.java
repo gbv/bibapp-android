@@ -32,7 +32,9 @@ public final class Constants
      * @see BIB_CODES and keep order in sync
      */
     public static final String[][] LOCAL_CATALOGS = {
-        { "opac-de-547", "Universitäts- und Forschungsbibliothek Erfurt/Gotha", "UFB" }
+        { "opac-de-1876", "UFB Erfurt/Gotha", "UFB Erfurt/Gotha" },
+        { "opac-de-547", "UB Erfurt", "UB Erfurt" },
+        { "opac-de-39", "FB Gotha", "FB Gotha" }
     };
 
     public static final int LOCAL_CATALOG_DEFAULT = 0;
@@ -72,7 +74,9 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] BIB_CODES = {
-        "DE-547"
+        "DE-1876",
+        "DE-547",
+        "DE-39"
     };
 
     /**
@@ -150,7 +154,7 @@ public final class Constants
     /**
      * DBS Counting (called on every search request)
      */
-    public static String DBS_COUNTING_URL = "http://dbspixel.hbz-nrw.de/count?id_EX461&page=2";
+    public static String DBS_COUNTING_URL = "";
 
     /**
      * If true, either the storage or the department location of an exemplar are displayed, otherwise both if available
