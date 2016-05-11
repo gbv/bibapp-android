@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class DaiaItem implements Comparable<DaiaItem>
 {
-	public String label;
+	public String label = "";
 	public final String uriUrl;
 	public final String status;
 	public final String statusColor;
@@ -22,19 +22,23 @@ public class DaiaItem implements Comparable<DaiaItem>
 	public LocationItem locationsEntry = null;
 	public Double distance = null;
 	public String itemUriUrl;
-	public final String storage;
+	public String storage = "";
 
 	public DaiaItem(JSONObject jsonObject, ModsItem modsItem) throws JSONException {
         if (jsonObject.has("id")) {
             itemUriUrl = jsonObject.getString("id");
         }
 
-        label = jsonObject.getString("label");
+        if (jsonObject.has("label")) {
+            label = jsonObject.getString("label");
+        }
 
         if (jsonObject.has("storage")) {
-            storage = jsonObject.getString("storage");
-        } else {
-            storage = "";
+            JSONObject storageObject = jsonObject.getJSONObject("storage");
+
+            if (storageObject.has("content")) {
+                storage = storageObject.getString("content");
+            }
         }
 
         String uriUrl = "";
