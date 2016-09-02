@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,8 +19,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.inject.Inject;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -37,19 +37,15 @@ import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.WatchlistSource;
 import de.eww.bibapp.tasks.UnApiLoaderCallback;
-import roboguice.activity.RoboActionBarActivity;
-import roboguice.fragment.RoboFragment;
 
 /**
  * Created by christoph on 11.11.14.
  */
-public class WatchlistListFragment extends RoboFragment implements
+public class WatchlistListFragment extends Fragment implements
         RecyclerViewOnGestureListener.OnGestureListener,
         UnApiLoaderCallback.UnApiLoaderInterface,
         AsyncCanceledInterface,
         ActionMode.Callback {
-
-    @Inject WatchlistSource mWatchlistSource;
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
@@ -120,7 +116,7 @@ public class WatchlistListFragment extends RoboFragment implements
         mRecyclerView.addItemDecoration(itemDecoration);
 
         // Get data from source
-        mAdapter = new ModsWatchlistAdapter(mWatchlistSource.getModsItems("watchlist"), getActivity());
+        mAdapter = new ModsWatchlistAdapter(WatchlistSource.getModsItems("watchlist"), getActivity());
         mRecyclerView.setAdapter(mAdapter);
 
         mProgressBar.setVisibility(View.GONE);
@@ -166,7 +162,7 @@ public class WatchlistListFragment extends RoboFragment implements
         }
 
         // Start the CAB
-        mActionMode = ((RoboActionBarActivity) getActivity()).startSupportActionMode(this);
+        mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(this);
         int childPosition = mRecyclerView.getChildPosition(view);
         toggleSelection(childPosition);
     }

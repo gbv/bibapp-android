@@ -14,6 +14,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,12 +24,11 @@ import android.widget.TextView;
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.PrefUtils;
-import roboguice.activity.RoboActionBarActivity;
 
 /**
  * Created by christoph on 10.11.14.
  */
-public abstract class BaseActivity extends RoboActionBarActivity implements
+public abstract class BaseActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
 
     private static final long DRAWER_CLOSE_DELAY_MS = 250;

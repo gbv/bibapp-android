@@ -2,6 +2,7 @@ package de.eww.bibapp.fragment.info;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +21,11 @@ import java.util.ListIterator;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.model.LocationItem;
-import roboguice.fragment.RoboFragment;
 
 /**
  * Created by christoph on 25.10.14.
  */
-public class LocationFragment extends RoboFragment {
+public class LocationFragment extends Fragment {
 
     private View mFragmentView;
     private TextView mTitleView;

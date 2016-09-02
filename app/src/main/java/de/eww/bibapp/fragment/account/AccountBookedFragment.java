@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,6 @@ import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.PaiaItem;
 import de.eww.bibapp.tasks.paia.BookedJsonLoader;
 import de.eww.bibapp.tasks.paia.PaiaCancelTask;
-import roboguice.activity.RoboActionBarActivity;
 
 /**
  * Created by christoph on 07.11.14.
@@ -226,7 +226,7 @@ public class AccountBookedFragment extends Fragment implements
         }
 
         // Start the CAB
-        mActionMode = ((RoboActionBarActivity) getActivity()).startSupportActionMode(this);
+        mActionMode = ((AppCompatActivity) getActivity()).startSupportActionMode(this);
         int childPosition = mRecyclerView.getChildLayoutPosition(view);
         toggleSelection(childPosition);
     }

@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.inject.Inject;
-
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsFragment;
@@ -26,8 +24,6 @@ public class SearchActivity extends BaseActivity implements
 
     SearchListViewPager mSearchListViewPager;
     ModsFragment mModsFragment;
-
-    @Inject ModsSource mModsSource;
 
     // The mods item index currently beeing displayed
     int mCurrentModsItemIndex = 0;
@@ -75,7 +71,7 @@ public class SearchActivity extends BaseActivity implements
 
         if (mIsDualPane) {
             // display it on the mods fragment
-            mModsFragment.setModsItem(mModsSource.getModsItem(searchMode.toString(), index));
+            mModsFragment.setModsItem(ModsSource.getModsItem(searchMode.toString(), index));
         } else {
             // use separate activity
             Intent modsIntent = new Intent(this, ModsActivity.class);
@@ -90,8 +86,8 @@ public class SearchActivity extends BaseActivity implements
     public void onNewSearchResultsLoaded(SearchListFragment.SEARCH_MODE searchMode) {
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
-            if (mModsSource.getTotalItems(searchMode.toString()) > 0) {
-                mModsFragment.setModsItem(mModsSource.getModsItem(searchMode.toString(), 0));
+            if (ModsSource.getTotalItems(searchMode.toString()) > 0) {
+                mModsFragment.setModsItem(ModsSource.getModsItem(searchMode.toString(), 0));
             }
         }
     }

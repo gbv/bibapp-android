@@ -2,6 +2,7 @@ package de.eww.bibapp.fragment.search;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
@@ -10,8 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.google.inject.Inject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,14 +23,12 @@ import de.eww.bibapp.adapter.ModsWatchlistPagerAdapter;
 import de.eww.bibapp.fragment.dialog.SwipeLoadingDialogFragment;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
-import de.eww.bibapp.model.source.WatchlistSource;
 import de.eww.bibapp.tasks.SearchXmlLoader;
-import roboguice.fragment.RoboFragment;
 
 /**
  * Created by christoph on 09.11.14.
  */
-public class ModsPagerFragment extends RoboFragment implements
+public class ModsPagerFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
         AsyncCanceledInterface {
 
@@ -46,17 +43,14 @@ public class ModsPagerFragment extends RoboFragment implements
 
     private SwipeLoadingDialogFragment mLoadingDialogFragment;
 
-    @Inject ModsSource mModsSource;
-    @Inject WatchlistSource mWatchlistSource;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         if (!mUseWatchlistSource) {
-            mPagerAdapter = new ModsPagerAdapter(this, getChildFragmentManager(), mModsSource, mSearchMode);
+            mPagerAdapter = new ModsPagerAdapter(this, getChildFragmentManager(), mSearchMode);
         } else {
-            mPagerAdapter = new ModsWatchlistPagerAdapter(getChildFragmentManager(), mWatchlistSource);
+            mPagerAdapter = new ModsWatchlistPagerAdapter(getChildFragmentManager());
         }
     }
 
@@ -127,7 +121,7 @@ public class ModsPagerFragment extends RoboFragment implements
     public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
         SearchXmlLoader loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
         loader.setSearchString(mSearchString);
-        loader.setOffset(mModsSource.getLoadedItems(mSearchMode) + 1);
+        loader.setOffset(ModsSource.getLoadedItems(mSearchMode) + 1);
         loader.setIsLocalSearch(mSearchMode.equals(SearchListFragment.SEARCH_MODE.LOCAL.toString()));
 
         return loader;
@@ -137,7 +131,7 @@ public class ModsPagerFragment extends RoboFragment implements
     public void onLoadFinished(Loader<HashMap<String, Object>> loader, HashMap<String, Object> data) {
         // Add data
         List<ModsItem> modsItems = (List<ModsItem>) data.get("list");
-        mModsSource.addModsItems(mSearchMode, modsItems);
+        ModsSource.addModsItems(mSearchMode, modsItems);
 
         // Dismiss dialog
         mLoadingDialogFragment.dismiss();

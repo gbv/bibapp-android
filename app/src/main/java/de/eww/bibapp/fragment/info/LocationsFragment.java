@@ -1,6 +1,7 @@
 package de.eww.bibapp.fragment.info;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,10 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.inject.Inject;
-
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.LocationAdapter;
@@ -24,28 +26,26 @@ import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.source.LocationSource;
 import de.eww.bibapp.tasks.LocationsJsonLoader;
-import roboguice.fragment.RoboFragment;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 25.10.14.
  */
-public class LocationsFragment extends RoboFragment implements
+public class LocationsFragment extends Fragment implements
         RecyclerViewOnGestureListener.OnGestureListener,
         LoaderManager.LoaderCallbacks<List<LocationItem>>,
         AsyncCanceledInterface {
 
-    @Inject LocationSource mLocationSource;
-
-    @InjectView(R.id.recycler) RecyclerView mRecyclerView;
-    @InjectView(R.id.progressbar) ProgressBar mProgressBar;
-    @InjectView(R.id.empty) TextView mEmptyView;
+    @BindView(R.id.recycler) RecyclerView mRecyclerView;
+    @BindView(R.id.progressbar) ProgressBar mProgressBar;
+    @BindView(R.id.empty) TextView mEmptyView;
 
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
     // The listener we are to notify when a location is selected
     OnLocationSelectedListener mLocationSelectedListener = null;
+
+    private Unbinder unbinder;
 
     /**
      * Represents a listener that will be notified of location selections.
@@ -98,7 +98,17 @@ public class LocationsFragment extends RoboFragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_locations, container, false);
+        View view = inflater.inflate(R.layout.fragment_locations, container, false);
+
+        unbinder = ButterKnife.bind(this, view);
+
+        return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     @Override
@@ -108,8 +118,8 @@ public class LocationsFragment extends RoboFragment implements
 
     @Override
     public void onLoadFinished(Loader<List<LocationItem>> loader, List<LocationItem> locations) {
-        mLocationSource.clear();
-        mLocationSource.addLocations(locations);
+        LocationSource.clear();
+        LocationSource.addLocations(locations);
         if (mLocationSelectedListener != null) {
             mLocationSelectedListener.onLocationsLoaded();
         }

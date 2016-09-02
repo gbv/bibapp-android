@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
+import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import de.eww.bibapp.PaiaHelper;
@@ -11,9 +12,8 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.PrefUtils;
-import roboguice.fragment.provided.RoboPreferenceFragment;
 
-public class SettingsFragment extends RoboPreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

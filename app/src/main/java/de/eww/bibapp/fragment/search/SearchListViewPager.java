@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.SearchListPagerAdapter;
-import roboguice.fragment.RoboFragment;
 
 /**
  * Created by christoph on 24.08.15.
  */
-public class SearchListViewPager extends RoboFragment {
+public class SearchListViewPager extends Fragment {
 
     private ViewPager mViewPager;
 

@@ -14,35 +14,33 @@ import de.eww.bibapp.model.source.ModsSource;
 public class ModsPagerAdapter extends FragmentStatePagerAdapter {
 
     private ModsPagerFragment mFragment;
-    private ModsSource mModsSource;
     private String mSearchMode;
 
     private static final int LOADING_OFFSET = 3;
 
-    public ModsPagerAdapter(ModsPagerFragment fragment, FragmentManager fragmentManager, ModsSource modsSource, String searchMode) {
+    public ModsPagerAdapter(ModsPagerFragment fragment, FragmentManager fragmentManager, String searchMode) {
         super(fragmentManager);
 
         mFragment = fragment;
-        mModsSource = modsSource;
         mSearchMode = searchMode;
     }
 
     @Override
     public int getCount() {
-        return mModsSource.getTotalItems(mSearchMode);
+        return ModsSource.getTotalItems(mSearchMode);
     }
 
     @Override
     public Fragment getItem(int position) {
-        if (mModsSource.getTotalItems(mSearchMode) > position + LOADING_OFFSET) {
-            if (mModsSource.getLoadedItems(mSearchMode) <= position + LOADING_OFFSET) {
+        if (ModsSource.getTotalItems(mSearchMode) > position + LOADING_OFFSET) {
+            if (ModsSource.getLoadedItems(mSearchMode) <= position + LOADING_OFFSET) {
                 mFragment.onLoadMore();
             }
         }
 
         ModsFragment modsFragment = new ModsFragment();
         modsFragment.setIsWatchlistFragment(false);
-        modsFragment.setModsItem(mModsSource.getModsItem(mSearchMode, position));
+        modsFragment.setModsItem(ModsSource.getModsItem(mSearchMode, position));
 
         return modsFragment;
     }

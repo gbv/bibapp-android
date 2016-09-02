@@ -12,24 +12,20 @@ import de.eww.bibapp.model.source.WatchlistSource;
  */
 public class ModsWatchlistPagerAdapter extends FragmentStatePagerAdapter {
 
-    private WatchlistSource mWatchlistSource;
-
-    public ModsWatchlistPagerAdapter(FragmentManager fragmentManager, WatchlistSource watchlistSource) {
+    public ModsWatchlistPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
-
-        mWatchlistSource = watchlistSource;
     }
 
     @Override
     public int getCount() {
-        return mWatchlistSource.getTotalItems("watchlist");
+        return WatchlistSource.getTotalItems("watchlist");
     }
 
     @Override
     public Fragment getItem(int position) {
         ModsFragment modsFragment = new ModsFragment();
         modsFragment.setIsWatchlistFragment(true);
-        modsFragment.setModsItem(mWatchlistSource.getModsItem("watchlist", position));
+        modsFragment.setModsItem(WatchlistSource.getModsItem("watchlist", position));
 
         return modsFragment;
     }

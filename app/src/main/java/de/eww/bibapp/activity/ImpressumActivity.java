@@ -8,12 +8,10 @@ import android.text.util.Linkify;
 import android.widget.TextView;
 
 import de.eww.bibapp.R;
-import roboguice.inject.ContentView;
 
 /**
  * Created by christoph on 25.10.14.
  */
-@ContentView(R.layout.activity_impressum)
 public class ImpressumActivity extends BaseActivity {
 
     @Override

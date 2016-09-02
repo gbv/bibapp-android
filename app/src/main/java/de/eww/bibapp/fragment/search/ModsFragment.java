@@ -32,7 +32,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
-import com.google.inject.Inject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +46,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
@@ -68,13 +70,11 @@ import de.eww.bibapp.tasks.DownloadImageTask;
 import de.eww.bibapp.tasks.LocationsJsonTask;
 import de.eww.bibapp.tasks.UnApiLoaderCallback;
 import de.eww.bibapp.tasks.paia.PaiaRequestTask;
-import roboguice.fragment.RoboFragment;
-import roboguice.inject.InjectView;
 
 /**
  * Created by christoph on 08.11.14.
  */
-public class ModsFragment extends RoboFragment implements
+public class ModsFragment extends Fragment implements
         DaiaLoaderCallback.DaiaLoaderInterface,
         UnApiLoaderCallback.UnApiLoaderInterface,
         RecyclerViewOnGestureListener.OnGestureListener,
@@ -85,21 +85,21 @@ public class ModsFragment extends RoboFragment implements
         GooglePlayServicesClient.OnConnectionFailedListener,
         AsyncCanceledInterface {
 
-    @Inject LocationSource mLocationSource;
-
-    @InjectView(R.id.title) TextView mTitleView;
-    @InjectView(R.id.sub) TextView mSubView;
-    @InjectView(R.id.image) ImageView mImageView;
-    @InjectView(R.id.author_extended) TextView mAuthorExtendedView;
-    @InjectView(R.id.index_container) LinearLayout mIndexContainer;
-    @InjectView(R.id.interlanding_container) LinearLayout mInterlandingContainer;
+    @BindView(R.id.title) TextView mTitleView;
+    @BindView(R.id.sub) TextView mSubView;
+    @BindView(R.id.image) ImageView mImageView;
+    @BindView(R.id.author_extended) TextView mAuthorExtendedView;
+    @BindView(R.id.index_container) LinearLayout mIndexContainer;
+    @BindView(R.id.interlanding_container) LinearLayout mInterlandingContainer;
 
     ModsItem mModsItem = null;
 
-    @InjectView(R.id.recycler) RecyclerView mRecyclerView;
-    @InjectView(R.id.progressbar) ProgressBar mProgressBar;
-    @InjectView(R.id.unapi_progressbar) ProgressBar mUnApiProgressBar;
-    @InjectView(R.id.empty) TextView mEmptyView;
+    @BindView(R.id.recycler) RecyclerView mRecyclerView;
+    @BindView(R.id.progressbar) ProgressBar mProgressBar;
+    @BindView(R.id.unapi_progressbar) ProgressBar mUnApiProgressBar;
+    @BindView(R.id.empty) TextView mEmptyView;
+
+    private Unbinder unbinder;
 
     LinearLayout mModsView;
     RelativeLayout mNoneView;
@@ -152,7 +152,11 @@ public class ModsFragment extends RoboFragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mods, container, false);
+        View view = inflater.inflate(R.layout.fragment_mods, container, false);
+
+        unbinder = ButterKnife.bind(this, view);
+
+        return view;
     }
 
     @Override
@@ -180,6 +184,12 @@ public class ModsFragment extends RoboFragment implements
         mNoneView = (RelativeLayout) view.findViewById(R.id.mods_none);
 
         displayModsItem();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     public void removeModsItem() {
@@ -306,8 +316,8 @@ public class ModsFragment extends RoboFragment implements
     }
 
     public void onLocationLoadFinished(LocationItem locationItem) {
-        mLocationSource.clear();
-        mLocationSource.addLocation(locationItem);
+        LocationSource.clear();
+        LocationSource.addLocation(locationItem);
 
         Intent locationIntent = new Intent(getActivity(), LocationActivity.class);
         locationIntent.putExtra("locationIndex", 0);

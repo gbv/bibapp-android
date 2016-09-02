@@ -2,8 +2,6 @@ package de.eww.bibapp.model.source;
 
 import android.content.Context;
 
-import com.google.inject.Singleton;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -15,10 +13,9 @@ import de.eww.bibapp.model.ModsItem;
 /**
  * Created by christoph on 11.11.14.
  */
-@Singleton
 public class WatchlistSource extends ModsSource {
 
-    public void loadFromFile(Context context) {
+    public static void loadFromFile(Context context) {
         List<ModsItem> response = new ArrayList<ModsItem>();
 
         try {

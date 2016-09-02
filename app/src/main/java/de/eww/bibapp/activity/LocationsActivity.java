@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.inject.Inject;
-
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.fragment.info.LocationsFragment;
@@ -22,8 +20,6 @@ public class LocationsActivity extends BaseActivity implements
 
     LocationsFragment mLocationsFragment;
     LocationFragment mLocationFragment;
-
-    @Inject LocationSource mLocationSource;
 
     // The location index currently being displayed
     int mCurrentLocationIndex = 0;
@@ -75,7 +71,7 @@ public class LocationsActivity extends BaseActivity implements
 
         if (mIsDualPane) {
             // display it on the location fragment
-            mLocationFragment.setLocation(mLocationSource.getLocation(index));
+            mLocationFragment.setLocation(LocationSource.getLocation(index));
         } else {
             // use separate activity
             Intent locationIntent = new Intent(this, LocationActivity.class);
@@ -88,7 +84,7 @@ public class LocationsActivity extends BaseActivity implements
     public void onLocationsLoaded() {
         // If we are displaying the location on the right, we have to update it
         if (mIsDualPane) {
-            mLocationFragment.setLocation(mLocationSource.getLocation(0));
+            mLocationFragment.setLocation(LocationSource.getLocation(0));
         }
     }
 

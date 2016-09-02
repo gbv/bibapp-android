@@ -2,8 +2,6 @@ package de.eww.bibapp.activity;
 
 import android.os.Bundle;
 
-import com.google.inject.Inject;
-
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.info.LocationFragment;
 import de.eww.bibapp.model.LocationItem;
@@ -23,8 +21,6 @@ import de.eww.bibapp.model.source.LocationSource;
  * and this Activity becomes unnecessary.
  */
 public class LocationActivity extends BaseActivity {
-
-    @Inject LocationSource mLocationSource;
 
     // The location index we are to display
     int mLocationIndex;
@@ -51,7 +47,7 @@ public class LocationActivity extends BaseActivity {
         mLocationIndex = getIntent().getExtras().getInt("locationIndex", 0);
 
         // Display the correct location on the fragment
-        LocationItem location = mLocationSource.getLocation(mLocationIndex);
+        LocationItem location = LocationSource.getLocation(mLocationIndex);
         locationFragment.setLocation(location);
 
         if (getIntent().hasExtra("source")) {

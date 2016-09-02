@@ -6,9 +6,11 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -19,8 +21,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.inject.Inject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,19 +38,15 @@ import de.eww.bibapp.model.source.ModsSource;
 import de.eww.bibapp.tasks.DBSPixelTask;
 import de.eww.bibapp.tasks.SearchXmlLoader;
 import de.eww.bibapp.util.PrefUtils;
-import roboguice.activity.RoboActionBarActivity;
-import roboguice.fragment.RoboFragment;
 
 /**
  * Created by christoph on 03.11.14.
  */
-public class SearchListFragment extends RoboFragment implements
+public class SearchListFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
         View.OnClickListener,
         RecyclerViewOnGestureListener.OnGestureListener,
         AsyncCanceledInterface {
-
-    @Inject ModsSource mModsSource;
 
     RecyclerView mRecyclerView;
     SearchView mSearchView;
@@ -92,7 +88,7 @@ public class SearchListFragment extends RoboFragment implements
 
     public void resetAdapter() {
         ArrayList<ModsItem> modsItemList = new ArrayList<>();
-        modsItemList.addAll(mModsSource.getModsItems(mSearchMode.toString()));
+        modsItemList.addAll(ModsSource.getModsItems(mSearchMode.toString()));
 
         mAdapter = new ModsAdapter(modsItemList, getActivity());
         mRecyclerView.setAdapter(mAdapter);
@@ -131,7 +127,7 @@ public class SearchListFragment extends RoboFragment implements
                 mProgressBar.setVisibility(View.VISIBLE);
                 Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
                 SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
-                searchXmlLoader.setOffset(mModsSource.getLoadedItems(mSearchMode.toString()) + 1);
+                searchXmlLoader.setOffset(ModsSource.getLoadedItems(mSearchMode.toString()) + 1);
                 searchXmlLoader.forceLoad();
             }
         });
@@ -198,8 +194,8 @@ public class SearchListFragment extends RoboFragment implements
     @Override
     public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
         // Reset source
-        mModsSource.clear(mSearchMode.toString());
-        mModsSource.setTotalItems(mSearchMode.toString(), 0);
+        ModsSource.clear(mSearchMode.toString());
+        ModsSource.setTotalItems(mSearchMode.toString(), 0);
         updateSubtitle();
 
         Loader<HashMap<String, Object>> loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
@@ -212,11 +208,11 @@ public class SearchListFragment extends RoboFragment implements
     public void onLoadFinished(Loader<HashMap<String, Object>> loader, HashMap<String, Object> data) {
         List<ModsItem> modsItems = (List<ModsItem>) data.get("list");
 
-        mModsSource.setTotalItems(mSearchMode.toString(), (Integer) data.get("numberOfRecords"));
+        ModsSource.setTotalItems(mSearchMode.toString(), (Integer) data.get("numberOfRecords"));
 
         mProgressBar.setVisibility(View.GONE);
 
-        if (mModsSource.getTotalItems(mSearchMode.toString()) == 0) {
+        if (ModsSource.getTotalItems(mSearchMode.toString()) == 0) {
             mEmptyView.setVisibility(View.VISIBLE);
             mRecyclerView.setVisibility(View.GONE);
         } else {
@@ -224,7 +220,7 @@ public class SearchListFragment extends RoboFragment implements
         }
 
         if (mAdapter == null) {
-            mModsSource.clear(mSearchMode.toString());
+            ModsSource.clear(mSearchMode.toString());
             mAdapter = new ModsAdapter(modsItems, getActivity());
             mRecyclerView.setAdapter(mAdapter);
         } else {
@@ -232,7 +228,7 @@ public class SearchListFragment extends RoboFragment implements
             mAdapter.notifyDataSetChanged();
         }
 
-        mModsSource.addModsItems(mSearchMode.toString(), modsItems);
+        ModsSource.addModsItems(mSearchMode.toString(), modsItems);
         if (mModsItemSelectedListener != null) {
             mModsItemSelectedListener.onNewSearchResultsLoaded(mSearchMode);
         }
@@ -256,7 +252,7 @@ public class SearchListFragment extends RoboFragment implements
          * suggest to use the global gvk search
          */
         if (mSearchMode == SEARCH_MODE.LOCAL) {
-            if (mModsSource.getTotalItems(mSearchMode.toString()) == 0) {
+            if (ModsSource.getTotalItems(mSearchMode.toString()) == 0) {
                 Snackbar
                     .make(getActivity().findViewById(R.id.content_frame), R.string.search_no_results, Snackbar.LENGTH_LONG)
                     .setDuration(5000)
@@ -290,9 +286,9 @@ public class SearchListFragment extends RoboFragment implements
     public void updateSubtitle() {
         Activity activity = getActivity();
         if (activity != null) {
-            ActionBar actionBar = ((RoboActionBarActivity) activity).getSupportActionBar();
+            ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
             if (actionBar != null) {
-                actionBar.setSubtitle(String.valueOf(mModsSource.getTotalItems(mSearchMode.toString())) + " " + getResources().getString(R.string.search_hits));
+                actionBar.setSubtitle(String.valueOf(ModsSource.getTotalItems(mSearchMode.toString())) + " " + getResources().getString(R.string.search_hits));
             }
         }
     }

@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import com.google.inject.Inject;
-
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.watchlist.WatchlistListFragment;
@@ -20,8 +18,6 @@ public class WatchlistActivity extends BaseActivity implements
 
     WatchlistListFragment mWatchlistListFragment;
     ModsFragment mModsFragment;
-
-    @Inject WatchlistSource mWatchlistSource;
 
     // The mods item index currently beeing displayed
     int mCurrentModsItemIndex = 0;
@@ -41,8 +37,8 @@ public class WatchlistActivity extends BaseActivity implements
         mIsDualPane = modsView != null && modsView.getVisibility() == View.VISIBLE;
 
         // load watchlist data
-        mWatchlistSource.clear("watchlist");
-        mWatchlistSource.loadFromFile(this);
+        WatchlistSource.clear("watchlist");
+        WatchlistSource.loadFromFile(this);
 
         // Register ourselves as the listener for the search list fragment events.
         mWatchlistListFragment.setOnModsItemSelectedListener(this);
@@ -52,9 +48,9 @@ public class WatchlistActivity extends BaseActivity implements
 
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
-            if (mWatchlistSource.getTotalItems("watchlist") > 0) {
+            if (WatchlistSource.getTotalItems("watchlist") > 0) {
                 mModsFragment.setIsWatchlistFragment(true);
-                mModsFragment.setModsItem(mWatchlistSource.getModsItem("watchlist", 0));
+                mModsFragment.setModsItem(WatchlistSource.getModsItem("watchlist", 0));
             }
         }
     }
@@ -83,7 +79,7 @@ public class WatchlistActivity extends BaseActivity implements
 
         if (mIsDualPane) {
             // display it on the mods fragment
-            mModsFragment.setModsItem(mWatchlistSource.getModsItem("watchlist", index));
+            mModsFragment.setModsItem(WatchlistSource.getModsItem("watchlist", index));
         } else {
             // use separate activity
             Intent modsIntent = new Intent(this, ModsActivity.class);
