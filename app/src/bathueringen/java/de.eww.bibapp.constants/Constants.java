@@ -120,8 +120,8 @@ public final class Constants
      * An URL to a homepage
      */
     public static final String[] HOMEPAGE_URLS = {
-        "http://bibliothek.ba-gera.de",
-        "http://bibliothek.ba-eisenach.de"
+        "http://bibliothek-gera.dhge.de",
+        "http://bibliothek-eisenach.dhge.de"
     };
 
     /**
