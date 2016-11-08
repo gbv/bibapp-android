@@ -124,6 +124,7 @@
     <string name="detailactionsdialog_request">Vormerken</string>
     <string name="detailactionsdialog_order">Bestellen</string>
     <string name="detailactionsdialog_online">Online ansehen</string>
+    <string name="indexactionsdialog_title">Quelle wählen</string>
     
     <!-- account -->
     <string name="account_borrowed_signature">Signatur:</string>

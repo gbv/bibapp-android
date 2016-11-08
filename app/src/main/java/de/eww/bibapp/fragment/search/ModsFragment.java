@@ -2,6 +2,7 @@ package de.eww.bibapp.fragment.search;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -43,7 +45,6 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -561,11 +562,8 @@ public class ModsFragment extends Fragment implements
         if (!mModsItem.indexArray.isEmpty()) {
             mIndexContainer.setVisibility(View.VISIBLE);
 
-            mIndexContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickIndex();
-                }
+            mIndexContainer.setOnClickListener((View v) -> {
+                onClickIndex();
             });
         } else {
             mIndexContainer.setVisibility(View.GONE);
@@ -575,18 +573,36 @@ public class ModsFragment extends Fragment implements
         if (mModsItem.isLocalSearch == false) {
             mInterlandingContainer.setVisibility(View.VISIBLE);
 
-            mInterlandingContainer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onClickInterlanding();
-                }
+            mInterlandingContainer.setOnClickListener((View v) -> {
+                onClickInterlanding();
             });
         }
     }
 
     private void onClickIndex() {
+        if (mModsItem.indexArray.size() == 1) {
+            // open directly
+            openIndexAsset(mModsItem.indexArray.get(0));
+        } else {
+            // create a dialag allowing selecting of an url to open
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            List<String> indexList = mModsItem.indexArray;
+            CharSequence[] indexItems = indexList.toArray(new CharSequence[indexList.size()]);
+
+            builder.setTitle(R.string.indexactionsdialog_title)
+                    .setItems(indexItems, (DialogInterface dialogInterface, int which) -> {
+                        openIndexAsset(indexList.get(which));
+                    });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    }
+
+    private void openIndexAsset(String url) {
         Intent webIntent = new Intent(getActivity(), WebViewActivity.class);
-        webIntent.putExtra("url", getIndexUrl());
+        webIntent.putExtra("url", url);
 
         if (mIsWatchlistFragment) {
             webIntent.putExtra("source", "watchlist");
@@ -600,26 +616,6 @@ public class ModsFragment extends Fragment implements
         } else {
             startActivityForResult(webIntent, 99);
         }
-    }
-
-    private String getIndexUrl() {
-        String indexUrl = "";
-
-        if (!mModsItem.indexArray.isEmpty()) {
-            // determine the index to display
-            Iterator<String> it = mModsItem.indexArray.iterator();
-
-            while (it.hasNext()) {
-                // Try to find pdf version
-                indexUrl = it.next();
-
-                if (indexUrl.substring(indexUrl.length() - 3, indexUrl.length()).equals("pdf")) {
-                    break;
-                }
-            }
-        }
-
-        return indexUrl;
     }
 
     private void onClickInterlanding() {
