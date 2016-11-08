@@ -216,21 +216,20 @@ public class AccountActivity extends BaseActivity implements
     }
 
     public void onPatronLoaded(JSONObject response) {
-        // Set action bar sub title
-        ActionBar actionBar = ((BaseActivity) this).getSupportActionBar();
-
         try {
+            // sub title
             String name = response.getString("name");
+            getSupportActionBar().setSubtitle(name);
 
+            // modify title
             if (response.has("status")) {
                 int status = response.getInt("status");
 
                 if (status > 0) {
-                    name += " " + getResources().getText(R.string.account_inactive);
+                    String currentTitle = getSupportActionBar().getTitle().toString();
+                    getSupportActionBar().setTitle(currentTitle + " " + getResources().getText(R.string.account_inactive));
                 }
             }
-
-            actionBar.setSubtitle(name);
         } catch (Exception e) {
             e.printStackTrace();
         }
