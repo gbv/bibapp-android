@@ -3,12 +3,12 @@ apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    compileSdkVersion 25
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 24
+        targetSdkVersion 25
 
         versionCode buildVersionCode()
         versionName version
@@ -89,9 +89,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     // Compat / Support
-    compile 'com.android.support:appcompat-v7:24.2.0'
-    compile 'com.android.support:recyclerview-v7:24.2.0'
-    compile 'com.android.support:design:24.2.0'
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:recyclerview-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
 
     // Retrofit
     ////compile 'com.google.code.gson:gson:2.6.2'
@@ -109,8 +109,8 @@ dependencies {
     //compile 'com.google.android.gms:play-services-location:9.4.0'
 
     // Butterknife
-    compile 'com.jakewharton:butterknife:8.2.1'
-    apt 'com.jakewharton:butterknife-compiler:8.2.1'
+    compile 'com.jakewharton:butterknife:8.4.0'
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 
     // Other
     compile 'com.octo.android.robospice:robospice:1.4.14'
@@ -122,8 +122,8 @@ dependencies {
 
     // LeakCanary
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
 }
 
 if (new File('signing.gradle').exists()) {
