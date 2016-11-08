@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
@@ -129,6 +130,12 @@ public class AccountBorrowedFragment extends Fragment implements
         getActivity().setProgressBarVisibility(false);
 
         mPaiaItemList.clear();
+
+        // sort by end date
+        Collections.sort(paiaItemList, (PaiaItem firstItem, PaiaItem secondItem) -> {
+            return firstItem.getEndDate().compareTo(secondItem.getEndDate());
+        });
+
         mPaiaItemList.addAll(paiaItemList);
 
         mProgressBar.setVisibility(View.GONE);
