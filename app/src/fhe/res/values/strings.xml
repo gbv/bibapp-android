@@ -43,7 +43,23 @@
         <b>Technische Betreuung</b><br/>
         Hochschulbibliothek der FHE<br/>
         Altonaer Straße 25<br/>
-        99085 Erfurt
+        99085 Erfurt<br/>
+        <br/>
+        <b>Datenschutzerklärung</b><br/>
+        Nutzerdaten (Bibliotheks-Kennung/Nutzername und Passwort) werden nur beim Anmelden über die Kontofunktionalität übertragen. Der Zugriff auf das persönliche Bibliothekskonto erfolgt ausschließlich über abhörsichere HTTPS Anfragen an das lokale Bibliothekssystem. Die Daten werden somit in Echtzeit direkt vom Bibliothekssystem abgefragt.<br/>
+        <br/>
+        Von der App werden folgende Daten an Schnittstellen übertragen:<br/>
+        - Eingaben in das Suchfeld an http://opac.uni-erfurt.de/DB=4/<br/>
+        - PPN-Angaben zu einzelnen Einträgen an http://unapi.gbv.de und http://daia.gbv.de/DE-546<br/>
+        - Benutzername und Passwort an https://opac.uni-erfurt.de/DE-546/<br/>
+        - Standort-URIs an  http://uri.gbv.de/organization/isil/DE-546<br/>
+        - ISBN-Angaben an http://ws.gbv.de<br/>
+        <br/>
+        Die App selbst sammelt und speichert keine Daten dauerhaft. Wenn der Nutzer es erlaubt, werden Benutzername und Passwort für den Zugriff auf die Kontofunktion gespeichert. Dies ist aber im Bereich "Optionen" auch wieder widerrufbar.<br/>
+        <br/>
+        Sie haben das Recht, jederzeit Auskunft über die zu Ihrer Person gespeicherten Daten zu erhalten, einschließlich Herkunft und Empfänger Ihrer Daten sowie den Zweck der Datenverarbeitung. Diese Datenschutzerklärung gilt nur für Inhalte auf unseren Servern und umfasst nicht die auf unserer Seite verlinkten Webseiten.
+        <br/>
+        Weitere Informationen bezüglich der Verarbeitung Ihrer persönlichen Daten im lokalen Bibliotheksystem finden Sie in der Rahmendienstvereinbarung zum Bibliothekssystem PICA sowie in der Benutzungsordnung der Hochschulbibliothek der Fachhochschule Erfurt.
         ]]>
     </string>
 </resources>
