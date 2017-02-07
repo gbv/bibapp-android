@@ -1,9 +1,11 @@
 package de.eww.bibapp.fragment.search;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.location.Location;
@@ -13,10 +15,10 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -31,9 +33,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesClient;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -82,8 +85,8 @@ public class ModsFragment extends Fragment implements
         PaiaHelper.PaiaListener,
         DetailActionsDialogFragment.DetailActionsDialogLisener,
         PaiaActionDialogFragment.PaiaActionDialogListener,
-        GooglePlayServicesClient.ConnectionCallbacks,
-        GooglePlayServicesClient.OnConnectionFailedListener,
+        GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener,
         AsyncCanceledInterface {
 
     @BindView(R.id.title) TextView mTitleView;
@@ -115,37 +118,34 @@ public class ModsFragment extends Fragment implements
 
     private MenuItem mMenuItem;
 
-    private LocationClient mLocationClient;
+    private GoogleApiClient googleApiClient;
+    private Location lastLocation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
-        mLocationClient = new LocationClient(getActivity(), this, this);
+
+        if (this.googleApiClient == null) {
+            this.googleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .addApi(LocationServices.API)
+                    .build();
+        }
     }
 
     @Override
     public void onStart() {
+        this.googleApiClient.connect();
+
         super.onStart();
-
-        // Check that Google Play services is available
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-
-        // If available
-        if (ConnectionResult.SUCCESS == resultCode) {
-            // In debug mode, log the status
-            Log.d("Location Updates", "Google Play services is available.");
-
-            mLocationClient.connect();
-        }
     }
 
     @Override
     public void onStop() {
-        if (mLocationClient != null) {
-            mLocationClient.disconnect();
-        }
+        this.googleApiClient.disconnect();
 
         super.onStop();
     }
@@ -236,9 +236,7 @@ public class ModsFragment extends Fragment implements
         mRecyclerView.setAdapter(mAdapter);
 
         // distance
-        if (!mModsItem.isLocalSearch) {
-            requestGeoLocation();
-        }
+        requestGeoLocation();
     }
 
     @Override
@@ -625,95 +623,68 @@ public class ModsFragment extends Fragment implements
     }
 
     private void requestGeoLocation() {
-        if (mLocationClient == null || !mLocationClient.isConnected()) {
+        if (this.mModsItem == null || this.mModsItem.isLocalSearch) {
             return;
         }
 
-        Location currentLocation = mLocationClient.getLastLocation();
-        if (currentLocation != null) {
-            // determine distance
-            for (int i=0; i < mAdapter.getItemCount(); i++) {
-                // Get the item
-                DaiaItem daiaItem = mAdapter.getItem(i);
+        if (this.mAdapter == null) {
+            return;
+        }
 
-                if (daiaItem.hasLocation()) {
-                    LocationItem locationItem = daiaItem.getLocation();
+        if (this.lastLocation != null) {
+            return;
+        }
 
-                    if (locationItem.hasPosition()) {
-                        // Determine distance and update item in adapter
-                        double itemDistance = calculateDistance(locationItem, currentLocation);
-                        daiaItem.setDistance(itemDistance);
+        if (!this.googleApiClient.isConnected()) {
+            return;
+        }
+
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+
+            this.lastLocation = LocationServices.FusedLocationApi.getLastLocation(this.googleApiClient);
+
+            if (this.lastLocation != null) {
+                // determine distance
+                for (int i=0; i < mAdapter.getItemCount(); i++) {
+                    // Get the item
+                    DaiaItem daiaItem = mAdapter.getItem(i);
+
+                    if (daiaItem.hasLocation()) {
+                        LocationItem locationItem = daiaItem.getLocation();
+
+                        if (locationItem.hasPosition()) {
+                            // Determine distance and update item in adapter
+                            double itemLat = Double.parseDouble(locationItem.getLat());
+                            double itemLong = Double.parseDouble(locationItem.getLong());
+
+                            LatLng itemLocation = new LatLng(itemLat, itemLong);
+                            LatLng currentLocation = new LatLng(this.lastLocation.getLatitude(), this.lastLocation.getLongitude());
+                            double itemDistance = SphericalUtil.computeDistanceBetween(itemLocation, currentLocation) / 1000;
+                            daiaItem.setDistance(itemDistance);
+                        }
                     }
                 }
-            }
 
-            // Sort by distance
-            mAdapter.sortByDistance();
+                // Sort by distance
+                mAdapter.sortByDistance();
+            }
         }
     }
 
-    private double calculateDistance(LocationItem locationItem, Location userLocation) {
-        // get geo data
-        double b1 = Double.parseDouble(locationItem.getLat());
-        double l1 = Double.parseDouble(locationItem.getLong());
-
-        double b2 = userLocation.getLatitude();
-        double l2 = userLocation.getLongitude();
-
-        // calculcate distance
-        double f = Constants.EARTH_FLATTENING;
-        double a = Constants.EQUATORIAL_RADIUS;
-
-        double F = (b1 + b2) / 2;
-        double G = (b1 - b2) / 2;
-        double l = (l1 - l2) / 2;
-
-        // transform into radian measure
-        F = Math.PI / 180 * F;
-        G = Math.PI / 180 * G;
-        l = Math.PI / 180 * l;
-
-        // calculate coarsely distance
-        double S = Math.pow(Math.sin(G), 2) * Math.pow(Math.cos(l), 2) + Math.pow(Math.cos(F), 2) * Math.pow(Math.sin(l), 2);
-        double C = Math.pow(Math.cos(G), 2) * Math.pow(Math.cos(l), 2) + Math.pow(Math.sin(F), 2) * Math.pow(Math.sin(l), 2);
-        double w = Math.atan(Math.sqrt(S / C));
-        double D = 2 * w * a;
-
-        // adjust distance with factors H1 and H2
-        double R = Math.sqrt(S * C) / w;
-        double H1 = (3 * R - 1) / (2 * C);
-        double H2 = (3 * R + 1) / (2 * S);
-
-        // calculate the final distance
-        double s = D * (1 + f * H1 * Math.pow(Math.sin(f), 2) * Math.pow(Math.cos(G), 2) - f * H2 * Math.pow(Math.cos(f), 2) * Math.pow(Math.sin(G), 2));
-
-        return s;
-    }
-
-    /*
-     * Called by Location Services when the request to connect the
-     * client finishes successfully. At this point, you can
-     * request the current location or start periodic updates
-     */
     @Override
-    public void onConnected(Bundle dataBundle) {
-        Log.d("Location Services", "connected");
+    public void onConnected(Bundle connectionHint) {
+        requestGeoLocation();
     }
 
-    /*
-     * Called by Location Services if the connection to the
-     * location client drops because of an error.
-     */
     @Override
-    public void onDisconnected() {
+    public void onConnectionSuspended(int i) {
+
     }
 
-    /*
-     * Called by Location Services if the attempt to
-     * Location Services fails.
-     */
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 
     @Override

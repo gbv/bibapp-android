@@ -1,6 +1,5 @@
 package de.eww.bibapp.fragment.info;
 
-import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.util.Linkify;
@@ -9,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -25,7 +23,8 @@ import de.eww.bibapp.model.LocationItem;
 /**
  * Created by christoph on 25.10.14.
  */
-public class LocationFragment extends Fragment {
+public class LocationFragment extends Fragment implements
+        OnMapReadyCallback {
 
     private View mFragmentView;
     private TextView mTitleView;
@@ -37,8 +36,6 @@ public class LocationFragment extends Fragment {
     private TextView mDescriptionView;
 
     private LocationItem mLocationItem = null;
-
-    private GoogleMap mMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -127,43 +124,24 @@ public class LocationFragment extends Fragment {
         }
 
         if (mLocationItem.hasPosition()) {
-            setUpMapIfNeeded();
-            updateMap();
+            SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
         } else {
             mFragmentView.setVisibility(View.GONE);
         }
     }
 
-    private void setUpMapIfNeeded() {
-        // We can't be guaranteed that the map is available because Google Play services might
-        // not be available.
-        int checkGooglePlay = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
-        if (checkGooglePlay != ConnectionResult.SUCCESS) {
-            // Open GooglePlay error dialog
-            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(checkGooglePlay, getActivity(), 0);
-            errorDialog.show();
-        } else {
-            // everything fine
-            mFragmentView.setVisibility(View.VISIBLE);
+    @Override
+    public void onMapReady(GoogleMap map) {
+        // everything fine
+        mFragmentView.setVisibility(View.VISIBLE);
 
-            // Do a null check to confirm that we have not already instantiated the map.
-            if (mMap == null) {
-                // Try to obtain the map from SupportMapFragment.
-                mMap = ((SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)).getMap();
-            }
-        }
-    }
+        // Move camera
+        float zoomLevel = (float) (map.getMinZoomLevel() + (map.getMaxZoomLevel() - map.getMinZoomLevel()) * 0.7);
+        LatLng latLng = new LatLng(Double.valueOf(mLocationItem.getLat()), Double.valueOf(mLocationItem.getLong()));
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
 
-    private void updateMap() {
-        // Check if we were successful in obtaining the map.
-        if (mMap != null) {
-            // Move camera
-            float zoomLevel = (float) (mMap.getMinZoomLevel() + (mMap.getMaxZoomLevel() - mMap.getMinZoomLevel()) * 0.7);
-            LatLng latLng = new LatLng(Double.valueOf(mLocationItem.getLat()), Double.valueOf(mLocationItem.getLong()));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomLevel));
-
-            // Add marker
-            mMap.addMarker(new MarkerOptions().position(latLng));
-        }
+        // Add marker
+        map.addMarker(new MarkerOptions().position(latLng));
     }
 }

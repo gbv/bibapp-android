@@ -1,10 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'android-apt'
 apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         minSdkVersion 14
@@ -89,9 +88,9 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     // Compat / Support
-    compile 'com.android.support:appcompat-v7:25.0.0'
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:appcompat-v7:25.1.1'
+    compile 'com.android.support:recyclerview-v7:25.1.1'
+    compile 'com.android.support:design:25.1.1'
 
     // Retrofit
     ////compile 'com.google.code.gson:gson:2.6.2'
@@ -104,13 +103,13 @@ dependencies {
     //compile 'io.reactivex:rxjava:1.1.9'
 
     // Google Play services
-    compile 'com.google.android.gms:play-services:6.1.71'
-    //compile 'com.google.android.gms:play-services-maps:9.4.0'
-    //compile 'com.google.android.gms:play-services-location:9.4.0'
+    compile 'com.google.android.gms:play-services-maps:10.0.1'
+    compile 'com.google.android.gms:play-services-location:10.0.1'
+    compile 'com.google.maps.android:android-maps-utils:0.4.4'
 
     // Butterknife
-    compile 'com.jakewharton:butterknife:8.4.0'
-    apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
 
     // Other
     compile 'com.octo.android.robospice:robospice:1.4.14'
@@ -121,9 +120,9 @@ dependencies {
     }
 
     // LeakCanary
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4'
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }
 
 if (new File('signing.gradle').exists()) {
