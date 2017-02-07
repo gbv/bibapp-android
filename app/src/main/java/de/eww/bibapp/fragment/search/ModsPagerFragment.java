@@ -43,6 +43,8 @@ public class ModsPagerFragment extends Fragment implements
 
     private SwipeLoadingDialogFragment mLoadingDialogFragment;
 
+    private boolean isLoadingMore = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,13 +110,17 @@ public class ModsPagerFragment extends Fragment implements
     }
 
     public void onLoadMore() {
-        // Create a dialog
-        mLoadingDialogFragment = new SwipeLoadingDialogFragment();
-        mLoadingDialogFragment.show(getChildFragmentManager(), "swipe_dialog");
+        if (this.isLoadingMore == false) {
+            // Create a dialog
+            mLoadingDialogFragment = new SwipeLoadingDialogFragment();
+            mLoadingDialogFragment.show(getChildFragmentManager(), "swipe_dialog");
 
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.destroyLoader(0);
-        loaderManager.initLoader(0, null, this).forceLoad();
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.destroyLoader(0);
+            loaderManager.initLoader(0, null, this).forceLoad();
+
+            this.isLoadingMore = true;
+        }
     }
 
     @Override
@@ -135,6 +141,8 @@ public class ModsPagerFragment extends Fragment implements
 
         // Dismiss dialog
         mLoadingDialogFragment.dismiss();
+
+        this.isLoadingMore = false;
     }
 
     @Override
