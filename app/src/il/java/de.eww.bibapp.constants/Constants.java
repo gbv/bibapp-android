@@ -110,12 +110,13 @@ public final class Constants
     /**
      * An URL to a news feed
      */
-    public static final String NEWS_URL = "http://www2.tu-ilmenau.de/ub/weblog/?feed=rss2";
+    public static final String NEWS_URL = "";
 
     /**
      * An URL to a homepage
      */
     public static final String[] HOMEPAGE_URLS = {
+        "http://www.tu-ilmenau.de/ub/nachrichtenarchiv/"
     };
 
     /**
