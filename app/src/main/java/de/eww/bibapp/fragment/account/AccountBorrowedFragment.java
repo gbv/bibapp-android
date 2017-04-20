@@ -133,6 +133,10 @@ public class AccountBorrowedFragment extends Fragment implements
 
         // sort by end date
         Collections.sort(paiaItemList, (PaiaItem firstItem, PaiaItem secondItem) -> {
+            if (firstItem.getEndDate() == null || secondItem.getEndDate() == null) {
+                return 0;
+            }
+
             return firstItem.getEndDate().compareTo(secondItem.getEndDate());
         });
 
