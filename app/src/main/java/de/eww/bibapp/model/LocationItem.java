@@ -7,7 +7,7 @@ public class LocationItem
 {
 	public final String name;
 	public final String listName;
-	public final String address;
+	public String address;
 	public final ArrayList<String> openingHours;
 	public final String email;
 	public final String url;
@@ -48,6 +48,10 @@ public class LocationItem
 
     public String getAddress() {
         return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public boolean hasEmail() {

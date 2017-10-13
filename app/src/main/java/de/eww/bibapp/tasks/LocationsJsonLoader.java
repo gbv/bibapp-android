@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -87,8 +88,16 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 			// is there a main entry?
 			if ( mainEntry != null )
 			{
-				// add the main entry to the reponse list
-				response.add(this.createLocationFromJSON(mainEntry, jsonResponse));
+				// add the main entry to the response list
+				LocationItem mainLocation = this.createLocationFromJSON(mainEntry, jsonResponse);
+				if (mainLocation.getAddress().isEmpty()) {
+					// fallback to extract address information from _:b2 key
+					if (jsonResponse.has("_:b2")) {
+						JSONObject b2Object = jsonResponse.getJSONObject("_:b2");
+						mainLocation.setAddress(this.extractLocationFromB2(b2Object));
+					}
+				}
+				response.add(mainLocation);
 
 				if (mainEntry.has("http://www.w3.org/ns/org#hasSite")) {
 					// iterate the elements of the "http://www.w3.org/ns/org#hasSite" key, holding all child locations
@@ -294,5 +303,41 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 			entryPosLat,
 			entryDescription
 		);
+	}
+
+	private String extractLocationFromB2(JSONObject b2Object) throws JSONException {
+
+		String address = "";
+		if (b2Object.has("http://www.w3.org/2006/vcard/ns#street-address")) {
+			JSONArray addressArray = b2Object.getJSONArray("http://www.w3.org/2006/vcard/ns#street-address");
+			if (addressArray.length() > 0) {
+				address = addressArray.getJSONObject(0).getString("value");
+			}
+		}
+
+		String locality = "";
+		if (b2Object.has("http://www.w3.org/2006/vcard/ns#locality")) {
+			JSONArray localityArray = b2Object.getJSONArray("http://www.w3.org/2006/vcard/ns#locality");
+			if (localityArray.length() > 0) {
+				locality = localityArray.getJSONObject(0).getString("value");
+			}
+		}
+
+		String postal = "";
+		if (b2Object.has("http://www.w3.org/2006/vcard/ns#postal-code")) {
+			JSONArray postalArray = b2Object.getJSONArray("http://www.w3.org/2006/vcard/ns#postal-code");
+			if (postalArray.length() > 0) {
+				postal = postalArray.getJSONObject(0).getString("value");
+			}
+		}
+
+		String completeAddress = address;
+
+		if (!address.isEmpty()) {
+			completeAddress += ", ";
+		}
+
+		completeAddress += postal + " " + locality;
+		return completeAddress;
 	}
 }
