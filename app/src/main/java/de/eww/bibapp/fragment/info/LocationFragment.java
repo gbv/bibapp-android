@@ -19,6 +19,7 @@ import java.util.ListIterator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import de.eww.bibapp.R;
 import de.eww.bibapp.model.LocationItem;
 
@@ -38,16 +39,24 @@ public class LocationFragment extends Fragment implements
     @BindView(R.id.description) TextView descriptionView;
 
     private LocationItem mLocationItem = null;
+    private Unbinder unbinder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_location, container, false);
-        ButterKnife.bind(this, view);
+        this.unbinder = ButterKnife.bind(this, view);
 
         displayLocation();
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        this.unbinder.unbind();
     }
 
     public void setLocation(LocationItem location) {
