@@ -48,7 +48,7 @@
 		Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes (VZG) in Göttingen. Die Datenübertragung geschieht dabei über eine verschlüsselte Verbindung (https).<br/>
 		<br/>
 		<b>Statistik</b><br/>
-		Die Universitätsbibliothek setzt den Webanalysedienst Piwik zur Verbesserung und Optimierung des Angebotes ein. Die IP-Adressen der zugreifenden Geräte werden unmittelbar beim Zugriff anonymisiert und anonymisiert gespeichert. Die erlangten Informationen werden nicht an Dritte weitergegeben, eine Zusammenführung der erhobenen Nutzerdaten und möglicher Ausleihdaten erfolgt nicht.<br/>
+		Die Universitätsbibliothek setzt den Webanalysedienst Matomo zur Verbesserung und Optimierung des Angebotes ein. Die IP-Adressen der zugreifenden Geräte werden unmittelbar beim Zugriff anonymisiert und anonymisiert gespeichert. Die erlangten Informationen werden nicht an Dritte weitergegeben, eine Zusammenführung der erhobenen Nutzerdaten und möglicher Ausleihdaten erfolgt nicht.<br/>
         Sie haben die Möglichkeit, die Erhebung der Daten im Menü "Einstellungen" im Punkt "Anonyme Nutzungsdaten" zu deaktivieren.<br/>
         <br/>
 		<b>Rechtliche Hinweise zur Haftung</b><br/>
