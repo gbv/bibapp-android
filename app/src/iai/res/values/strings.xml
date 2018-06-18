@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp IAI</string>
+
+    <!-- contact -->
+    <string name="contact_text">
+        <![CDATA[
+        <b>Kontakt</b><br/>
+        Referat Benutzung - Leitung Dr. Ulrike Mühlschlegel<br/>
+        E-Mail: muehlschlegel@iai.spk-berlin.de<br/>
+        <br/>
+        <b>Information / Auskunft</b><br/>
+        Tel.: +49 30 266 45 2210<br/>
+        E-Mail: info@iai.spk-berlin.de<br/>
+        <br/>
+        <b>Ausleihe</b><br/>
+        Tel.: +49 30 266 45 2220
+		]]>
+    </string>
+
+    <!-- impressum -->
+    <string name="impressum_text">
+        <![CDATA[
+        <b>Anbieter</b><br/>
+        Ibero-Amerikanisches Institut Preußischer Kulturbesitz<br/>
+		Potsdamer Str. 37<br/>
+		D-10785 Berlin <br/>
+		<br/>
+		Homepage: www.iai.spk-berlin.de<br/>
+		E-Mail: iai@iai.spk-berlin.de<br/>
+		Telefon: +49 (0) 30 266 45 1500<br/>
+		<br/>
+		<b>Vertreter</b><br/>
+		Das IAI wird gesetzlich vertreten durch seine Direktorin.<br/>
+		<br/>
+		<b>Umsatzsteueridentifikationsnummer</b><br/>
+		Die Umsatzsteueridentifikationsnummer des IAI lautet: DE 81 1176 992<br/>
+		<br/>
+		<b>Presserechtliche Verantwortlichkeit</b><br/>
+		Die Direktorin des Ibero-Amerikanischen Instituts: Dr. Barbara Göbel<br/>
+		<br/>
+		<b>Datenschutzerklärung</b><br/>
+		Bei jedem Zugriff eines Nutzers auf das Internetangebot des Ibero-Amerikanischen Instituts und bei jedem Abruf einer Datei werden Daten über diesen Vorgang vorübergehend in einer Protokolldatei gespeichert und verarbeitet. Im Einzelnen werden über jeden Zugriff/Abruf folgende Daten gespeichert:<br/>
+        <br/>
+        - IP-Adresse/DNS-Name,<br/>
+        - Datum und Uhrzeit,<br/>
+        - aufgerufene Seite/Name der abgerufenen Datei,<br/>
+        - übertragene Datenmenge,<br/>
+        - verwendetes Betriebssystem,<br/>
+        - verwendeter Browser,<br/>
+        - Meldung, ob der Zugriff/Abruf erfolgreich war.<br/>
+        <br/>
+        Diese Daten werden lediglich für statistische Zwecke und zur Verbesserung des Angebotes ausgewertet. Eine andere Verwendung oder Weitergabe an Dritte erfolgt nicht.<br/>
+        <br/>
+        Beim Aufruf einzelner Seiten werden so genannte temporäre Cookies verwendet, um die Navigation zu erleichtern. Diese Session Cookies beinhalten keine personenbezogenen Daten und verfallen nach Ablauf der Sitzung. Techniken, wie zum Beispiel Java-Applets oder Activ-X-Controls, die es ermöglichen, das Zugriffsverhalten der Nutzer nachzuvollziehen, werden nicht eingesetzt.<br/>
+        <br/>
+        <b>Personenbezogene Daten</b><br/>
+        An personenbezogenen Daten werden ausschließlich die von Ihnen in den Online-Formularen eingegebenen Daten erhoben und verarbeitet, sofern diese für die Abwicklung des betreffenden Vorgangs (zum Beispiel Spenden) erforderlich sind. Notwendige Daten sind als Pflichtfelder in den Online-Formularen gekennzeichnet, alle anderen Angaben sind freiwillig.<br/>
+        Personenbezogene Daten werden nur im technisch notwendigen und für die Abwicklung der Spende erforderlichen Umfang erhoben. In keinem Fall werden die erhobenen Daten verkauft oder aus anderen Gründen an Dritte weitergegeben.<br/>
+        <br/>
+        <b>Rechtliche Hinweise zur Haftung / Disclaimer</b><br/>
+        Das Ibero-Amerikanische Institut (IAI) ist um Richtigkeit und Aktualität der auf dieser Internetpräsenz bereitgestellten Informationen bemüht. Trotzdem können Fehler und Unklarheiten nicht vollständig ausgeschlossen werden. Das IAI übernimmt daher keinerlei Gewähr für die Aktualität, Korrektheit, Vollständigkeit oder Qualität der bereitgestellten Informationen.<br/>
+        Für Schäden materieller oder immaterieller Art. die durch die Nutzung oder Nichtnutzung der dargebotenen Informationen bzw. durch die Nutzung fehlerhafter und unvollständiger Informationen unmittelbar oder mittelbar verursacht werden, haftet das IAI nicht, sofern ihm nicht nachweislich vorsätzliches oder grob fahrlässiges Verschulden zur Last fällt. Gleiches gilt für kostenlos zum Download bereitgehaltene Software.<br/>
+        Alle Angebote sind freibleibend und unverbindlich. Das IAI behält es sich ausdrücklich vor, Teile des Internetangebotes oder das gesamte Angebot ohne gesonderte Ankündigung zu verändern, zu ergänzen, zu löschen oder die Veröffentlichung zeitweise oder endgültig einzustellen.<br/>
+        Die Verantwortlichkeit für "fremde Inhalte", die beispielsweise durch direkte oder indirekte Verknüpfungen (z.B. sogenannte "Links") zu anderen Anbietern bereitgehalten werden, setzt unter anderem positive Kenntnis des rechtswidrigen bzw. strafbaren Inhaltes voraus. "Fremde Inhalte" sind in geeigneter Weise gekennzeichnet. Das IAI hat auf "fremde Inhalte" keinerlei Einfluss und macht sich diese Inhalte auch nicht zu Eigen. Das IAI hat keine positive Kenntnis über rechtswidrige oder anstößige Inhalte auf den verknüpften Seiten fremder Anbieter. Sollten auf den verknüpften Seiten fremder Anbieter dennoch rechtswidrige oder anstößige Inhalte enthalten sein, so distanziert sich das IAI von diesen Inhalten ausdrücklich.<br/>
+        Das IAI ist bestrebt, in allen Publikationen die Urheberrechte der verwendeten Grafiken, Tondokumente, Videosequenzen und Texte zu beachten, von ihm selbst erstellte Grafiken, Tondokumente, Videosequenzen und Texte zu nutzen oder auf lizenzfreie Grafiken, Tondokumente, Videosequenzen und Texte zurückzugreifen.<br/>
+        Alle innerhalb des Internetangebotes genannten und ggf. durch Dritte geschützten Marken- und Warenzeichen unterliegen uneingeschränkt den Bestimmungen des jeweils gültigen Kennzeichenrechts und den Besitzrechten der jeweiligen eingetragenen Eigentümer. Allein aufgrund der bloßen Nennung ist nicht der Schluß zu ziehen, dass Markenzeichen nicht durch Rechte Dritter geschützt sind!<br/>
+        Das Copyright für veröffentlichte, vom IAI selbst erstellte Objekte bleibt allein beim IAI. Eine Vervielfältigung oder Verwendung solcher Grafiken, Tondokumente, Videosequenzen und Texte in anderen elektronischen oder gedruckten Publikationen ist ohne ausdrückliche Zustimmung nicht gestattet.<br/>
+		<br/>
+		<b>Gestaltung und Umsetzung</b><br/>
+		Entwurf und Konzeption<br/>
+		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
+		Umsetzung<br/>
+		Effective Webwork GmbH
+        ]]>
+    </string>
+</resources>

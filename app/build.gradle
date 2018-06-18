@@ -85,6 +85,9 @@ android {
         commerz {
             applicationId 'de.eww.bibapp.commerz'
         }
+        iai {
+            applicationId 'de.eww.bibapp.iai'
+        }
     }
 }
 
