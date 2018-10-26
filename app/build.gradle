@@ -1,18 +1,17 @@
 apply plugin: 'com.android.application'
-apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 25
+        targetSdkVersion 27
 
         versionCode buildVersionCode()
         versionName version
 
         multiDexEnabled false
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -33,72 +32,97 @@ android {
         exclude 'META-INF/notice.txt'
     }
 
+    flavorDimensions "version"
+
     productFlavors {
         hi {
+            dimension "version"
             applicationId "de.eww.bibapp.hi"
         }
         lg {
+            dimension "version"
             applicationId "de.eww.bibapp.lg"
         }
         il {
+            dimension "version"
             applicationId "de.eww.bibapp.il"
         }
         bls {
+            dimension "version"
             applicationId "de.eww.bibapp.bls"
         }
         hawk {
+            dimension "version"
             applicationId "de.eww.bibapp.hawk"
         }
         thulb {
+            dimension "version"
             applicationId "de.eww.bibapp.thulb"
         }
         eahjena {
+            dimension "version"
             applicationId "de.eww.bibapp.eahjena"
         }
         bathueringen {
+            dimension "version"
             applicationId "de.eww.bibapp.bathueringen"
         }
         schmalkalden {
+            dimension "version"
             applicationId "de.eww.bibapp.schmalkalden"
         }
         ubweimar {
+            dimension "version"
             applicationId "de.eww.bibapp.ubweimar"
         }
         hfmweimar {
+            dimension "version"
             applicationId "de.eww.bibapp.hfmweimar"
         }
         ndh {
+            dimension "version"
             applicationId "de.eww.bibapp.ndh"
         }
         fhe {
+            dimension "version"
             applicationId "de.eww.bibapp.fhe"
         }
         ufb {
+            dimension "version"
             applicationId "de.eww.bibapp.ufb"
         }
         tubs {
+            dimension "version"
             applicationId 'de.eww.bibapp.tubs'
         }
         aezb {
+            dimension "version"
             applicationId 'de.eww.bibapp.aezb'
         }
         commerz {
+            dimension "version"
             applicationId 'de.eww.bibapp.commerz'
         }
         iai {
+            dimension "version"
             applicationId 'de.eww.bibapp.iai'
         }
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     // Compat / Support
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:multidex:1.0.1'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
+
+    // Testing
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     // Retrofit
     ////compile 'com.google.code.gson:gson:2.6.2'
@@ -111,26 +135,26 @@ dependencies {
     //compile 'io.reactivex:rxjava:1.1.9'
 
     // Google Play services
-    compile 'com.google.android.gms:play-services-maps:10.2.1'
-    compile 'com.google.android.gms:play-services-location:10.2.1'
-    compile 'com.google.maps.android:android-maps-utils:0.4.4'
+    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.5'
 
     // Butterknife
-    compile 'com.jakewharton:butterknife:8.8.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
     // Other
-    compile 'com.octo.android.robospice:robospice:1.4.14'
-    compile 'com.octo.android.robospice:robospice-spring-android:1.4.14'
-    compile('org.simpleframework:simple-xml:2.7.1') {
+    implementation 'com.octo.android.robospice:robospice:1.4.14'
+    implementation 'com.octo.android.robospice:robospice-spring-android:1.4.14'
+    implementation('org.simpleframework:simple-xml:2.7.1') {
         exclude module: 'xpp3'
         exclude group: 'stax'
     }
 
     // LeakCanary
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    testImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
 }
 
 if (new File('signing.gradle').exists()) {
