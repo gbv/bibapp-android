@@ -1,4 +1,4 @@
-package de.eww.bibapp.parser;
+package de.eww.bibapp.network.parser;
 
 import android.util.Xml;
 
@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.eww.bibapp.model.RssItem;
+import de.eww.bibapp.network.model.RssItem;
 
 /**
  * Created by christoph on 09.12.14.

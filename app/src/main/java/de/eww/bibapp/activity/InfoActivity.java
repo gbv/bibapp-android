@@ -5,32 +5,31 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.octo.android.robospice.SpiceManager;
-import com.octo.android.robospice.XmlSpringAndroidSpiceService;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.OnClick;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.RssAdapter;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
-import de.eww.bibapp.model.RssFeed;
-import de.eww.bibapp.model.RssItem;
-import de.eww.bibapp.request.RssFeedRequest;
+import de.eww.bibapp.network.ApiClient;
+import de.eww.bibapp.network.RssService;
+import de.eww.bibapp.network.model.RssFeed;
+import de.eww.bibapp.network.model.RssItem;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.HttpUrl;
 
 public class InfoActivity extends BaseActivity {
 
-    private SpiceManager mSpiceManager = new SpiceManager(XmlSpringAndroidSpiceService.class);
-
-    private RssFeedRequest mRssFeedRequest;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     RecyclerView mRecyclerView;
     ProgressBar mProgressBar;
@@ -39,28 +38,16 @@ public class InfoActivity extends BaseActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    private List<RssItem> mItemList = new ArrayList<RssItem>();
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        mSpiceManager.start(this);
-    }
-
-    @Override
-    public void onStop() {
-        mSpiceManager.shouldStop();
-        super.onStop();
-    }
+    private List<RssItem> mItemList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        mRecyclerView = (RecyclerView) findViewById(R.id.recycler);
-        mEmptyView = (TextView) findViewById(R.id.empty);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
+        mRecyclerView = this.findViewById(R.id.recycler);
+        mEmptyView = this.findViewById(R.id.empty);
+        mProgressBar = this.findViewById(R.id.progressbar);
 
         // Use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
@@ -72,76 +59,65 @@ public class InfoActivity extends BaseActivity {
         // Do we have a rss feed to display?
         if (!Constants.NEWS_URL.isEmpty()) {
             // Start the Request
-            mRssFeedRequest = new RssFeedRequest(this);
             mEmptyView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.VISIBLE);
-            mSpiceManager.execute(mRssFeedRequest, new RssRequestListener());
+
+            RssService service = ApiClient.getClient(this.getApplicationContext(), HttpUrl.parse("http://dummy.de/")).create(RssService.class);
+            this.disposable.add(service
+                    .getRss(Constants.NEWS_URL)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<RssFeed>() {
+                        @Override
+                        public void onSuccess(RssFeed feed) {
+                            mItemList.addAll(feed.getItems());
+
+                            mProgressBar.setVisibility(View.GONE);
+                            if (feed.getItems().isEmpty()) {
+                                mEmptyView.setVisibility(View.VISIBLE);
+                            }
+
+                            mAdapter = new RssAdapter(mItemList);
+                            mRecyclerView.setAdapter(mAdapter);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast toast = Toast.makeText(InfoActivity.this, R.string.toast_info_rss_error, Toast.LENGTH_LONG);
+                            toast.show();
+
+                            mProgressBar.setVisibility(View.GONE);
+                            mEmptyView.setVisibility(View.VISIBLE);
+                        }
+                    }));
         } else {
             mEmptyView.setVisibility(View.GONE);
             mProgressBar.setVisibility(View.GONE);
         }
-
-        Button infoButton = (Button) findViewById(R.id.info_button_contact);
-        Button locationsButton = (Button) findViewById(R.id.info_button_locations);
-        Button impressumButton = (Button) findViewById(R.id.info_button_impressum);
-
-        infoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickContactButton();
-            }
-        });
-        locationsButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickLocationsButton();
-            }
-        });
-        impressumButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClickImpressumButton();
-            }
-        });
     }
 
-    private void onClickContactButton() {
+    @Override
+    public void onDestroy() {
+        this.disposable.dispose();
+        super.onDestroy();
+    }
+
+    @OnClick(R.id.info_button_contact)
+    public void onClickContactButton() {
         Intent contactIntent = new Intent(this, ContactActivity.class);
         startActivityForResult(contactIntent, 99);
     }
 
-    private void onClickLocationsButton() {
+    @OnClick(R.id.info_button_locations)
+    public void onClickLocationsButton() {
         Intent locationsIntent = new Intent(this, LocationsActivity.class);
         startActivityForResult(locationsIntent, 99);
     }
 
-    private void onClickImpressumButton() {
+    @OnClick(R.id.info_button_impressum)
+    public void onClickImpressumButton() {
         Intent impressumIntent = new Intent(this, ImpressumActivity.class);
         startActivityForResult(impressumIntent, 99);
-    }
-
-    public final class RssRequestListener implements RequestListener<RssFeed> {
-        @Override
-        public void onRequestFailure(SpiceException spiceException) {
-            Toast toast = Toast.makeText(InfoActivity.this, R.string.toast_info_rss_error, Toast.LENGTH_LONG);
-            toast.show();
-
-            mProgressBar.setVisibility(View.GONE);
-            mEmptyView.setVisibility(View.VISIBLE);
-        }
-
-        @Override
-        public void onRequestSuccess(final RssFeed result) {
-            mItemList.addAll(result.getItems());
-
-            mProgressBar.setVisibility(View.GONE);
-            if (result.getItems().isEmpty()) {
-                mEmptyView.setVisibility(View.VISIBLE);
-            }
-
-            mAdapter = new RssAdapter(mItemList);
-            mRecyclerView.setAdapter(mAdapter);
-        }
     }
 
     @Override
@@ -150,7 +126,7 @@ public class InfoActivity extends BaseActivity {
             if (resultCode == this.RESULT_OK) {
                 // Set navigation position
                 int navigationPosition = data.getIntExtra("navigationIndex", 0);
-                ((BaseActivity) this).selectItem(navigationPosition);
+                this.selectItem(navigationPosition);
             }
         }
     }

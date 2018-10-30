@@ -1,4 +1,4 @@
-package de.eww.bibapp.model;
+package de.eww.bibapp.network.model;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

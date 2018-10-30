@@ -10,12 +10,12 @@ import android.widget.TextView;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.RssItem;
+import de.eww.bibapp.network.model.RssItem;
 
 /**
  * Created by christoph on 24.10.14.
  */
-public class    RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
+public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
 
     private List<RssItem> mItemList;
 
