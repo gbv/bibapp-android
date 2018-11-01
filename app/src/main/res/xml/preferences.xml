@@ -17,6 +17,13 @@
     <ListPreference
         android:key="pref_localCatalog"
         android:title="@string/settings_local_catalog_title"
-        android:summary="@string/settings_local_catalog_summary"
-        android:defaultValue="" />
+        android:summary="@string/settings_local_catalog_summary" />
+
+    <ListPreference
+        android:key="pref_userLanguage"
+        android:title="@string/settings_user_language_title"
+        android:summary="@string/settings_user_language_summary"
+        android:entries="@array/settings_languages_entries"
+        android:entryValues="@array/settings_languages_entry_values"
+        android:defaultValue="device"/>
 </PreferenceScreen>

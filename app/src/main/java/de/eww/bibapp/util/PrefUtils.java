@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import java.util.Locale;
+
 import de.eww.bibapp.R;
 
 /**
@@ -14,6 +16,7 @@ public class PrefUtils {
     public static final String PREF_LOCAL_CATALOG = "pref_localCatalog";
     public static final String PREF_STORE_LOGIN = "pref_storeLogin";
     public static final String PREF_DATA_PRIVACY = "pref_dataPrivacy";
+    public static final String PREF_USER_LANGUAGE = "pref_userLanguage";
 
     public static void init(final Context context) {
         // Set default values for our preferences
@@ -65,5 +68,15 @@ public class PrefUtils {
     public static void setStoredPassword(final Context context, final String password) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString("store_login_password", password).commit();
+    }
+
+    public static String getUserLanguage(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        return sp.getString(PREF_USER_LANGUAGE, "device");
+    }
+
+    public void setUserLanguage(final Context context, final Locale locale) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp.edit().putString(PREF_USER_LANGUAGE, locale.toString());
     }
 }

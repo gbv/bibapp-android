@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.util.LocaleManager;
 import de.eww.bibapp.util.PrefUtils;
 
 /**
@@ -67,6 +68,14 @@ public abstract class BaseActivity extends AppCompatActivity implements
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE);
         } else {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
+
+        // set user language
+        String userLanguage = PrefUtils.getUserLanguage(this);
+        if (userLanguage != null && !userLanguage.equals("device")) {
+            LocaleManager.changeLanguage(this, userLanguage);
+        } else {
+            LocaleManager.changeLanguage(this, LocaleManager.getDefaultLanguage(this));
         }
     }
 

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="settings_languages_entries">
+        <item>Gerät</item>
+        <item>Deutsch</item>
+        <item>Englisch</item>
+    </array>
+
+    <array name="settings_languages_entry_values">
+        <item>device</item>
+        <item>de</item>
+        <item>en</item>
+    </array>
+</resources>

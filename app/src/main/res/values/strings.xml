@@ -23,6 +23,8 @@
     <string name="settings_local_catalog_summary">Wenn die Bibliothek mehrere lokale Kataloge anbietet, können Sie hier konfigurieren in welchem Sie suchen möchten.</string>
     <string name="settings_data_privacy_title">Anonyme Nutzungsdaten speichern</string>
     <string name="settings_data_privacy_summary">Wenn Sie diese Option deaktivieren, werden keine anonymisierten Nutzungsdaten gespeichert. Weitere Hinweise s. Info / Impressum</string>
+    <string name="settings_user_language_title">Sprache</string>
+    <string name="settings_user_language_summary">Hier können Sie die Sprache anpassen, die in der App verwendet wird.</string>
 
     <!-- actions -->
     <string name="action_search">Suchen</string>

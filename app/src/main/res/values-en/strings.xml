@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <!-- general -->
+    <string name="app_name">BibApp</string>
+    <string name="empty_list">Keine Einträge vorhanden</string>
+    <string name="loading_in_progress">Inhalte werden geladen</string>
+
+    <!-- navigation -->
+    <string name="drawer_navigation_search">Search</string>
+    <string name="drawer_navigation_account">Account</string>
+    <string name="drawer_navigation_watchlist">Watch list</string>
+    <string name="drawer_navigation_info">Info</string>
+    <string name="drawer_navigation_homepage">Homepage</string>
+    <string name="drawer_navigation_settings">Settings</string>
+    <string name="drawer_open">Open navigation</string>
+    <string name="drawer_close">Close navigation</string>
+
+    <!-- settings -->
+    <string name="settings_store_login_title">Save log in data</string>
+    <string name="settings_store_login_summary">Saving your login details allows you to sign in only once for all actions within your account.</string>
+    <string name="settings_local_catalog_title">Local library catalog</string>
+    <string name="settings_local_catalog_summary">If the library offers several local catalogs, you can select here how to search.</string>
+    <string name="settings_data_privacy_title">Save anonymous user data</string>
+    <string name="settings_data_privacy_summary">If you deactivate this option, no anonymized user data will be tracked. Read more in the Legal Notice.</string>
+    <string name="settings_user_language_title">Language</string>
+    <string name="settings_user_language_summary">Select the app language.</string>
+
+    <!-- actions -->
+    <string name="action_search">Search</string>
+
+    <!-- info -->
+    <string name="info_button_contact">Contact</string>
+    <string name="info_button_locations">Locations</string>
+    <string name="info_button_impressum">Legal notice</string>
+
+    <!-- search spinner -->
+    <string-array name="search_catalogs">
+        <item>Local</item>
+        <item>GVK</item>
+    </string-array>
+
+    <!-- account -->
+    <string name="account_borrowed">on loan</string>
+    <string name="account_booked">reserved</string>
+    <string name="account_fees">fees</string>
+    <string name="account_fees_amount">total:</string>
+    <string name="account_inactive">(locked)</string>
+
+    <!-- paia -->
+    <string-array name="paia_service_status">
+        <item>available</item>
+        <item>reserved</item>
+        <item>requested</item>
+        <item>on loan</item>
+        <item>ready for collection</item>
+        <item>denied</item>
+    </string-array>
+
+    <!-- login dialog -->
+    <string name="logindialog_username">User number</string>
+    <string name="logindialog_password">Password</string>
+    <string name="logindialog_login">Log in</string>
+    <string name="logindialog_cancel">Cancel</string>
+    <string name="logindialog_heading">Please log in:</string>
+    <string name="logindialog_wrong">Please verify your login credentials!</string>
+    <string name="logindialog_store">Save log in data</string>
+
+    <!-- paia dialog -->
+    <string name="paiadialog_heading">Access to account</string>
+    <string name="paiadialog_in_progress">Carrying out account action...</string>
+    <string name="paiadialog_proceed">Close</string>
+    <plurals name="paiadialog_renew_success">
+        <item quantity="one">The selected item has been renewed.</item>
+        <item quantity="other">All selected items have been renewed.</item>
+    </plurals>
+    <string name="paiadialog_renew_partial">Only some items have been renewed.</string>
+    <string name="paiadialog_renew_failure">Sorry, no items have been renewed.</string>
+    <plurals name="paiadialog_cancel_success">
+        <item quantity="one">The selected item has been cancelled.</item>
+        <item quantity="other">All selected items have been cancelled.</item>
+    </plurals>
+    <string name="paiadialog_cancel_partial">Only some items have been cancelled.</string>
+    <string name="paiadialog_cancel_failure">Sorry, no items have been cancelled.</string>
+    <string name="paiadialog_general_success">Successful action.</string>
+    <string name="paiadialog_general_failure">Action not successful.</string>
+
+    <!-- toasts -->
+    <string name="toast_watchlist_added">Entry added to watch list</string>
+    <string name="toast_watchlist_removed">Entry has been removed</string>
+    <string name="toast_info_rss_error">Unable to open news feed</string>
+    <string name="toast_locations_error">Unable to load locations</string>
+    <string name="toast_account_error">Unable to load account information</string>
+    <string name="toast_search_error">Search query could not be completed</string>
+    <string name="toast_mods_error">Not all informations loaded successfully</string>
+
+    <!-- search -->
+    <string name="search_hint">Search term</string>
+    <string name="search_hits">Hits</string>
+    <string name="search_in_progress">Searching library catalog</string>
+    <string name="search_no_results">Your search has no results :(</string>
+    <string name="search_gvk">Search in the GVK catalogue</string>
+
+    <!-- watchlist -->
+    <string name="watchlist_export_subject">BibApp: Export your watch list</string>
+    <string name="watchlist_export_send_to">export watch list</string>
+
+    <!-- swipe dialog -->
+    <string name="swipedialog_extending">loading additional entries</string>
+
+    <!-- error dialog -->
+    <string name="errordialog_connection">
+        Your request cannot be completed..\n
+        Please check your network connection and try again!
+    </string>
+    <string name="errordialog_rights">
+        You do not have the necessary rights to perform this action.\n
+        Please check your account!
+    </string>
+    <string name="errordialog_proceed">OK</string>
+
+    <!-- detail actions dialog -->
+    <string name="detailactionsdialog_heading">Choose an action</string>
+    <string name="detailactionsdialog_cancel">Cancel</string>
+    <string name="detailactionsdialog_location">Informations on location</string>
+    <string name="detailactionsdialog_request">Reserve</string>
+    <string name="detailactionsdialog_order">Request</string>
+    <string name="detailactionsdialog_online">View online</string>
+    <string name="indexactionsdialog_title">Choose source</string>
+
+    <!-- account -->
+    <string name="account_borrowed_signature">Shelf mark:</string>
+    <string name="account_borrowed_duedate">End of loan period:</string>
+    <string name="account_borrowed_queue">Reservations:</string>
+    <string name="account_borrowed_renewals">Renewals:</string>
+    <string name="account_borrowed_status">Status:</string>
+    <string name="account_booked_signature">Shelf mark:</string>
+    <string name="account_booked_date">Reservation date:</string>
+
+    <!-- menu -->
+    <string name="menu_borrowed_extend">Renew</string>
+    <string name="menu_detail_addtowatchlist">Add to watch list</string>
+    <string name="menu_detail_addtowatchlist_duplicate">Already in watch list</string>
+    <string name="menu_booked_cancel">Cancel</string>
+    <string name="menu_watchlist_remove">Remove</string>
+    <string name="menu_watchlist_export">Export</string>
+    <string name="menu_selected_count">%1$s selected</string>
+    <string name="menu_account_logout">Log out</string>
+
+    <!-- detail -->
+    <string name="detail_available">Availability</string>
+    <string name="detail_index">Show more</string>
+    <string name="detail_daia_no_department">Without assignment</string>
+    <string name="detail_interlending">Options for interlibrary loan</string>
+    <string name="detail_select">Please use the search or select an item!</string>
+
+    <!-- daia -->
+    <string name="daia_default_department">Additional copies in other libraries</string>
+</resources>

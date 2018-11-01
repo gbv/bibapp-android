@@ -11,6 +11,7 @@ import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.util.LocaleManager;
 import de.eww.bibapp.util.PrefUtils;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -78,6 +79,14 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (key.equals(PrefUtils.PREF_LOCAL_CATALOG)) {
             // reset login
             cleanStoredCredentials();
+        }
+
+        if (key.equals(PrefUtils.PREF_USER_LANGUAGE)) {
+            ListPreference languagePref = (ListPreference) this.findPreference(key);
+            String languagePrefValue = languagePref.getValue();
+            if (!languagePrefValue.equals("device")) {
+                LocaleManager.changeLanguage(getActivity(), languagePrefValue);
+            }
         }
     }
 
