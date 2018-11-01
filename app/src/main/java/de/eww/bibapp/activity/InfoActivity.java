@@ -1,5 +1,6 @@
 package de.eww.bibapp.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.RssAdapter;
@@ -31,12 +34,11 @@ public class InfoActivity extends BaseActivity {
 
     private CompositeDisposable disposable = new CompositeDisposable();
 
-    RecyclerView mRecyclerView;
-    ProgressBar mProgressBar;
-    TextView mEmptyView;
+    @BindView(R.id.recycler) RecyclerView recyclerView;
+    @BindView(R.id.progressbar) ProgressBar progressBar;
+    @BindView(R.id.empty) TextView emptyView;
 
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
 
     private List<RssItem> mItemList = new ArrayList<>();
 
@@ -44,23 +46,21 @@ public class InfoActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-
-        mRecyclerView = this.findViewById(R.id.recycler);
-        mEmptyView = this.findViewById(R.id.empty);
-        mProgressBar = this.findViewById(R.id.progressbar);
+        ButterKnife.bind(this);
 
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        this.recyclerView.setLayoutManager(layoutManager);
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
-        mRecyclerView.addItemDecoration(itemDecoration);
+        this.recyclerView.addItemDecoration(itemDecoration);
 
         // Do we have a rss feed to display?
+        //noinspection ConstantConditions
         if (!Constants.NEWS_URL.isEmpty()) {
             // Start the Request
-            mEmptyView.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.VISIBLE);
+            this.emptyView.setVisibility(View.GONE);
+            this.progressBar.setVisibility(View.VISIBLE);
 
             RssService service = ApiClient.getClient(this.getApplicationContext(), HttpUrl.parse("http://dummy.de/")).create(RssService.class);
             this.disposable.add(service
@@ -72,13 +72,13 @@ public class InfoActivity extends BaseActivity {
                         public void onSuccess(RssFeed feed) {
                             mItemList.addAll(feed.getItems());
 
-                            mProgressBar.setVisibility(View.GONE);
+                            InfoActivity.this.progressBar.setVisibility(View.GONE);
                             if (feed.getItems().isEmpty()) {
-                                mEmptyView.setVisibility(View.VISIBLE);
+                                InfoActivity.this.emptyView.setVisibility(View.VISIBLE);
                             }
 
                             mAdapter = new RssAdapter(mItemList);
-                            mRecyclerView.setAdapter(mAdapter);
+                            InfoActivity.this.recyclerView.setAdapter(mAdapter);
                         }
 
                         @Override
@@ -86,13 +86,13 @@ public class InfoActivity extends BaseActivity {
                             Toast toast = Toast.makeText(InfoActivity.this, R.string.toast_info_rss_error, Toast.LENGTH_LONG);
                             toast.show();
 
-                            mProgressBar.setVisibility(View.GONE);
-                            mEmptyView.setVisibility(View.VISIBLE);
+                            InfoActivity.this.progressBar.setVisibility(View.GONE);
+                            InfoActivity.this.emptyView.setVisibility(View.VISIBLE);
                         }
                     }));
         } else {
-            mEmptyView.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.GONE);
+            this.emptyView.setVisibility(View.GONE);
+            this.progressBar.setVisibility(View.GONE);
         }
     }
 
@@ -123,7 +123,7 @@ public class InfoActivity extends BaseActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 99) {
-            if (resultCode == this.RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
                 // Set navigation position
                 int navigationPosition = data.getIntExtra("navigationIndex", 0);
                 this.selectItem(navigationPosition);
