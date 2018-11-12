@@ -57,6 +57,9 @@
         <item>abgelehnt</item>
     </string-array>
 
+    <!-- daia -->
+    <string name="daia_no_barcode">Bände zu diesem Titel können Sie ggf. nur über den OPAC bestellen.</string>
+
     <!-- login dialog -->
     <string name="logindialog_username">Benutzernummer</string>
     <string name="logindialog_password">Kennwort</string>

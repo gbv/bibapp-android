@@ -57,6 +57,9 @@
         <item>denied</item>
     </string-array>
 
+    <!-- daia -->
+    <string name="daia_no_barcode">Volumes of this title might only be orderable in OPAC.</string>
+
     <!-- login dialog -->
     <string name="logindialog_username">User number</string>
     <string name="logindialog_password">Password</string>
