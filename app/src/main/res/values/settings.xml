@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+        Block orders if the listed keys contains a "b" character at the second position in a
+        UNAPI picaxml request.
+    -->
+    <array name="block_order_types">
+        <!--<item>002@</item>-->
+    </array>
+
+    <!--
+        If true, the detail view will not initially requests DAIA, but first check the FamURL
+    -->
+    <bool name="use_daia_sub_requests">false</bool>
+
+    <!--
+        If "use_daia_sub_requests" is true, these are the FamURL's for each configured catalog.
+    -->
+    <array name="fam_urls">
+        <!-- https://lhiai.gbv.de/DB=1/SET=1/TTL=1/FAM?FRST=[START 10er Block]&PPN=[PPN]&XML=YES -->
+        <!-- <item>https://lhiai.gbv.de/DB=1/SET=1/TTL=1/FAM\?FRST=%1$d&amp;PPN=%2$s&amp;XML=YES</item> -->
+    </array>
+</resources>

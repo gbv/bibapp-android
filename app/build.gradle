@@ -132,6 +132,12 @@ dependencies {
     // Retrofit / OkHttp
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     //implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+    implementation "com.squareup.retrofit2:converter-scalars:2.3.0"
+    implementation ("com.squareup.retrofit2:converter-simplexml:2.3.0") {
+        exclude group: 'xpp3', module: 'xpp3'
+        exclude group: 'stax', module: 'stax-api'
+        exclude group: 'stax', module: 'stax'
+    }
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.3.0"
     implementation "com.squareup.okhttp3:okhttp:3.10.0"
     //implementation "com.squareup.okhttp3:okhttp-urlconnection:3.0.1"
@@ -149,10 +155,6 @@ dependencies {
     // Other
     implementation 'com.octo.android.robospice:robospice:1.4.14'
     implementation 'com.octo.android.robospice:robospice-spring-android:1.4.14'
-    implementation('org.simpleframework:simple-xml:2.7.1') {
-        exclude module: 'xpp3'
-        exclude group: 'stax'
-    }
 
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

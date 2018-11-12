@@ -14,7 +14,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -65,22 +64,31 @@ import de.eww.bibapp.fragment.dialog.DetailActionsDialogFragment;
 import de.eww.bibapp.fragment.dialog.InsufficentRightsDialogFragment;
 import de.eww.bibapp.fragment.dialog.PaiaActionDialogFragment;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
-import de.eww.bibapp.model.DaiaItem;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.LocationSource;
-import de.eww.bibapp.tasks.DaiaLoaderCallback;
+import de.eww.bibapp.network.ApiClient;
+import de.eww.bibapp.network.UnAPIService;
+import de.eww.bibapp.network.availability.AvailabilityManager;
+import de.eww.bibapp.network.model.DaiaItem;
+import de.eww.bibapp.network.model.DaiaItems;
+import de.eww.bibapp.network.model.ISBD;
 import de.eww.bibapp.tasks.DownloadImageTask;
 import de.eww.bibapp.tasks.LocationsJsonTask;
-import de.eww.bibapp.tasks.UnApiLoaderCallback;
 import de.eww.bibapp.tasks.paia.PaiaRequestTask;
+import de.eww.bibapp.util.DaiaHelper;
+import de.eww.bibapp.util.UnAPIHelper;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.HttpUrl;
 
 /**
  * Created by christoph on 08.11.14.
  */
 public class ModsFragment extends Fragment implements
-        DaiaLoaderCallback.DaiaLoaderInterface,
-        UnApiLoaderCallback.UnApiLoaderInterface,
+        AvailabilityManager.DaiaLoaderInterface,
         RecyclerViewOnGestureListener.OnGestureListener,
         PaiaHelper.PaiaListener,
         DetailActionsDialogFragment.DetailActionsDialogLisener,
@@ -109,7 +117,8 @@ public class ModsFragment extends Fragment implements
     RelativeLayout mNoneView;
 
     private DaiaAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private AvailabilityManager availabilityManager;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     private PaiaActionDialogFragment mPaiaDialog;
 
@@ -126,6 +135,10 @@ public class ModsFragment extends Fragment implements
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
+
+        if (this.availabilityManager == null) {
+            this.availabilityManager = new AvailabilityManager();
+        }
 
         if (this.googleApiClient == null) {
             this.googleApiClient = new GoogleApiClient.Builder(getActivity())
@@ -170,8 +183,8 @@ public class ModsFragment extends Fragment implements
         mRecyclerView.setHasFixedSize(true);
 
         // Use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this.getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        mRecyclerView.setLayoutManager(layoutManager);
         RecyclerViewOnGestureListener gestureListener = new RecyclerViewOnGestureListener(getActivity(), mRecyclerView);
         gestureListener.setOnGestureListener(this);
         mRecyclerView.addOnItemTouchListener(gestureListener);
@@ -181,8 +194,8 @@ public class ModsFragment extends Fragment implements
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mModsView = (LinearLayout) view.findViewById(R.id.mods_layout);
-        mNoneView = (RelativeLayout) view.findViewById(R.id.mods_none);
+        mModsView = view.findViewById(R.id.mods_layout);
+        mNoneView = view.findViewById(R.id.mods_none);
 
         displayModsItem();
     }
@@ -191,6 +204,7 @@ public class ModsFragment extends Fragment implements
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        this.disposable.dispose();
     }
 
     public void removeModsItem() {
@@ -208,30 +222,55 @@ public class ModsFragment extends Fragment implements
     }
 
     private void loadData() {
-        // Perform requests
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.destroyLoader(0);
-        loaderManager.destroyLoader(1);
-        loaderManager.initLoader(0, null, new DaiaLoaderCallback(this));
-        loaderManager.initLoader(1, null, new UnApiLoaderCallback(this, mModsItem));
+        this.updateISBDInformation();
+        this.updateAvailibityInformation();
+    }
+
+    private void updateISBDInformation()
+    {
+        UnAPIService service = ApiClient.getClient(getContext(), HttpUrl.parse("http://dummy.de/")).create(UnAPIService.class);
+        String url = Constants.getUnApiUrl(this.mModsItem.ppn, "isbd");
+        this.disposable.add(service
+                .getISBD(url)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeWith(new DisposableSingleObserver<ISBD>() {
+                    @Override
+                    public void onSuccess(ISBD unApiISBDResponse) {
+                        ModsFragment.this.onUnApiRequestDone(unApiISBDResponse.getLines());
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ModsFragment.this.onAsyncCanceled();
+                    }
+                }));
+    }
+
+    private void updateAvailibityInformation()
+    {
+        if (this.mAdapter != null) {
+            this.mAdapter.clear();
+        }
 
         mProgressBar.setVisibility(View.VISIBLE);
         mEmptyView.setVisibility(View.GONE);
+
+        this.availabilityManager.getAvailabilityList(
+                this.mModsItem,
+                this.disposable,
+                this,
+                getContext());
     }
 
     @Override
-    public ModsItem getModsItem() {
-        return mModsItem;
-    }
-
-    @Override
-    public void onDaiaRequestDone(List<DaiaItem> daiaItems) {
+    public void onDaiaRequestDone(DaiaItems daiaItems) {
         mProgressBar.setVisibility(View.GONE);
-        if (daiaItems.isEmpty()) {
+        if (daiaItems.getItems().isEmpty()) {
             mEmptyView.setVisibility(View.VISIBLE);
         }
 
-        mAdapter = new DaiaAdapter(daiaItems);
+        mAdapter = new DaiaAdapter(daiaItems.getItems(), this.mModsItem, getContext());
         mAdapter.setIsLocalSearch(mModsItem.isLocalSearch);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -239,9 +278,9 @@ public class ModsFragment extends Fragment implements
         requestGeoLocation();
     }
 
-    @Override
-    public void onUnApiRequestDone(String authorExtended) {
+    public void onUnApiRequestDone(String[] unApiISBDResponse) {
         // Set extended author information
+        String authorExtended = UnAPIHelper.convert(unApiISBDResponse, this.mModsItem);
         mAuthorExtendedView.setText(authorExtended);
 
         // Hide UnApi loading animation
@@ -260,7 +299,12 @@ public class ModsFragment extends Fragment implements
     @Override
     public void onActionLocation(DialogFragment dialog) {
         AsyncTask<String, Void, LocationItem> locationsTask = new LocationsJsonTask(this);
-        locationsTask.execute(mAdapter.getItem(mLastClickedPosition).uriUrl);
+
+        try {
+            locationsTask.execute(DaiaHelper.getUriUrl(mAdapter.getItem(mLastClickedPosition)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -352,7 +396,6 @@ public class ModsFragment extends Fragment implements
 
                     if (docEntry.has("error")) {
                         numFailedItems++;
-                        continue;
                     }
                 }
 
@@ -373,13 +416,8 @@ public class ModsFragment extends Fragment implements
 
 		mPaiaDialog.paiaActionDone(responseText);
 
-		// reload daia information
-        mAdapter.clear();
-
-
-		mAdapter.clear();
-        mProgressBar.setVisibility(View.VISIBLE);
-        getLoaderManager().getLoader(0).forceLoad();
+		// reload availability information
+		this.updateAvailibityInformation();
 	}
 
     @Override
@@ -490,20 +528,24 @@ public class ModsFragment extends Fragment implements
         mLastClickedPosition = position;
 
         DaiaItem daiaItem = mAdapter.getItem(position);
-        String actions = daiaItem.actions;
+        String actions = daiaItem.getActions();
 
         // Determine which actions are available for this location
-        ArrayList<String> actionList = new ArrayList<String>();
+        ArrayList<String> actionList = new ArrayList<>();
         if (mModsItem.onlineUrl.isEmpty()) {            // This is not an online resource
-            // location | request | order
-            if (actions.contains("location")) {
-                actionList.add("location");
-            }
-            if (actions.contains("request")) {
-                actionList.add("request");
-            }
-            if (actions.contains("order")) {
-                actionList.add("order");
+            if (actions.contains("no_barcode_reset")) {
+                return;
+            } else {
+                // location | request | order
+                if (actions.contains("location")) {
+                    actionList.add("location");
+                }
+                if (actions.contains("request")) {
+                    actionList.add("request");
+                }
+                if (actions.contains("order")) {
+                    actionList.add("order");
+                }
             }
         } else {
             // location

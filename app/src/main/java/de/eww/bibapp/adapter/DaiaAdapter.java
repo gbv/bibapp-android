@@ -1,5 +1,6 @@
 package de.eww.bibapp.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,11 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.model.DaiaItem;
+import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.DaiaItem;
+import de.eww.bibapp.util.DaiaHelper;
 
 /**
  * Created by christoph on 10.11.14.
@@ -20,6 +24,8 @@ import de.eww.bibapp.model.DaiaItem;
 public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
 
     private List<DaiaItem> mItemList;
+    private ModsItem modsItem;
+    private Context context;
 
     private boolean mIsLocalSearch = true;
 
@@ -37,17 +43,19 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mDistance = (TextView) itemView.findViewById(R.id.distance);
-            mDepartment = (TextView) itemView.findViewById(R.id.department);
-            mLabel = (TextView) itemView.findViewById(R.id.label);
-            mStatus = (TextView) itemView.findViewById(R.id.status);
-            mStatusInfo = (TextView) itemView.findViewById(R.id.status_info);
+            mDistance = itemView.findViewById(R.id.distance);
+            mDepartment = itemView.findViewById(R.id.department);
+            mLabel = itemView.findViewById(R.id.label);
+            mStatus = itemView.findViewById(R.id.status);
+            mStatusInfo = itemView.findViewById(R.id.status_info);
         }
     }
 
     // Suitable constructor for list type
-    public DaiaAdapter(List<DaiaItem> itemList) {
+    public DaiaAdapter(List<DaiaItem> itemList, ModsItem modsItem, Context context) {
         mItemList = itemList;
+        this.modsItem = modsItem;
+        this.context = context;
     }
 
     public void setIsLocalSearch(boolean isLocalSearch) {
@@ -60,10 +68,6 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
 
     public void clear() {
         mItemList.clear();
-    }
-
-    public void addDaiaItems(List<DaiaItem> daiaItems) {
-        mItemList.addAll(daiaItems);
     }
 
     public void sortByDistance() {
@@ -118,11 +122,24 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
 
         // status
         if (mIsLocalSearch) {
-            holder.mStatus.setText(item.status);
-            holder.mStatus.setTextColor(Color.parseColor(item.statusColor));
-            holder.mStatus.setVisibility(View.VISIBLE);
-            holder.mStatusInfo.setText(item.statusInfo);
-            holder.mStatusInfo.setVisibility(View.VISIBLE);
+            try {
+                HashMap<String, String> daiaInformation = DaiaHelper.getInformation(item, this.modsItem, this.context);
+
+                if (daiaInformation.get("actions").contains("no_barcode_reset")) {
+                    holder.mStatus.setText(R.string.daia_no_barcode);
+                    holder.mStatus.setTextColor(Color.RED);
+                    holder.mStatusInfo.setText("");
+                } else {
+                    holder.mStatus.setText(daiaInformation.get("status"));
+                    holder.mStatus.setTextColor(Color.parseColor(daiaInformation.get("statusColor")));
+                    holder.mStatusInfo.setText(daiaInformation.get("statusInfo"));
+                }
+
+                holder.mStatus.setVisibility(View.VISIBLE);
+                holder.mStatusInfo.setVisibility(View.VISIBLE);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             holder.mStatus.setText("");
             holder.mStatusInfo.setText("");

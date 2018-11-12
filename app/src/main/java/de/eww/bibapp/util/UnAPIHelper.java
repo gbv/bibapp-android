@@ -1,0 +1,155 @@
+package de.eww.bibapp.util;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import de.eww.bibapp.model.ModsItem;
+
+public class UnAPIHelper {
+
+    public static String convert(String[] lines, ModsItem modsItem) {
+        String response = "";
+
+        Pattern pattern;
+        Matcher matcher;
+        String[] searchSplit;
+        int currentLine = 0;
+
+        /**
+         * 	Wenn aktuelle Zeile nur einen Eintrag mit Eckiger Klammer enthält ^\[.*\]$...
+         */
+        if ( lines.length > currentLine )
+        {
+            pattern = Pattern.compile("^\\[.*\\]$", Pattern.CASE_INSENSITIVE);
+            matcher = pattern.matcher(lines[currentLine]);
+            if ( matcher.find() )
+            {
+                /**
+                 * dann zur nächsten Zeile springen  (-> Hier stehen z.T. Angaben zum Typ des Dokuments wie [Periodical])
+                 */
+                currentLine++;
+            }
+        }
+
+        /**
+         * 	Wenn aktuelle Zeile mit : endet :$
+         */
+        if ( lines.length > currentLine && lines[currentLine].endsWith(":") )
+        {
+            /**
+             * dann zur nächsten Zeile springen (-> Hier stehen manchmal Herausgeberangaben, die wir nicht benötigen.)
+             */
+            currentLine++;
+        }
+
+        /**
+         * 	Wenn die aktuelle Zeile mit eckigen Klammern beginnt ^\[.*\], diese entfernen (-> In diesen Klammern taucht oft ein _/_ auf, das alles durcheinander bringt.)
+         */
+        if ( lines.length > currentLine )
+        {
+            pattern = Pattern.compile("^\\[.*\\]", Pattern.CASE_INSENSITIVE);
+            matcher = pattern.matcher(lines[currentLine]);
+            if ( matcher.find() )
+            {
+                searchSplit = lines[currentLine].split("\\]");
+                if ( searchSplit.length > 1 )
+                {
+                    for (int i=1; i <= searchSplit.length-1; i++) {
+                        lines[i] = "]" + searchSplit[i];
+                    }
+                }
+                else
+                {
+                    lines[currentLine] = "";
+                }
+            }
+
+            /**
+             * 	Wenn in der Zeile ein _/_ vorkommt, dann zeige alles danach an.
+             */
+            searchSplit = lines[currentLine].split(" / ");
+            if ( searchSplit.length > 1 )
+            {
+                for (int i=1; i <= searchSplit.length-1; i++) {
+                    if (!response.equals("")) {
+                        response += " / ";
+                    }
+
+                    response += searchSplit[i];
+                }
+            }
+            else
+            {
+                /**
+                 * Wenn nicht, dann zeige alles nach dem ersten _-_ an, sofern vorhanden.
+                 */
+                searchSplit = lines[currentLine].split(" \\- ");
+                if ( searchSplit.length > 1 )
+                {
+                    response += searchSplit[1];
+                }
+                else
+                {
+                    /**
+                     * 	Wenn nicht, dann zeige die ganze Zeile an.
+                     */
+                    response += lines[currentLine];
+                }
+            }
+        }
+
+        /**
+         * 	Zur nächsten Zeile springen.
+         */
+        currentLine++;
+
+
+        if ( lines.length > currentLine )
+        {
+            /**
+             * 	Wenn die Zeile mit "Congress:_" beginnt, alles nach "Congress:_" anzeigen. Den Rest der Daten verwerfen.
+             */
+            searchSplit = lines[currentLine].split("Congress: ");
+            if ( searchSplit.length > 1 )
+            {
+                response += " " + searchSplit[1];
+            }
+            else
+            {
+                /**
+                 * 	Wenn es ein Mehrbändiges Werk ist (f-Stufe) d.h. <partNumber> oder <partName> sind nicht null dann
+                 */
+                if ( !modsItem.partName.isEmpty() || !modsItem.partNumber.isEmpty() )
+                {
+                    /**
+                     * Wenn in der Zeile ein _-_ vorkommt, dann zeige alles danach an.
+                     */
+                    searchSplit = lines[currentLine].split(" \\- ");
+                    if ( searchSplit.length > 1 )
+                    {
+                        response += " " + searchSplit[1];
+                    }
+                }
+            }
+        }
+
+        currentLine++;
+        if (lines.length > currentLine) {
+            /**
+             * Iteriere alle verbleibenden Zeilen
+             */
+            for (int i = currentLine; i < lines.length; i++) {
+                /**
+                 * Wenn die Zeile mit In:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
+                 */
+                searchSplit = lines[i].split("In: ");
+                if (searchSplit.length > 1) {
+                    response += " " + lines[i];
+                    break;
+                }
+            }
+        }
+
+        return response;
+    }
+}

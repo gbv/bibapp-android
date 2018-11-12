@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,18 +31,26 @@ import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.adapter.ModsWatchlistAdapter;
+import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.WatchlistSource;
-import de.eww.bibapp.tasks.UnApiLoaderCallback;
+import de.eww.bibapp.network.ApiClient;
+import de.eww.bibapp.network.UnAPIService;
+import de.eww.bibapp.network.model.ISBD;
+import de.eww.bibapp.util.UnAPIHelper;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.observers.DisposableSingleObserver;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.HttpUrl;
 
 /**
  * Created by christoph on 11.11.14.
  */
 public class WatchlistListFragment extends Fragment implements
         RecyclerViewOnGestureListener.OnGestureListener,
-        UnApiLoaderCallback.UnApiLoaderInterface,
         AsyncCanceledInterface,
         ActionMode.Callback {
 
@@ -58,6 +65,8 @@ public class WatchlistListFragment extends Fragment implements
 
     // The listener we are to notify when a mods item is selected
     OnModsItemSelectedListener mModsItemSelectedListener = null;
+
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     private ActionMode mActionMode;
 
@@ -75,9 +84,9 @@ public class WatchlistListFragment extends Fragment implements
          *
          * @param index the index of the selected mods item.
          */
-        public void onModsItemSelected(int index);
+        void onModsItemSelected(int index);
 
-        public void onEmptyList();
+        void onEmptyList();
     }
 
     /**
@@ -132,11 +141,17 @@ public class WatchlistListFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_watchlist_list, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-        mEmptyView = (TextView) view.findViewById(R.id.empty);
+        mRecyclerView = view.findViewById(R.id.recycler);
+        mProgressBar = view.findViewById(R.id.progressbar);
+        mEmptyView = view.findViewById(R.id.empty);
 
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.disposable.dispose();
     }
 
     @Override
@@ -307,9 +322,31 @@ public class WatchlistListFragment extends Fragment implements
         if (mRequestsDone < totalRequests) {
             ModsItem modsItem = mAdapter.getModsItem(mRequestsDone);
             mUnApiResponse += Integer.toString(mRequestsDone + 1) + ") " + modsItem.title + " - ";
-            LoaderManager loaderManager = getLoaderManager();
-            loaderManager.destroyLoader(0);
-            loaderManager.initLoader(0, null, new UnApiLoaderCallback(this, modsItem));
+
+            UnAPIService service = ApiClient.getClient(getContext(), HttpUrl.parse("http://dummy.de/")).create(UnAPIService.class);
+            String url = Constants.getUnApiUrl(modsItem.ppn, "isbd");
+
+            this.disposable.add(service
+                    .getISBD(url)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribeWith(new DisposableSingleObserver<ISBD>() {
+                        @Override
+                        public void onSuccess(ISBD unApiISBDResponse) {
+                            mRequestsDone++;
+
+                            String authorExtended = UnAPIHelper.convert(unApiISBDResponse.getLines(), modsItem);
+                            mUnApiResponse += authorExtended + "\n";
+
+                            performUnApiRequests();
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            Toast toast = Toast.makeText(getActivity(), R.string.toast_mods_error, Toast.LENGTH_LONG);
+                            toast.show();
+                        }
+                    }));
         } else {
             // create an intent to send an email with a list of watchlist items
             Intent sendIntent = new Intent(Intent.ACTION_SEND);
@@ -325,14 +362,6 @@ public class WatchlistListFragment extends Fragment implements
                 startActivity(Intent.createChooser(sendIntent, getResources().getText(R.string.watchlist_export_send_to)));
             }
         }
-    }
-
-    @Override
-    public void onUnApiRequestDone(String authorExtended) {
-        mRequestsDone++;
-        mUnApiResponse += authorExtended + "\n";
-
-        performUnApiRequests();
     }
 
     @Override
