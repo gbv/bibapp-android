@@ -106,7 +106,7 @@
     <string name="watchlist_export_send_to">export watch list</string>
 
     <!-- swipe dialog -->
-    <string name="swipedialog_extending">loading additional entries</string>
+    <string name="swipedialog_extending">Loading additional entries</string>
 
     <!-- error dialog -->
     <string name="errordialog_connection">
@@ -144,7 +144,7 @@
     <string name="menu_booked_cancel">Cancel</string>
     <string name="menu_watchlist_remove">Remove</string>
     <string name="menu_watchlist_export">Export</string>
-    <string name="menu_selected_count">%1$s selected</string>
+    <string name="menu_selected_count">%1$d selected</string>
     <string name="menu_account_logout">Log out</string>
 
     <!-- detail -->
