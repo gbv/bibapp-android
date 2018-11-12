@@ -9,13 +9,13 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -36,13 +36,13 @@ public abstract class BaseActivity extends AppCompatActivity implements
     private final Handler mDrawerActionHandler = new Handler();
 
     /**
-     * The {@link android.support.v4.widget.DrawerLayout} that represents the top-level content view,
+     * The {@link DrawerLayout} that represents the top-level content view,
      * separating the content and navigation drawer.
      */
     private DrawerLayout mDrawerLayout;
 
     /**
-     * The {@link android.support.v7.widget.Toolbar} we will use as our action bar.
+     * The {@link androidx.appcompat.widget.Toolbar} we will use as our action bar.
      */
     Toolbar mToolbar;
 

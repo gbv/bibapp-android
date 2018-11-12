@@ -2,7 +2,7 @@
 
 <!-- A DrawerLayout is intended to be used as the top-level content view using
      match_parent for both width and height to consume the full space available. -->
-<android.support.v4.widget.DrawerLayout
+<androidx.drawerlayout.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/drawer_layout"
@@ -35,7 +35,7 @@
          to treat this as a sliding drawer on the left side for left-to-right
          languages and on the right side for right-to-left languages.
          A solid background is used for contrast with the content view. -->
-    <android.support.design.widget.NavigationView
+    <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -55,5 +55,5 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
-    </android.support.design.widget.NavigationView>
-</android.support.v4.widget.DrawerLayout>
+    </com.google.android.material.navigation.NavigationView>
+</androidx.drawerlayout.widget.DrawerLayout>

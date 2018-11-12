@@ -1,7 +1,7 @@
 package de.eww.bibapp.tasks.paia;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import org.json.JSONObject;
 

@@ -1,8 +1,8 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.AsyncTaskLoader;
+import androidx.fragment.app.Fragment;
+import androidx.loader.content.AsyncTaskLoader;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;

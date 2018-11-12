@@ -1,8 +1,8 @@
 package de.eww.bibapp.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 
 import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.model.source.WatchlistSource;

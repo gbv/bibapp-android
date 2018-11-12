@@ -4,11 +4,11 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -167,7 +167,7 @@ public class AccountActivity extends BaseActivity implements
     }
 
     /**
-     * The {@link android.support.v4.app.FragmentPagerAdapter} used to display pages in this sample.
+     * The {@link FragmentPagerAdapter} used to display pages in this sample.
      * The individual pages are simple and just display two lines of text. The important section of
      * this class is the {@link #getPageTitle(int)} method which controls what is displayed in the
      * {@link SlidingTabLayout}.
