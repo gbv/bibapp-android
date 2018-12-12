@@ -130,6 +130,22 @@ public class DaiaHelper {
                 if (modsItem.onlineUrl.isEmpty()) {
                     status += "nicht ausleihbar";
                     statusColor = "#FF0000";
+
+                    if (availableItems.containsKey("presentation")) {
+                        if (availableItems.get("presentation").has("href")) {
+                            String href = availableItems.get("presentation").get("href").toString();
+                            HttpUrl hrefUrl = HttpUrl.parse(href);
+                            Set<String> queryParameter = hrefUrl.queryParameterNames();
+                            if (queryParameter.contains("action")) {
+                                List<String> hrefValues = hrefUrl.queryParameterValues("action");
+                                if (hrefValues.size() > 0) {
+                                    if (hrefValues.get(0).equals("order")) {
+                                        status += "; Vor Ort benutzbar, bitte bestellen";
+                                    }
+                                }
+                            }
+                        }
+                    }
                 } else {
                     status += "Online-Ressource im Browser öffnen";
                 }
@@ -195,6 +211,22 @@ public class DaiaHelper {
                 if (unavailableItems.get("loan").has("href")) {
                     actions = "request";
                 }
+            } else {
+                if (availableItems.containsKey("presentation")) {
+                    if (availableItems.get("presentation").has("href")) {
+                        String href = availableItems.get("presentation").get("href").toString();
+                        HttpUrl hrefUrl = HttpUrl.parse(href);
+                        Set<String> queryParameter = hrefUrl.queryParameterNames();
+                        if (queryParameter.contains("action")) {
+                            List<String> hrefValues = hrefUrl.queryParameterValues("action");
+                            if (hrefValues.size() > 0) {
+                                if (hrefValues.get(0).equals("order")) {
+                                    actions = "order";
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -203,9 +235,9 @@ public class DaiaHelper {
             actions += ";location";
         } else {
             // fix for crash when tryining to access a location entry that does not exists
-            // the default actions depend on the existence of a uri entry
+            // the default actions depends on the existence of a uri entry
             String uriUrl = DaiaHelper.getUriUrl(daiaItem);
-            if (!uriUrl.isEmpty()) {
+            if (!uriUrl.isEmpty() && actions.isEmpty()) {
                 actions = "location";
             }
         }
