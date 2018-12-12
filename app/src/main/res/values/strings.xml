@@ -149,6 +149,7 @@
     <string name="menu_watchlist_export">Exportieren</string>
     <string name="menu_selected_count">%1$d ausgewählt</string>
     <string name="menu_account_logout">Logout</string>
+    <string name="menu_account_id">ID</string>
     
     <!-- detail -->
     <string name="detail_available">Verfügbarkeit</string>

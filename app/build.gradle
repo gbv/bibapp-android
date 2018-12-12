@@ -156,6 +156,9 @@ dependencies {
     implementation 'com.mikepenz:iconics-core:3.1.0'
     implementation 'com.mikepenz:iconics-views:3.1.0'
 
+    // ZXing
+    implementation 'com.google.zxing:core:3.3.3'
+
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'

@@ -51,6 +51,11 @@
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden">
         </activity>
+        <activity
+            android:name=".activity.IdActivity"
+            android:screenOrientation="fullSensor"
+            android:configChanges="orientation|keyboardHidden">
+        </activity>
 
         <!-- Watchlist -->
         <activity

@@ -1,5 +1,6 @@
 package de.eww.bibapp.activity;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -113,6 +114,8 @@ public class AccountActivity extends BaseActivity implements
      * List of {@link AccountPagerItem} which represents the tabs
      */
     private List<AccountPagerItem> mTabs = new ArrayList<>();
+
+    private MenuItem idMenuItem;
 
     private JSONObject patronInformation;
 
@@ -246,6 +249,8 @@ public class AccountActivity extends BaseActivity implements
                 if (status > 0) {
                     String currentTitle = getSupportActionBar().getTitle().toString();
                     getSupportActionBar().setTitle(currentTitle + " " + getResources().getText(R.string.account_inactive));
+                } else {
+                    this.idMenuItem.setVisible(true);
                 }
             }
         } catch (Exception e) {
@@ -279,6 +284,12 @@ public class AccountActivity extends BaseActivity implements
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.account_fragment_actions, menu);
 
+        this.idMenuItem = menu.findItem(R.id.menu_account_account_id);
+        this.idMenuItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_idcard)
+            .color(Color.WHITE)
+            .sizeDp(24));
+
         return true;
     }
 
@@ -302,6 +313,12 @@ public class AccountActivity extends BaseActivity implements
 
                 // go to search
                 this.selectItem(0);
+
+                return true;
+            case R.id.menu_account_account_id:
+                Intent intent = new Intent(this, IdActivity.class);
+                intent.putExtra("patron", this.patronInformation.toString());
+                startActivity(intent);
 
                 return true;
             default:
