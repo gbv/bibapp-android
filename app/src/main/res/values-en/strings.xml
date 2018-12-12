@@ -3,8 +3,8 @@
 
     <!-- general -->
     <string name="app_name">BibApp</string>
-    <string name="empty_list">Keine Einträge vorhanden</string>
-    <string name="loading_in_progress">Inhalte werden geladen</string>
+    <string name="empty_list">No entries found</string>
+    <string name="loading_in_progress">Content is loading</string>
 
     <!-- navigation -->
     <string name="drawer_navigation_search">Search</string>
