@@ -99,7 +99,7 @@ public final class Constants
     {
         if ( isLocal == true )
         {
-            return "http://daia.gbv.de/isil/" + Constants.DAIA_BIB_CODES[localCatalogIndex] + "?id=ppn:" + ppn + "&format=json";
+            return "https://paia.gbv.de/" + Constants.DAIA_BIB_CODES[localCatalogIndex] + "/daia?id=ppn:" + ppn + "&format=json";
         }
         else
         {
