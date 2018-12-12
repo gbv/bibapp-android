@@ -116,6 +116,7 @@ public final class Constants
      * An URL to a homepage
      */
     public static final String[] HOMEPAGE_URLS = {
+        "https://www.hs-schmalkalden.de/hochschule/einrichtungen/bibliothek.html"
     };
 
     /**
