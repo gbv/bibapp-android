@@ -2,11 +2,16 @@ package de.eww.bibapp.adapter;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mikepenz.iconics.IconicsDrawable;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -16,6 +21,7 @@ import java.util.Locale;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.model.PaiaItem;
+import de.eww.bibapp.typeface.BeluginoFont;
 
 /**
  * Created by christoph on 07.11.14.
@@ -34,7 +40,11 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
 
         public TextView mAbout;
         public TextView mSignature;
+
+        private TextView dueDateLabel;
         public TextView mDate;
+        private ImageView dueDateWarning;
+
         public TextView mQueue;
         public TextView mRenewals;
         public TextView mStatus;
@@ -42,12 +52,14 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mAbout = (TextView) itemView.findViewById(R.id.about);
-            mSignature = (TextView) itemView.findViewById(R.id.signature);
-            mDate = (TextView) itemView.findViewById(R.id.duedate);
-            mQueue = (TextView) itemView.findViewById(R.id.queue);
-            mRenewals = (TextView) itemView.findViewById(R.id.renewals);
-            mStatus = (TextView) itemView.findViewById(R.id.status);
+            mAbout = itemView.findViewById(R.id.about);
+            mSignature = itemView.findViewById(R.id.signature);
+            this.dueDateLabel = itemView.findViewById(R.id.duedate_label);
+            mDate = itemView.findViewById(R.id.duedate);
+            this.dueDateWarning = itemView.findViewById(R.id.duedate_warning);
+            mQueue = itemView.findViewById(R.id.queue);
+            mRenewals = itemView.findViewById(R.id.renewals);
+            mStatus = itemView.findViewById(R.id.status);
         }
     }
 
@@ -124,6 +136,10 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
                 endDateString = dateFormatWithoutTime.format(endDate);
             }
 
+            if (endDate.before(new Date())) {
+                this.makeDueDateWarning(holder);
+            }
+
             holder.mDate.setText(endDateString);
         } else if (item.getDueDate() != null) {
             Date dueDate = item.getDueDate();
@@ -132,6 +148,10 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
 
             if (dueDateString.contains("00:00")) {
                 dueDateString = dateFormatWithoutTime.format(dueDate);
+            }
+
+            if (dueDate.before(new Date())) {
+                this.makeDueDateWarning(holder);
             }
 
             holder.mDate.setText(dueDateString);
@@ -157,5 +177,15 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
     @Override
     public int getItemCount() {
         return (mItemList != null ? mItemList.size() : 0);
+    }
+
+    private void makeDueDateWarning(ViewHolder viewHolder) {
+        viewHolder.dueDateLabel.setTextColor(Color.RED);
+        viewHolder.mDate.setTextColor(Color.RED);
+        viewHolder.dueDateWarning.setVisibility(View.VISIBLE);
+        viewHolder.dueDateWarning.setImageDrawable(new IconicsDrawable(this.mContext)
+            .icon(BeluginoFont.Icon.bel_warning)
+            .color(Color.RED)
+            .sizeDp(16));
     }
 }

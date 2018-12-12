@@ -15,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mikepenz.iconics.IconicsDrawable;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -28,11 +30,16 @@ import de.eww.bibapp.fragment.account.AccountBorrowedFragment;
 import de.eww.bibapp.fragment.account.AccountFeesFragment;
 import de.eww.bibapp.tasks.paia.PaiaLogoutTask;
 import de.eww.bibapp.tasks.paia.PaiaPatronTask;
+import de.eww.bibapp.typeface.BeluginoFont;
 import de.eww.bibapp.view.SlidingTabLayout;
 
 public class AccountActivity extends BaseActivity implements
         PaiaHelper.PaiaListener,
         AsyncCanceledInterface {
+
+    private final static String FRAGMENT_BORROWED = "frag_borrowed";
+    private final static String FRAGMENT_BOOKED = "frag_booked";
+    private final static String FRAGMENT_FEES = "frag_fees";
 
     /**
      * This class represents a tab to be displayed by {@link ViewPager} and it's associated
@@ -105,7 +112,9 @@ public class AccountActivity extends BaseActivity implements
     /**
      * List of {@link AccountPagerItem} which represents the tabs
      */
-    private List<AccountPagerItem> mTabs = new ArrayList<AccountPagerItem>();
+    private List<AccountPagerItem> mTabs = new ArrayList<>();
+
+    private JSONObject patronInformation;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -207,15 +216,25 @@ public class AccountActivity extends BaseActivity implements
     private void addFragments() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
-        transaction.add(R.id.container, Fragment.instantiate(this, AccountBorrowedFragment.class.getName()));
-        transaction.add(R.id.container, Fragment.instantiate(this, AccountBookedFragment.class.getName()));
-        transaction.add(R.id.container, Fragment.instantiate(this, AccountFeesFragment.class.getName()));
+        if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_BORROWED) == null) {
+            transaction.add(R.id.container, Fragment.instantiate(this, AccountBorrowedFragment.class.getName()), FRAGMENT_BORROWED);
+        }
+
+        if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_BOOKED) == null) {
+            transaction.add(R.id.container, Fragment.instantiate(this, AccountBookedFragment.class.getName()), FRAGMENT_BOOKED);
+        }
+
+        if (getSupportFragmentManager().findFragmentByTag(FRAGMENT_FEES) == null) {
+            transaction.add(R.id.container, Fragment.instantiate(this, AccountFeesFragment.class.getName()), FRAGMENT_FEES);
+        }
 
         transaction.commit();
     }
 
     public void onPatronLoaded(JSONObject response) {
         try {
+            this.patronInformation = response;
+
             // sub title
             String name = response.getString("name");
             getSupportActionBar().setSubtitle(name);

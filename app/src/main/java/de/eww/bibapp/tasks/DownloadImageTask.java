@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.mikepenz.iconics.IconicsDrawable;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -15,6 +17,7 @@ import java.net.URL;
 import java.util.Locale;
 
 import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.util.ModsHelper;
 
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 {
@@ -32,6 +35,10 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 	@Override
 	protected Bitmap doInBackground(String... urls)
 	{
+		if (this.item.isbn.isEmpty()) {
+			return null;
+		}
+
 		String urlParam = urls[0];
 		Bitmap bitmap = null;
 		
@@ -69,7 +76,7 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 			//int byteCount = result.getByteCount();
             int byteCount = result.getRowBytes() * result.getHeight();
 			
-			if ( byteCount > 1 )
+			if ( byteCount > 4 )
 			{
 				this.imageView.setImageBitmap(result);
 			}
@@ -82,7 +89,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap>
 	
 	private void setListImage()
 	{
-		Resources res = this.context.getResources();
-		this.imageView.setImageResource(res.getIdentifier("mediaicon_" + this.item.mediaType.toLowerCase(Locale.GERMANY), "drawable", this.context.getPackageName()));
+		this.imageView.setImageDrawable(new IconicsDrawable(this.context).icon(ModsHelper.getBeluginoFontIcon(this.item)));
 	}
 }

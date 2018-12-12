@@ -291,6 +291,10 @@ public class SearchXmlParser
 		{
 			mediaType = "E";
 		}
+		else if ( physicalDescription != null && physicalDescription.equals("electronic resource") )
+		{
+			mediaType = "ebook";
+		}
 		else if ( typeOfResource != null && typeOfResource.equals("manuscript") )
 		{
 			mediaType = "H";
@@ -806,7 +810,7 @@ public class SearchXmlParser
                         {
                             String form = this.readForm(parser);
 
-                            if ( form.equals("microform") || form.equals("remote") )
+                            if ( form.equals("microform") || form.equals("remote") || form.equals("electronic resource") )
                             {
                                 mediatype = form;
                             }

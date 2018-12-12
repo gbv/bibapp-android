@@ -3,7 +3,10 @@ package de.eww.bibapp;
 import android.app.Application;
 import android.content.Context;
 import androidx.multidex.MultiDex;
+import de.eww.bibapp.typeface.BeluginoFont;
 
+import com.mikepenz.iconics.Iconics;
+import com.mikepenz.iconics.typeface.GenericFont;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -22,6 +25,10 @@ public class BibAppApplication extends Application {
             return;
         }
         LeakCanary.install(this);
+
+        // Iconics
+        Iconics.init(getApplicationContext());
+        Iconics.registerFont(new BeluginoFont());
     }
 
     @Override

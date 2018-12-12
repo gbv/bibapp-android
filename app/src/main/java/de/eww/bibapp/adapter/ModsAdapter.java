@@ -3,11 +3,15 @@ package de.eww.bibapp.adapter;
 import android.content.Context;
 import android.content.res.Resources;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.mikepenz.iconics.IconicsDrawable;
 
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +19,8 @@ import java.util.Locale;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.typeface.BeluginoFont;
+import de.eww.bibapp.util.ModsHelper;
 
 public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
 
@@ -36,11 +42,11 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mTitle = (TextView) itemView.findViewById(R.id.title);
-            mSub = (TextView) itemView.findViewById(R.id.sub);
-            mAuthor = (TextView) itemView.findViewById(R.id.author);
-            mPublication = (TextView) itemView.findViewById(R.id.publication);
-            mImage = (ImageView) itemView.findViewById(R.id.image);
+            mTitle = itemView.findViewById(R.id.title);
+            mSub = itemView.findViewById(R.id.sub);
+            mAuthor = itemView.findViewById(R.id.author);
+            mPublication = itemView.findViewById(R.id.publication);
+            mImage = itemView.findViewById(R.id.image);
         }
     }
 
@@ -98,8 +104,10 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
                 holder.mPublication.setText(item.issuedDate);
             }
 
-            Resources res = mContext.getResources();
-            holder.mImage.setImageResource(res.getIdentifier("mediaicon_" + item.mediaType.toLowerCase(Locale.GERMANY), "drawable", mContext.getPackageName()));
+            holder.mImage.setImageDrawable(new IconicsDrawable(this.mContext)
+                .icon(ModsHelper.getBeluginoFontIcon(item))
+                .color(Color.LTGRAY)
+                .sizeDp(36));
         }
     }
 

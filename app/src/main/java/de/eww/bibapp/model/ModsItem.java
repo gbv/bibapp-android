@@ -59,4 +59,8 @@ public class ModsItem implements Serializable
 	    final ModsItem compare = (ModsItem) obj;
 		return this.ppn.equals(compare.ppn);
 	}
+
+	public String getMediaType() {
+		return this.mediaType;
+	}
 }

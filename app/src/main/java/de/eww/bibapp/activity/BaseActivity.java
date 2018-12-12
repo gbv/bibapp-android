@@ -1,21 +1,28 @@
 package de.eww.bibapp.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import com.google.android.material.navigation.NavigationView;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.context.IconicsContextWrapper;
+
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -23,6 +30,7 @@ import android.widget.TextView;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.typeface.BeluginoFont;
 import de.eww.bibapp.util.LocaleManager;
 import de.eww.bibapp.util.PrefUtils;
 
@@ -208,10 +216,36 @@ public abstract class BaseActivity extends AppCompatActivity implements
         // Set up the navigation listener
         mNavigationView.setNavigationItemSelectedListener(this);
 
+        Menu navigationMenu = mNavigationView.getMenu();
+
+        // Navigation Icons
+        MenuItem searchItem = navigationMenu.findItem(R.id.nav_search);
+        searchItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_magnifier));
+
+        MenuItem accountItem = navigationMenu.findItem(R.id.nav_account);
+        accountItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_account));
+
+        MenuItem watchlistItem = navigationMenu.findItem(R.id.nav_watchlist);
+        watchlistItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_content));
+
+        MenuItem infoItem = navigationMenu.findItem(R.id.nav_info);
+        infoItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_info));
+
+        MenuItem settingsItem = navigationMenu.findItem(R.id.nav_settings);
+        settingsItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_cog));
+
+        MenuItem homepageItem = navigationMenu.findItem(R.id.nav_homepage);
+        homepageItem.setIcon(new IconicsDrawable(this)
+            .icon(BeluginoFont.Icon.bel_world));
+
         // Show homepage menu item, if url is set
         int localCatalogIndex = PrefUtils.getLocalCatalogIndex(this);
         if (Constants.HOMEPAGE_URLS.length >= localCatalogIndex + 1) {
-            MenuItem homepageItem = mNavigationView.getMenu().findItem(R.id.nav_homepage);
             homepageItem.setVisible(true);
         }
 
@@ -256,5 +290,10 @@ public abstract class BaseActivity extends AppCompatActivity implements
             mForceSelectSearch = false;
             navigate(mNavigationView.getMenu().getItem(0));
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(base));
     }
 }

@@ -155,6 +155,9 @@ dependencies {
     // Other
     implementation 'com.octo.android.robospice:robospice:1.4.14'
     implementation 'com.octo.android.robospice:robospice-spring-android:1.4.14'
+    // Iconics
+    implementation 'com.mikepenz:iconics-core:3.1.0'
+    implementation 'com.mikepenz:iconics-views:3.1.0'
 
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

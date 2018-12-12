@@ -47,6 +47,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/duedate_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:width="130dp"
@@ -60,6 +61,12 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/list_secondary_text_size"
                 android:textColor="@android:color/secondary_text_light" />
+
+           <ImageView
+               android:id="@+id/duedate_warning"
+               android:layout_width="16dp"
+               android:layout_height="16dp"
+               android:visibility="gone"/>
        </LinearLayout>
 
        <LinearLayout
