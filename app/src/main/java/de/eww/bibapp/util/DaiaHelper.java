@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -180,11 +181,12 @@ public class DaiaHelper {
                     HttpUrl hrefUrl = HttpUrl.parse(href);
                     Set<String> queryParameter = hrefUrl.queryParameterNames();
                     if (queryParameter.contains("bar")) {
-                        if (hrefUrl.queryParameterValues("bar").isEmpty()) {
-                            actions = "no_barcode_reset";
+                        List<String> hrefValues = hrefUrl.queryParameterValues("bar");
+                        if (hrefValues.size() > 0) {
+                            if (hrefValues.get(0).isEmpty()) {
+                                actions = "no_barcode_reset";
+                            }
                         }
-                    } else {
-                        actions = "no_barcode_reset";
                     }
                 }
             }
