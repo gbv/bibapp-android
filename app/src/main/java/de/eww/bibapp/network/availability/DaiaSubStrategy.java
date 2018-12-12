@@ -72,6 +72,12 @@ public class DaiaSubStrategy implements AvailabilityStrategy {
         }
     }
 
+    /**
+     * Important note: Observable.merge will emit multiple results, one for each sub request.
+     * Entries are added one by one in ModsFragment, so it's important to not reset the
+     * result set when updating. An alternative approach would be to wait for completion on all
+     * observables as suggested by https://stackoverflow.com/questions/35357919/combine-a-list-of-observables-and-wait-until-all-completed.
+     */
     private Observable<DaiaItems> performFamRequest(ModsItem modsItem, int start) {
         FamService service = ApiClient.getClient(this.context, HttpUrl.parse("http://dummy.de/")).create(FamService.class);
 
@@ -79,7 +85,7 @@ public class DaiaSubStrategy implements AvailabilityStrategy {
         int localCatalogIndex = PrefUtils.getLocalCatalogIndex(this.context);
         Resources resources = this.context.getResources();
         String[] famUrls = resources.getStringArray(R.array.fam_urls);
-        String famUrl = String.format(famUrls[localCatalogIndex], start, modsItem.ppn);
+        String famUrl = String.format(famUrls[localCatalogIndex], start+1, modsItem.ppn);
 
         // send a Fam-Request starting at index 0 with the mods ppn
         return service.getFam(famUrl)

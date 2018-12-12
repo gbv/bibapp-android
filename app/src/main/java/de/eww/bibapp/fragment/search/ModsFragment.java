@@ -130,6 +130,8 @@ public class ModsFragment extends Fragment implements
     private GoogleApiClient googleApiClient;
     private Location lastLocation;
 
+    private DaiaItems daiaItems = new DaiaItems();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -270,7 +272,9 @@ public class ModsFragment extends Fragment implements
             mEmptyView.setVisibility(View.VISIBLE);
         }
 
-        mAdapter = new DaiaAdapter(daiaItems.getItems(), this.mModsItem, getContext());
+        this.daiaItems.addItems(daiaItems.getItems());
+
+        mAdapter = new DaiaAdapter(this.daiaItems.getItems(), this.mModsItem, getContext());
         mAdapter.setIsLocalSearch(mModsItem.isLocalSearch);
         mRecyclerView.setAdapter(mAdapter);
 
