@@ -152,9 +152,6 @@ dependencies {
     implementation 'com.jakewharton:butterknife:9.0.0-rc1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:9.0.0-rc1'
 
-    // Other
-    implementation 'com.octo.android.robospice:robospice:1.4.14'
-    implementation 'com.octo.android.robospice:robospice-spring-android:1.4.14'
     // Iconics
     implementation 'com.mikepenz:iconics-core:3.1.0'
     implementation 'com.mikepenz:iconics-views:3.1.0'
