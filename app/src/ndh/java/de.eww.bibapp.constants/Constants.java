@@ -43,30 +43,6 @@ public final class Constants
     public static final String GVK_CATALOG = "gvk";
 
     /**
-     * This determs the URL for search requests
-     */
-    public static String getSearchUrl(String search, int start, int numRecords, boolean isLocalSearch, int localCatalogIndex)
-    {
-        String url = null;
-
-        url = "http://sru.gbv.de/";
-
-        if ( isLocalSearch == true )
-        {
-            url += Constants.LOCAL_CATALOGS[localCatalogIndex][0];
-        }
-        else
-        {
-            url += Constants.GVK_CATALOG;
-        }
-
-        url += "?version=1.1&operation=searchRetrieve&query=pica.all=" + search + "+or+pica.tmb=" + search + "+not+(pica.mak=ac*+or+pica.mak=bc*+or+pica.mak=ec*+or+pica.mak=gc*+or+pica.mak=kc*+or+pica.mak=mc*+or+pica.mak=oc*+or+pica.mak=sc*)";
-        url += "&startRecord=" + start + "&maximumRecords=" + numRecords + "&recordSchema=mods";
-
-        return url;
-    }
-
-    /**
      * The library codes used in location requests
      *
      * @see LOCAL_CATALOGS and keep order in sync
@@ -136,7 +112,7 @@ public final class Constants
      */
     public static String getUnApiUrl(String ppn)
     {
-        return "http://unapi.gbv.de/?id=gvk:ppn:" + ppn + "&format=isbd";
+        return "http://unapi.k10plus.de/?id=gvk:ppn:" + ppn + "&format=isbd";
     }
 
     /**
