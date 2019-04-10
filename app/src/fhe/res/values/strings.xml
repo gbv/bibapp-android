@@ -50,7 +50,7 @@
         <br/>
         Von der App werden folgende Daten an Schnittstellen übertragen:<br/>
         - Eingaben in das Suchfeld an http://opac.uni-erfurt.de/DB=4/<br/>
-        - PPN-Angaben zu einzelnen Einträgen an http://unapi.gbv.de und http://daia.gbv.de/DE-546<br/>
+        - PPN-Angaben zu einzelnen Einträgen an http://unapi.k10plus.de und http://daia.gbv.de/DE-546<br/>
         - Benutzername und Passwort an https://opac.uni-erfurt.de/DE-546/<br/>
         - Standort-URIs an  http://uri.gbv.de/organization/isil/DE-546<br/>
         - ISBN-Angaben an http://ws.gbv.de<br/>
