@@ -14,6 +14,7 @@ import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.parser.SearchXmlParser;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.SruHelper;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -176,7 +177,7 @@ public final class SearchXmlLoader extends AsyncTaskLoader<HashMap<String, Objec
 		}
 
 		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(fragment.getActivity());
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, localCatalogIndex), this.fragment.getActivity());
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(SruHelper.getSearchUrl(searchString, this.offset, Constants.SEARCH_HITS_PER_REQUEST, this.isLocalSearch, localCatalogIndex), this.fragment.getActivity());
 
 		try {
 			urlConnectionHelper.configure();
