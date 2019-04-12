@@ -110,9 +110,9 @@ public final class Constants
     /**
      * The UnAPI URL for extended information
      */
-    public static String getUnApiUrl(String ppn)
+    public static String getUnApiUrl(String ppn, String format)
     {
-        return "http://unapi.k10plus.de/?id=gvk:ppn:" + ppn + "&format=isbd";
+        return "http://unapi.k10plus.de/?id=gvk:ppn:" + ppn + "&format=" + format;
     }
 
     /**
