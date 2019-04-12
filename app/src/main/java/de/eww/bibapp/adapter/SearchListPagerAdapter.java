@@ -8,6 +8,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import de.eww.bibapp.R;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragment.search.SearchListFragment;
+import de.eww.bibapp.network.search.SearchManager;
 import de.eww.bibapp.util.PrefUtils;
 
 /**
@@ -33,9 +34,9 @@ public class SearchListPagerAdapter extends FragmentPagerAdapter {
         SearchListFragment fragment = new SearchListFragment();
 
         if (position == 0) {
-            fragment.setSearchMode(SearchListFragment.SEARCH_MODE.LOCAL);
+            fragment.setSearchMode(SearchManager.SEARCH_MODE.LOCAL);
         } else {
-            fragment.setSearchMode(SearchListFragment.SEARCH_MODE.GVK);
+            fragment.setSearchMode(SearchManager.SEARCH_MODE.GVK);
         }
 
         return fragment;

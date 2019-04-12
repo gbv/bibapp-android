@@ -1,4 +1,4 @@
-package de.eww.bibapp.parser;
+package de.eww.bibapp.network.parser;
 
 import android.util.Xml;
 
@@ -23,7 +23,7 @@ public class SearchXmlParser
 	// We don't use namespaces
     private static final String ns = null;
     
-	public HashMap<String, Object> parse(InputStream in, boolean isLocalSearch) throws XmlPullParserException, IOException
+	public HashMap<String, Object> parse(InputStream in) throws XmlPullParserException, IOException
 	{
 		try
 		{
@@ -33,7 +33,7 @@ public class SearchXmlParser
 			parser.setInput(in, null);
 			parser.nextTag();
 			
-			return this.readFeed(parser, isLocalSearch);
+			return this.readFeed(parser);
 		}
 		finally
 		{
@@ -41,7 +41,7 @@ public class SearchXmlParser
 		}
 	}
 	
-	private HashMap<String, Object> readFeed(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private HashMap<String, Object> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		List<ModsItem> list = new ArrayList<ModsItem>();
@@ -61,7 +61,7 @@ public class SearchXmlParser
 			// get records
 			if ( name.equals("zs:records") )
 			{
-				map.put("list", this.readRecords(parser, isLocalSearch));
+				map.put("list", this.readRecords(parser));
 			}
 			else if ( name.equals("zs:numberOfRecords") )
 			{
@@ -76,7 +76,7 @@ public class SearchXmlParser
 		return map;
 	}
 	
-	private List<ModsItem> readRecords(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private List<ModsItem> readRecords(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
 		List<ModsItem> entries = new ArrayList<ModsItem>();
 		
@@ -93,7 +93,7 @@ public class SearchXmlParser
 			
 			if ( name.equals("zs:record") )
 			{
-				entries.add(this.readRecord(parser, isLocalSearch));
+				entries.add(this.readRecord(parser));
 			}
 			else
 			{
@@ -104,7 +104,7 @@ public class SearchXmlParser
 		return entries;
 	}
 	
-	private ModsItem readRecord(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private ModsItem readRecord(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
 		ModsItem entry = null;
 		
@@ -121,7 +121,7 @@ public class SearchXmlParser
 			
 			if ( name.equals("zs:recordData") )
 			{
-				entry = this.readRecordData(parser, isLocalSearch);
+				entry = this.readRecordData(parser);
 			}
 			else
 			{
@@ -132,7 +132,7 @@ public class SearchXmlParser
 		return entry;
 	}
 	
-	private ModsItem readRecordData(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private ModsItem readRecordData(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
 		ModsItem entry = null;
 		
@@ -149,7 +149,7 @@ public class SearchXmlParser
 			
 			if ( name.equals("mods") )
 			{
-				entry = this.readMods(parser, isLocalSearch);
+				entry = this.readMods(parser);
 			}
 			else
 			{
@@ -161,7 +161,7 @@ public class SearchXmlParser
 	}
 	
 	@SuppressWarnings("unchecked")
-	private ModsItem readMods(XmlPullParser parser, boolean isLocalSearch) throws XmlPullParserException, IOException
+	private ModsItem readMods(XmlPullParser parser) throws XmlPullParserException, IOException
 	{
 		parser.require(XmlPullParser.START_TAG, SearchXmlParser.ns, "mods");
 		
@@ -395,7 +395,6 @@ public class SearchXmlParser
             onlineUrl,
             indexArray
         );
-		entry.setIsLocalSearch(isLocalSearch);
 		
 		return entry;
 	}

@@ -12,6 +12,7 @@ import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.fragment.search.ModsPagerFragment;
 import de.eww.bibapp.model.source.WatchlistSource;
+import de.eww.bibapp.network.search.SearchManager;
 
 /**
  * Activity that displays a particular location onscreen.
@@ -51,7 +52,7 @@ public class ModsActivity extends BaseActivity implements
         }
 
         if (getIntent().hasExtra("searchMode")) {
-            String searchMode = getIntent().getExtras().getString("searchMode");
+            SearchManager.SEARCH_MODE searchMode = (SearchManager.SEARCH_MODE) getIntent().getSerializableExtra("searchMode");
             mModsPagerFragment.setSearchMode(searchMode);
         }
 

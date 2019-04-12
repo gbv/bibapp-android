@@ -4,18 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.List;
 
-import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
 import de.eww.bibapp.adapter.ModsPagerAdapter;
@@ -23,22 +19,27 @@ import de.eww.bibapp.adapter.ModsWatchlistPagerAdapter;
 import de.eww.bibapp.fragment.dialog.SwipeLoadingDialogFragment;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
-import de.eww.bibapp.tasks.SearchXmlLoader;
+import de.eww.bibapp.network.model.SruResult;
+import de.eww.bibapp.network.search.SearchManager;
+import de.eww.bibapp.util.SruHelper;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by christoph on 09.11.14.
  */
 public class ModsPagerFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
-        AsyncCanceledInterface {
+        SearchManager.SearchLoaderInterface {
 
     private FragmentStatePagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
 
+    private SearchManager searchManager;
+    private CompositeDisposable disposable = new CompositeDisposable();
+
     private int mCurrentItem = 0;
 
     private boolean mUseWatchlistSource = false;
-    private String mSearchMode;
+    private SearchManager.SEARCH_MODE mSearchMode;
     private String mSearchString;
 
     private SwipeLoadingDialogFragment mLoadingDialogFragment;
@@ -49,11 +50,25 @@ public class ModsPagerFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (this.searchManager == null) {
+            this.searchManager = new SearchManager();
+
+            this.searchManager.setSearchQuery(mSearchString);
+            this.searchManager.setOffset(ModsSource.getLoadedItems(mSearchMode.toString()) + 1);
+            this.searchManager.setSearchMode(mSearchMode);
+        }
+
         if (!mUseWatchlistSource) {
             mPagerAdapter = new ModsPagerAdapter(this, getChildFragmentManager(), mSearchMode);
         } else {
             mPagerAdapter = new ModsWatchlistPagerAdapter(getChildFragmentManager());
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.disposable.dispose();
     }
 
     @Override
@@ -78,7 +93,7 @@ public class ModsPagerFragment extends Fragment implements
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_mods_pager, container, false);
 
-        mViewPager = (ViewPager) view.findViewById(R.id.pager);
+        mViewPager = view.findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
 
         mViewPager.setCurrentItem(mCurrentItem);
@@ -90,7 +105,7 @@ public class ModsPagerFragment extends Fragment implements
         mUseWatchlistSource = true;
     }
 
-    public void setSearchMode(String searchMode) {
+    public void setSearchMode(SearchManager.SEARCH_MODE searchMode) {
         mSearchMode = searchMode;
     }
 
@@ -115,29 +130,22 @@ public class ModsPagerFragment extends Fragment implements
             mLoadingDialogFragment = new SwipeLoadingDialogFragment();
             mLoadingDialogFragment.show(getChildFragmentManager(), "swipe_dialog");
 
-            LoaderManager loaderManager = getLoaderManager();
-            loaderManager.destroyLoader(0);
-            loaderManager.initLoader(0, null, this).forceLoad();
+            this.searchManager.getSearchResults(
+                    this.disposable,
+                    this,
+                    getContext()
+            );
 
             this.isLoadingMore = true;
         }
     }
 
     @Override
-    public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
-        SearchXmlLoader loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
-        loader.setSearchString(mSearchString);
-        loader.setOffset(ModsSource.getLoadedItems(mSearchMode) + 1);
-        loader.setIsLocalSearch(mSearchMode.equals(SearchListFragment.SEARCH_MODE.LOCAL.toString()));
-
-        return loader;
-    }
-
-    @Override
-    public void onLoadFinished(Loader<HashMap<String, Object>> loader, HashMap<String, Object> data) {
+    public void onSearchRequestDone(SruResult sruResult)
+    {
         // Add data
-        List<ModsItem> modsItems = (List<ModsItem>) data.get("list");
-        ModsSource.addModsItems(mSearchMode, modsItems);
+        List<ModsItem> modsItems = (List<ModsItem>) sruResult.getResult().get("list");
+        ModsSource.addModsItems(mSearchMode.toString(), modsItems);
 
         // Dismiss dialog
         mLoadingDialogFragment.dismiss();
@@ -146,15 +154,9 @@ public class ModsPagerFragment extends Fragment implements
     }
 
     @Override
-    public void onLoaderReset(Loader<HashMap<String, Object>> loader) {
-        // empty
-    }
-
-    @Override
-    public void onAsyncCanceled() {
+    public void onSearchRequestFailed()
+    {
         Toast toast = Toast.makeText(getActivity(), R.string.toast_search_error, Toast.LENGTH_LONG);
         toast.show();
-
-        getLoaderManager().destroyLoader(0);
     }
 }

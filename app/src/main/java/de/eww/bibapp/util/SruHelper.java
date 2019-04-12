@@ -1,6 +1,10 @@
 package de.eww.bibapp.util;
 
+import java.util.List;
+
 import de.eww.bibapp.constants.Constants;
+import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.search.SearchManager;
 
 public class SruHelper {
 
@@ -20,7 +24,7 @@ public class SruHelper {
      */
     public static String getSearchUrl(String search, int start, int numRecords, boolean isLocalSearch, int localCatalogIndex, String catalog)
     {
-        String url = "http://sru.k10plus.de/";
+        String url = "https://sru.k10plus.de/";
 
         if (isLocalSearch) {
             url += Constants.LOCAL_CATALOGS[localCatalogIndex][0];
@@ -34,5 +38,14 @@ public class SruHelper {
                 "&startRecord=" + start + "&maximumRecords=" + numRecords + "&recordSchema=mods";
 
         return url;
+    }
+
+    public static List<ModsItem> injectSearchModeIntoMods(List<ModsItem> list, SearchManager.SEARCH_MODE searchMode)
+    {
+        for (ModsItem item: list) {
+            item.setIsLocalSearch(searchMode.equals(SearchManager.SEARCH_MODE.LOCAL));
+        }
+
+        return list;
     }
 }

@@ -12,6 +12,7 @@ import de.eww.bibapp.fragment.search.ModsFragment;
 import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.fragment.search.SearchListViewPager;
 import de.eww.bibapp.model.source.ModsSource;
+import de.eww.bibapp.network.search.SearchManager;
 
 public class SearchActivity extends BaseActivity implements
         SearchListFragment.OnModsItemSelectedListener,
@@ -66,7 +67,7 @@ public class SearchActivity extends BaseActivity implements
      * @param index the index of the selected mods item.
      */
     @Override
-    public void onModsItemSelected(SearchListFragment.SEARCH_MODE searchMode, int index, String searchString) {
+    public void onModsItemSelected(SearchManager.SEARCH_MODE searchMode, int index, String searchString) {
         mCurrentModsItemIndex = index;
 
         if (mIsDualPane) {
@@ -77,13 +78,13 @@ public class SearchActivity extends BaseActivity implements
             Intent modsIntent = new Intent(this, ModsActivity.class);
             modsIntent.putExtra("modsItemIndex", index);
             modsIntent.putExtra("searchString", searchString);
-            modsIntent.putExtra("searchMode", searchMode.toString());
+            modsIntent.putExtra("searchMode", searchMode);
             startActivityForResult(modsIntent, 1);
         }
     }
 
     @Override
-    public void onNewSearchResultsLoaded(SearchListFragment.SEARCH_MODE searchMode) {
+    public void onNewSearchResultsLoaded(SearchManager.SEARCH_MODE searchMode) {
         // If we are displaying the mods item on the right, we have to update it
         if (mIsDualPane) {
             if (ModsSource.getTotalItems(searchMode.toString()) > 0) {

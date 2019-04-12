@@ -5,10 +5,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
+
 import androidx.fragment.app.Fragment;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.Loader;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,8 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import de.eww.bibapp.AsyncCanceledInterface;
@@ -35,38 +34,37 @@ import de.eww.bibapp.listener.EndlessScrollListener;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
+import de.eww.bibapp.network.model.SruResult;
+import de.eww.bibapp.network.search.SearchManager;
 import de.eww.bibapp.tasks.DBSPixelTask;
-import de.eww.bibapp.tasks.SearchXmlLoader;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.SruHelper;
+import io.reactivex.disposables.CompositeDisposable;
 
 /**
  * Created by christoph on 03.11.14.
  */
 public class SearchListFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<HashMap<String, Object>>,
+        SearchManager.SearchLoaderInterface,
         View.OnClickListener,
-        RecyclerViewOnGestureListener.OnGestureListener,
-        AsyncCanceledInterface {
+        RecyclerViewOnGestureListener.OnGestureListener {
 
-    RecyclerView mRecyclerView;
-    SearchView mSearchView;
-    ProgressBar mProgressBar;
-    TextView mEmptyView;
+    private RecyclerView mRecyclerView;
+    private SearchView mSearchView;
+    private ProgressBar mProgressBar;
+    private TextView mEmptyView;
 
     private ModsAdapter mAdapter;
+    private SearchManager searchManager;
+    private CompositeDisposable disposable = new CompositeDisposable();
 
     private boolean mIsLoading = false;
     private String mLastSearchQuery;
 
-    public enum SEARCH_MODE {
-        LOCAL,
-        GVK
-    }
-
-    private SEARCH_MODE mSearchMode = SEARCH_MODE.LOCAL;
+    private SearchManager.SEARCH_MODE mSearchMode = SearchManager.SEARCH_MODE.LOCAL;
 
     // The listener we are to notify when a mods item is selected
-    OnModsItemSelectedListener mModsItemSelectedListener = null;
+    private OnModsItemSelectedListener mModsItemSelectedListener = null;
 
     /**
      * Represents a listener that will be notified of mods item selections.
@@ -77,9 +75,9 @@ public class SearchListFragment extends Fragment implements
          *
          * @param index the index of the selected mods item.
          */
-        void onModsItemSelected(SEARCH_MODE searchMode, int index, String searchString);
+        void onModsItemSelected(SearchManager.SEARCH_MODE searchMode, int index, String searchString);
 
-        void onNewSearchResultsLoaded(SEARCH_MODE searchMode);
+        void onNewSearchResultsLoaded(SearchManager.SEARCH_MODE searchMode);
     }
 
     public void setSelection(int position) {
@@ -107,8 +105,25 @@ public class SearchListFragment extends Fragment implements
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        this.disposable.dispose();
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        if (this.searchManager == null) {
+            this.searchManager = new SearchManager();
+
+            // Reset source
+            ModsSource.clear(mSearchMode.toString());
+            ModsSource.setTotalItems(mSearchMode.toString(), 0);
+            updateSubtitle();
+
+            this.searchManager.setSearchMode(this.mSearchMode);
+        }
 
         // Use a linear layout manager
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -125,10 +140,8 @@ public class SearchListFragment extends Fragment implements
                 mIsLoading = true;
 
                 mProgressBar.setVisibility(View.VISIBLE);
-                Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
-                SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
-                searchXmlLoader.setOffset(ModsSource.getLoadedItems(mSearchMode.toString()) + 1);
-                searchXmlLoader.forceLoad();
+
+                SearchListFragment.this.performSearch(ModsSource.getLoadedItems(mSearchMode.toString()) + 1);
             }
         });
 
@@ -138,17 +151,13 @@ public class SearchListFragment extends Fragment implements
             @Override
             public boolean onQueryTextSubmit(String query) {
                 mProgressBar.setVisibility(View.VISIBLE);
-                    mRecyclerView.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.GONE);
-
-                Loader<HashMap<String, Object>> loader = getLoaderManager().getLoader(0);
-                SearchXmlLoader searchXmlLoader = (SearchXmlLoader) loader;
 
                 mLastSearchQuery = query;
 
-                searchXmlLoader.setSearchString(query);
-                searchXmlLoader.resetOffset();
-                searchXmlLoader.forceLoad();
+                SearchListFragment.this.performSearch(1);
+
                 mAdapter = null;
 
                 // Force soft keyboard to hide
@@ -166,10 +175,6 @@ public class SearchListFragment extends Fragment implements
             }
         });
 
-        // Start the Request
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.destroyLoader(0);
-        loaderManager.initLoader(0, null, this);
         mRecyclerView.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.GONE);
@@ -183,32 +188,74 @@ public class SearchListFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_search_list, container, false);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler);
-        mSearchView = (SearchView) view.findViewById(R.id.search_query);
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progressbar);
-        mEmptyView = (TextView) view.findViewById(R.id.empty);
+        mRecyclerView = view.findViewById(R.id.recycler);
+        mSearchView = view.findViewById(R.id.search_query);
+        mProgressBar = view.findViewById(R.id.progressbar);
+        mEmptyView = view.findViewById(R.id.empty);
 
         return view;
     }
 
     @Override
-    public Loader<HashMap<String, Object>> onCreateLoader(int arg0, Bundle arg1) {
-        // Reset source
-        ModsSource.clear(mSearchMode.toString());
-        ModsSource.setTotalItems(mSearchMode.toString(), 0);
-        updateSubtitle();
-
-        Loader<HashMap<String, Object>> loader = new SearchXmlLoader(getActivity().getApplicationContext(), this);
-        ((SearchXmlLoader) loader).setIsLocalSearch(mSearchMode == SearchListFragment.SEARCH_MODE.LOCAL);
-
-        return loader;
+    public void onClick(View v) {
+        SearchListViewPager searchViewPager = (SearchListViewPager) getParentFragment();
+        searchViewPager.searchGvk(mLastSearchQuery);
     }
 
     @Override
-    public void onLoadFinished(Loader<HashMap<String, Object>> loader, HashMap<String, Object> data) {
-        List<ModsItem> modsItems = (List<ModsItem>) data.get("list");
+    public void setMenuVisibility(final boolean visible) {
+        super.setMenuVisibility(visible);
 
-        ModsSource.setTotalItems(mSearchMode.toString(), (Integer) data.get("numberOfRecords"));
+        if (visible) {
+            updateSubtitle();
+        }
+    }
+
+    public void updateSubtitle() {
+        Activity activity = getActivity();
+        if (activity != null) {
+            ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setSubtitle(String.valueOf(ModsSource.getTotalItems(mSearchMode.toString())) + " " + getResources().getString(R.string.search_hits));
+            }
+        }
+    }
+
+    @Override
+    public void onClick(View view, int position) {
+        if (!mIsLoading) {
+            if (mModsItemSelectedListener != null) {
+                mModsItemSelectedListener.onModsItemSelected(mSearchMode, position, mLastSearchQuery);
+            }
+        }
+    }
+
+    @Override
+    public void onLongPress(View view, int position) {
+
+    }
+
+    public void setSearchMode(SearchManager.SEARCH_MODE searchMode) {
+        mSearchMode = searchMode;
+    }
+
+    private void performSearch(int offset)
+    {
+        this.searchManager.setSearchQuery(this.mLastSearchQuery);
+        this.searchManager.setOffset(offset);
+
+        this.searchManager.getSearchResults(
+            this.disposable,
+            this,
+            getContext()
+        );
+    }
+
+    @Override
+    public void onSearchRequestDone(SruResult sruResult)
+    {
+        List<ModsItem> modsItems = (List<ModsItem>) sruResult.getResult().get("list");
+        ModsSource.setTotalItems(mSearchMode.toString(), (Integer) sruResult.getResult().get("numberOfRecords"));
 
         mProgressBar.setVisibility(View.GONE);
 
@@ -251,7 +298,7 @@ public class SearchListFragment extends Fragment implements
          * If this is a local catalog search and we could not find any results
          * suggest to use the global gvk search
          */
-        if (mSearchMode == SEARCH_MODE.LOCAL) {
+        if (mSearchMode.equals(SearchManager.SEARCH_MODE.LOCAL)) {
             if (ModsSource.getTotalItems(mSearchMode.toString()) == 0) {
                 Snackbar
                     .make(getActivity().findViewById(R.id.content_frame), R.string.search_no_results, Snackbar.LENGTH_LONG)
@@ -264,60 +311,12 @@ public class SearchListFragment extends Fragment implements
     }
 
     @Override
-    public void onClick(View v) {
-        SearchListViewPager searchViewPager = (SearchListViewPager) getParentFragment();
-        searchViewPager.searchGvk(mLastSearchQuery);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<HashMap<String, Object>> loader) {
-        // empty
-    }
-
-    @Override
-    public void setMenuVisibility(final boolean visible) {
-        super.setMenuVisibility(visible);
-
-        if (visible) {
-            updateSubtitle();
-        }
-    }
-
-    public void updateSubtitle() {
-        Activity activity = getActivity();
-        if (activity != null) {
-            ActionBar actionBar = ((AppCompatActivity) activity).getSupportActionBar();
-            if (actionBar != null) {
-                actionBar.setSubtitle(String.valueOf(ModsSource.getTotalItems(mSearchMode.toString())) + " " + getResources().getString(R.string.search_hits));
-            }
-        }
-    }
-
-    @Override
-    public void onAsyncCanceled() {
+    public void onSearchRequestFailed()
+    {
         Toast toast = Toast.makeText(getActivity(), R.string.toast_search_error, Toast.LENGTH_LONG);
         toast.show();
 
         mProgressBar.setVisibility(View.GONE);
         mEmptyView.setVisibility(View.VISIBLE);
-        getLoaderManager().destroyLoader(0);
-    }
-
-    @Override
-    public void onClick(View view, int position) {
-        if (!mIsLoading) {
-            if (mModsItemSelectedListener != null) {
-                mModsItemSelectedListener.onModsItemSelected(mSearchMode, position, mLastSearchQuery);
-            }
-        }
-    }
-
-    @Override
-    public void onLongPress(View view, int position) {
-
-    }
-
-    public void setSearchMode(SEARCH_MODE searchMode) {
-        mSearchMode = searchMode;
     }
 }

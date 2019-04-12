@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import de.eww.bibapp.network.converter.DaiaConverterFactory;
 import de.eww.bibapp.network.converter.ISBDConverterFactory;
 import de.eww.bibapp.network.converter.RssConverterFactory;
+import de.eww.bibapp.network.converter.SruConverterFactory;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -34,6 +35,7 @@ public class ApiClient {
                     .client(ApiClient.okHttpClient)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(RssConverterFactory.create())
+                    .addConverterFactory(SruConverterFactory.create())
                     .addConverterFactory(DaiaConverterFactory.create())
                     .addConverterFactory(ISBDConverterFactory.create())
                     .addConverterFactory(ScalarsConverterFactory.create())
