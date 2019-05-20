@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingTranslation">
+
     <!--
         Block orders if the listed keys contains a "b" character at the second position in a
         UNAPI picaxml request.
@@ -20,4 +23,10 @@
         <!-- https://lhiai.gbv.de/DB=1/SET=1/TTL=1/FAM?FRST=[START 10er Block]&PPN=[PPN]&XML=YES -->
         <!-- <item>https://lhiai.gbv.de/DB=1/SET=1/TTL=1/FAM\?FRST=%1$d&amp;PPN=%2$s&amp;XML=YES</item> -->
     </array>
+
+    <!--
+        List of URLs to be shown as homepage links in the main navigation, one for each local
+        catalog
+    -->
+    <string-array name="bibapp_homepage_urls"></string-array>
 </resources>

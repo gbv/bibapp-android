@@ -147,7 +147,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
                 intent = new Intent(this, InfoActivity.class);
                 break;
             case R.id.nav_homepage:
-                Uri homepageUrl = Uri.parse(Constants.HOMEPAGE_URLS[PrefUtils.getLocalCatalogIndex(this)]);
+                Uri homepageUrl = Uri.parse(this.getResources().getStringArray(R.array.bibapp_homepage_urls)[PrefUtils.getLocalCatalogIndex(this)]);
                 intent = new Intent(Intent.ACTION_VIEW, homepageUrl);
                 break;
             case R.id.nav_settings:
@@ -245,7 +245,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
         // Show homepage menu item, if url is set
         int localCatalogIndex = PrefUtils.getLocalCatalogIndex(this);
-        if (Constants.HOMEPAGE_URLS.length >= localCatalogIndex + 1) {
+        if (this.getResources().getStringArray(R.array.bibapp_homepage_urls).length >= localCatalogIndex + 1) {
             homepageItem.setVisible(true);
         }
 
