@@ -600,7 +600,7 @@ public class ModsFragment extends Fragment implements
 
         // image
         AsyncTask<String, Void, Bitmap> imageTask = new DownloadImageTask(mImageView, mModsItem, getActivity());
-        imageTask.execute(Constants.getImageUrl(mModsItem.isbn));
+        imageTask.execute(String.format(this.getResources().getString(R.string.bibapp_cover_url), mModsItem.isbn));
 
         // index
         if (!mModsItem.indexArray.isEmpty()) {

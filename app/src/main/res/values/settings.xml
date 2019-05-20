@@ -29,4 +29,10 @@
         catalog
     -->
     <string-array name="bibapp_homepage_urls"></string-array>
+
+    <!--
+        URL for getting cover images
+        %1 - ISBN
+    -->
+    <string name="bibapp_cover_url"></string>
 </resources>
