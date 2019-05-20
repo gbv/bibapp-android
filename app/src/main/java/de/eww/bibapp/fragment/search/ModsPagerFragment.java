@@ -50,15 +50,15 @@ public class ModsPagerFragment extends Fragment implements
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (this.searchManager == null) {
-            this.searchManager = new SearchManager();
-
-            this.searchManager.setSearchQuery(mSearchString);
-            this.searchManager.setOffset(ModsSource.getLoadedItems(mSearchMode.toString()) + 1);
-            this.searchManager.setSearchMode(mSearchMode);
-        }
-
         if (!mUseWatchlistSource) {
+            if (this.searchManager == null) {
+                this.searchManager = new SearchManager();
+
+                this.searchManager.setSearchQuery(mSearchString);
+                this.searchManager.setOffset(ModsSource.getLoadedItems(mSearchMode.toString()) + 1);
+                this.searchManager.setSearchMode(mSearchMode);
+            }
+
             mPagerAdapter = new ModsPagerAdapter(this, getChildFragmentManager(), mSearchMode);
         } else {
             mPagerAdapter = new ModsWatchlistPagerAdapter(getChildFragmentManager());
