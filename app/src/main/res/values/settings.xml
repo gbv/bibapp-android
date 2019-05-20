@@ -33,14 +33,19 @@
     <string name="bibapp_unapi_gvk_url"></string>
 
     <!--
+        URL for getting cover images
+        %1 - ISBN
+    -->
+    <string name="bibapp_cover_url"></string>
+
+    <!--
         List of URLs to be shown as homepage links in the main navigation, one for each local
         catalog
     -->
     <string-array name="bibapp_homepage_urls"></string-array>
 
     <!--
-        URL for getting cover images
-        %1 - ISBN
+        URL for Data Privacy information
     -->
-    <string name="bibapp_cover_url"></string>
+    <string name="bibapp_dataprivacy_url"></string>
 </resources>

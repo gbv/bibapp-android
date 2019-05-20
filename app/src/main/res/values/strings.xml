@@ -33,6 +33,7 @@
     <string name="info_button_contact">Kontakt</string>
     <string name="info_button_locations">Standorte</string>
     <string name="info_button_impressum">Impressum</string>
+    <string name="info_button_dataprivacy">Datenschutz</string>
 
     <!-- search spinner -->
     <string-array name="search_catalogs">

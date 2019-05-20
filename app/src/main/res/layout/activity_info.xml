@@ -28,5 +28,11 @@
 	    android:layout_height="wrap_content"
 	    android:text="@string/info_button_impressum" />
 
+	<Button
+		android:id="@+id/info_button_dataprivacy"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:text="@string/info_button_dataprivacy" />
+
     <include layout="@layout/include_list" />
 </LinearLayout>

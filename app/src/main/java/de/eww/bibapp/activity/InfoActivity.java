@@ -2,10 +2,12 @@ package de.eww.bibapp.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +39,7 @@ public class InfoActivity extends BaseActivity {
     @BindView(R.id.recycler) RecyclerView recyclerView;
     @BindView(R.id.progressbar) ProgressBar progressBar;
     @BindView(R.id.empty) TextView emptyView;
+    @BindView(R.id.info_button_dataprivacy) Button dataPrivacyButton;
 
     private RecyclerView.Adapter mAdapter;
 
@@ -54,6 +57,10 @@ public class InfoActivity extends BaseActivity {
 
         RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST);
         this.recyclerView.addItemDecoration(itemDecoration);
+
+        if (this.getResources().getString(R.string.bibapp_dataprivacy_url).isEmpty()) {
+            this.dataPrivacyButton.setVisibility(View.INVISIBLE);
+        }
 
         // Do we have a rss feed to display?
         //noinspection ConstantConditions
@@ -118,6 +125,13 @@ public class InfoActivity extends BaseActivity {
     public void onClickImpressumButton() {
         Intent impressumIntent = new Intent(this, ImpressumActivity.class);
         startActivityForResult(impressumIntent, 99);
+    }
+
+    @OnClick(R.id.info_button_dataprivacy)
+    public void onClickDataPrivacyButton() {
+        Uri uri = Uri.parse(this.getResources().getString(R.string.bibapp_dataprivacy_url));
+        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uri);
+        startActivity(launchBrowser);
     }
 
     @Override
