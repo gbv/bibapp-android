@@ -18,6 +18,7 @@ import de.eww.bibapp.network.model.fam.FamSet;
 import de.eww.bibapp.network.model.pica.PicaDatafield;
 import de.eww.bibapp.network.model.pica.PicaRecord;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.UnAPIHelper;
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
 
@@ -35,7 +36,7 @@ public class DaiaSubStrategy implements AvailabilityStrategy {
     public Observable<DaiaItems> getAvailabilityList(String ppn) {
         // request UNAPI for pica in xml format
         UnAPIService service = ApiClient.getClient(context, HttpUrl.parse("http://dummy.de/")).create(UnAPIService.class);
-        String url = Constants.getUnApiUrl(ppn, "picaxml");
+        String url = UnAPIHelper.getUnAPIUrl(this.context, this.modsItem, "picaxml");
 
         return service.getPica(url)
                 .flatMap(picaRecord -> DaiaSubStrategy.this.processPicaRecord(picaRecord, ppn));

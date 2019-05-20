@@ -1,11 +1,26 @@
 package de.eww.bibapp.util;
 
+import android.content.Context;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.eww.bibapp.R;
 import de.eww.bibapp.model.ModsItem;
 
 public class UnAPIHelper {
+
+    /**
+     * This determs the URL for search requests
+     */
+    public static String getUnAPIUrl(Context context, ModsItem modsItem, String format)
+    {
+        if (modsItem.isLocalSearch) {
+            return String.format(context.getResources().getString(R.string.bibapp_unapi_local_url), modsItem.ppn, format);
+        } else {
+            return String.format(context.getResources().getString(R.string.bibapp_unapi_gvk_url), modsItem.ppn, format);
+        }
+    }
 
     public static String convert(String[] lines, ModsItem modsItem) {
         String response = "";

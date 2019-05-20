@@ -25,6 +25,14 @@
     </array>
 
     <!--
+        The UnAPI URL for extended information
+        %1 - PPN
+        %2 - Format
+    -->
+    <string name="bibapp_unapi_local_url"></string>
+    <string name="bibapp_unapi_gvk_url"></string>
+
+    <!--
         List of URLs to be shown as homepage links in the main navigation, one for each local
         catalog
     -->

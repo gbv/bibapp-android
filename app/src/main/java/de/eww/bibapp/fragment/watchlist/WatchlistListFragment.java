@@ -324,7 +324,7 @@ public class WatchlistListFragment extends Fragment implements
             mUnApiResponse += Integer.toString(mRequestsDone + 1) + ") " + modsItem.title + " - ";
 
             UnAPIService service = ApiClient.getClient(getContext(), HttpUrl.parse("http://dummy.de/")).create(UnAPIService.class);
-            String url = Constants.getUnApiUrl(modsItem.ppn, "isbd");
+            String url = UnAPIHelper.getUnAPIUrl(this.getContext(), modsItem, "isbd");
 
             this.disposable.add(service
                     .getISBD(url)

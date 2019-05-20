@@ -231,7 +231,7 @@ public class ModsFragment extends Fragment implements
     private void updateISBDInformation()
     {
         UnAPIService service = ApiClient.getClient(getContext(), HttpUrl.parse("http://dummy.de/")).create(UnAPIService.class);
-        String url = Constants.getUnApiUrl(this.mModsItem.ppn, "isbd");
+        String url = UnAPIHelper.getUnAPIUrl(getContext(), this.mModsItem, "isbd");
         this.disposable.add(service
                 .getISBD(url)
                 .subscribeOn(Schedulers.io())
