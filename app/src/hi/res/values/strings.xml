@@ -42,10 +42,6 @@
 		Die Universitätsbibliothek Hildesheim ist eine Einrichtung der Stiftung Universität Hildesheim, sie wird vertreten durch ihren Leiter, Dr. Ewald Brahms. Die Stiftung Universität Hildesheim ist eine rechtsfähige Stiftung öffentlichen Rechts. Die Stiftung unterhält und fördert die Universität Hildesheim in deren Eigenschaft als Körperschaft des öffentlichen Rechts und übt die Rechtsaufsicht über sie aus. Stiftung Universität Hildesheim und Universität Hildesheim werden vertreten durch ihren Präsidenten Herrn Prof. Dr. Wolfgang-Uwe Friedrich.<br/>
 Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259506.<br/>
 		<br/>
-		<b>Angaben zum Datenschutz</b><br/>
-		Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
-		Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
-		<br/>
 		<b>Rechtliche Hinweise zur Haftung</b><br/>
 		Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
 		Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
@@ -54,13 +50,7 @@ Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259
 		Entwurf und Konzeption<br/>
 		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
 		Umsetzung<br/>
-		Effective Webwork GmbH<br/>
-        <br/>
-        <b>Datenschutzerklärung BibApp Hildesheim</b><br/>
-        Die Universitätsbibliothek Hildesheim nutzt im Rahmen ihrer Teilnahme an der Deutschen Bibliotheksstatistik ein Verfahren zur Zählung der Besuche auf ihren Online-Angeboten. Bei jeder Suche innerhalb der BibApp werden eine Kennung der Bibliothek, der Zeitpunkt des Aufrufs und eine pseudonymisierte Signatur des aufrufenden Gerätes gespeichert. Die Signatur wird mittels einer Einwegfunktion aus IP-Adresse, Browserkennung und Proxy-Information gebildet. Die Erhebung, Speicherung und Auswertung dieser Daten erfolgt in pseudonymisierter Form, d.h. die Signatur ist nicht bestimmten Personen zuzuordnen. Eine Speicherung insbesondere der IP-Adresse findet nicht statt. Die pseudonymen Einzeldaten werden nach spätestens 24 Stunden aufsummiert und damit anonymisiert.<br/>
-        Die gespeicherten Daten werden statistisch ausgewertet, um unsere Online-Angebote bedarfsgerecht zu gestalten und weiterzuentwickeln. Die Daten werden nur zu diesem Zweck genutzt und im Anschluss an die Auswertung gelöscht. Mit der technischen und organisatorischen Umsetzung des Verfahrens ist die Hochschule der Medien Stuttgart beauftragt. Sie hat das Verfahren nach den Maßgaben der gesetzlichen Bestimmungen der Datenschutzgesetze und des Telemediengesetzes (TMG) entwickelt und sich zu deren Einhaltung verpflichtet.<br/>
-        <br/>
-        Sie haben die Möglichkeit, der Erhebung, Verarbeitung und Nutzung der vorbezeichneten Daten Ihrer Besuche zu dem genannten Zweck zu widersprechen. Deaktivieren Sie dazu unter "Optionen / Datenschutz" die Option "Anonyme Nutzungsdaten speichern".
+		Effective WEBWORK GmbH<br/>
         ]]>
     </string>
 </resources>
