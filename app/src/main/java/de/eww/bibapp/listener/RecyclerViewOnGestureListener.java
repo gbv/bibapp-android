@@ -1,11 +1,12 @@
 package de.eww.bibapp.listener;
 
 import android.content.Context;
-import androidx.core.view.GestureDetectorCompat;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.view.GestureDetectorCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by christoph on 03.11.14.

@@ -1,9 +1,6 @@
 package de.eww.bibapp.adapter;
 
 import android.content.Context;
-import android.content.res.Resources;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.graphics.Color;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -12,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.mikepenz.iconics.IconicsDrawable;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.model.ModsItem;

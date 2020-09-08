@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.ApiClient;
 import de.eww.bibapp.network.FamService;

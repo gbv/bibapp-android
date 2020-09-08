@@ -1,8 +1,9 @@
 package de.eww.bibapp.tasks.paia;
 
 import android.content.Context;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,10 +18,8 @@ import java.util.Locale;
 
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.PaiaItem;
 import de.eww.bibapp.tasks.AbstractLoader;
-import de.eww.bibapp.util.PrefUtils;
 import de.eww.bibapp.util.UrlHelper;
 
 /**

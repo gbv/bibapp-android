@@ -7,8 +7,6 @@ import org.json.JSONObject;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.activity.AccountActivity;
-import de.eww.bibapp.constants.Constants;
-import de.eww.bibapp.util.PrefUtils;
 import de.eww.bibapp.util.UrlHelper;
 
 /**

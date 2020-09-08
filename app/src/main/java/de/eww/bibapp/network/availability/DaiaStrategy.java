@@ -12,7 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.ApiClient;
@@ -20,7 +19,6 @@ import de.eww.bibapp.network.DaiaService;
 import de.eww.bibapp.network.model.DaiaItem;
 import de.eww.bibapp.network.model.DaiaItems;
 import de.eww.bibapp.util.DaiaHelper;
-import de.eww.bibapp.util.PrefUtils;
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
 

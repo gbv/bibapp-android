@@ -10,7 +10,6 @@ import android.preference.PreferenceManager;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.R;
 import de.eww.bibapp.activity.BaseActivity;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.LocaleManager;
 import de.eww.bibapp.util.PrefUtils;
 

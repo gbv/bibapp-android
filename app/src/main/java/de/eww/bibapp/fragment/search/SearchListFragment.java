@@ -5,13 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,15 +13,20 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.ModsAdapter;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.listener.EndlessScrollListener;
 import de.eww.bibapp.listener.RecyclerViewOnGestureListener;
@@ -38,7 +36,6 @@ import de.eww.bibapp.network.model.SruResult;
 import de.eww.bibapp.network.search.SearchManager;
 import de.eww.bibapp.tasks.DBSPixelTask;
 import de.eww.bibapp.util.PrefUtils;
-import de.eww.bibapp.util.SruHelper;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**

@@ -2,9 +2,9 @@ package de.eww.bibapp;
 
 import android.app.Application;
 
-import de.eww.bibapp.typeface.BeluginoFont;
-
 import com.mikepenz.iconics.Iconics;
+
+import de.eww.bibapp.typeface.BeluginoFont;
 
 /**
  * Created by cschoenf on 07.02.17.

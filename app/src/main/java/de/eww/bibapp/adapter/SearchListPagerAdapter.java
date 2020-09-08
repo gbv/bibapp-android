@@ -1,12 +1,12 @@
 package de.eww.bibapp.adapter;
 
 import android.content.Context;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.network.search.SearchManager;
 import de.eww.bibapp.util.PrefUtils;

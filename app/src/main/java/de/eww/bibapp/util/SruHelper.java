@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.search.SearchManager;
 

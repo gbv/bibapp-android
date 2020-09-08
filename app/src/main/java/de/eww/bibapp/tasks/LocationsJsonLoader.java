@@ -1,8 +1,9 @@
 package de.eww.bibapp.tasks;
 
 import android.content.Context;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
+
+import androidx.fragment.app.Fragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -15,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.util.PrefUtils;
 import de.eww.bibapp.util.UrlHelper;

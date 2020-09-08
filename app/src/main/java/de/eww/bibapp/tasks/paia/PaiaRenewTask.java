@@ -1,13 +1,13 @@
 package de.eww.bibapp.tasks.paia;
 
 import android.app.Activity;
+
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONObject;
 
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragment.account.AccountBorrowedFragment;
 import de.eww.bibapp.util.PrefUtils;
 import de.eww.bibapp.util.UrlHelper;

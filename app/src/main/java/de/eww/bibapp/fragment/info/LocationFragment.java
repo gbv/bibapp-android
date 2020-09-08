@@ -1,12 +1,13 @@
 package de.eww.bibapp.fragment.info;
 
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;

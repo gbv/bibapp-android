@@ -9,7 +9,6 @@ import java.io.InputStream;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.URLConnectionHelper;
-import de.eww.bibapp.constants.Constants;
 
 public class DBSPixelTask extends AsyncTask<Void, Void, Void> {
 

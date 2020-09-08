@@ -12,7 +12,6 @@ import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.ApiClient;
 import de.eww.bibapp.network.SruService;
 import de.eww.bibapp.network.model.SruResult;
-import de.eww.bibapp.util.PrefUtils;
 import de.eww.bibapp.util.SruHelper;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

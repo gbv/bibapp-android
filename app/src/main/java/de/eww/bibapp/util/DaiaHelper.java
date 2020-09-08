@@ -14,7 +14,6 @@ import java.util.Locale;
 import java.util.Set;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
 import okhttp3.HttpUrl;

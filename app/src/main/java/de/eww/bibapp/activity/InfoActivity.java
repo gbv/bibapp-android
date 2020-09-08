@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.eww.bibapp.R;
 import de.eww.bibapp.adapter.RssAdapter;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.decoration.DividerItemDecoration;
 import de.eww.bibapp.network.ApiClient;
 import de.eww.bibapp.network.RssService;

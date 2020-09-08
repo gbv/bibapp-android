@@ -2,13 +2,14 @@ package de.eww.bibapp.fragment.search;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import java.util.List;
 
@@ -21,7 +22,6 @@ import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.model.source.ModsSource;
 import de.eww.bibapp.network.model.SruResult;
 import de.eww.bibapp.network.search.SearchManager;
-import de.eww.bibapp.util.SruHelper;
 import io.reactivex.disposables.CompositeDisposable;
 
 /**
