@@ -98,13 +98,12 @@ public class SearchManager {
     {
         SruService service = ApiClient.getClient(context.getApplicationContext(), HttpUrl.parse("http://dummy.de/")).create(SruService.class);
 
-        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(context);
         String url = SruHelper.getSearchUrl(
             this.searchQuery,
             this.offset,
             Constants.SEARCH_HITS_PER_REQUEST,
             this.searchMode == SEARCH_MODE.LOCAL,
-            localCatalogIndex,
+            context,
             catalog
         );
 

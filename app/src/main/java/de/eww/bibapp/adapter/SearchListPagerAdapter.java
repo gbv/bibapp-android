@@ -48,8 +48,9 @@ public class SearchListPagerAdapter extends FragmentPagerAdapter {
 
         // If our current local catalog contains a short title, we append it to the default title
         int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
-        if (Constants.LOCAL_CATALOGS[localCatalogIndex].length > 2) {
-            searchCatalogs[0] += " " + Constants.LOCAL_CATALOGS[localCatalogIndex][2];
+        String[] localCatalogSuffixes = mContext.getResources().getStringArray(R.array.bibapp_local_catalog_suffixes);
+        if (localCatalogSuffixes.length > localCatalogIndex + 1) {
+            searchCatalogs[0] += " " + localCatalogSuffixes[localCatalogIndex + 1];
         }
 
         return searchCatalogs[position];

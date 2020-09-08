@@ -78,6 +78,7 @@ import de.eww.bibapp.tasks.LocationsJsonTask;
 import de.eww.bibapp.tasks.paia.PaiaRequestTask;
 import de.eww.bibapp.util.DaiaHelper;
 import de.eww.bibapp.util.UnAPIHelper;
+import de.eww.bibapp.util.UrlHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -663,7 +664,7 @@ public class ModsFragment extends Fragment implements
     }
 
     private void onClickInterlanding() {
-        Uri uri = Uri.parse(Constants.getInterlendingUrl(mModsItem.ppn));
+        Uri uri = Uri.parse(UrlHelper.getInterlendingUrl(getContext(), mModsItem.ppn));
         Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uri);
         startActivity(launchBrowser);
     }

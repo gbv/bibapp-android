@@ -9,6 +9,7 @@ import java.net.URLEncoder;
 import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.UrlHelper;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -33,14 +34,12 @@ public class PaiaLoginTask extends AbstractPaiaTask
 		JSONObject result = new JSONObject();
 
 		// get url
-		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(activity);
-
 		try
 		{
 			username = URLEncoder.encode(username, "UTF-8");
             password = URLEncoder.encode(password, "UTF-8");
 
-            String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/auth/login?username=" + username + "&password=" + password + "&grant_type=password";
+            String paiaUrl = UrlHelper.getPaiaUrl(activity) + "/auth/login?username=" + username + "&password=" + password + "&grant_type=password";
 
 			JSONObject paiaResponse = this.performRequest(paiaUrl);
 

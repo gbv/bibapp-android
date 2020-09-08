@@ -10,6 +10,7 @@ import de.eww.bibapp.AsyncCanceledInterface;
 import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.UrlHelper;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -33,13 +34,11 @@ public class PaiaLogoutTask extends AbstractPaiaTask
 		JSONObject result = new JSONObject();
 
 		// get url
-		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(activity);
-
 		try
 		{
 			patron = URLEncoder.encode(patron, "UTF-8");
 
-            String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/auth/logout?access_token=" + PaiaHelper.getInstance().getAccessToken() + "&patron=" + patron;
+            String paiaUrl = UrlHelper.getPaiaUrl(activity) + "/auth/logout?access_token=" + PaiaHelper.getInstance().getAccessToken() + "&patron=" + patron;
 
 			result = this.performRequest(paiaUrl);
 		}

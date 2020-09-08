@@ -13,11 +13,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
+import de.eww.bibapp.R;
+import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
 import okhttp3.HttpUrl;
 
 public class DaiaHelper {
+
+    public static String getDaiaUrl(Context context, String ppn, boolean isLocal, String format)
+    {
+        if (isLocal) {
+            String[] localDaiaUrls = context.getResources().getStringArray(R.array.daia_local_urls);
+            int localCatalogIndex = PrefUtils.getLocalCatalogIndex(context);
+
+
+            return String.format(localDaiaUrls[localCatalogIndex], ppn, format);
+
+        } else {
+            return String.format(context.getResources().getString(R.string.daia_gvk_url), ppn, format);
+        }
+    }
 
     public static String getUriUrl(DaiaItem daiaItem) throws Exception {
         String uriUrl = "";

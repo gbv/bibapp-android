@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
 import de.eww.bibapp.util.DaiaHelper;
@@ -93,7 +92,7 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
 
         // department
         String departmentText = "";
-        if (!Constants.EXEMPLAR_SHORT_DISPLAY) {
+        if (!this.context.getResources().getBoolean(R.bool.use_exemplar_short_display)) {
             if (item.department != null && !item.department.isEmpty()) {
                 departmentText = item.department;
             }

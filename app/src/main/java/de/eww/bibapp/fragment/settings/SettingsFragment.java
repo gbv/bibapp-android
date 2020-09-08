@@ -28,13 +28,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         // catalog pre-configured
         ListPreference localCatalogPreference = (ListPreference) findPreference(PrefUtils.PREF_LOCAL_CATALOG);
 
-        if (Constants.LOCAL_CATALOGS.length > 1) {
+        String[] localCatalogs = getResources().getStringArray(R.array.bibapp_local_catalogs);
+
+        if (localCatalogs.length > 1) {
             // Set entries and values for the local catalog list
-            CharSequence[] localCatalogEntries = new CharSequence[Constants.LOCAL_CATALOGS.length];
-            CharSequence[] localCatalogValues = new CharSequence[Constants.LOCAL_CATALOGS.length];
+            CharSequence[] localCatalogEntries = new CharSequence[localCatalogs.length];
+            CharSequence[] localCatalogValues = new CharSequence[localCatalogs.length];
             int index = 0;
-            for (String[] localCatalog : Constants.LOCAL_CATALOGS) {
-                localCatalogEntries[index] = localCatalog[1];
+            for (String localCatalog : localCatalogs) {
+                localCatalogEntries[index] = localCatalog;
                 localCatalogValues[index] = Integer.toString(index);
                 index++;
             }
@@ -48,7 +50,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
         // Check if we need to present the dbs privacy checkbox preference
         // to the user, which is only the case, if there is an url pre-configured
-        if (Constants.DBS_COUNTING_URL.isEmpty()) {
+        if (getResources().getString(R.string.bibapp_tracking_url).isEmpty()) {
             getPreferenceScreen().removePreference(findPreference(PrefUtils.PREF_DATA_PRIVACY));
         }
     }

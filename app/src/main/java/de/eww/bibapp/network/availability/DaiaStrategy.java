@@ -38,8 +38,7 @@ public class DaiaStrategy implements AvailabilityStrategy {
     public Observable<DaiaItems> getAvailabilityList(String ppn) {
         DaiaService service = ApiClient.getClient(context.getApplicationContext(), HttpUrl.parse("http://dummy.de/")).create(DaiaService.class);
 
-        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(this.context);
-        String url = Constants.getDaiaUrl(ppn, this.modsItem.isLocalSearch, localCatalogIndex);
+        String url = DaiaHelper.getDaiaUrl(context.getApplicationContext(), ppn, this.modsItem.isLocalSearch, "json");
 
 
         return service.getDaia(url)

@@ -283,7 +283,7 @@ public class SearchListFragment extends Fragment implements
         mIsLoading = false;
 
         // dbs counting
-        if (Constants.DBS_COUNTING_URL != null && !Constants.DBS_COUNTING_URL.isEmpty()) {
+        if (!getResources().getString(R.string.bibapp_tracking_url).isEmpty()) {
             boolean isDbsChecked = PrefUtils.isDbsChecked(getActivity());
 
             if (isDbsChecked) {

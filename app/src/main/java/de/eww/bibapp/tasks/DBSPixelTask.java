@@ -7,6 +7,7 @@ import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 
+import de.eww.bibapp.R;
 import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 
@@ -20,7 +21,7 @@ public class DBSPixelTask extends AsyncTask<Void, Void, Void> {
 
 	@Override
 	protected Void doInBackground(Void... params) {
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.DBS_COUNTING_URL, mContext);
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(mContext.getResources().getString(R.string.bibapp_tracking_url), mContext);
 
 		try {
 			urlConnectionHelper.configure();

@@ -18,6 +18,7 @@ import de.eww.bibapp.URLConnectionHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.LocationItem;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.UrlHelper;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -47,7 +48,7 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 		List<LocationItem> response = new ArrayList<LocationItem>();
 
 		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
-		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(Constants.getLocationUrl(localCatalogIndex), mContext);
+		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(UrlHelper.getLocationUrl(mContext, "json"), mContext);
 
 		try
 		{
@@ -80,7 +81,7 @@ public class LocationsJsonLoader extends AbstractLoader<LocationItem>
 			}
 
 			// if we did not found a main entry, try to find one with the uri url as key
-			String lookupKey = Constants.getLocationUrl(localCatalogIndex).substring(0, Constants.getLocationUrl(localCatalogIndex).length() - 12);
+			String lookupKey = UrlHelper.getLocationUrl(mContext, "json").substring(0, UrlHelper.getLocationUrl(mContext, "json").length() - 12);
 			if (jsonResponse.has(lookupKey)) {
 				mainEntry = (JSONObject) jsonResponse.get(lookupKey);
 			}

@@ -10,6 +10,7 @@ import de.eww.bibapp.PaiaHelper;
 import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.fragment.account.AccountBookedFragment;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.UrlHelper;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -35,8 +36,7 @@ public class PaiaCancelTask extends AbstractPaiaTask
 		String jsonString = params[0];
 
 		// get url
-		int localCatalogIndex = PrefUtils.getLocalCatalogIndex(activity);
-		String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/core/" + PaiaHelper.getInstance().getUsername() + "/cancel?access_token=" + PaiaHelper.getInstance().getAccessToken();
+		String paiaUrl = UrlHelper.getPaiaUrl(activity) + "/core/" + PaiaHelper.getInstance().getUsername() + "/cancel?access_token=" + PaiaHelper.getInstance().getAccessToken();
 
 		JSONObject paiaResponse = new JSONObject();
 

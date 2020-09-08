@@ -64,14 +64,15 @@ public class InfoActivity extends BaseActivity {
 
         // Do we have a rss feed to display?
         //noinspection ConstantConditions
-        if (!Constants.NEWS_URL.isEmpty()) {
+        String rssUrl = getResources().getString(R.string.bibapp_rss_url);
+        if (!rssUrl.isEmpty()) {
             // Start the Request
             this.emptyView.setVisibility(View.GONE);
             this.progressBar.setVisibility(View.VISIBLE);
 
             RssService service = ApiClient.getClient(this.getApplicationContext(), HttpUrl.parse("http://dummy.de/")).create(RssService.class);
             this.disposable.add(service
-                    .getRss(Constants.NEWS_URL)
+                    .getRss(rssUrl)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribeWith(new DisposableSingleObserver<RssFeed>() {

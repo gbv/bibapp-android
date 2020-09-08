@@ -21,6 +21,7 @@ import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.PaiaItem;
 import de.eww.bibapp.tasks.AbstractLoader;
 import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.util.UrlHelper;
 
 /**
 * @author Christoph Schönfeld - effective WEBWORK GmbH
@@ -51,8 +52,7 @@ public class BookedJsonLoader extends AbstractLoader<PaiaItem>
 		List<PaiaItem> response = new ArrayList<PaiaItem>();
 
 		// get url
-        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
-		String paiaUrl = Constants.getPaiaUrl(localCatalogIndex) + "/core/" + PaiaHelper.getInstance().getUsername() + "/items?access_token=" + PaiaHelper.getInstance().getAccessToken();
+		String paiaUrl = UrlHelper.getPaiaUrl(mContext) + "/core/" + PaiaHelper.getInstance().getUsername() + "/items?access_token=" + PaiaHelper.getInstance().getAccessToken();
 		URLConnectionHelper urlConnectionHelper = new URLConnectionHelper(paiaUrl, mContext);
 
 		try

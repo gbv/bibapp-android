@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.constants.Constants;
 import de.eww.bibapp.model.ModsItem;
 
 public class UnAPIHelper {
@@ -15,8 +16,11 @@ public class UnAPIHelper {
      */
     public static String getUnAPIUrl(Context context, ModsItem modsItem, String format)
     {
+        String[] localUnApiUrls = context.getResources().getStringArray(R.array.bibapp_unapi_local_urls);
+        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(context);
+
         if (modsItem.isLocalSearch) {
-            return String.format(context.getResources().getString(R.string.bibapp_unapi_local_url), modsItem.ppn, format);
+            return String.format(localUnApiUrls[localCatalogIndex], modsItem.ppn, format);
         } else {
             return String.format(context.getResources().getString(R.string.bibapp_unapi_gvk_url), modsItem.ppn, format);
         }
