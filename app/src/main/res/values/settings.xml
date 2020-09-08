@@ -29,7 +29,6 @@
         %1 - PPN
         %2 - Format
     -->
-    <string name="bibapp_unapi_local_url"></string>
     <string name="bibapp_unapi_gvk_url"></string>
 
     <!--

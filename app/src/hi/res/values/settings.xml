@@ -57,9 +57,6 @@
         %1 - PPN
         %2 - Format
     -->
-    <string-array name="bibapp_unapi_local_urls">
-        <item>https://unapi.k10plus.de/\?id=opac-de-hil2:ppn:%1$s&amp;format=%2$s</item>
-    </string-array>
     <string name="bibapp_unapi_gvk_url">https://unapi.k10plus.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
 
     <!--
