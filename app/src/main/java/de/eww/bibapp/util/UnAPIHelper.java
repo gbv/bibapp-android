@@ -151,9 +151,9 @@ public class UnAPIHelper {
              */
             for (int i = currentLine; i < lines.length; i++) {
                 /**
-                 * Wenn die Zeile mit In:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
+                 * Wenn die Zeile mit In:_ / Enth.:_ / Enthalten in:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
                  */
-                searchSplit = lines[i].split("In: ");
+                searchSplit = lines[i].split("^(In: |Enth\\.: |Enthalten in: )");
                 if (searchSplit.length > 1) {
                     response += " " + lines[i];
                     break;
