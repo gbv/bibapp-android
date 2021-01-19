@@ -81,7 +81,9 @@
         List of URLs to be shown as homepage links in the main navigation, one for each local
         catalog
     -->
-    <string-array name="bibapp_homepage_urls"></string-array>
+    <string-array name="bibapp_homepage_urls">
+        <item>http://www.uke.de/aerztliche-zentralbibliothek</item>
+    </string-array>
 
     <!--
         URL for Data Privacy information
@@ -91,17 +93,17 @@
     <!--
         If true, either the storage or the department location of an exemplar are displayed, otherwise both if available
     -->
-    <bool name="use_exemplar_short_display">false</bool>
+    <bool name="use_exemplar_short_display">true</bool>
 
     <!--
         DBS Counting (called on every search request)
     -->
-    <string name="bibapp_tracking_url">https://dbspixel.hbz-nrw.de/count\?id=AN087&amp;page=20</string>
+    <string name="bibapp_tracking_url"></string>
 
     <!--
         RSS url news feed
     -->
-    <string name="bibapp_rss_url">https://www.uni-hildesheim.de/index.php\?id=8920&amp;type=100</string>
+    <string name="bibapp_rss_url"></string>
 
     <!--
         The Interlending URL

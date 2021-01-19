@@ -15,7 +15,7 @@ public final class Constants
      * @see LOCAL_CATALOGS and keep order in sync
      */
     public static final String[] PAIA_URLS = {
-        "https://jenlbs6.thulb.uni-jena.de:7242/DE-27"
+        "https://paia.thulb.uni-jena.de/DE-27"
     };
 
     /**
@@ -75,7 +75,7 @@ public final class Constants
     {
         if ( isLocal == true )
         {
-            return "https://jenlbs6.thulb.uni-jena.de:7242/" + Constants.DAIA_BIB_CODES[localCatalogIndex] + "/daia?id=ppn:" + ppn + "&format=json";
+            return "https://paia.thulb.uni-jena.de/" + Constants.DAIA_BIB_CODES[localCatalogIndex] + "/daia?id=ppn:" + ppn + "&format=json";
         }
         else
         {
@@ -89,13 +89,6 @@ public final class Constants
     public static final String NEWS_URL = "";
 
     /**
-     * An URL to a homepage
-     */
-    public static final String[] HOMEPAGE_URLS = {
-        "http://www.thulb.uni-jena.de"
-    };
-
-    /**
      * This is the number of hits display by a single request - without scroll reloads
      */
     public static final int SEARCH_HITS_PER_REQUEST = 20;
@@ -106,22 +99,6 @@ public final class Constants
     public static String getInterlendingUrl(String ppn)
     {
         return "http://gso.gbv.de/DB=2.1/PPNSET?PPN=" + ppn;
-    }
-
-    /**
-     * The UnAPI URL for extended information
-     */
-    public static String getUnApiUrl(String ppn)
-    {
-        return "http://unapi.k10plus.de/?id=gvk:ppn:" + ppn + "&format=isbd";
-    }
-
-    /**
-     * URL for getting images
-     */
-    public static String getImageUrl(String isbn)
-    {
-        return "http://ws.gbv.de/covers/?id=" + isbn + "&format=img";
     }
 
     /**

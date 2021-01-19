@@ -13,13 +13,12 @@
     <!--
         If true, the detail view will not initially requests DAIA, but first check the FamURL
     -->
-    <bool name="use_daia_sub_requests">true</bool>
+    <bool name="use_daia_sub_requests">false</bool>
 
     <!--
         If "use_daia_sub_requests" is true, these are the FamURL's for each configured catalog.
     -->
     <array name="fam_urls">
-        <item>https://lhiai.gbv.de/DB=1/SET=1/TTL=1/FAM\?FRST=%1$d&amp;PPN=%2$s&amp;XML=YES</item>
     </array>
 
     <!--
@@ -27,7 +26,9 @@
         %1 - PPN
         %2 - Format
     -->
-    <string name="bibapp_unapi_local_url">http://unapi.k10plus.de/\?id=opac-de-204:ppn:%1$s&amp;format=%2$s</string>
+    <string-array name="bibapp_unapi_local_urls">
+        <item>http://unapi.k10plus.de/\?id=opac-de-564:ppn:%1$s&amp;format=%2$s</item>
+    </string-array>
     <string name="bibapp_unapi_gvk_url">http://unapi.k10plus.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
 
     <!--
@@ -40,7 +41,8 @@
         List of URLs to be shown as homepage links in the main navigation, one for each local
         catalog
     -->
-    <string-array name="bibapp_homepage_urls"></string-array>
+    <string-array name="bibapp_homepage_urls">
+    </string-array>
 
     <!--
         URL for Data Privacy information

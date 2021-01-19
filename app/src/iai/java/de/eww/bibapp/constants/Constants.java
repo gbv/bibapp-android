@@ -89,12 +89,6 @@ public final class Constants
     public static final String NEWS_URL = "";
 
     /**
-     * An URL to a homepage
-     */
-    public static final String[] HOMEPAGE_URLS = {
-    };
-
-    /**
      * This is the number of hits display by a single request - without scroll reloads
      */
     public static final int SEARCH_HITS_PER_REQUEST = 20;
@@ -105,22 +99,6 @@ public final class Constants
     public static String getInterlendingUrl(String ppn)
     {
         return "http://gso.gbv.de/DB=2.1/PPNSET?PPN=" + ppn;
-    }
-
-    /**
-     * The UnAPI URL for extended information
-     */
-    public static String getUnApiUrl(String ppn, String format)
-    {
-        return "http://unapi.k10plus.de/?id=gvk:ppn:" + ppn + "&format=" + format;
-    }
-
-    /**
-     * URL for getting images
-     */
-    public static String getImageUrl(String isbn)
-    {
-        return "http://ws.gbv.de/covers/?id=" + isbn + "&format=img";
     }
 
     /**

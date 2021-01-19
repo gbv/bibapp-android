@@ -108,22 +108,6 @@ public final class Constants
     }
 
     /**
-     * The UnAPI URL for extended information
-     */
-    public static String getUnApiUrl(String ppn, String format)
-    {
-        return "http://unapi.k10plus.de/?id=gvk:ppn:" + ppn + "&format=" + format;
-    }
-
-    /**
-     * URL for getting images
-     */
-    public static String getImageUrl(String isbn)
-    {
-        return "http://ws.gbv.de/covers/?id=" + isbn + "&format=img";
-    }
-
-    /**
      * DBS Counting (called on every search request)
      */
     public static String DBS_COUNTING_URL = "";
