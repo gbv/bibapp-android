@@ -153,8 +153,7 @@ public class UnAPIHelper {
                 /**
                  * Wenn die Zeile mit In:_ / Enth.:_ / Enthalten in:_ beginnt, die ganze Zeile anzeigen. Den Rest der Daten verwerfen.
                  */
-                searchSplit = lines[i].split("^(In: |Enth\\.: |Enthalten in: )");
-                if (searchSplit.length > 1) {
+                if (UnAPIHelper.lineContainsPartOfInformation(lines[i])) {
                     response += " " + lines[i];
                     break;
                 }
@@ -162,5 +161,12 @@ public class UnAPIHelper {
         }
 
         return response;
+    }
+
+    public static boolean lineContainsPartOfInformation(String line) {
+        Pattern pattern = Pattern.compile("^(In: |Enth\\.: |Enthalten in: ).*", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(line);
+
+        return matcher.matches();
     }
 }
