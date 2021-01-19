@@ -74,20 +74,12 @@
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden"
             android:parentActivityName=".activity.InfoActivity">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.InfoActivity" />
         </activity>
         <activity
             android:name=".activity.ImpressumActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden"
             android:parentActivityName=".activity.InfoActivity">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.InfoActivity" />
         </activity>
 
         <!-- Location -->
@@ -107,10 +99,6 @@
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden"
             android:parentActivityName=".activity.SearchActivity">
-            <!-- Parent activity meta-data to support 4.0 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activity.SearchActivity" />
         </activity>
 
         <!-- Other -->
@@ -122,10 +110,6 @@
             android:name=".activity.WebViewActivity"
             android:screenOrientation="fullSensor"
             android:configChanges="orientation|keyboardHidden" />
-
-        <service
-            android:name="com.octo.android.robospice.XmlSpringAndroidSpiceService"
-            android:exported="false" />
 
         <!-- Google Maps -->
         <meta-data
