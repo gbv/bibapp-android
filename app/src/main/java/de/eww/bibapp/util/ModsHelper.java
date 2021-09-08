@@ -1,6 +1,6 @@
 package de.eww.bibapp.util;
 
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.typeface.BeluginoFont;
 
 public class ModsHelper {

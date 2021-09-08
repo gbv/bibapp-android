@@ -12,13 +12,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.LocationItem;
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.LocationItem;
+import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.network.ApiClient;
 import de.eww.bibapp.network.DaiaService;
 import de.eww.bibapp.network.model.DaiaItem;
 import de.eww.bibapp.network.model.DaiaItems;
 import de.eww.bibapp.util.DaiaHelper;
+import de.eww.bibapp.util.UrlHelper;
 import io.reactivex.Observable;
 import okhttp3.HttpUrl;
 
@@ -38,7 +39,6 @@ public class DaiaStrategy implements AvailabilityStrategy {
 
         String url = DaiaHelper.getDaiaUrl(context.getApplicationContext(), ppn, this.modsItem.isLocalSearch, "json");
 
-
         return service.getDaia(url)
                 .flatMap(daiaItems -> Observable.fromIterable(daiaItems.getItems()))
                 .flatMap(DaiaStrategy.this::processSingleDaiaItem)
@@ -53,7 +53,7 @@ public class DaiaStrategy implements AvailabilityStrategy {
             HashMap<String, String> daiaInformation = DaiaHelper.getInformation(daiaItem, DaiaStrategy.this.modsItem, DaiaStrategy.this.context);
             daiaItem.setActions(daiaInformation.get("actions"));
 
-            String uriUrl = DaiaHelper.getUriUrl(daiaItem);
+            String uriUrl = UrlHelper.getSecureUrl(DaiaHelper.getUriUrl(daiaItem));
             if (!uriUrl.isEmpty()) {
                 return DaiaStrategy.this.performSubrequest(uriUrl, daiaItem);
             } else {

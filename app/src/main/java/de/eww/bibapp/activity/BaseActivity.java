@@ -56,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     TextView mVersionView;
 
     private ActionBarDrawerToggle mDrawerToggle;
-    protected static int mNextNavigationIndex = R.id.nav_search;
+//    protected static int mNextNavigationIndex = R.id.nav_search;
 
     public static BaseActivity instance;
     private boolean mForceSelectSearch = false;
@@ -76,27 +76,21 @@ public abstract class BaseActivity extends AppCompatActivity implements
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
 
-        // set user language
-        String userLanguage = PrefUtils.getUserLanguage(this);
-        if (userLanguage != null && !userLanguage.equals("device")) {
-            LocaleManager.changeLanguage(this, userLanguage);
-        } else {
-            LocaleManager.changeLanguage(this, LocaleManager.getDefaultLanguage(this));
-        }
+
     }
 
     @Override
     public void setContentView(int layoutResId) {
-        mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
+        //mDrawerLayout = (DrawerLayout) getLayoutInflater().inflate(R.layout.activity_drawer, null);
         mToolbar = (Toolbar) mDrawerLayout.findViewById(R.id.toolbar);
-        mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
-        mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
+//        mNavigationView = (NavigationView) mDrawerLayout.findViewById(R.id.navigation_view);
+//        mVersionView = (TextView) mDrawerLayout.findViewById(R.id.drawer_version);
 
-        FrameLayout frameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
+        //FrameLayout frameLayout = (FrameLayout) mDrawerLayout.findViewById(R.id.content_frame);
 
-        setupNavigation();
+//        setupNavigation();
 
-        getLayoutInflater().inflate(layoutResId, frameLayout, true);
+        //getLayoutInflater().inflate(layoutResId, frameLayout, true);
         super.setContentView(mDrawerLayout);
     }
 
@@ -121,48 +115,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     }
 
     public void selectItem(int position) {
-        navigate(mNavigationView.getMenu().getItem(position));
-    }
-
-    public void navigate(MenuItem menuItem) {
-        // Only navigate, if the user selected a different item
-        if (menuItem.getItemId() == mNextNavigationIndex) {
-            return;
-        }
-
-        mNextNavigationIndex = menuItem.getItemId();
-
-        Intent intent;
-
-        switch (menuItem.getItemId()) {
-                case R.id.nav_account:
-                intent = new Intent(this, AccountActivity.class);
-                break;
-            case R.id.nav_watchlist:
-                intent = new Intent(this, WatchlistActivity.class);
-                break;
-            case R.id.nav_info:
-                intent = new Intent(this, InfoActivity.class);
-                break;
-            case R.id.nav_homepage:
-                Uri homepageUrl = Uri.parse(this.getResources().getStringArray(R.array.bibapp_homepage_urls)[PrefUtils.getLocalCatalogIndex(this)]);
-                intent = new Intent(Intent.ACTION_VIEW, homepageUrl);
-                break;
-            case R.id.nav_settings:
-                intent = new Intent(this, SettingsActivity.class);
-                break;
-            default:
-                intent = new Intent(this, SearchActivity.class);
-                break;
-        }
-
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |Intent.FLAG_ACTIVITY_NEW_TASK);
-
-        startActivity(intent);
-        finish();
-
-        // Close the drawer
-        mDrawerLayout.closeDrawers();
+//        navigate(mNavigationView.getMenu().getItem(position));
     }
 
     @Override
@@ -186,112 +139,14 @@ public abstract class BaseActivity extends AppCompatActivity implements
         mDrawerActionHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                navigate(menuItem);
+//                navigate(menuItem);
             }
         }, DRAWER_CLOSE_DELAY_MS);
 
         return true;
     }
 
-    private void setupNavigation() {
-        // Set a Toolbar to replace the ActionBar.
-        setSupportActionBar(mToolbar);
-
-        // Set the menu icon instead of the launcher icon.
-        final ActionBar ab = getSupportActionBar();
-        if (ab != null) {
-            ab.setDisplayHomeAsUpEnabled(true);
-        }
-
-        setActiveNavigationItem(mNavigationView.getMenu().findItem(mNextNavigationIndex));
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        // Set a custom shadow that overlays the main content when the drawer opens
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
-        // Set up the navigation listener
-        mNavigationView.setNavigationItemSelectedListener(this);
-
-        Menu navigationMenu = mNavigationView.getMenu();
-
-        // Navigation Icons
-        MenuItem searchItem = navigationMenu.findItem(R.id.nav_search);
-        searchItem.setIcon(new IconicsDrawable(this)
-            .icon(BeluginoFont.Icon.bel_magnifier));
-
-        MenuItem accountItem = navigationMenu.findItem(R.id.nav_account);
-        accountItem.setIcon(new IconicsDrawable(this)
-            .icon(BeluginoFont.Icon.bel_account));
-
-        MenuItem watchlistItem = navigationMenu.findItem(R.id.nav_watchlist);
-        watchlistItem.setIcon(new IconicsDrawable(this)
-            .icon(BeluginoFont.Icon.bel_content));
-
-        MenuItem infoItem = navigationMenu.findItem(R.id.nav_info);
-        infoItem.setIcon(new IconicsDrawable(this)
-            .icon(BeluginoFont.Icon.bel_info));
-
-        MenuItem settingsItem = navigationMenu.findItem(R.id.nav_settings);
-        settingsItem.setIcon(new IconicsDrawable(this)
-            .icon(BeluginoFont.Icon.bel_cog));
-
-        MenuItem homepageItem = navigationMenu.findItem(R.id.nav_homepage);
-        homepageItem.setIcon(new IconicsDrawable(this)
-            .icon(BeluginoFont.Icon.bel_world));
-
-        // Show homepage menu item, if url is set
-        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(this);
-        if (this.getResources().getStringArray(R.array.bibapp_homepage_urls).length >= localCatalogIndex + 1) {
-            homepageItem.setVisible(true);
-        }
-
-        // Get the version name and set it in the layout
-        try {
-            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            mVersionView.setText("v" + packageInfo.versionName);
-        } catch(PackageManager.NameNotFoundException e) {
-        }
-    }
-
     public void selectSearch() {
         mForceSelectSearch = true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-
-        // Pass any configuration change to the drawer toggles
-        mDrawerToggle.onConfigurationChanged(newConfig);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (mForceSelectSearch) {
-            mForceSelectSearch = false;
-            navigate(mNavigationView.getMenu().getItem(0));
-        }
-    }
-
-    @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(IconicsContextWrapper.wrap(base));
     }
 }

@@ -19,4 +19,12 @@ public final class Annotations {
     @Retention(RetentionPolicy.RUNTIME)
     public @interface SRU {
     }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface URI {
+    }
+
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface Json {
+    }
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/nav_search">
+
+    <!-- Search -->
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="de.eww.bibapp.ui.mods.SearchFragment"
+        android:label="@string/nav_search"
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_nav_serach_to_nav_mods"
+            app:destination="@id/nav_mods" />
+    </fragment>
+
+    <!-- Account -->
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="de.eww.bibapp.ui.account.LoginFragment"
+        android:label="@string/nav_account"
+        tools:layout="@layout/fragment_login" >
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="de.eww.bibapp.ui.account.AccountFragment"
+        android:label="@string/nav_account"
+        tools:layout="@layout/fragment_account">
+        <action
+            android:id="@+id/action_nav_account_to_nav_id"
+            app:destination="@id/nav_id" />
+        <argument
+            android:name="requestItem"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_id"
+        android:name="de.eww.bibapp.ui.account.IdFragment"
+        android:label="@string/nav_account"
+        tools:layout="@layout/fragment_id" />
+
+    <!-- Watchlist -->
+    <fragment
+        android:id="@+id/nav_watchlist"
+        android:name="de.eww.bibapp.ui.mods.WatchlistFragment"
+        android:label="@string/nav_watchlist"
+        tools:layout="@layout/fragment_watchlist">
+        <action
+            android:id="@+id/action_nav_watchlist_to_nav_mods"
+            app:destination="@id/nav_mods" />
+    </fragment>
+
+    <!-- Mods -->
+    <fragment
+        android:id="@+id/nav_mods"
+        android:name="de.eww.bibapp.ui.mods.ModsFragment"
+        tools:layout="@layout/fragment_mods" >
+        <action
+            android:id="@+id/action_nav_mods_to_nav_location"
+            app:destination="@id/nav_location" />
+        <action
+            android:id="@+id/action_nav_mods_to_nav_account"
+            app:destination="@id/nav_account" />
+    </fragment>
+
+    <!-- Info -->
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="de.eww.bibapp.ui.info.InfoFragment"
+        android:label="@string/nav_info"
+        tools:layout="@layout/fragment_info" >
+        <action
+            android:id="@+id/action_navigation_info_to_navigation_contact"
+            app:destination="@id/nav_contact" />
+        <action
+            android:id="@+id/action_nav_info_to_nav_impressum"
+            app:destination="@id/nav_impressum" />
+        <action
+            android:id="@+id/action_nav_info_to_nav_locations"
+            app:destination="@id/nav_locations" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_contact"
+        android:name="de.eww.bibapp.ui.info.ContactFragment"
+        android:label="@string/nav_info"
+        tools:layout="@layout/fragment_contact" />
+
+    <fragment
+        android:id="@+id/nav_impressum"
+        android:name="de.eww.bibapp.ui.info.ImpressumFragment"
+        android:label="@string/nav_info"
+        tools:layout="@layout/fragment_impressum" />
+
+    <fragment
+        android:id="@+id/nav_locations"
+        android:name="de.eww.bibapp.ui.info.LocationsFragment"
+        android:label="@string/nav_info"
+        tools:layout="@layout/fragment_locations" >
+        <action
+            android:id="@+id/action_nav_locations_to_nav_location"
+            app:destination="@id/nav_location" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_location"
+        android:name="de.eww.bibapp.ui.info.LocationFragment"
+        android:label="@string/nav_info"
+        tools:layout="@layout/fragment_location" >
+        <argument
+            android:name="locationUrl"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+
+    <!-- Settings -->
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="de.eww.bibapp.ui.SettingsFragment"
+        android:label="@string/action_settings" />
+</navigation>

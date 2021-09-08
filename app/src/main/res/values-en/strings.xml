@@ -7,12 +7,10 @@
     <string name="loading_in_progress">Content is loading</string>
 
     <!-- navigation -->
-    <string name="drawer_navigation_search">Search</string>
-    <string name="drawer_navigation_account">Account</string>
-    <string name="drawer_navigation_watchlist">Watch list</string>
-    <string name="drawer_navigation_info">Info</string>
-    <string name="drawer_navigation_homepage">Homepage</string>
-    <string name="drawer_navigation_settings">Settings</string>
+    <string name="nav_search">Search</string>
+    <string name="nav_account">Account</string>
+    <string name="nav_watchlist">Watch list</string>
+    <string name="nav_info">Info</string>
     <string name="drawer_open">Open navigation</string>
     <string name="drawer_close">Close navigation</string>
 
@@ -28,6 +26,8 @@
 
     <!-- actions -->
     <string name="action_search">Search</string>
+    <string name="action_homepage">Homepage</string>
+    <string name="action_settings">Settings</string>
 
     <!-- info -->
     <string name="info_button_contact">Contact</string>

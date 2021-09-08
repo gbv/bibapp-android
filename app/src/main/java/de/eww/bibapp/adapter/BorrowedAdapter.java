@@ -2,13 +2,18 @@ package de.eww.bibapp.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.selection.ItemDetailsLookup;
+import androidx.recyclerview.selection.SelectionTracker;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mikepenz.iconics.IconicsDrawable;
@@ -20,23 +25,18 @@ import java.util.List;
 import java.util.Locale;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.PaiaItem;
+import de.eww.bibapp.network.model.paia.PaiaItem;
 import de.eww.bibapp.typeface.BeluginoFont;
 
-/**
- * Created by christoph on 07.11.14.
- */
-public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHolder> {
+public class BorrowedAdapter extends ListAdapter<PaiaItem, BorrowedAdapter.ViewHolder> {
 
-    private List<PaiaItem> mItemList;
     private Context mContext;
-    private SparseBooleanArray mSelectedItems;
-    private boolean mSelectionMode;
+    private SelectionTracker<String> selectionTracker;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView mAbout;
         public TextView mSignature;
@@ -54,73 +54,81 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
 
             mAbout = itemView.findViewById(R.id.about);
             mSignature = itemView.findViewById(R.id.signature);
-            this.dueDateLabel = itemView.findViewById(R.id.duedate_label);
+            this.dueDateLabel = itemView.findViewById(R.id.label_duedate);
             mDate = itemView.findViewById(R.id.duedate);
             this.dueDateWarning = itemView.findViewById(R.id.duedate_warning);
             mQueue = itemView.findViewById(R.id.queue);
             mRenewals = itemView.findViewById(R.id.renewals);
             mStatus = itemView.findViewById(R.id.status);
         }
+
+        public ItemDetailsLookup.ItemDetails<String> getItemDetails() {
+            return new ItemDetailsLookup.ItemDetails<>() {
+                @Override
+                public int getPosition() {
+                    return getBindingAdapterPosition();
+                }
+
+                @Nullable
+                @Override
+                public String getSelectionKey() {
+                    return BorrowedAdapter.this.getItem(getBindingAdapterPosition()).getItem();
+                }
+            };
+        }
     }
 
-    // Suitable constructor for list type
-    public BorrowedAdapter(List<PaiaItem> itemList, Context context) {
-        mItemList = itemList;
+    public static final DiffUtil.ItemCallback<PaiaItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<PaiaItem>() {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull PaiaItem oldItem, @NonNull PaiaItem newItem) {
+            return oldItem.getItem().equals(newItem.getItem());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull PaiaItem oldItem, @NonNull PaiaItem newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+
+    public BorrowedAdapter(Context context) {
+        super(DIFF_CALLBACK);
+
         mContext = context;
-        mSelectedItems = new SparseBooleanArray();
     }
 
-    public void toggleSelection(int position) {
-        if (mSelectedItems.get(position, false)) {
-            mSelectedItems.delete(position);
-        } else {
-            mSelectedItems.put(position, true);
+    @Override
+    public void submitList(@Nullable List<PaiaItem> list) {
+        super.submitList(list != null ? new ArrayList<>(list) : null);
+    }
+
+    public void setSelectionTracker(SelectionTracker<String> selectionTracker) {
+        this.selectionTracker = selectionTracker;
+    }
+
+    public List<PaiaItem> getSelectedItems() {
+        List<PaiaItem> selectedItems = new ArrayList<>();
+
+        for (PaiaItem item: getCurrentList()) {
+            if (selectionTracker.getSelection().contains(item.getItem())) {
+                selectedItems.add(item);
+            }
         }
 
-        notifyDataSetChanged();
-    }
-
-    public void setSelectionMode(boolean selectionMode) {
-        mSelectionMode = selectionMode;
-    }
-
-    public void clearSelection() {
-        mSelectedItems.clear();
-        notifyDataSetChanged();
-    }
-
-    public List<Integer> getSelectedItems() {
-        List<Integer> items = new ArrayList<Integer>(mSelectedItems.size());
-        for (int i=0; i < mSelectedItems.size(); i++) {
-            items.add(mSelectedItems.keyAt(i));
-        }
-
-        return items;
-    }
-
-    public int getSelectedItemCount() {
-        return mSelectedItems.size();
-    }
-
-    public PaiaItem getPaiaItem(int position) {
-        return mItemList.get(position);
+        return selectedItems;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_borrowed_view, parent, false);
-
-        // Set the view's size, margins, paddings and layout parameters
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        PaiaItem item = mItemList.get(position);
+        PaiaItem item = getItem(position);
 
         holder.mAbout.setText(item.getAbout());
         holder.mSignature.setText(item.getLabel());
@@ -128,8 +136,8 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         SimpleDateFormat dateFormatWithoutTime = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
         SimpleDateFormat dateFormatWithTime = new SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.GERMANY);
 
-        if (item.getEndDate() != null) {
-            Date endDate = item.getEndDate();
+        if (item.getEndTime() != null) {
+            Date endDate = item.getEndTime();
             String endDateString = dateFormatWithTime.format(endDate);
 
             if (endDateString.contains("00:00")) {
@@ -164,19 +172,9 @@ public class BorrowedAdapter extends RecyclerView.Adapter<BorrowedAdapter.ViewHo
         String[] statusTranslations = mContext.getResources().getStringArray(R.array.paia_service_status);
         holder.mStatus.setText(statusTranslations[statusCode]);
 
-        holder.itemView.setSelected(mSelectedItems.get(position, false) && item.isCanRenew());
-
-        if (mSelectionMode && !item.isCanRenew()) {
-            holder.itemView.setAlpha(0.3f);
-        } else {
-            holder.itemView.setAlpha(1.0f);
-        }
-    }
-
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return (mItemList != null ? mItemList.size() : 0);
+        boolean isSelected = selectionTracker.isSelected(item.getItem());
+        holder.itemView.setActivated(isSelected);
+        holder.itemView.setEnabled(item.isCanRenew());
     }
 
     private void makeDueDateWarning(ViewHolder viewHolder) {

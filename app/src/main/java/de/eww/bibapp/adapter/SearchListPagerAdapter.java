@@ -1,58 +1,32 @@
 package de.eww.bibapp.adapter;
 
-import android.content.Context;
-
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import de.eww.bibapp.R;
-import de.eww.bibapp.fragment.search.SearchListFragment;
 import de.eww.bibapp.network.search.SearchManager;
-import de.eww.bibapp.util.PrefUtils;
+import de.eww.bibapp.ui.mods.SearchListFragment;
 
-/**
- * Created by christoph on 24.08.15.
- */
-public class SearchListPagerAdapter extends FragmentPagerAdapter {
+public class SearchListPagerAdapter extends FragmentStateAdapter {
 
-    final int PAGE_COUNT = 2;
-    private Context mContext;
-
-    public SearchListPagerAdapter(FragmentManager fm, Context context) {
-        super(fm);
-        mContext = context;
+    public SearchListPagerAdapter(Fragment fragment) {
+        super(fragment);
     }
 
+    @NonNull
     @Override
-    public int getCount() {
-        return PAGE_COUNT;
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-        SearchListFragment fragment = new SearchListFragment();
-
-        if (position == 0) {
-            fragment.setSearchMode(SearchManager.SEARCH_MODE.LOCAL);
-        } else {
-            fragment.setSearchMode(SearchManager.SEARCH_MODE.GVK);
+    public Fragment createFragment(int position) {
+        switch (position) {
+            case 1:
+                return SearchListFragment.newInstance(SearchManager.SEARCH_MODE.GVK);
+            default:
+                return SearchListFragment.newInstance(SearchManager.SEARCH_MODE.LOCAL);
         }
-
-        return fragment;
     }
 
+
     @Override
-    public CharSequence getPageTitle(int position) {
-        String[] searchCatalogs = mContext.getResources().getStringArray(R.array.search_catalogs);
-
-        // If our current local catalog contains a short title, we append it to the default title
-        int localCatalogIndex = PrefUtils.getLocalCatalogIndex(mContext);
-        String[] localCatalogSuffixes = mContext.getResources().getStringArray(R.array.bibapp_local_catalog_suffixes);
-        if (localCatalogSuffixes.length > localCatalogIndex + 1) {
-            searchCatalogs[0] += " " + localCatalogSuffixes[localCatalogIndex + 1];
-        }
-
-        return searchCatalogs[position];
+    public int getItemCount() {
+        return 2;
     }
 }

@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
 import de.eww.bibapp.network.model.DaiaItems;
 import io.reactivex.android.schedulers.AndroidSchedulers;

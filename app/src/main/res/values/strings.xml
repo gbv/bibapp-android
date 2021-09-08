@@ -7,12 +7,10 @@
     <string name="loading_in_progress">Inhalte werden geladen</string>
 
     <!-- navigation -->
-    <string name="drawer_navigation_search">Suche</string>
-    <string name="drawer_navigation_account">Konto</string>
-    <string name="drawer_navigation_watchlist">Merkliste</string>
-    <string name="drawer_navigation_info">Info</string>
-    <string name="drawer_navigation_homepage">Homepage</string>
-    <string name="drawer_navigation_settings">Einstellungen</string>
+    <string name="nav_search">Suche</string>
+    <string name="nav_account">Konto</string>
+    <string name="nav_watchlist">Merkliste</string>
+    <string name="nav_info">Info</string>
     <string name="drawer_open">Navigation öffnen</string>
     <string name="drawer_close">Navigation schließen</string>
 
@@ -28,6 +26,8 @@
 
     <!-- actions -->
     <string name="action_search">Suchen</string>
+    <string name="action_homepage">Homepage</string>
+    <string name="action_settings">Einstellungen</string>
 
     <!-- info -->
     <string name="info_button_contact">Kontakt</string>
@@ -131,7 +131,7 @@
     <string name="detailactionsdialog_order">Bestellen</string>
     <string name="detailactionsdialog_online">Online ansehen</string>
     <string name="indexactionsdialog_title">Quelle wählen</string>
-    
+
     <!-- account -->
     <string name="account_borrowed_signature">Signatur:</string>
     <string name="account_borrowed_duedate">Leihfristende:</string>
@@ -140,7 +140,7 @@
     <string name="account_borrowed_status">Status:</string>
     <string name="account_booked_signature">Signatur:</string>
     <string name="account_booked_date">Vormerkdatum:</string>
-    
+
     <!-- menu -->
     <string name="menu_borrowed_extend">Verlängern</string>
     <string name="menu_detail_addtowatchlist">Zur Merkliste hinzufügen</string>
@@ -151,7 +151,7 @@
     <string name="menu_selected_count">%1$d ausgewählt</string>
     <string name="menu_account_logout">Logout</string>
     <string name="menu_account_id">ID</string>
-    
+
     <!-- detail -->
     <string name="detail_available">Verfügbarkeit</string>
     <string name="detail_index">Mehr zum Inhalt</string>
@@ -161,4 +161,6 @@
 
     <!-- daia -->
     <string name="daia_default_department">Zusätzliche Exemplare anderer Bibliotheken</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

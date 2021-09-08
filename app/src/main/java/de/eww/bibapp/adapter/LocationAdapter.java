@@ -5,19 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.LocationItem;
+import de.eww.bibapp.network.model.LocationItem;
 
-/**
- * Created by christoph on 30.10.14.
- */
 public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder> {
 
     private List<LocationItem> mItemList;
+    private final View.OnClickListener mOnClickListener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -29,32 +28,37 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
         public ViewHolder(View itemView) {
             super(itemView);
 
-            mTitle = (TextView) itemView.findViewById(R.id.title);
+            mTitle = itemView.findViewById(R.id.title);
         }
     }
 
     // Suitable constructor for list type
-    public LocationAdapter(List<LocationItem> itemList) {
-        mItemList = itemList;
+    public LocationAdapter(View.OnClickListener onClickListener) {
+        mOnClickListener = onClickListener;
+    }
+
+    public void setLocationList(final List<LocationItem> locationList) {
+        mItemList = locationList;
+        notifyDataSetChanged();
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_location_view, parent, false);
-
-        // Set the view's size, margins, paddings and layout parameters
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         LocationItem item = mItemList.get(position);
+        holder.itemView.setTag(item);
 
         holder.mTitle.setText(item.listName);
+
+        holder.itemView.setOnClickListener(mOnClickListener);
     }
 
     // Return the size of your dataset (invoked by the layout manager)

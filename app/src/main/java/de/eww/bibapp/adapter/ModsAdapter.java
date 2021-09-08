@@ -8,22 +8,26 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mikepenz.iconics.IconicsDrawable;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.util.ModsHelper;
 
-public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
+public class ModsAdapter extends ListAdapter<ModsItem, ModsAdapter.ViewHolder> {
 
-    private Context mContext;
-
-    private List<ModsItem> mItemList;
+    private final Context mContext;
+    private final View.OnClickListener mOnClickListener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -47,70 +51,78 @@ public class ModsAdapter extends RecyclerView.Adapter<ModsAdapter.ViewHolder> {
         }
     }
 
+    public static final DiffUtil.ItemCallback<ModsItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull ModsItem oldItem, @NonNull ModsItem newItem) {
+            return oldItem.ppn.equals(newItem.ppn);
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull ModsItem oldItem, @NonNull ModsItem newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+
     // Suitable constructor for list type
-    public ModsAdapter(List<ModsItem> itemList, Context context) {
-        mItemList = itemList;
+    public ModsAdapter(Context context, View.OnClickListener onClickListener) {
+        super(DIFF_CALLBACK);
+
         mContext = context;
+        mOnClickListener = onClickListener;
     }
 
-    public void addModsItems(List<ModsItem> itemList) {
-        mItemList.addAll(itemList);
+    @Override
+    public void submitList(@Nullable List<ModsItem> list) {
+        super.submitList(list != null ? new ArrayList<>(list) : null);
     }
 
     // Create new views (invoked by the layout manager)
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mods_view, parent, false);
-
-        // Set the view's size, margins, paddings and layout parameters
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ModsItem item = mItemList.get(position);
+        ModsItem item = getItem(position);
+        holder.itemView.setTag(item);
 
-        if (item != null) {
-            holder.mTitle.setText(item.title);
+        holder.mTitle.setText(item.title);
 
-            String subTitle = item.subTitle;
-            if (!item.partName.isEmpty()) {
-                subTitle = item.partName + "; " + subTitle;
-            }
-            if (!item.partNumber.isEmpty()) {
-                subTitle = item.partNumber + "; " + subTitle;
-            }
-            holder.mSub.setText(subTitle);
-
-            String authorString = "";
-            Iterator<String> it = item.authors.iterator();
-            while (it.hasNext()) {
-                String author = it.next();
-                authorString += author;
-
-                if (it.hasNext()) {
-                    authorString += ", ";
-                }
-            }
-            holder.mAuthor.setText(authorString);
-
-            if (item.issuedDate != null) {
-                holder.mPublication.setText(item.issuedDate);
-            }
-
-            holder.mImage.setImageDrawable(new IconicsDrawable(this.mContext)
-                .icon(ModsHelper.getBeluginoFontIcon(item))
-                .color(Color.LTGRAY)
-                .sizeDp(36));
+        String subTitle = item.subTitle;
+        if (!item.partName.isEmpty()) {
+            subTitle = item.partName + "; " + subTitle;
         }
-    }
+        if (!item.partNumber.isEmpty()) {
+            subTitle = item.partNumber + "; " + subTitle;
+        }
+        holder.mSub.setText(subTitle);
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return (mItemList != null ? mItemList.size() : 0);
+        StringBuilder authorString = new StringBuilder();
+        Iterator<String> it = item.authors.iterator();
+        while (it.hasNext()) {
+            String author = it.next();
+            authorString.append(author);
+
+            if (it.hasNext()) {
+                authorString.append(", ");
+            }
+        }
+        holder.mAuthor.setText(authorString.toString());
+
+        if (item.issuedDate != null) {
+            holder.mPublication.setText(item.issuedDate);
+        }
+
+        holder.mImage.setImageDrawable(new IconicsDrawable(this.mContext)
+            .icon(ModsHelper.getBeluginoFontIcon(item))
+            .color(Color.LTGRAY)
+            .sizeDp(36));
+
+        holder.itemView.setOnClickListener(mOnClickListener);
     }
 }

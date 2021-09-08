@@ -128,7 +128,8 @@ public class BeluginoFont implements ITypeface {
         bel_article('\ue9aa'),
         bel_warning('\ue915'),
         bel_idcard('\ue95a'),
-        bel_arrow_right('\ue928');
+        bel_arrow_right('\ue928'),
+        bel_logout('\ue907');
 
         char character;
 

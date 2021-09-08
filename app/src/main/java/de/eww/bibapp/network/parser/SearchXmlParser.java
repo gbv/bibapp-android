@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.ModsItem;
 
 public class SearchXmlParser
 {

@@ -4,16 +4,15 @@ import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.util.List;
 import java.util.Map;
 
 import de.eww.bibapp.R;
 import de.eww.bibapp.tasks.HeaderRequest;
 
-/**
- * Created by christoph on 10.11.14.
- */
-public class WebViewActivity extends BaseActivity {
+public class WebViewActivity extends AppCompatActivity {
 
     private WebView mWebView;
 
@@ -26,18 +25,12 @@ public class WebViewActivity extends BaseActivity {
 
         mUrl = getIntent().getExtras().getString("url");
 
-        mWebView = (WebView) findViewById(R.id.web);
+        mWebView = findViewById(R.id.web);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.setWebViewClient(new WebViewClient());
 
         // Try to detect header information
         new HeaderRequest(this).execute(mUrl);
-
-        if (getIntent().hasExtra("source") && getIntent().getExtras().getString("source").equals("search")) {
-            setActiveNavigationItem(0);
-        } else {
-            setActiveNavigationItem(2);
-        }
     }
 
     public void onHeaderRequestDone(Map<String, List<String>> header) {

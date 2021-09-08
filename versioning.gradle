@@ -1,13 +1,13 @@
 ext {
     /**
-     * Builds an Android version code from the version of the project.
-     * This is designed to handle the -SNAPSHOT and -RC format.
-     *
-     * I.e. during development the version ends with -SNAPSHOT. As the code stabilizes and release nears
-     * one or many Release Candidates are tagged. These all end with "-RC1", "-RC2" etc.
-     * And the final release is without any suffix.
-     * @re  turn
-     */
+     * Builds an Android version code from the version of the project.
+     * This is designed to handle the -SNAPSHOT and -RC format.
+     *
+     * I.e. during development the version ends with -SNAPSHOT. As the code stabilizes and release nears
+     * one or many Release Candidates are tagged. These all end with "-RC1", "-RC2" etc.
+     * And the final release is without any suffix.
+     * @return
+     */
     buildVersionCode = {
         //The rules is as follows:
         //-SNAPSHOT counts as 0

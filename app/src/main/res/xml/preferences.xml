@@ -26,4 +26,10 @@
         android:entries="@array/settings_languages_entries"
         android:entryValues="@array/settings_languages_entry_values"
         android:defaultValue="device"/>
+
+    <EditTextPreference
+        android:key="pref_version"
+        android:singleLine="true"
+        android:enabled="false"
+        android:title="Version" />
 </PreferenceScreen>

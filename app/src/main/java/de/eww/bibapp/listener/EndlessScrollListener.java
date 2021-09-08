@@ -3,9 +3,6 @@ package de.eww.bibapp.listener;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * Created by christoph on 25.08.15.
- */
 public abstract class EndlessScrollListener extends RecyclerView.OnScrollListener {
     /**
      * The minimum amount of items to have below current scroll position
@@ -25,6 +22,11 @@ public abstract class EndlessScrollListener extends RecyclerView.OnScrollListene
 
     public EndlessScrollListener() {
 
+    }
+
+    public void reset() {
+        mPreviousTotalItemCount = 0;
+        mLoading = true;
     }
 
     @Override

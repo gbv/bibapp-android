@@ -1,7 +1,10 @@
 package de.eww.bibapp.network.converter;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
 
+import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.network.model.SruResult;
 import de.eww.bibapp.network.parser.SearchXmlParser;
 import okhttp3.ResponseBody;
@@ -15,7 +18,9 @@ public class SruResponseBodyConverter implements Converter<ResponseBody, SruResu
         SruResult result = new SruResult();
 
         try {
-            result.setResult(parser.parse(value.byteStream()));
+            HashMap<String, Object> parserResult = parser.parse(value.byteStream());
+            result.setNumberOfRecords((Integer) parserResult.get("numberOfRecords"));
+            result.setItems((List<ModsItem>) parserResult.get("list"));
         } catch (Exception e) {
             e.printStackTrace();
 

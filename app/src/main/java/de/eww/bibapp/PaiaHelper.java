@@ -20,26 +20,19 @@ import java.util.Date;
 import java.util.List;
 
 import de.eww.bibapp.activity.BaseActivity;
-import de.eww.bibapp.fragment.dialog.LoginDialogFragment;
-import de.eww.bibapp.tasks.paia.PaiaLoginTask;
+import de.eww.bibapp.ui.account.LoginDialogFragment;
 import de.eww.bibapp.util.PrefUtils;
 
 public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 {
     private static PaiaHelper instance = new PaiaHelper();
 
-    public enum SCOPES {
-        READ_PATRON,
-        READ_FEES,
-        READ_ITEMS,
-        WRITE_ITEMS
-    }
+
 
     private String patron = null;
 	private String accessToken = null;
 	private String username = null;
 	private Date accessTokenDate = null;
-    private List<SCOPES> scopes;
 
     private FragmentActivity activity;
     private List<PaiaListener> listener;
@@ -52,7 +45,6 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	private PaiaHelper()
 	{
         this.listener = new ArrayList<PaiaListener>();
-        this.reset();
 	}
 
     public static PaiaHelper getInstance() {
@@ -77,20 +69,6 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	public String getUsername()
 	{
 		return this.username;
-	}
-
-    public boolean hasScope(SCOPES scope) {
-        return this.scopes.contains(scope);
-    }
-
-	public void reset()
-	{
-        this.patron = null;
-		this.accessToken = null;
-        this.username = null;
-        this.accessTokenDate = null;
-        this.scopes = new ArrayList<SCOPES>();
-        this.listener.clear();
 	}
 
 	public synchronized void ensureConnection(PaiaListener listener, FragmentActivity activity, AsyncCanceledInterface asyncCanceledImplementer)
@@ -129,14 +107,14 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
                     this.username = usernameForCheck;
 
                     // login
-                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(this.username, PrefUtils.getStoredPassword(activity));
+//                    AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(this.username, PrefUtils.getStoredPassword(activity));
 
                     try
                     {
-                        JSONObject loginResponse = loginTask.get();
-                        this.accessToken = loginResponse.getString("access_token");
-                        this.setScopes(loginResponse.getString("scopes"));
-                        this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
+//                        JSONObject loginResponse = loginTask.get();
+//                        this.accessToken = loginResponse.getString("access_token");
+//                        this.setScopes(loginResponse.getString("scopes"));
+//                        this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
 
                     }
                     catch (Exception e)
@@ -152,15 +130,7 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
         }
 	}
 
-    public void unsetStoredCredentials(Activity activity) {
-        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(activity);
-        SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putString("store_login_username", null);
-        editor.putString("store_login_password", null);
-
-        editor.commit();
-    }
 
     private void connected() {
         // Important: Copy the list of registered listener and clear the original one
@@ -179,97 +149,66 @@ public class PaiaHelper implements LoginDialogFragment.LoginDialogListener
 	@Override
 	public void onLoginDialogPositiveClick(DialogFragment dialog, boolean storeData)
 	{
-		View dialogView = ((LoginDialogFragment) dialog).getDialogView();
-
-		EditText usernameText = (EditText) dialogView.findViewById(R.id.logindialog_username);
-		EditText passwordText = (EditText) dialogView.findViewById(R.id.logindialog_password);
-
-		String username = usernameText.getText().toString();
-		String password = passwordText.getText().toString();
-
-		// verify input
-		if ( !username.trim().isEmpty() && !password.trim().isEmpty() )
-		{
-            this.username = username;
-
-			// perform login
-			AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(username, password);
-
-			try
-			{
-                JSONObject loginResponse = loginTask.get();
-
-                if (!loginResponse.has("access_token") || loginResponse.getString("access_token").isEmpty()) {
-                    // login was wrong - update dialog
-                    ((LoginDialogFragment) dialog).setWrongLogin();
-                } else {
-                    accessToken = loginResponse.getString("access_token");
-                    this.setScopes(loginResponse.getString("scopes"));
-
-					// force soft keyboard to hide
-					InputMethodManager imm = (InputMethodManager) this.activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-					imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
-
-					// store login credentials - if set in preferences
-					// or the checkbox was set in the login dialog
-                    boolean storeLoginCredentials = PrefUtils.isLoginStored(this.activity) || storeData;
-
-				    if ( storeLoginCredentials ) {
-                        PrefUtils.setStoredUsername(this.activity, username);
-                        PrefUtils.setStoredPassword(this.activity, password);
-                        PrefUtils.setLoginStored(this.activity, storeData);
-				    }
-
-                    this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
-
-                    if (loginResponse.has("patron")) {
-                        this.patron = loginResponse.getString("patron");
-                    }
-
-                    this.connected();
-
-					// close dialog
-					dialog.dismiss();
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//		View dialogView = ((LoginDialogFragment) dialog).getDialogView();
+//
+//		EditText usernameText = (EditText) dialogView.findViewById(R.id.logindialog_username);
+//		EditText passwordText = (EditText) dialogView.findViewById(R.id.logindialog_password);
+//
+//		String username = usernameText.getText().toString();
+//		String password = passwordText.getText().toString();
+//
+//		// verify input
+//		if ( !username.trim().isEmpty() && !password.trim().isEmpty() )
+//		{
+//            this.username = username;
+//
+//			// perform login
+//			AsyncTask<String, Void, JSONObject> loginTask = new PaiaLoginTask(this.activity, (AsyncCanceledInterface) this.activity).execute(username, password);
+//
+//			try
+//			{
+//                JSONObject loginResponse = loginTask.get();
+//
+//                if (!loginResponse.has("access_token") || loginResponse.getString("access_token").isEmpty()) {
+//                    // login was wrong - update dialog
+//                    ((LoginDialogFragment) dialog).setWrongLogin();
+//                } else {
+//                    accessToken = loginResponse.getString("access_token");
+//                    this.setScopes(loginResponse.getString("scopes"));
+//
+//					// force soft keyboard to hide
+//					InputMethodManager imm = (InputMethodManager) this.activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+//					imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
+//
+//					// store login credentials - if set in preferences
+//					// or the checkbox was set in the login dialog
+//                    boolean storeLoginCredentials = PrefUtils.isLoginStored(this.activity) || storeData;
+//
+//				    if ( storeLoginCredentials ) {
+//                        PrefUtils.setStoredUsername(this.activity, username);
+//                        PrefUtils.setStoredPassword(this.activity, password);
+//                        PrefUtils.setLoginStored(this.activity, storeData);
+//				    }
+//
+//                    this.updateAccessTokenDate(loginResponse.getInt("expires_in"));
+//
+//                    if (loginResponse.has("patron")) {
+//                        this.patron = loginResponse.getString("patron");
+//                    }
+//
+//                    this.connected();
+//
+//					// close dialog
+//					dialog.dismiss();
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 	}
 
 	@Override
 	public void onLoginDialogNegativeClick(DialogFragment dialog)
 	{
-		View dialogView = ((LoginDialogFragment) dialog).getDialogView();
-
-		EditText usernameText = (EditText) dialogView.findViewById(R.id.logindialog_username);
-
-		// force soft keyboard to hide
-		InputMethodManager imm = (InputMethodManager) this.activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-		imm.hideSoftInputFromWindow(usernameText.getWindowToken(), 0);
-
-		dialog.getDialog().cancel();
-        this.reset();
-
-        ((BaseActivity) this.activity).selectItem(0);
 	}
-
-    private void setScopes(String scopesString) {
-        this.scopes.clear();
-        String[] scopes = scopesString.split(" ");
-
-        if (scopes.length > 0) {
-            for (String scope: scopes) {
-                if (scope.equals("read_patron")) {
-                    this.scopes.add(SCOPES.READ_PATRON);
-                } else if (scope.equals("read_fees")) {
-                    this.scopes.add(SCOPES.READ_FEES);
-                } else if (scope.equals("read_items")) {
-                    this.scopes.add(SCOPES.READ_ITEMS);
-                } else if (scope.equals("write_items")) {
-                    this.scopes.add(SCOPES.WRITE_ITEMS);
-                }
-            }
-        }
-    }
 }

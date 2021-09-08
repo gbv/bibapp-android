@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:paddingTop="@dimen/list_vertical_text_padding"
     android:paddingBottom="@dimen/list_vertical_text_padding"
-    android:background="@drawable/statelist_item_background">
+    android:background="@drawable/item_selectable_background_simple">
    
     <ImageView
         android:id="@+id/image"

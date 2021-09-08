@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import de.eww.bibapp.R;
+import de.eww.bibapp.network.model.RssFeed;
 import de.eww.bibapp.network.model.RssItem;
 
 /**
@@ -37,8 +38,12 @@ public class RssAdapter extends RecyclerView.Adapter<RssAdapter.ViewHolder> {
     }
 
     // Suitable constructor for list type
-    public RssAdapter(List<RssItem> itemList) {
-        mItemList = itemList;
+    public RssAdapter() {
+    }
+
+    public void setRssFeed(final RssFeed rssFeed) {
+        mItemList = rssFeed.getItems();
+        notifyDataSetChanged();
     }
 
     // Create new views (invoked by the layout manager)

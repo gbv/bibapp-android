@@ -2,6 +2,8 @@ package de.eww.bibapp.util;
 
 import android.content.Context;
 
+import java.net.URL;
+
 import de.eww.bibapp.R;
 
 public class UrlHelper {
@@ -21,5 +23,13 @@ public class UrlHelper {
         int localCatalogIndex = PrefUtils.getLocalCatalogIndex(context);
 
         return paiaUrls[localCatalogIndex];
+    }
+
+    public static String getSecureUrl(String url) {
+        return url.replace("http://","https://");
+    }
+
+    public static String getInsecureUrl(String url) {
+        return url.replace("https://","http://");
     }
 }

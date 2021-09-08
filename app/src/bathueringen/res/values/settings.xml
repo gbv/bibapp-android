@@ -2,6 +2,28 @@
 <resources
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
+
+    <!--
+        This is the main configuration file, please adjust these settings according to your library.
+
+        Detailed information for each entry are given below.
+    -->
+
+    <string-array name="bibapp_sru_isils">
+        <item>opac-de-ga20</item>
+        <item>opac-de-ei6</item>
+    </string-array>
+
+    <string-array name="bibapp_local_catalogs">
+        <item>OPAC Gera</item>
+        <item>OPAC Eisenach</item>
+    </string-array>
+
+    <string-array name="bibapp_local_catalog_suffixes">
+        <item>Gera</item>
+        <item>Eisenach</item>
+    </string-array>
+
     <!--
         Block orders if the listed keys contains a "b" character at the second position in a
         UNAPI picaxml request.
@@ -22,16 +44,36 @@
     </array>
 
     <!--
+        The Daia URL for availability information
+        %1 - PPN
+        %2 - Format
+    -->
+    <string-array name="daia_local_urls">
+        <item>https://paia.gbv.de/DE-Ga20/daia\?id=ppn:%1$s&amp;format=%2$s</item>
+        <item>https://paia.gbv.de/DE-Ei6/daia\?id=ppn:%1$s&amp;format=%2$s</item>
+    </string-array>
+    <string name="daia_gvk_url">https://daia.gbv.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
+
+    <!--
         The UnAPI URL for extended information
         %1 - PPN
         %2 - Format
     -->
-    <string-array name="bibapp_unapi_local_urls">
-        <item>http://unapi.k10plus.de/\?id=opac-de-ga20:ppn:%1$s&amp;format=%2$s</item>
-        <item>http://unapi.k10plus.de/\?id=opac-de-ei6:ppn:%1$s&amp;format=%2$s</item>
+    <string name="bibapp_unapi_gvk_url">https://unapi.k10plus.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
+
+    <!--
+        The address to location information
+        %1 - Format
+    -->
+    <string-array name="bibapp_location_urls">
+        <item>https://uri.gbv.de/organization/isil/DE-Ga20\?format=%1$s</item>
+        <item>https://uri.gbv.de/organization/isil/DE-Ei6\?format=%1$s</item>
     </string-array>
-    <string name="bibapp_unapi_local_url">http://unapi.k10plus.de/\?id=%3$s:ppn:%1$s&amp;format=%2$s</string>
-    <string name="bibapp_unapi_gvk_url">http://unapi.k10plus.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
+
+    <string-array name="bibapp_paia_urls">
+        <item>https://paia.gbv.de/DE-Ga20/</item>
+        <item>https://paia.gbv.de/DE-Ei6/</item>
+    </string-array>
 
     <!--
         URL for getting cover images
@@ -52,4 +94,25 @@
         URL for Data Privacy information
     -->
     <string name="bibapp_dataprivacy_url"></string>
+
+    <!--
+        If true, either the storage or the department location of an exemplar are displayed, otherwise both if available
+    -->
+    <bool name="use_exemplar_short_display">false</bool>
+
+    <!--
+        DBS Counting (called on every search request)
+    -->
+    <string name="bibapp_tracking_url"></string>
+
+    <!--
+        RSS url news feed
+    -->
+    <string name="bibapp_rss_url"></string>
+
+    <!--
+        The Interlending URL
+        %1 - PPN
+    -->
+    <string name="bibapp_interlanding_url">https://gso.gbv.de/DB=2.1/PPNSET\?PPN=%1$s</string>
 </resources>

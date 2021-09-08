@@ -4,8 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.eww.bibapp.model.LocationItem;
-
 public class DaiaItem implements Comparable<DaiaItem>
 {
 	public String label = "";
@@ -105,34 +103,42 @@ public class DaiaItem implements Comparable<DaiaItem>
         this.distance = distance;
     }
 
-	@Override
-	public int compareTo(DaiaItem another)
-	{
-		if ( this.distance == null && another.distance != null )
-		{
-			return 1;
-		}
-		
-		if ( this.distance != null && another.distance == null )
-		{
-			return -1;
-		}
+    @Override
+    public int compareTo(DaiaItem another) {
+        if (this.distance == null && another.distance != null) {
+            return 1;
+        }
 
-		if ( this.distance == null && another.distance == null )
-		{
-			return 0;
-		}
-		
-		if ( this.distance < another.distance )
-		{
-			return -1;
-		}
-		
-		if ( this.distance > another.distance )
-		{
-			return 1;
-		}
-		
-		return 0;
-	}
+        if (this.distance != null && another.distance == null) {
+            return -1;
+        }
+
+        if (this.distance == null && another.distance == null) {
+            return 0;
+        }
+
+        if (this.distance < another.distance) {
+            return -1;
+        }
+
+        if (this.distance > another.distance) {
+            return 1;
+        }
+
+        return 0;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+
+        final DaiaItem compare = (DaiaItem) obj;
+        return this.itemUriUrl.equals(compare.itemUriUrl);
+    }
 }

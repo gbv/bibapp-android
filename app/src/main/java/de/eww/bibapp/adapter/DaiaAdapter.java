@@ -7,27 +7,27 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
 import de.eww.bibapp.R;
-import de.eww.bibapp.model.ModsItem;
+import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
 import de.eww.bibapp.util.DaiaHelper;
 
-/**
- * Created by christoph on 10.11.14.
- */
-public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
+public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
 
-    private List<DaiaItem> mItemList;
     private ModsItem modsItem;
     private Context context;
-
-    private boolean mIsLocalSearch = true;
+    private final View.OnClickListener mOnClickListener;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -51,45 +51,50 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
         }
     }
 
+    public static final DiffUtil.ItemCallback<DaiaItem> DIFF_CALLBACK = new DiffUtil.ItemCallback<>() {
+
+        @Override
+        public boolean areItemsTheSame(@NonNull DaiaItem oldItem, @NonNull DaiaItem newItem) {
+            return oldItem.itemUriUrl.equals(newItem.itemUriUrl);
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull DaiaItem oldItem, @NonNull DaiaItem newItem) {
+            return oldItem.equals(newItem);
+        }
+    };
+
     // Suitable constructor for list type
-    public DaiaAdapter(List<DaiaItem> itemList, ModsItem modsItem, Context context) {
-        mItemList = itemList;
+    public DaiaAdapter(ModsItem modsItem, Context context, View.OnClickListener onClickListener) {
+        super(DIFF_CALLBACK);
+
         this.modsItem = modsItem;
         this.context = context;
+        mOnClickListener = onClickListener;
     }
 
-    public void setIsLocalSearch(boolean isLocalSearch) {
-        mIsLocalSearch = isLocalSearch;
-    }
-
-    public DaiaItem getItem(int position) {
-        return mItemList.get(position);
-    }
-
-    public void clear() {
-        mItemList.clear();
+    @Override
+    public void submitList(@Nullable List<DaiaItem> list) {
+        super.submitList(list != null ? new ArrayList<>(list) : null);
     }
 
     public void sortByDistance() {
-        Collections.sort(mItemList);
-        notifyDataSetChanged();
+        Collections.sort(getCurrentList());
+        submitList(getCurrentList());
     }
 
     // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_daia_view, parent, false);
-
-        // Set the view's size, margins, paddings and layout parameters
-        ViewHolder viewHolder = new ViewHolder(view);
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        DaiaItem item = mItemList.get(position);
+        DaiaItem item = getItem(position);
+        holder.itemView.setTag(item);
 
         // department
         String departmentText = "";
@@ -121,9 +126,9 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
         holder.mLabel.setText(item.label);
 
         // status
-        if (mIsLocalSearch) {
+        if (modsItem.isLocalSearch) {
             try {
-                HashMap<String, String> daiaInformation = DaiaHelper.getInformation(item, this.modsItem, this.context);
+                HashMap<String, String> daiaInformation = DaiaHelper.getInformation(item, modsItem, context);
 
                 if (daiaInformation.get("actions").contains("no_barcode_reset")) {
                     holder.mStatus.setText(R.string.daia_no_barcode);
@@ -152,11 +157,7 @@ public class DaiaAdapter extends RecyclerView.Adapter<DaiaAdapter.ViewHolder> {
         } else {
             holder.mDistance.setVisibility(View.GONE);
         }
-    }
 
-    // Return the size of your dataset (invoked by the layout manager)
-    @Override
-    public int getItemCount() {
-        return (mItemList != null ? mItemList.size() : 0);
+        holder.itemView.setOnClickListener(mOnClickListener);
     }
 }

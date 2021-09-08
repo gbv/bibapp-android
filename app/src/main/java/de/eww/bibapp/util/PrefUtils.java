@@ -1,5 +1,6 @@
 package de.eww.bibapp.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,6 +16,8 @@ public class PrefUtils {
 
     public static final String PREF_LOCAL_CATALOG = "pref_localCatalog";
     public static final String PREF_STORE_LOGIN = "pref_storeLogin";
+    public static final String PREF_STORE_LOGIN_USERNAME = "pref_storeLoginUsername";
+    public static final String PREF_STORE_LOGIN_PASSWORD = "pref_storeLoginPassword";
     public static final String PREF_DATA_PRIVACY = "pref_dataPrivacy";
     public static final String PREF_USER_LANGUAGE = "pref_userLanguage";
 
@@ -52,22 +55,32 @@ public class PrefUtils {
 
     public static String getStoredUsername(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString("store_login_username", null);
+        return sp.getString(PREF_STORE_LOGIN_USERNAME, null);
     }
 
     public static void setStoredUsername(final Context context, final String username) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString("store_login_username", username).commit();
+        sp.edit().putString(PREF_STORE_LOGIN_USERNAME, username).commit();
     }
 
     public static String getStoredPassword(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        return sp.getString("store_login_password", null);
+        return sp.getString(PREF_STORE_LOGIN_PASSWORD, null);
     }
 
     public static void setStoredPassword(final Context context, final String password) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putString("store_login_password", password).commit();
+        sp.edit().putString(PREF_STORE_LOGIN_PASSWORD, password).commit();
+    }
+
+    public static void unsetStoredCredentials(final Context context) {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString(PREF_STORE_LOGIN_USERNAME, null);
+        editor.putString(PREF_STORE_LOGIN_PASSWORD, null);
+
+        editor.commit();
     }
 
     public static String getUserLanguage(final Context context) {
