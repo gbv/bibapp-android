@@ -10,15 +10,21 @@
     -->
 
     <string-array name="bibapp_sru_isils">
-        <item>opac-de-564</item>
+        <item>opac-de-1876</item>
+        <item>opac-de-547</item>
+        <item>opac-de-39</item>
     </string-array>
 
     <string-array name="bibapp_local_catalogs">
-        <item>OPAC NDH</item>
+        <item>UFB Erfurt/Gotha</item>
+        <item>UB Erfurt</item>
+        <item>FB Gotha</item>
     </string-array>
 
     <string-array name="bibapp_local_catalog_suffixes">
-        <item>NDH</item>
+        <item>UFB Erfurt/Gotha</item>
+        <item>UB Erfurt</item>
+        <item>FB Gotha</item>
     </string-array>
 
     <!--
@@ -48,7 +54,9 @@
         %2 - Format
     -->
     <string-array name="daia_local_urls">
-        <item>https://paia.gbv.de/DE-564/daia\?id=ppn:%1$s&amp;format=%2$s</item>
+        <item>https://paia.gbv.de/DE-1876/daia\?id=ppn:%1$s&amp;format=%2$s</item>
+        <item>https://paia.gbv.de/DE-547/daia\?id=ppn:%1$s&amp;format=%2$s</item>
+        <item>https://paia.gbv.de/DE-39/daia\?id=ppn:%1$s&amp;format=%2$s</item>
     </string-array>
     <string name="daia_gvk_url">https://daia.gbv.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
 
@@ -64,11 +72,15 @@
         %1 - Format
     -->
     <string-array name="bibapp_location_urls">
-        <item>https://uri.gbv.de/organization/isil/DE-564\?format=%1$s</item>
+        <item>https://uri.gbv.de/organization/isil/DE-1876\?format=%1$s</item>
+        <item>https://uri.gbv.de/organization/isil/DE-547\?format=%1$s</item>
+        <item>https://uri.gbv.de/organization/isil/DE-39\?format=%1$s</item>
     </string-array>
 
     <string-array name="bibapp_paia_urls">
-        <item>https://paia.gbv.de/DE-564/</item>
+        <item>https://paia.gbv.de/DE-1876/</item>
+        <item>https://paia.gbv.de/DE-547/</item>
+        <item>https://paia.gbv.de/DE-39/</item>
     </string-array>
 
     <!--

@@ -10,7 +10,7 @@
     -->
 
     <string-array name="bibapp_sru_isils">
-        <item>opac-de-Hil2</item>
+        <item>opac-de-hil2</item>
     </string-array>
 
     <string-array name="bibapp_local_catalogs">
@@ -68,7 +68,7 @@
     </string-array>
 
     <string-array name="bibapp_paia_urls">
-        <item>https://paia.gbv.de/DE-Hil2</item>
+        <item>https://paia.gbv.de/DE-Hil2/</item>
     </string-array>
 
     <!--

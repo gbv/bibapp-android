@@ -10,15 +10,15 @@
     -->
 
     <string-array name="bibapp_sru_isils">
-        <item>opac-de-564</item>
+        <item>opac-de-546</item>
     </string-array>
 
     <string-array name="bibapp_local_catalogs">
-        <item>OPAC NDH</item>
+        <item>FHE</item>
     </string-array>
 
     <string-array name="bibapp_local_catalog_suffixes">
-        <item>NDH</item>
+        <item>OPAC FHE</item>
     </string-array>
 
     <!--
@@ -48,7 +48,7 @@
         %2 - Format
     -->
     <string-array name="daia_local_urls">
-        <item>https://paia.gbv.de/DE-564/daia\?id=ppn:%1$s&amp;format=%2$s</item>
+        <item>https://paia.gbv.de/DE-546/daia\?id=ppn:%1$s&amp;format=%2$s</item>
     </string-array>
     <string name="daia_gvk_url">https://daia.gbv.de/\?id=gvk:ppn:%1$s&amp;format=%2$s</string>
 
@@ -64,11 +64,11 @@
         %1 - Format
     -->
     <string-array name="bibapp_location_urls">
-        <item>https://uri.gbv.de/organization/isil/DE-564\?format=%1$s</item>
+        <item>https://uri.gbv.de/organization/isil/DE-546\?format=%1$s</item>
     </string-array>
 
     <string-array name="bibapp_paia_urls">
-        <item>https://paia.gbv.de/DE-564/</item>
+        <item>https://paia.gbv.de/DE-546/</item>
     </string-array>
 
     <!--
@@ -81,7 +81,8 @@
         List of URLs to be shown as homepage links in the main navigation, one for each local
         catalog
     -->
-    <string-array name="bibapp_homepage_urls"></string-array>
+    <string-array name="bibapp_homepage_urls">
+    </string-array>
 
     <!--
         URL for Data Privacy information
@@ -101,7 +102,7 @@
     <!--
         RSS url news feed
     -->
-    <string name="bibapp_rss_url"></string>
+    <string name="bibapp_rss_url">https://www.fh-erfurt.de/fhe/?id=663&amp;type=100&amp;tx_ttnews[cat]=2</string>
 
     <!--
         The Interlending URL

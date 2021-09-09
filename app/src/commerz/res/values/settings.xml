@@ -68,7 +68,7 @@
     </string-array>
 
     <string-array name="bibapp_paia_urls">
-        <item>https://paia.gbv.de/DE-205</item>
+        <item>https://paia.gbv.de/DE-205/</item>
     </string-array>
 
     <!--
