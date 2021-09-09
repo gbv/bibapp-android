@@ -16,26 +16,16 @@ or alternatively using `brew install fastlane`
 
 # Available Actions
 ## Android
-### android test
-```
-fastlane android test
-```
-Runs all the tests
 ### android build
 ```
 fastlane android build
 ```
-Deploy BibApp IL on Goolge Play Beta
-### android deploy_beta
-```
-fastlane android deploy_beta
-```
-
+Build all BibApp flavors
 ### android beta
 ```
 fastlane android beta
 ```
-
+Deploy all BibApp flavors to beta stage
 
 ----
 

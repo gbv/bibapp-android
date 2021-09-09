@@ -4,6 +4,18 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+def secretsPropertiesFile = rootProject.file("secrets.properties")
+def secretProperties = new Properties()
+
+if (secretsPropertiesFile.exists()) {
+    secretProperties.load(new FileInputStream(secretsPropertiesFile))
+} else {
+    secretProperties.setProperty("store_file", "${System.getenv('store_file')}")
+    secretProperties.setProperty("signing_keystore_password", "${System.getenv('signing_keystore_password')}")
+    secretProperties.setProperty("signing_key_password", "${System.getenv('signing_key_password')}")
+    secretProperties.setProperty("signing_key_alias", "${System.getenv('signing_key_alias')}")
+}
+
 android {
     compileSdk 30
 
@@ -108,6 +120,23 @@ android {
             applicationIdSuffix '.commerz'
         }
     }
+
+    signingConfigs {
+        release {
+            storeFile file(secretProperties['store_file'])
+            storePassword secretProperties['signing_keystore_password']
+            keyPassword secretProperties['signing_key_password']
+            keyAlias secretProperties['signing_key_alias']
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
 }
 
 dependencies {
@@ -161,8 +190,4 @@ dependencies {
 
     // LeakCanary
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
-}
-
-if (new File('signing.gradle').exists()) {
-    apply from: '../signing.gradle'
 }

@@ -65,7 +65,7 @@ proguard/
 # Project related    #
 ######################
 
-signing.gradle
+secrets.properties
 
 # travis
 !.travis.yml

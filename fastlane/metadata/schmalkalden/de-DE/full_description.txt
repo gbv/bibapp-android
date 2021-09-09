@@ -1,0 +1,1 @@
+Die App ermöglicht die Suche in dem lokalen Katalog sowie dem Verbundkatalog, die Verwaltung des jeweiligen Benutzerkontos, das Anlegen und Verwalten von Merklisten sowie das Abrufen von allgemeinen Informationen und Neuigkeiten aus der Bibliothek.

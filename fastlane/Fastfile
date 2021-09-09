@@ -16,49 +16,52 @@
 default_platform(:android)
 
 platform :android do
-  desc "Runs all the tests"
-  lane :test do
-    gradle(task: "test")
-  end
 
-  desc "Deploy BibApp IL on Goolge Play Beta"
+#  desc "Runs all the tests"
+#  lane :test do
+#    gradle(task: "test")
+#  end
+
+  desc "Build all BibApp flavors"
   lane :build do
     gradle(task: 'clean')
 
-    gradle(task: 'assemble', flavor: 'il', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'aezb', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'bathueringen', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'bls', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'commerz', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'eahjena', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'fhe', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'hawk', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'hfmweimar', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'hi', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'iai', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'lg', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'ndh', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'schmalkalden', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'thulb', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'tubs', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'ubweimar', build_type: 'Release')
-    gradle(task: 'assemble', flavor: 'ufb', build_type: 'Release')
-
-
-
-
-#    supply(
-#        track: beta
-#        skip_upload_images: true,
-#        skip_upload_apk: true
-#    )
+    gradle(task: 'bundle', flavor: 'il', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'aezb', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'bathueringen', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'bls', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'commerz', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'eahjena', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'hawk', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'hfmweimar', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'hi', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'lg', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'ndh', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'schmalkalden', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'thulb', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'tubs', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'ubweimar', build_type: 'Release')
+    gradle(task: 'bundle', flavor: 'ufb', build_type: 'Release')
   end
 
-  lane :deploy_beta do
-  end
-
+  desc "Deploy all BibApp flavors to beta stage"
   lane :beta do
-    build
+#    supply(package_name: 'de.eww.bibapp.il', metadata_path: 'fastlane/metadata/il', track: 'beta', aab: 'app/build/outputs/bundle/ilRelease/app-il-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#####    supply( package_name: 'de.eww.bibapp.aezb', metadata_path: 'fastlane/metadata/aezb', track: 'beta', aab: 'app/build/outputs/bundle/aezbRelease/app-aezb-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.bathueringen', metadata_path: 'fastlane/metadata/bathueringen', track: 'beta', aab: 'app/build/outputs/bundle/bathueringenRelease/app-bathueringen-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.bls', metadata_path: 'fastlane/metadata/bls', track: 'beta', aab: 'app/build/outputs/bundle/blsRelease/app-bls-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.commerz', metadata_path: 'fastlane/metadata/commerz', track: 'beta', aab: 'app/build/outputs/bundle/commerzRelease/app-commerz-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.eahjena', metadata_path: 'fastlane/metadata/eahjena', track: 'beta', aab: 'app/build/outputs/bundle/eahjenaRelease/app-eahjena-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#####    supply( package_name: 'de.eww.bibapp.hawk', metadata_path: 'fastlane/metadata/hawk', track: 'beta', aab: 'app/build/outputs/bundle/hawkRelease/app-hawk-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.hfmweimar', metadata_path: 'fastlane/metadata/hfmweimar', track: 'beta', aab: 'app/build/outputs/bundle/hfmweimarRelease/app-hfmweimar-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#####    supply( package_name: 'de.eww.bibapp.hi', metadata_path: 'fastlane/metadata/hi', track: 'beta', aab: 'app/build/outputs/bundle/hiRelease/app-hi-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#####    supply( package_name: 'de.eww.bibapp.lg', metadata_path: 'fastlane/metadata/lg', track: 'beta', aab: 'app/build/outputs/bundle/lgRelease/app-lg-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.ndh', metadata_path: 'fastlane/metadata/ndh', track: 'beta', aab: 'app/build/outputs/bundle/ndhRelease/app-ndh-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.schmalkalden', metadata_path: 'fastlane/metadata/schmalkalden', track: 'beta', aab: 'app/build/outputs/bundle/schmalkaldenRelease/app-schmalkalden-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.thulb', metadata_path: 'fastlane/metadata/thulb', track: 'beta', aab: 'app/build/outputs/bundle/thulbRelease/app-thulb-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.tubs', metadata_path: 'fastlane/metadata/tubs', track: 'beta', aab: 'app/build/outputs/bundle/tubsRelease/app-tubs-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#    supply( package_name: 'de.eww.bibapp.ubweimar', metadata_path: 'fastlane/metadata/ubweimar', track: 'beta', aab: 'app/build/outputs/bundle/ubweimarRelease/app-ubweimar-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
+#####    supply( package_name: 'de.eww.bibapp.ufb', metadata_path: 'fastlane/metadata/ufb', track: 'beta', aab: 'app/build/outputs/bundle/ufbRelease/app-ufb-release.aab', skip_upload_changelogs: true, skip_upload_images: true, skip_upload_screenshots: true)
   end
 
 end
