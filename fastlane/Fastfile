@@ -1,0 +1,64 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:android)
+
+platform :android do
+  desc "Runs all the tests"
+  lane :test do
+    gradle(task: "test")
+  end
+
+  desc "Deploy BibApp IL on Goolge Play Beta"
+  lane :build do
+    gradle(task: 'clean')
+
+    gradle(task: 'assemble', flavor: 'il', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'aezb', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'bathueringen', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'bls', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'commerz', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'eahjena', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'fhe', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'hawk', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'hfmweimar', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'hi', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'iai', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'lg', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'ndh', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'schmalkalden', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'thulb', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'tubs', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'ubweimar', build_type: 'Release')
+    gradle(task: 'assemble', flavor: 'ufb', build_type: 'Release')
+
+
+
+
+#    supply(
+#        track: beta
+#        skip_upload_images: true,
+#        skip_upload_apk: true
+#    )
+  end
+
+  lane :deploy_beta do
+  end
+
+  lane :beta do
+    build
+  end
+
+end
