@@ -91,10 +91,6 @@ android {
             dimension "version"
             applicationIdSuffix ".ndh"
         }
-        fhe {
-            dimension "version"
-            applicationIdSuffix ".fhe"
-        }
         ufb {
             dimension "version"
             applicationIdSuffix ".ufb"
@@ -110,10 +106,6 @@ android {
         commerz {
             dimension "version"
             applicationIdSuffix '.commerz'
-        }
-        iai {
-            dimension "version"
-            applicationIdSuffix '.iai'
         }
     }
 }
