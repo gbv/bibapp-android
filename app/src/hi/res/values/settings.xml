@@ -101,7 +101,7 @@
     <!--
         RSS url news feed
     -->
-    <string name="bibapp_rss_url">https://www.uni-hildesheim.de/index.php\?id=8920&amp;type=100</string>
+    <string name="bibapp_rss_url">https://bibliothek.blog.uni-hildesheim.de/feed/</string>
 
     <!--
         The Interlending URL
