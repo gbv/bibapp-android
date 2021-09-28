@@ -378,10 +378,6 @@ public class ModsFragment extends Fragment implements
             actionList.add("online");
         }
 
-        // DEBUG
-        actionList.add("request");
-        // ~DEBUG
-
         // Open a dialog with all available actions
         DetailActionsDialogFragment dialogFragment = new DetailActionsDialogFragment();
         dialogFragment.setActionList(actionList);
