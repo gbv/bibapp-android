@@ -119,7 +119,10 @@ public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
         }
 
         if (!departmentText.isEmpty()) {
-            holder.mDepartment.setText(departmentText);
+            if (modsItem.onlineUrl.isEmpty()) {
+                holder.mDepartment.setText(departmentText);
+                holder.mDepartment.setVisibility(View.VISIBLE);
+            }
         }
 
         // label
