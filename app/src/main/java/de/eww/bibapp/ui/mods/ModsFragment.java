@@ -280,7 +280,7 @@ public class ModsFragment extends Fragment implements
     @Override
     public void onActionLocation(DialogFragment dialog) {
         try {
-            String requestUrl = DaiaHelper.getUriUrl(lastSelectedDaiaItem);
+            String requestUrl = lastSelectedDaiaItem.getStorage().getId();
 
             ModsFragmentDirections.ActionNavModsToNavLocation action = ModsFragmentDirections.actionNavModsToNavLocation();
             action.setLocationUrl(requestUrl);
