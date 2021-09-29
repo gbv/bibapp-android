@@ -211,7 +211,7 @@ public class AccountFragment extends Fragment {
     }
 
     private void onLogoutFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.container, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onLogoutSuccess(PaiaLogout logout) {
@@ -250,7 +250,7 @@ public class AccountFragment extends Fragment {
             }
         }
 
-        Snackbar.make(binding.container, successText, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), successText, Snackbar.LENGTH_LONG).show();
 
 //        mPaiaDialog.paiaActionDone(responseText);
 //        accountViewModel.loadItems();

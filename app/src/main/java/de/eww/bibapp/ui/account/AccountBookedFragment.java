@@ -184,7 +184,7 @@ public class AccountBookedFragment extends Fragment {
     };
 
     private void onItemsFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.list.swiperefresh, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onItemsSuccess(PaiaItems paiaItems) {
@@ -196,7 +196,7 @@ public class AccountBookedFragment extends Fragment {
     }
 
     private void onCancelFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.list.swiperefresh, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onCancelSuccess(PaiaItems paiaItems) {
@@ -231,7 +231,7 @@ public class AccountBookedFragment extends Fragment {
             }
         }
 
-        Snackbar.make(binding.list.swiperefresh, successText, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), successText, Snackbar.LENGTH_LONG).show();
 
         actionMode.finish();
         accountViewModel.loadItems();

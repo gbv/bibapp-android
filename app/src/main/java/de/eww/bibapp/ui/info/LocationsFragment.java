@@ -85,7 +85,7 @@ public class LocationsFragment extends Fragment {
             binding.swiperefresh.setRefreshing(false);
 
             if (locations.getError()) {
-                Snackbar.make(binding.swiperefresh, R.string.toast_locations_error, Snackbar.LENGTH_LONG).show();
+                Snackbar.make(requireActivity().findViewById(R.id.coordinator), R.string.toast_locations_error, Snackbar.LENGTH_LONG).show();
             } else {
                 if (locations.getData().isEmpty()) {
                     binding.empty.setVisibility(View.VISIBLE);

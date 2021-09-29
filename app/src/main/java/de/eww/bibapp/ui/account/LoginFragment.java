@@ -23,6 +23,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import de.eww.bibapp.MainActivity;
+import de.eww.bibapp.R;
 import de.eww.bibapp.databinding.FragmentLoginBinding;
 import de.eww.bibapp.network.model.LoggedInUser;
 import de.eww.bibapp.util.PrefUtils;
@@ -151,7 +152,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void onLoginFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.login, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onLoginSuccess(LoggedInUser user) {

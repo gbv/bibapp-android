@@ -262,7 +262,7 @@ public class ModsFragment extends Fragment implements
                 viewModel.addToWatchlist(modsItem);
 
                 // Display Snackbar
-                Snackbar.make(binding.modsLayout, getResources().getString(R.string.toast_watchlist_added), Snackbar.LENGTH_LONG).show();
+                Snackbar.make(requireActivity().findViewById(R.id.coordinator), getResources().getString(R.string.toast_watchlist_added), Snackbar.LENGTH_LONG).show();
 
                 // Disable menu item
                 item.setTitle(R.string.menu_detail_addtowatchlist_duplicate);
@@ -340,7 +340,7 @@ public class ModsFragment extends Fragment implements
     }
 
     private void onRequestFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.modsLayout, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
 
         binding.list.swiperefresh.setRefreshing(false);
         binding.unapiProgressbar.setVisibility(View.GONE);

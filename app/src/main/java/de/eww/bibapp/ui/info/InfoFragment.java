@@ -95,7 +95,7 @@ public class InfoFragment extends Fragment {
                 binding.swiperefresh.setRefreshing(false);
 
                 if (rssFeed.getError()) {
-                    Snackbar.make(binding.swiperefresh, R.string.toast_info_rss_error, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireActivity().findViewById(R.id.coordinator), R.string.toast_info_rss_error, Snackbar.LENGTH_LONG).show();
                 } else {
                     if (rssFeed.getData().getItems().isEmpty()) {
                         binding.empty.setVisibility(View.VISIBLE);

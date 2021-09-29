@@ -214,7 +214,7 @@ public class WatchlistFragment extends Fragment {
                     viewModel.removeFromWatchlist(watchlistAdapter.getSelectedItems());
 
                     // Display Snackbar
-                    Snackbar.make(binding.itemListContainer, R.string.toast_watchlist_removed, Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(requireActivity().findViewById(R.id.coordinator), R.string.toast_watchlist_removed, Snackbar.LENGTH_LONG).show();
 
                     // refresh menu
                     requireActivity().invalidateOptionsMenu();
@@ -235,7 +235,7 @@ public class WatchlistFragment extends Fragment {
     };
 
     private void onWatchlistFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.list.swiperefresh, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onWatchlistSuccess(List<ModsItem> modsItems) {

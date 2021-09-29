@@ -191,7 +191,7 @@ public class SearchListFragment extends Fragment {
     }
 
     private void onSearchFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.list.swiperefresh, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onSearchSuccess(SruResult sruResult) {
@@ -222,7 +222,7 @@ public class SearchListFragment extends Fragment {
             if (searchMode.equals(SearchManager.SEARCH_MODE.LOCAL)) {
                 if (modsAdapter.getItemCount() == 0) {
                     Snackbar
-                            .make(binding.list.itemList, R.string.search_no_results, Snackbar.LENGTH_LONG)
+                            .make(requireActivity().findViewById(R.id.coordinator), R.string.search_no_results, Snackbar.LENGTH_LONG)
                             .setDuration(5000)
                             .setAction(R.string.search_gvk, onClickSnackbarListener)
                             .setActionTextColor(Color.WHITE)

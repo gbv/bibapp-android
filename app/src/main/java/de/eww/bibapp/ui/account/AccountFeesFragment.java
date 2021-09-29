@@ -72,7 +72,7 @@ public class AccountFeesFragment extends Fragment {
     }
 
     private void onFeesFailed(@StringRes Integer errorString) {
-        Snackbar.make(binding.list.swiperefresh, errorString, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(requireActivity().findViewById(R.id.coordinator), errorString, Snackbar.LENGTH_LONG).show();
     }
 
     private void onFeesSuccess(PaiaFees paiaFees) {
