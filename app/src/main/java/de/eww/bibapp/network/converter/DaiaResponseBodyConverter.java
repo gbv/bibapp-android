@@ -2,6 +2,8 @@ package de.eww.bibapp.network.converter;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,6 +20,8 @@ public class DaiaResponseBodyConverter implements Converter<ResponseBody, DaiaIt
     public DaiaItems convert(@NonNull ResponseBody value) throws IOException {
         ArrayList<DaiaItem> daiaResponse = new ArrayList<>();
 
+        Gson gson = new Gson();
+
         try {
             JSONObject daiaJsonResponse = new JSONObject(value.string());
             if (daiaJsonResponse.has("document")) {
@@ -32,7 +36,7 @@ public class DaiaResponseBodyConverter implements Converter<ResponseBody, DaiaIt
                         for (int j=0; j < itemArray.length(); j++) {
                             JSONObject itemObject = itemArray.getJSONObject(j);
 
-                            DaiaItem daiaItem = new DaiaItem(itemObject);
+                            DaiaItem daiaItem = gson.fromJson(itemObject.toString(), DaiaItem.class);
                             daiaResponse.add(daiaItem);
                         }
                     }

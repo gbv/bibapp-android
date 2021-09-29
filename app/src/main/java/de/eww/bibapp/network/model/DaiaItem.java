@@ -1,64 +1,101 @@
 package de.eww.bibapp.network.model;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.google.gson.annotations.SerializedName;
 
-public class DaiaItem implements Comparable<DaiaItem>
-{
-	public String label = "";
-	public String department;
-	public LocationItem locationsEntry = null;
-	public Double distance = null;
-	public String itemUriUrl;
-	public String storage = "";
+import java.util.ArrayList;
+import java.util.List;
 
-	private String actions;
+import de.eww.bibapp.network.model.daia.DaiaAvailable;
+import de.eww.bibapp.network.model.daia.DaiaEntity;
+import de.eww.bibapp.network.model.daia.DaiaUnavailable;
 
-	private JSONArray availableItems = new JSONArray();
-	private JSONArray unavailableItems = new JSONArray();
-	private JSONObject departmentObject = new JSONObject();
+public class DaiaItem implements Comparable<DaiaItem> {
 
-	public DaiaItem(JSONObject jsonObject) throws JSONException {
-        if (jsonObject.has("id")) {
-            itemUriUrl = jsonObject.getString("id");
-        }
+    @SerializedName("id")
+    private String id;
 
-        if (jsonObject.has("label")) {
-            label = jsonObject.getString("label");
-        }
+    @SerializedName("label")
+    private String label;
 
-        if (jsonObject.has("storage")) {
-            JSONObject storageObject = jsonObject.getJSONObject("storage");
+    @SerializedName("department")
+    private DaiaEntity departmentEntity;
 
-            if (storageObject.has("content")) {
-                storage = storageObject.getString("content");
-            }
-        }
+    @SerializedName("storage")
+    private DaiaEntity storage;
 
-        if (jsonObject.has("available")) {
-            this.availableItems = jsonObject.getJSONArray("available");
-        }
+    @SerializedName("available")
+    private final List<DaiaAvailable> availables = new ArrayList<>();
 
-        if (jsonObject.has("unavailable")) {
-            this.unavailableItems = jsonObject.getJSONArray("unavailable");
-        }
+    @SerializedName("unavailable")
+    private final List<DaiaUnavailable> unavailables = new ArrayList<>();
 
-        if (jsonObject.has("department")) {
-            this.departmentObject = jsonObject.getJSONObject("department");
-        }
+    private LocationItem locationsEntry;
+
+    private Double distance;
+
+    private String actions;
+
+    private String departmentInfo;
+
+    public String getId() {
+        return id;
     }
 
-    public JSONArray getAvailableItems() {
-	    return this.availableItems;
+    public String getLabel() {
+        return label;
     }
 
-    public JSONArray getUnavailableItems() {
-	    return this.unavailableItems;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public JSONObject getDepartmentObject() {
-	    return this.departmentObject;
+    public DaiaEntity getDepartmentEntity() {
+        return departmentEntity;
+    }
+
+    public String getDepartment() {
+        return departmentInfo;
+    }
+
+    public boolean hasDepartment() {
+        return (departmentInfo != null && !departmentInfo.isEmpty());
+    }
+
+    public void setDepartment(String departmentInfo) {
+        this.departmentInfo = departmentInfo;
+    }
+
+    public DaiaEntity getStorage() {
+        return storage;
+    }
+
+    public LocationItem getLocation() {
+        return this.locationsEntry;
+    }
+
+    public boolean hasLocation() {
+        return this.locationsEntry != null;
+    }
+
+    public void setLocation(LocationItem entry)
+    {
+        this.locationsEntry = entry;
+    }
+
+    public Double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
+    }
+
+    public List<DaiaAvailable> getAvailables() {
+        return availables;
+    }
+
+    public List<DaiaUnavailable> getUnavailables() {
+        return unavailables;
     }
 
     public String getActions() {
@@ -69,39 +106,13 @@ public class DaiaItem implements Comparable<DaiaItem>
 	    this.actions = actions;
     }
 
-    public boolean hasLabel() {
-        return !this.label.isEmpty();
-    }
-	
-	public void setDepartment(String department)
-	{
-		this.department = department;
-	}
 
-    public String getDepartment() {
-        return this.department;
-    }
 
-    public boolean hasDepartment() {
-        return (this.department != null && !this.department.isEmpty());
-    }
-	
-	public void setLocation(LocationItem entry)
-	{
-		this.locationsEntry = entry;
-	}
 
-    public boolean hasLocation() {
-        return this.locationsEntry != null;
-    }
 
-    public LocationItem getLocation() {
-        return this.locationsEntry;
-    }
 
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
+
+
 
     @Override
     public int compareTo(DaiaItem another) {
@@ -139,6 +150,6 @@ public class DaiaItem implements Comparable<DaiaItem>
         }
 
         final DaiaItem compare = (DaiaItem) obj;
-        return this.itemUriUrl.equals(compare.itemUriUrl);
+        return this.id.equals(compare.id);
     }
 }

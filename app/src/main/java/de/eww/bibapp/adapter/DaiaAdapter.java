@@ -21,6 +21,7 @@ import java.util.List;
 import de.eww.bibapp.R;
 import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
+import de.eww.bibapp.network.model.daia.DaiaEntity;
 import de.eww.bibapp.util.DaiaHelper;
 
 public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
@@ -55,7 +56,7 @@ public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
 
         @Override
         public boolean areItemsTheSame(@NonNull DaiaItem oldItem, @NonNull DaiaItem newItem) {
-            return oldItem.itemUriUrl.equals(newItem.itemUriUrl);
+            return oldItem.getId().equals(newItem.getId());
         }
 
         @Override
@@ -98,23 +99,28 @@ public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
 
         // department
         String departmentText = "";
+        DaiaEntity storage = item.getStorage();
         if (!this.context.getResources().getBoolean(R.bool.use_exemplar_short_display)) {
-            if (item.department != null && !item.department.isEmpty()) {
-                departmentText = item.department;
+            if (item.getDepartment() != null && !item.getDepartment().isEmpty()) {
+                departmentText = item.getDepartment();
             }
 
-            if (item.storage != null && !item.storage.isEmpty()) {
-                if (!departmentText.isEmpty()) {
-                    departmentText += ", ";
-                }
+            if (storage != null) {
+                String storageContent = storage.getContent();
 
-                departmentText += item.storage;
+                if (storageContent != null && !storageContent.isEmpty()) {
+                    if (!departmentText.isEmpty()) {
+                        departmentText += ", ";
+                    }
+
+                    departmentText += storageContent;
+                }
             }
         } else {
-            if (item.storage != null && !item.storage.isEmpty()) {
-                departmentText = item.storage;
-            } else if (item.department != null && !item.department.isEmpty()) {
-                departmentText = item.department;
+            if (storage != null && storage.getContent() != null && !storage.getContent().isEmpty()) {
+                departmentText = storage.getContent();
+            } else if (item.getDepartment() != null && !item.getDepartment().isEmpty()) {
+                departmentText = item.getDepartment();
             }
         }
 
@@ -126,7 +132,7 @@ public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
         }
 
         // label
-        holder.mLabel.setText(item.label);
+        holder.mLabel.setText(item.getLabel());
 
         // status
         if (modsItem.isLocalSearch) {
@@ -154,8 +160,8 @@ public class DaiaAdapter extends ListAdapter<DaiaItem, DaiaAdapter.ViewHolder> {
         }
 
         // distance
-        if (item.distance != null) {
-            holder.mDistance.setText(String.format("%.2f km", item.distance));
+        if (item.getDistance() != null) {
+            holder.mDistance.setText(String.format("%.2f km", item.getDistance()));
             holder.mDistance.setVisibility(View.VISIBLE);
         } else {
             holder.mDistance.setVisibility(View.GONE);

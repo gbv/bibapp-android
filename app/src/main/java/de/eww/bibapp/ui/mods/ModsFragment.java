@@ -292,7 +292,7 @@ public class ModsFragment extends Fragment implements
 
     @Override
     public void onActionRequest(DialogFragment dialog) {
-        String requestItem = lastSelectedDaiaItem.itemUriUrl;
+        String requestItem = lastSelectedDaiaItem.getId();
 
         ModsFragmentDirections.ActionNavModsToNavAccount action = ModsFragmentDirections.actionNavModsToNavAccount();
         action.setRequestItem(requestItem);
@@ -301,7 +301,7 @@ public class ModsFragment extends Fragment implements
 
     @Override
     public void onActionOrder(DialogFragment dialog) {
-        String requestItem = lastSelectedDaiaItem.itemUriUrl;
+        String requestItem = lastSelectedDaiaItem.getId();
 
         ModsFragmentDirections.ActionNavModsToNavAccount action = ModsFragmentDirections.actionNavModsToNavAccount();
         action.setRequestItem(requestItem);

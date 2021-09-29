@@ -16,6 +16,9 @@ import java.util.Set;
 import de.eww.bibapp.R;
 import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.network.model.DaiaItem;
+import de.eww.bibapp.network.model.daia.DaiaAvailable;
+import de.eww.bibapp.network.model.daia.DaiaEntity;
+import de.eww.bibapp.network.model.daia.DaiaUnavailable;
 import okhttp3.HttpUrl;
 
 public class DaiaHelper {
@@ -38,10 +41,10 @@ public class DaiaHelper {
         String uriUrl = "";
 
         // department
-        JSONObject departmentObject = daiaItem.getDepartmentObject();
-        if (departmentObject != null) {
-            if (departmentObject.has("id")) {
-                uriUrl = departmentObject.getString("id");
+        DaiaEntity department = daiaItem.getDepartmentEntity();
+        if (department != null) {
+            if (department.getId() != null) {
+                uriUrl = department.getId();
             }
         }
 
@@ -49,63 +52,35 @@ public class DaiaHelper {
     }
 
     public static HashMap<String, String> getInformation(DaiaItem daiaItem, ModsItem modsItem, Context context) throws Exception {
-        String limitation = "";
+        String presentationLimitation = "";
 
-        HashMap<String, JSONObject> availableItems = new HashMap<>();
-        HashMap<String, JSONObject> unavailableItems = new HashMap<>();
+        HashMap<String, DaiaAvailable> availableItems = new HashMap<>();
+        HashMap<String, DaiaUnavailable> unavailableItems = new HashMap<>();
 
         // available
-        JSONArray availableArray = daiaItem.getAvailableItems();
-        for (int i=0; i < availableArray.length(); i++) {
-            JSONObject availableObject = availableArray.getJSONObject(i);
-
-            String service = availableObject.getString("service");
-            availableItems.put(service, availableObject);
+        for (DaiaAvailable available: daiaItem.getAvailables()) {
+            String service = available.getService();
+            availableItems.put(service, available);
 
             // read limitation only from the "presentation" attribute
             if (service.equals("presentation")) {
-                if (availableObject.has("limitation")) {
-                    JSONArray limitationArray = availableObject.getJSONArray("limitation");
-
-                    for (int j=0; j < limitationArray.length(); j++) {
-                        JSONObject limitationObject = limitationArray.getJSONObject(j);
-
-                        if (limitationObject.has("content")) {
-                            String content = limitationObject.getString("content");
-
-                            if (!content.isEmpty()) {
-                                limitation = content;
-                            }
-                        }
+                for (DaiaEntity limitation: available.getLimitations()) {
+                    if (limitation.getContent() != null && !limitation.getContent().isEmpty()) {
+                        presentationLimitation = limitation.getContent();
                     }
                 }
             }
         }
-
-        JSONArray unavailableArray = daiaItem.getUnavailableItems();
-
         // unavailable
-        for (int i=0; i < unavailableArray.length(); i++) {
-            JSONObject unavailableObject = unavailableArray.getJSONObject(i);
-
-            String service = unavailableObject.getString("service");
-            unavailableItems.put(service, unavailableObject);
+        for (DaiaUnavailable unavailable: daiaItem.getUnavailables()) {
+            String service = unavailable.getService();
+            unavailableItems.put(service, unavailable);
 
             // read limitation only from the "presentation" attribute
             if (service.equals("presentation")) {
-                if (unavailableObject.has("limitation")) {
-                    JSONArray limitationArray = unavailableObject.getJSONArray("limitation");
-
-                    for (int j=0; j < limitationArray.length(); j++) {
-                        JSONObject limitationObject = limitationArray.getJSONObject(j);
-
-                        if (limitationObject.has("content")) {
-                            String content = limitationObject.getString("content");
-
-                            if (!content.isEmpty()) {
-                                limitation = content;
-                            }
-                        }
+                for (DaiaEntity limitation: unavailable.getLimitations()) {
+                    if (limitation.getContent() != null && !limitation.getContent().isEmpty()) {
+                        presentationLimitation = limitation.getContent();
                     }
                 }
             }
@@ -119,27 +94,22 @@ public class DaiaHelper {
             status += "ausleihbar";
             statusColor = "#007F00";
 
-            if ((availableItems.containsKey("presentation") || availableItems.containsKey("presentation")) && !limitation.isEmpty()) {
-                status += "; " + limitation;
+            if ((availableItems.containsKey("presentation") || availableItems.containsKey("presentation")) && !presentationLimitation.isEmpty()) {
+                status += "; " + presentationLimitation;
             }
 
             if (availableItems.containsKey("presentation")) {
                 // tag available with service="loan" and href=""
-                if (availableItems.get("loan").has("href")) {
+                if (availableItems.get("loan").getHref() != null) {
                     statusInfo += "Bitte bestellen";
                 } else {
                     statusInfo += "Bitte am Standort entnehmen";
                 }
             }
         } else {
-            if (unavailableItems.containsKey("loan") && unavailableItems.get("loan").has("href")) {
-                if (unavailableItems.get("loan").getString("href").contains("loan/RES")) {
-                    status += "ausleihbar";
-                    statusColor = "#FF7F00";
-                } else {
-                    status += "nicht ausleihbar";
-                    statusColor = "#FF0000";
-                }
+            if (unavailableItems.containsKey("loan") && unavailableItems.get("loan").getHref() != null) {
+                status += "ausleihbar";
+                statusColor = "#FF7F00";
             } else {
                 // if this is not an online resource
                 if (modsItem.onlineUrl.isEmpty()) {
@@ -147,8 +117,8 @@ public class DaiaHelper {
                     statusColor = "#FF0000";
 
                     if (availableItems.containsKey("presentation")) {
-                        if (availableItems.get("presentation").has("href")) {
-                            String href = availableItems.get("presentation").get("href").toString();
+                        if (availableItems.get("presentation").getHref() != null) {
+                            String href = availableItems.get("presentation").getHref();
                             HttpUrl hrefUrl = HttpUrl.parse(href);
                             Set<String> queryParameter = hrefUrl.queryParameterNames();
                             if (queryParameter.contains("action")) {
@@ -166,33 +136,31 @@ public class DaiaHelper {
                 }
             }
 
-            if ((availableItems.containsKey("presentation") || unavailableItems.containsKey("presentation")) && !limitation.isEmpty()) {
-                status += "; " + limitation;
+            if ((availableItems.containsKey("presentation") || unavailableItems.containsKey("presentation")) && !presentationLimitation.isEmpty()) {
+                status += "; " + presentationLimitation;
             }
 
             if (unavailableItems.containsKey("presentation")) {
-                if ( unavailableItems.get("loan").has("href") ){
-                    if (unavailableItems.get("loan").getString("href").contains("loan/RES")) {
-                        if (!unavailableItems.get("loan").has("expected") || unavailableItems.get("loan").getString("expected").equals("unknown")) {
-                            statusInfo += "ausgeliehen, Vormerken möglich";
+                if (unavailableItems.get("loan").getHref() != null){
+                    if (unavailableItems.get("loan").getExpected() == null || unavailableItems.get("loan").getExpected().equals("unknown")) {
+                        statusInfo += "ausgeliehen, Vormerken möglich";
+                    } else {
+                        String dateString = unavailableItems.get("loan").getExpected();
+                        SimpleDateFormat simpleDateFormat;
+
+                        if (dateString.substring(2, 3).equals("-") && dateString.substring(5, 6).equals("-")) {
+                            simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.GERMANY);
                         } else {
-                            String dateString = unavailableItems.get("loan").getString("expected");
-                            SimpleDateFormat simpleDateFormat;
+                            simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+                        }
 
-                            if (dateString.substring(2, 3).equals("-") && dateString.substring(5, 6).equals("-")) {
-                                simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.GERMANY);
-                            } else {
-                                simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
-                            }
+                        try {
+                            Date date = simpleDateFormat.parse(dateString);
 
-                            try {
-                                Date date = simpleDateFormat.parse(dateString);
-
-                                SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
-                                statusInfo += "ausgeliehen bis " + dateFormat.format(date) + ", Vormerken möglich";
-                            } catch (ParseException e) {
-                                e.printStackTrace();
-                            }
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+                            statusInfo += "ausgeliehen bis " + dateFormat.format(date) + ", Vormerken möglich";
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
                     }
                 } else {
@@ -205,10 +173,10 @@ public class DaiaHelper {
         String actions = "";
         if (availableItems.containsKey("loan")) {
             if (availableItems.containsKey("presentation")) {
-                if (availableItems.get("loan").has("href")) {
+                if (availableItems.get("loan").getHref() != null) {
                     actions = "order";
 
-                    String href = availableItems.get("loan").get("href").toString();
+                    String href = availableItems.get("loan").getHref();
                     HttpUrl hrefUrl = HttpUrl.parse(href);
                     Set<String> queryParameter = hrefUrl.queryParameterNames();
                     if (queryParameter.contains("bar")) {
@@ -223,13 +191,13 @@ public class DaiaHelper {
             }
         } else {
             if (unavailableItems.containsKey("presentation")) {
-                if (unavailableItems.get("loan").has("href")) {
+                if (unavailableItems.get("loan").getHref() != null) {
                     actions = "request";
                 }
             } else {
                 if (availableItems.containsKey("presentation")) {
-                    if (availableItems.get("presentation").has("href")) {
-                        String href = availableItems.get("presentation").get("href").toString();
+                    if (availableItems.get("presentation").getHref() != null) {
+                        String href = availableItems.get("presentation").getHref();
                         HttpUrl hrefUrl = HttpUrl.parse(href);
                         Set<String> queryParameter = hrefUrl.queryParameterNames();
                         if (queryParameter.contains("action")) {
@@ -245,8 +213,8 @@ public class DaiaHelper {
             }
         }
 
-        if (    (availableItems.containsKey("loan") && availableItems.get("loan").has("href") && !availableItems.get("loan").getString("href").isEmpty()) ||
-                (unavailableItems.containsKey("loan") && unavailableItems.get("loan").has("href") && !unavailableItems.get("loan").getString("href").isEmpty())) {
+        if (    (availableItems.containsKey("loan") && availableItems.get("loan").getHref() != null && !availableItems.get("loan").getHref().isEmpty()) ||
+                (unavailableItems.containsKey("loan") && unavailableItems.get("loan").getHref() != null && !unavailableItems.get("loan").getHref().isEmpty())) {
             actions += ";location";
         } else {
             // fix for crash when tryining to access a location entry that does not exists

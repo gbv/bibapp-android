@@ -88,8 +88,8 @@ public class AvailabilityManager {
             if (hashMap.containsKey(daiaItem.getDepartment())) {
                 DaiaItem daiaHashItem = hashMap.get(daiaItem.getDepartment());
 
-                if (daiaItem.hasLabel()) {
-                    daiaHashItem.label += ", " + daiaItem.label;
+                if (!daiaItem.getLabel().isEmpty()) {
+                    daiaHashItem.setLabel(daiaHashItem.getLabel() + ", " + daiaItem.getLabel());
                 }
 
                 hashMap.put(daiaItem.getDepartment(), daiaHashItem);
