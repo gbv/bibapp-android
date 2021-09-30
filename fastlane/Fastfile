@@ -35,7 +35,6 @@ platform :android do
     gradle(task: 'bundle', flavor: 'hawk', build_type: 'Release')
     gradle(task: 'bundle', flavor: 'hfmweimar', build_type: 'Release')
     gradle(task: 'bundle', flavor: 'hi', build_type: 'Release')
-    gradle(task: 'bundle', flavor: 'lg', build_type: 'Release')
     gradle(task: 'bundle', flavor: 'ndh', build_type: 'Release')
     gradle(task: 'bundle', flavor: 'schmalkalden', build_type: 'Release')
     gradle(task: 'bundle', flavor: 'thulb', build_type: 'Release')
