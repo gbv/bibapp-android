@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="8dp"
     tools:context=".ui.info.InfoFragment">
 
     <Button
@@ -17,60 +18,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/info_button_locations"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:elevation="1dp"
-        android:text="@string/info_button_locations"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_button_contact" />
-
-    <Button
         android:id="@+id/info_button_impressum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/info_button_impressum"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_button_locations" />
+        app:layout_constraintTop_toBottomOf="@id/info_button_contact"
+        app:layout_constraintBottom_toTopOf="@id/info_eol"/>
 
-    <Button
-        android:id="@+id/info_button_dataprivacy"
+    <TextView
+        android:id="@+id/info_eol"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/info_button_dataprivacy"
+        android:text="@string/info_eol"
+        android:linksClickable="true"
+        android:autoLink="web"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/info_button_impressum" />
-
-    <TextView
-        android:id="@+id/empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/empty_list"
-        android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_button_dataprivacy"
-        android:visibility="gone"/>
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swiperefresh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_button_dataprivacy">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/item_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/item_rss_view" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

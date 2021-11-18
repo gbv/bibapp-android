@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/gbv/bibapp-android.svg?branch=master)](https://travis-ci.org/gbv/bibapp-android)
 
+**Dieses Projekt ist inaktiv wird nicht mehr weiterentwickelt**
+
 BibApp Android
 ==============
 Die BibApp ermöglicht den Zugriff auf Kataloge und Nutzerkonten von Bibliotheken von Geräten mit Android Betriebssystem.
