@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.paging.PagingDataAdapter;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +25,7 @@ import de.eww.bibapp.R;
 import de.eww.bibapp.network.model.ModsItem;
 import de.eww.bibapp.util.ModsHelper;
 
-public class ModsAdapter extends ListAdapter<ModsItem, ModsAdapter.ViewHolder> {
+public class ModsAdapter extends PagingDataAdapter<ModsItem, ModsAdapter.ViewHolder> {
 
     private final Context mContext;
     private final View.OnClickListener mOnClickListener;
@@ -70,11 +71,6 @@ public class ModsAdapter extends ListAdapter<ModsItem, ModsAdapter.ViewHolder> {
 
         mContext = context;
         mOnClickListener = onClickListener;
-    }
-
-    @Override
-    public void submitList(@Nullable List<ModsItem> list) {
-        super.submitList(list != null ? new ArrayList<>(list) : null);
     }
 
     // Create new views (invoked by the layout manager)

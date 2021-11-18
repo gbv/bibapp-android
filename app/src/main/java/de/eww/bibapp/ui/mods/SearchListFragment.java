@@ -118,25 +118,28 @@ public class SearchListFragment extends Fragment {
         modsAdapter = new ModsAdapter(requireContext(), onClickListener);
         recyclerView.setAdapter(modsAdapter);
 
-        recyclerView.addOnScrollListener(onScrollListener);
+//        recyclerView.addOnScrollListener(onScrollListener);
 
-        viewModel.getSearchResult(searchMode).observe(getViewLifecycleOwner(), searchResult -> {
-            binding.list.empty.setVisibility(View.GONE);
-            binding.list.swiperefresh.setRefreshing(false);
+//        viewModel.getSearchResult(searchMode).observe(getViewLifecycleOwner(), searchResult -> {
+//            binding.list.empty.setVisibility(View.GONE);
+//            binding.list.swiperefresh.setRefreshing(false);
+//
+//            if (searchResult.getError() != null) {
+//                onSearchFailed(searchResult.getError());
+//            }
+//            if (searchResult.getSuccess() != null) {
+//                onSearchSuccess(searchResult.getSuccess());
+//            }
+//        });
 
-            if (searchResult.getError() != null) {
-                onSearchFailed(searchResult.getError());
-            }
-            if (searchResult.getSuccess() != null) {
-                onSearchSuccess(searchResult.getSuccess());
-            }
-        });
+        viewModel.loadTest().subscribe(pagingData -> modsAdapter.submitData(getLifecycle(), pagingData));
 
-        viewModel.getForceGvkSearch().observe(getViewLifecycleOwner(), searchQuery -> {
-            if (this.searchMode == SearchManager.SEARCH_MODE.GVK) {
-                forceSearch(searchQuery);
-            }
-        });
+
+//        viewModel.getForceGvkSearch().observe(getViewLifecycleOwner(), searchQuery -> {
+//            if (this.searchMode == SearchManager.SEARCH_MODE.GVK) {
+//                forceSearch(searchQuery);
+//            }
+//        });
 
         // Set up search view
         binding.searchQuery.setIconifiedByDefault(false);

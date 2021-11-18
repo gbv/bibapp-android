@@ -6,6 +6,11 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModelKt;
+import androidx.paging.Pager;
+import androidx.paging.PagingConfig;
+import androidx.paging.PagingData;
+import androidx.paging.rxjava2.PagingRx;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -18,7 +23,11 @@ import de.eww.bibapp.network.model.DaiaItems;
 import de.eww.bibapp.network.model.SruResult;
 import de.eww.bibapp.network.repository.ModsRepository;
 import de.eww.bibapp.network.search.SearchManager;
+import de.eww.bibapp.repository.SruPagingSource;
 import de.eww.bibapp.util.SruHelper;
+import io.reactivex.Flowable;
+import kotlinx.coroutines.CoroutineScope;
+import kotlinx.coroutines.flow.Flow;
 
 public class ModsViewModel extends AndroidViewModel {
 
@@ -132,6 +141,17 @@ public class ModsViewModel extends AndroidViewModel {
         if (result instanceof Result.Success) {
             loadWatchlist();
         }
+    }
+
+    public Flowable<PagingData<ModsItem>> loadTest() {
+        Pager<Integer, ModsItem> pager = new Pager<Integer, ModsItem>(
+            new PagingConfig(/* pageSize = */ 20),
+            () -> new SruPagingSource("query")
+        );
+
+        Flowable<PagingData<ModsItem>> flowable = PagingRx.getFlowable(pager);
+        CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
+        return PagingRx.cachedIn(flowable, viewModelScope);
     }
 
     public void loadSearchResults() {

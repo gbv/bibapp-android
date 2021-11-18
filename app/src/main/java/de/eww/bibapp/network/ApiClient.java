@@ -28,30 +28,32 @@ public class ApiClient {
     private static OkHttpClient okHttpClient;
 
     public static Retrofit getClient(Context context, HttpUrl baseUrl) {
+        return getClient(baseUrl);
+    }
+
+    public static Retrofit getClient(HttpUrl baseUrl) {
         if (ApiClient.okHttpClient == null) {
-            ApiClient.initOkHttp(context);
+            ApiClient.initOkHttp();
         }
 
-//        if (ApiClient.retrofit == null) {
-            ApiClient.retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .client(ApiClient.okHttpClient)
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(RssConverterFactory.create())
-                    .addConverterFactory(SruConverterFactory.create())
-                    .addConverterFactory(UriConverterFactory.create())
-                    .addConverterFactory(DaiaConverterFactory.create())
-                    .addConverterFactory(ISBDConverterFactory.create())
-                    .addConverterFactory(ScalarsConverterFactory.create())
-                    .addConverterFactory(JsonConverterFactory.create(GsonConverterFactory.create()))
-                    .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(new Persister(new AnnotationStrategy())))
-                    .build();
-//        }
+        ApiClient.retrofit = new Retrofit.Builder()
+                .baseUrl(baseUrl)
+                .client(ApiClient.okHttpClient)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(RssConverterFactory.create())
+                .addConverterFactory(SruConverterFactory.create())
+                .addConverterFactory(UriConverterFactory.create())
+                .addConverterFactory(DaiaConverterFactory.create())
+                .addConverterFactory(ISBDConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(JsonConverterFactory.create(GsonConverterFactory.create()))
+                .addConverterFactory(SimpleXmlConverterFactory.createNonStrict(new Persister(new AnnotationStrategy())))
+                .build();
 
         return ApiClient.retrofit;
     }
 
-    private static void initOkHttp(final Context context) {
+    private static void initOkHttp() {
         OkHttpClient.Builder httpClient = new OkHttpClient.Builder()
                 .connectTimeout(ApiClient.REQUEST_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(ApiClient.REQUEST_TIMEOUT, TimeUnit.SECONDS)
