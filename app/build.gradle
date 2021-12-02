@@ -99,17 +99,9 @@ android {
             dimension "version"
             applicationIdSuffix ".ndh"
         }
-        ufb {
-            dimension "version"
-            applicationIdSuffix ".ufb"
-        }
         tubs {
             dimension "version"
             applicationIdSuffix '.tubs'
-        }
-        aezb {
-            dimension "version"
-            applicationIdSuffix '.aezb'
         }
         commerz {
             dimension "version"
