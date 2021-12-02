@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp HI</string>
 
-    <!-- contact -->
     <string name="contact_text">
         <![CDATA[
         <b>Hildesheim</b><br/>
@@ -26,31 +24,8 @@
 		]]>
     </string>
 
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Anbieter</b><br/>
-        Universitätsbibliothek Hildesheim<br/>
-		Universitätsplatz 1<br/>
-		31141 Hildesheim<br/>
-		<br/>
-		E-Mail: auskunft@uni-hildesheim.de<br/>
-		Telefon: +49 (0) 51 21 - 883 93010<br/>
-		Telefax: +49 (0) 51 21 - 883 93011<br/>
-		<br/>
-		<b>Vertreter</b><br/>
-		Die Universitätsbibliothek Hildesheim ist eine Einrichtung der Stiftung Universität Hildesheim, sie wird vertreten durch ihren Leiter, Dr. Ewald Brahms. Die Stiftung Universität Hildesheim ist eine rechtsfähige Stiftung öffentlichen Rechts. Die Stiftung unterhält und fördert die Universität Hildesheim in deren Eigenschaft als Körperschaft des öffentlichen Rechts und übt die Rechtsaufsicht über sie aus. Stiftung Universität Hildesheim und Universität Hildesheim werden vertreten durch ihren Präsidenten Herrn Prof. Dr. Wolfgang-Uwe Friedrich.<br/>
-Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: DE 239259506.<br/>
-		<br/>
-		<b>Rechtliche Hinweise zur Haftung</b><br/>
-		Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
-		Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
-		<br/>
-		<b>Gestaltung und Umsetzung</b><br/>
-		Entwurf und Konzeption<br/>
-		A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
-		Umsetzung<br/>
-		Effective WEBWORK GmbH<br/>
-        ]]>
+    <string name="info_eol">
+        Der Betrieb der BibApp wird zum 31.12.2021 eingestellt.\n
+        Bitte nutzen Sie stattdessen unser <a href="https://hilkat.uni-hildesheim.de/vufind/">Discoverysystem</a>.
     </string>
 </resources>

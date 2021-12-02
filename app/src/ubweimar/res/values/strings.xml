@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp UB Weimar</string>
-    
-    <!-- contact -->
+
     <string name="contact_text">
         <![CDATA[
         <b>Kontakt</b><br/>
@@ -26,36 +24,6 @@
         <br/>
         <b>Bibliothek Baustoffe und Naturwissenschaften</b><br/>
         Tel.: +49 03643 - 58 28 90
-        ]]>
-    </string>
-
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Universitätsbibliothek der Bauhaus-Universität Weimar</b><br/>
-        Steubenstr. 6<br/>
-        99423 Weimar<br/>
-        Telefon: +49 03643 - 58 28 01<br/>
-        Fax: +49 03643 - 58 28 02<br/>
-        E-Mail: info@ub.uni-weimar.de<br/>
-        <br/>
-        Die Bauhaus-Universität Weimar ist eine Körperschaft des öffentlichen Rechts.<br/>
-        Sie wird durch ihren Rektor, Herrn Prof. Dr. Karl Beucke, gesetzlich vertreten.<br/>
-        Zuständige Aufsichtsbehörde: Thüringer Ministerium für Bildung, Wissenschaft und Kultur.<br/>
-        <br/>
-        <b>Datenschutzerklärung</b><br/>
-        Wir erheben, verwenden und speichern Ihre personenbezogenen Daten ausschließlich im Rahmen der Bestimmungen des Bundesdatenschutzgesetzes der Bundesrepublik Deutschland. Nachfolgend unterrichten wir Sie über Art, Umfang und Zweck der Datenerhebung und Verwendung.<br/>
-        <br/>
-        Speicherung von personenbezogenen Daten<br/>
-        Daten zur Speicherung des Logins (zum Zwecke eines automatischen Logins ohne erneute Passworteingabe) sowie zum Vorhalten der Bestände in der persönlichen Merkliste werden ausschließlich auf dem Telefon des Benutzers gespeichert und vorgehalten.<br/>
-        Der Benutzer muss der dauerhaften Speicherung seiner Login-Information aktiv zustimmen.<br/>
-        <br/>
-        Übertragung von personenbezogenen Daten<br/>
-        Die Übertragung persönlicher Daten erfolgt nur zum Zweck der Authentifizierung. Darüber hinaus werden weder Informationen zur Authentifizierung noch zur Merkliste an Dritte weitergegeben. Die Übertragung dieser Informationen sowie sonstige Kommunikation mit der VZG erfolgt verschlüsselt.<br/>
-        <br/>
-        Die Kommunikation, basiert auf HTTPS (Hypertext Transfer Protocol Secure), dem allgemein üblichen Standard zur sicheren Übertragung im Web. Grundlage des HTTPS-Standards sind die Identifikation und Authentifizierung der Kommunikationspartner sowie die verschlüsselte Übertragung der Nutzerdaten.<br/>
-        <br/>
-        Der Lokalisierungsdienst ermöglicht bei Anfragen an den GVK-Katalog die Sortierung der Ergebnisliste nach der Entfernung zum Standort. Ein Abschalten des Lokalisierungsdienstes in den Systemeinstellungen beeinträchtig nicht den Funktionsumfang.<br/>
         ]]>
     </string>
 </resources>

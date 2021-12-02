@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp IL</string>
-    
-    <!-- contact -->
+
     <string name="contact_text">
         <![CDATA[
         <b>Ilmenau</b><br/>
@@ -23,43 +21,6 @@
 		<b>Direktion</b><br/>
 		Tel.: 03677 69-4701<br/>
 		E-Mail: direktion.ub@tu-ilmenau.de
-		]]>
-    </string>
-    
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Anbieter</b><br/>
-        Universitätsbibliothek Ilmenau<br/>
-        Der Direktor<br/>
-		Langewiesener Str.37<br/>
-		98693 Ilmenau<br/>
-		<br/>
-		http://www.tu-ilmenau.de/ub/<br/>
-		E-Mail: direktion.ub@tu-ilmenau.de<br/>
-		Tel.: 03677 69-4701<br/>
-		Fax: 03677 69-4700<br/>
-		<br/>
-		<b>Impressum der TU Ilmenau</b><br/>
-		http://www.tu-ilmenau.de/impressum/<br/>
-		<br/>
-		<b>Angaben zum Datenschutz</b><br/>
-		Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Nutzernummer und -passwort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter "Optionen" den Punkt "Zugangsdaten speichern" für das jeweilige Konto. Damit stimmen Sie der Speicherung der Daten auf Ihrem mobilen Endgerät zu.<br/>
-		Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes (VZG) in Göttingen. Die Datenübertragung geschieht dabei über eine verschlüsselte Verbindung (https).<br/>
-		<br/>
-		<b>Statistik</b><br/>
-		Die Universitätsbibliothek setzt den Webanalysedienst Matomo zur Verbesserung und Optimierung des Angebotes ein. Die IP-Adressen der zugreifenden Geräte werden unmittelbar beim Zugriff anonymisiert und anonymisiert gespeichert. Die erlangten Informationen werden nicht an Dritte weitergegeben, eine Zusammenführung der erhobenen Nutzerdaten und möglicher Ausleihdaten erfolgt nicht.<br/>
-        Sie haben die Möglichkeit, die Erhebung der Daten im Menü "Einstellungen" im Punkt "Anonyme Nutzungsdaten" zu deaktivieren.<br/>
-        <br/>
-		<b>Rechtliche Hinweise zur Haftung</b><br/>
-		Die BibApp wurde mit größter Sorgfalt erstellt und geprüft. Dennoch kann auf Grund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der UB Ilmenau für Schäden, die durch die Nutzung der App, der angebotenen Funktionen oder durch Fehlfunktionen der App entstehen, ist grundsätzlich ausgeschlossen.<br/>
-		Die UB Ilmenau behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
-		Die App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
-		<br/>
-		<b>Gestaltung und Umsetzung</b><br/>
-		ursprünglich: UB Lüneburg, UB Hildesheim, VZG<br/>
-		Anpassung: UB Ilmenau<br/>
-		Umsetzung: effective WEBWORK GmbH
 		]]>
     </string>
 </resources>

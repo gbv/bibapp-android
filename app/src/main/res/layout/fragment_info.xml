@@ -5,7 +5,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
+    android:textAlignment="center"
     tools:context=".ui.info.InfoFragment">
+
+    <TextView
+        android:id="@+id/info_eol"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/info_eol"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/info_button_contact"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/info_button_contact"
@@ -15,28 +30,6 @@
         android:text="@string/info_button_contact"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/info_button_impressum"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/info_button_impressum"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_button_contact"
-        app:layout_constraintBottom_toTopOf="@id/info_eol"/>
-
-    <TextView
-        android:id="@+id/info_eol"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/info_eol"
-        android:linksClickable="true"
-        android:autoLink="web"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/info_button_impressum" />
+        app:layout_constraintTop_toBottomOf="@id/info_eol" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

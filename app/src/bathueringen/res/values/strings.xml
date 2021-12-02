@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp DHGE</string>
-    
-    <!-- contact -->
+
     <string name="contact_text">
         <![CDATA[
         <b>Gera</b><br/>
@@ -26,36 +24,9 @@
         Internet: http://bibliothek-eisenach@dhge.de
         ]]>
     </string>
-    
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Duale Hochschule Gera-Eisenach</b><br/>
-        Weg der Freundschaft 4<br/>
-        07546 Gera<br/>
-        Tel.: +49 365 / 4341-0<br/>
-        Fax: +49 365 / 4341-103<br/>
-        E-Mail: info@dhge.de<br/>
-        Internet: https://www.dhge.de<br/>
-        <br/>
-        Die Duale Hochschule Gera-Eisenach ist eine rechtsfähige Körperschaft des öffentlichen Rechts. Sie wird gesetzlich vertreten durch den Präsidenten der Dualen Hochschule Gera-Eisenach Prof. Dr. rer. pol. habil. Burkhard Utecht.<br/>
-        <br/>
-        Zuständige Behörde für die Rechts- und Fachaufsicht:<br/>
-        Thüringer Ministerium für Wirtschaft, Wissenschaft und Digitale Gesellschaft<br/>
-        Max-Reger-Straße 4-8<br/>
-        99096 Erfurt<br/>
-        <br/>
-        <b>Angaben zum Datenschutz</b><br/>
-        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“ für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
-        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
-        <br/>
-        <b>Rechtliche Hinweise zur Haftung</b><br/>
-        Die BibApp wurde mit größter Sorgfalt erstellt und geprüft. Dennoch kann auf Grund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der Dualen Hochschule Gera-Eisenach für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen. Die DHGE behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen. Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
-        <br/>
-        <b>Gestaltung und Umsetzung</b><br/>
-        Ursprünglich: UB Lüneburg, UB Hildesheim, VZG<br/>
-        Anpassung: Duale Hochschule Gera-Eisenach<br/>
-        Umsetzung: effective WEBWORK GmbH
-        ]]>
+
+    <string name="info_eol">
+        Der Betrieb der BibApp wird zum 31.12.2021 eingestellt.\n
+        Für Alternativen besuchen Sie bitte unsere <a href="https://www.dhge.de/DHGE/Einrichtungen/Bibliothek.html">Homepage</a>.
     </string>
 </resources>

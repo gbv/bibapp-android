@@ -5,10 +5,9 @@
 
     <string name="nav_info">Info</string>
     <string name="info_button_contact">Contact</string>
-    <string name="info_button_impressum">Legal notice</string>
 
     <string name="info_eol">
-        App is discontinued\n
-        <a href="#">Link</a>
+        The BibApp is discontinued as of December 31, 2021.\n
+        For alternatives please visit our <a href="#">website</a>.
     </string>
 </resources>

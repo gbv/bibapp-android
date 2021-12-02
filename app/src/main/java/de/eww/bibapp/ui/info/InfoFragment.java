@@ -2,6 +2,7 @@ package de.eww.bibapp.ui.info;
 
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,14 +38,10 @@ public class InfoFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Resources resources = this.getResources();
+        binding.infoEol.setMovementMethod(LinkMovementMethod.getInstance());
 
         // contact navigation
         binding.infoButtonContact.setOnClickListener(v -> NavHostFragment.findNavController(this)
                 .navigate(R.id.action_navigation_info_to_navigation_contact));
-
-        // impressum navigation
-        binding.infoButtonImpressum.setOnClickListener(v -> NavHostFragment.findNavController(this)
-                .navigate(R.id.action_nav_info_to_nav_impressum));
     }
 }

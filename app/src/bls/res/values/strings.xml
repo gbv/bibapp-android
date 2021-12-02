@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp BLS</string>
 
-    <!-- action bar -->
-    <string name="actionbar_search">Recherche</string>
-
-    <!-- search -->
-    <string name="search_local">OPAC</string>
-
-    <!-- contact -->
     <string name="contact_text">
         <![CDATA[
         <b>Bibliothek der Bucerius Law School</b><br/>
@@ -29,35 +21,8 @@
         ]]>
     </string>
 
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Anbieter</b><br/>
-        Bibliothek der Bucerius Law School<br/>
-        Jungiusstrasse 6<br/>
-        20355 Hamburg<br/>
-        <br/>
-        E-Mail: martin.vorberg@law-school.de<br/>
-        Telefon: (040) 307-061-34<br/>
-        Mobil: (0176) 706-634-47<br/>
-        <br/>
-        <b>Vertreter</b><br/>
-        Die Bibliothek der Bucerius Law School ist das Zentrum der juristischen Informationen unserer Hochschule, sie wird verantwortlich geleitet durch Herrn Martin Vorberg. Die Bucerius Law School gGmbH ist die erste private Hochschule für Rechtswissenschaft in Deutschland, sie wird verantwortlich geleitet durch Herrn Dr. Hariolf Wenzler.<br/>
-        Die Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz: DE 212998891.<br/>
-        <br/>
-        <b>Angaben zum Datenschutz</b><br/>
-        Sie haben die Möglichkeit Ihre bibliotheksspezifischen Zugangsdaten (Benutzernummer und Benutzerpasswort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter „Optionen“ den Punkt „Zugangsdaten speichern“  für das jeweilige Konto. Mit dieser Aktivierung stimmen Sie der Speicherung Ihrer Zugangsdaten auf Ihrem mobilen Endgerät zu.<br/>
-        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes in Göttingen. Die Datenübertragung geschieht dabei über eine mit hohen Standards verschlüsselte Verbindung (HTTPS).<br/>
-        <br/>
-        <b>Rechtliche Hinweise zur Haftung</b><br/>
-        Diese App wurde von der Universitätsbibliothek Hildesheim mit großer Sorgfalt  erstellt und geprüft, dennoch können wir aufgrund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte geben. Eine Haftung der Universitätsbibliothek Hildesheim für Schäden, die durch die Nutzung der App, der angebotenen Informationen oder durch Fehlfunktion der App entstehen ist grundsätzlich ausgeschlossen, sofern kein nachweislich vorsätzliches oder grob fahrlässiges Verschulden unsererseits vorliegt.  Die Universitätsbibliothek Hildesheim behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
-        Diese App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
-        <br/>
-        <b>Gestaltung und Umsetzung</b><br/>
-        Entwurf und Konzeption<br/>
-        A. Christensen (UB Lüneburg), J. Schrader (UB Hildesheim), J. Voss (VZG Göttingen)<br/>
-        Umsetzung<br/>
-        Effective Webwork GmbH
-        ]]>
+    <string name="info_eol">
+        Der Betrieb der BibApp wird zum 31.12.2021 eingestellt.\n
+        Für Alternativen besuchen Sie bitte unsere <a href="https://www.law-school.de/international/library">Homepage</a>.
     </string>
 </resources>

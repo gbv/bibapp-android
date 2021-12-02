@@ -22,9 +22,6 @@
         <action
             android:id="@+id/action_navigation_info_to_navigation_contact"
             app:destination="@id/nav_contact" />
-        <action
-            android:id="@+id/action_nav_info_to_nav_impressum"
-            app:destination="@id/nav_impressum" />
     </fragment>
 
     <fragment
@@ -32,12 +29,6 @@
         android:name="de.eww.bibapp.ui.info.ContactFragment"
         android:label="@string/nav_info"
         tools:layout="@layout/fragment_contact" />
-
-    <fragment
-        android:id="@+id/nav_impressum"
-        android:name="de.eww.bibapp.ui.info.ImpressumFragment"
-        android:label="@string/nav_info"
-        tools:layout="@layout/fragment_impressum" />
 
     <!-- Settings -->
 </navigation>

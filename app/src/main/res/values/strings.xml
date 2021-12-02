@@ -4,11 +4,10 @@
     <string name="app_name">BibApp</string>
 
     <string name="nav_info">Info</string>
-    <string name="info_button_contact">Kontakt</string>
-    <string name="info_button_impressum">Impressum</string>
+    <string name="info_button_contact">Kontakt</string>x
 
     <string name="info_eol">
-        Die App wird eingestellt\n
-        <a href="#">Link</a>
+        Der Betrieb der BibApp wird zum 31.12.2021 eingestellt.\n
+        Für Alternativen besuchen Sie bitte unsere <a href="#">Homepage</a>.
     </string>
 </resources>

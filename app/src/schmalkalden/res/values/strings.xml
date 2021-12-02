@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp SM</string>
-    
-    <!-- contact -->
+
     <string name="contact_text">
         <![CDATA[
         <b>Hochschule Schmalkalden</b><br/>
@@ -17,39 +15,6 @@
         Tel.: 03683 6881785<br/>
         Fax: 03683 6881923<br/>
         E-Mail: bibliothek@hs-schmalkalden.de
-		]]>
-    </string>
-    
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Anbieter</b><br/>
-        Hochschule Schmalkalden<br/>
-        Cellarius Bibliothek<br/>
-        Blechhammer, Haus I<br/>
-        98574 Schmalkalden<br/>
-        <br/>
-        https://www.hs-schmalkalden.de/hochschule/einrichtungen/bibliothek.html<br/>
-        Tel.: 03683 6881785<br/>
-        Fax: 03683 6881923<br/>
-        E-Mail: bibliothek@hs-schmalkalden.de<br/>
-        <br/>
-        <b>Impressum der Hochschule Schmalkalden</b><br/>
-        http://www.hs-schmalkalden.de/Impressum.html<br/>
-        <br/>
-        <b>Angaben zum Datenschutz</b><br/>
-        Sie haben die Möglichkeit, Ihre bibliotheksspezifischen Zugangsdaten (Nutzernummer und -passwort) auf Ihrem mobilen Endgerät zu speichern. Dazu aktivieren Sie unter "Optionen" den Punkt "Zugangsdaten speichern" für das jeweilige Konto. Damit stimmen Sie der Speicherung der Daten auf Ihrem mobilen Endgerät zu.<br/>
-        Die BibApp kommuniziert beim Zugriff auf Katalog- und Nutzerkontofunktionen mit Servern der Verbundzentrale des Gemeinsamen Bibliotheksverbundes (VZG) in Göttingen. Die Datenübertragung geschieht dabei über eine verschlüsselte Verbindung (https).<br/>
-        <br/>
-        <b>Rechtliche Hinweise zur Haftung</b><br/>
-        Die BibApp wurde mit größter Sorgfalt erstellt und geprüft. Dennoch kann auf Grund der technischen Rahmenbedingungen keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der App und der angezeigten Inhalte gegeben werden. Eine Haftung der Cellarius Bibliothek Schmalkalden für Schäden, die durch die Nutzung der App, der angebotenen Funktionen oder durch Fehlfunktionen der App entstehen, ist grundsätzlich ausgeschlossen.<br/>
-        Die Cellarius Bibliothek Schmalkalden behält sich vor, Teile der App ohne gesonderte Ankündigung zu ändern, zu ergänzen, zu löschen oder die Veröffentlichung der App zeitweise oder endgültig einzustellen.<br/>
-        Die App bietet Links auf Internetangebote anderer Betreiber. Für den Inhalt dieser externen Seiten sind ausschließlich deren Betreiber verantwortlich.<br/>
-        <br/>
-        <b>Gestaltung und Umsetzung</b><br/>
-        ursprünglich: UB Lüneburg, UB Hildesheim, VZG<br/>
-        Anpassung: Hochschule Schmalkalden<br/>
-        Umsetzung: effective WEBWORK GmbH
 		]]>
     </string>
 </resources>

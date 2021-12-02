@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <!-- general -->
     <string name="app_name">BibApp NDH</string>
-    
-    <!-- contact -->
+
     <string name="contact_text">
         <![CDATA[
         Hochschule Nordhausen<br/>
@@ -19,21 +17,8 @@
         ]]>
     </string>
 
-    <!-- impressum -->
-    <string name="impressum_text">
-        <![CDATA[
-        <b>Anbieter</b><br/>
-        Hochschulbibliothek Nordhausen<br/>
-        Weinberghof 4<br/>
-        99734 Nordhausen<br/>
-        <br/>
-        http://www.hs-nordhausen.de/service/bibliothek/<br/>
-        E-Mail: bibliothek@hs-nordhausen.de<br/>
-        Tel.: 03631 420-184<br/>
-        Fax: 03631 420-815<br/>
-        <br/>
-        <b>Impressum der Hochschule</b><br/>
-        http://www.hs-nordhausen.de/allgemeines/impressum/?T=0
-        ]]>
+    <string name="info_eol">
+        Der Betrieb der BibApp wird zum 31.12.2021 eingestellt.\n
+        Bitte nutzen Sie stattdessen unser <a href="https://hsnfind.tu-ilmenau.de/">Discoverysystem</a>.
     </string>
 </resources>
